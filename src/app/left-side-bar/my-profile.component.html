@@ -1,0 +1,1050 @@
+<!-- Mobile View -->
+<ng-container>
+  <!-- <div class="d-block d-lg-none">
+    <button
+      class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
+    >
+      <i class="material-symbols-outlined mat-icon" (click)="openToggle()">
+        tune
+      </i>
+      <span>My profile</span>
+    </button>
+  </div> -->
+  <div
+    class="d-block d-lg-none profile-sidebar cus-scrollbar p-5"
+    *ngIf="isEXpand"
+  >
+    <!-- <div class="d-block d-lg-none position-absolute end-0 top-0">
+      <button class="button profile-close">
+        <i class="material-symbols-outlined mat-icon fs-xl"> close </i>
+      </button>
+    </div> -->
+    <div class="profile-pic d-flex gap-2 align-items-center">
+      <div class="avatar position-relative">
+        <img
+          class="avatar-img max-un"
+          src="assets/images/avatar-1.png"
+          alt="avatar"
+        />
+      </div>
+      <div class="text-area">
+        <h6 class="m-0 mb-1">
+          <a>Lerio Mao</a>
+        </h6>
+        <p class="mdtxt">@maolio</p>
+      </div>
+    </div>
+    <ul class="profile-link mt-7 mb-7 pb-7">
+      <li>
+        <a href="index.html" class="d-flex gap-4 active">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> home </i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="friend-request.html" class="d-flex gap-4">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> person </i>
+          <span>People</span>
+        </a>
+      </li>
+      <li>
+        <a href="event.html" class="d-flex gap-4">
+          <i class="material-symbols-outlined fs-xxl mat-icon">
+            workspace_premium
+          </i>
+          <span>Event</span>
+        </a>
+      </li>
+      <li>
+        <a class="d-flex gap-4">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> perm_media </i>
+          <span>Pages</span>
+        </a>
+      </li>
+      <li>
+        <a href="group.html" class="d-flex gap-4">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> workspaces </i>
+          <span>Group</span>
+        </a>
+      </li>
+      <li>
+        <a href="marketplace.html" class="d-flex gap-4">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> store </i>
+          <span>Marketplace</span>
+        </a>
+      </li>
+      <li>
+        <a href="saved-post.html" class="d-flex gap-4">
+          <i class="material-symbols-outlined fs-xxl mat-icon">
+            sync_saved_locally
+          </i>
+          <span>Saved</span>
+        </a>
+      </li>
+      <li>
+        <a href="favorites.html" class="d-flex gap-4">
+          <i class="material-symbols-outlined fs-xxl mat-icon">
+            bookmark_add
+          </i>
+          <span>Favorites</span>
+        </a>
+      </li>
+      <li>
+        <a href="setting.html" class="d-flex gap-4">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+    <!-- <div class="mb-4">
+        <h6 class="d-inline-flex">Contact</h6>
+      </div>
+      <div class="d-flex flex-column gap-6">
+        <div class="profile-area d-center justify-content-between">
+          <div class="avatar-item d-flex gap-3 align-items-center">
+            <div class="avatar-item">
+              <img
+                class="avatar-img max-un"
+                src="assets/images/avatar-9.png"
+                alt="avatar"
+              />
+            </div>
+            <div class="info-area">
+              <h6 class="m-0">
+                <a ublic-p class="mdtxt">Piter Maio</a>
+              </h6>
+            </div>
+          </div>
+          <div class="btn-group cus-dropdown dropend">
+            <button
+              type="button"
+              class="dropdown-btn"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+            </button>
+            <ul class="dropdown-menu p-4 pt-2">
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                  <span>Unfollow</span>
+                </a>
+              </li>
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                  <span>Hide Contact</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="profile-area d-center justify-content-between">
+          <div class="avatar-item d-flex gap-3 align-items-center">
+            <div class="avatar-item">
+              <img
+                class="avatar-img max-un"
+                src="assets/images/avatar-7.png"
+                alt="avatar"
+              />
+            </div>
+            <div class="info-area">
+              <h6 class="m-0">
+                <a ublic-p class="mdtxt">Floyd Miles</a>
+              </h6>
+            </div>
+          </div>
+          <div class="btn-group cus-dropdown dropend">
+            <button
+              type="button"
+              class="dropdown-btn"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+            </button>
+            <ul class="dropdown-menu p-4 pt-2">
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                  <span>Unfollow</span>
+                </a>
+              </li>
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                  <span>Hide Contact</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="profile-area d-center justify-content-between">
+          <div class="avatar-item d-flex gap-3 align-items-center">
+            <div class="avatar-item">
+              <img
+                class="avatar-img max-un"
+                src="assets/images/avatar-8.png"
+                alt="avatar"
+              />
+            </div>
+            <div class="info-area">
+              <h6 class="m-0">
+                <a ublic-p class="mdtxt">Darrell Steward</a>
+              </h6>
+            </div>
+          </div>
+          <div class="btn-group cus-dropdown dropend">
+            <button
+              type="button"
+              class="dropdown-btn"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+            </button>
+            <ul class="dropdown-menu p-4 pt-2">
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                  <span>Unfollow</span>
+                </a>
+              </li>
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                  <span>Hide Contact</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="profile-area d-center justify-content-between">
+          <div class="avatar-item d-flex gap-3 align-items-center">
+            <div class="avatar-item">
+              <img
+                class="avatar-img max-un"
+                src="assets/images/avatar-2.png"
+                alt="avatar"
+              />
+            </div>
+            <div class="info-area">
+              <h6 class="m-0">
+                <a ublic-p class="mdtxt">Kristin Watson</a>
+              </h6>
+            </div>
+          </div>
+          <div class="btn-group cus-dropdown dropend">
+            <button
+              type="button"
+              class="dropdown-btn"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+            </button>
+            <ul class="dropdown-menu p-4 pt-2">
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                  <span>Unfollow</span>
+                </a>
+              </li>
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                  <span>Hide Contact</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="profile-area d-center justify-content-between">
+          <div class="avatar-item d-flex gap-3 align-items-center">
+            <div class="avatar-item">
+              <img
+                class="avatar-img max-un"
+                src="assets/images/avatar-3.png"
+                alt="avatar"
+              />
+            </div>
+            <div class="info-area">
+              <h6 class="m-0">
+                <a ublic-p class="mdtxt">Jane Cooper</a>
+              </h6>
+            </div>
+          </div>
+          <div class="btn-group cus-dropdown dropend">
+            <button
+              type="button"
+              class="dropdown-btn"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+            </button>
+            <ul class="dropdown-menu p-4 pt-2">
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                  <span>Unfollow</span>
+                </a>
+              </li>
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                  <span>Hide Contact</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="profile-area d-center justify-content-between">
+          <div class="avatar-item d-flex gap-3 align-items-center">
+            <div class="avatar-item">
+              <img
+                class="avatar-img max-un"
+                src="assets/images/avatar-4.png"
+                alt="avatar"
+              />
+            </div>
+            <div class="info-area">
+              <h6 class="m-0">
+                <a ublic-p class="mdtxt">Devon Lane</a>
+              </h6>
+            </div>
+          </div>
+          <div class="btn-group cus-dropdown dropend">
+            <button
+              type="button"
+              class="dropdown-btn"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+            </button>
+            <ul class="dropdown-menu p-4 pt-2">
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                  <span>Unfollow</span>
+                </a>
+              </li>
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                  <span>Hide Contact</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="profile-area d-center justify-content-between">
+          <div class="avatar-item d-flex gap-3 align-items-center">
+            <div class="avatar-item">
+              <img
+                class="avatar-img max-un"
+                src="assets/images/avatar-9.png"
+                alt="avatar"
+              />
+            </div>
+            <div class="info-area">
+              <h6 class="m-0">
+                <a ublic-p class="mdtxt">Annette Black</a>
+              </h6>
+            </div>
+          </div>
+          <div class="btn-group cus-dropdown dropend">
+            <button
+              type="button"
+              class="dropdown-btn"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+            </button>
+            <ul class="dropdown-menu p-4 pt-2">
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                  <span>Unfollow</span>
+                </a>
+              </li>
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                  <span>Hide Contact</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="profile-area d-center justify-content-between">
+          <div class="avatar-item d-flex gap-3 align-items-center">
+            <div class="avatar-item">
+              <img
+                class="avatar-img max-un"
+                src="assets/images/avatar-10.png"
+                alt="avatar"
+              />
+            </div>
+            <div class="info-area">
+              <h6 class="m-0">
+                <a ublic-p class="mdtxt">Jerome Bell</a>
+              </h6>
+            </div>
+          </div>
+          <div class="btn-group cus-dropdown dropend">
+            <button
+              type="button"
+              class="dropdown-btn"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+            </button>
+            <ul class="dropdown-menu p-4 pt-2">
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                  <span>Unfollow</span>
+                </a>
+              </li>
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                  <span>Hide Contact</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="profile-area d-center justify-content-between">
+          <div class="avatar-item d-flex gap-3 align-items-center">
+            <div class="avatar-item">
+              <img
+                class="avatar-img max-un"
+                src="assets/images/avatar-11.png"
+                alt="avatar"
+              />
+            </div>
+            <div class="info-area">
+              <h6 class="m-0">
+                <a ublic-p>Guy Hawkins</a>
+              </h6>
+            </div>
+          </div>
+          <div class="btn-group cus-dropdown dropend">
+            <button
+              type="button"
+              class="dropdown-btn"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+            </button>
+            <ul class="dropdown-menu p-4 pt-2">
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                  <span>Unfollow</span>
+                </a>
+              </li>
+              <li>
+                <a class="droplist d-flex align-items-center gap-2" >
+                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                  <span>Hide Contact</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div> -->
+    <div class="your-shortcuts">
+      <h6>Your shortcuts</h6>
+      <ul>
+        <li>
+          <a ublic-p class="d-flex align-items-center gap-3">
+            <img src="assets/images/shortcuts-1.png" alt="icon" />
+            <span>Game Community</span>
+          </a>
+        </li>
+        <li>
+          <a ublic-p class="d-flex align-items-center gap-3">
+            <img src="assets/images/shortcuts-2.png" alt="icon" />
+            <span>Pixel Think (Member)</span>
+          </a>
+        </li>
+        <li>
+          <a ublic-p class="d-flex align-items-center gap-3">
+            <img src="assets/images/shortcuts-3.png" alt="icon" />
+            <span>8 Ball Pool</span>
+          </a>
+        </li>
+        <li>
+          <a ublic-p class="d-flex align-items-center gap-3">
+            <img src="assets/images/shortcuts-4.png" alt="icon" />
+            <span>Gembio</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Web View -->
+<div class="profile-content">
+  <div class="profile-sidebar cus-scrollbar p-5 d-lg-block d-none">
+    <div class="profile-pic d-flex gap-2 align-items-center">
+      <div class="avatar position-relative">
+        <img
+          class="avatar-img max-un"
+          src="assets/images/avatar-1.png"
+          alt="avatar"
+        />
+      </div>
+      <div class="text-area">
+        <h6 class="m-0 mb-1">
+          <a>Lerio Mao</a>
+        </h6>
+        <p class="mdtxt">@maolio</p>
+      </div>
+    </div>
+    <ul class="profile-link mt-7 mb-7 pb-7">
+      <ng-container *ngIf="!isShowPeoplePages">
+        <li>
+          <a
+            routerLink="home"
+            class="d-flex gap-4"
+            [ngClass]="isHome ? 'active' : ''"
+          >
+            <i class="material-symbols-outlined fs-xxl mat-icon"> home </i>
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/people/all-friends" class="d-flex gap-4">
+            <i class="material-symbols-outlined fs-xxl mat-icon"> person </i>
+            <span>People</span>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="events"
+            class="d-flex gap-4"
+            [ngClass]="isEvents ? 'active' : ''"
+          >
+            <i class="material-symbols-outlined fs-xxl mat-icon">
+              workspace_premium
+            </i>
+            <span>Event</span>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="community"
+            class="d-flex gap-4"
+            [ngClass]="isCommunity ? 'active' : ''"
+            F
+          >
+            <i class="material-symbols-outlined fs-xxl mat-icon">
+              workspaces
+            </i>
+            <span>Create Local Community</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://localfoods.market/"
+            target="_blank"
+            class="d-flex gap-4"
+          >
+            <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+            <span>Local Foods</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://lamarslist.com/"
+            target="_blank"
+            class="d-flex gap-4"
+          >
+            <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+            <span>Lamars List</span>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="research"
+            class="d-flex gap-4"
+            [ngClass]="isPageResearch ? 'active' : ''"
+          >
+            <i class="material-symbols-outlined fs-xxl mat-icon">
+              bookmark_add
+            </i>
+            <span>Page Research</span>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="setting"
+            class="d-flex gap-4"
+            [ngClass]="isSetting ? 'active' : ''"
+          >
+            <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="isShowPeoplePages">
+        <li>
+          <a
+            routerLink="people/friend-request"
+            class="d-flex gap-4"
+            [ngClass]="isFriendRequest ? 'active' : ''"
+          >
+            <i class="material-symbols-outlined mat-icon"> person </i>
+            <span>Friend Request</span>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="people/suggesation"
+            class="d-flex gap-4"
+            [ngClass]="isSuggesation ? 'active' : ''"
+          >
+            <i class="material-symbols-outlined mat-icon"> person_add </i>
+            <span>Suggestions</span>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="people/all-friends"
+            class="d-flex gap-4"
+            [ngClass]="isAllFriends ? 'active' : ''"
+          >
+            <i class="material-symbols-outlined mat-icon"> person </i>
+            <span>All Friend</span>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="people/block-list"
+            class="d-flex gap-4"
+            [ngClass]="isBlockList ? 'active' : ''"
+          >
+            <i class="material-symbols-outlined mat-icon"> lock </i>
+            <span>Block List</span>
+          </a>
+        </li>
+      </ng-container>
+    </ul>
+    <!-- <div class="mb-4">
+          <h6 class="d-inline-flex">Contact</h6>
+        </div>
+        <div class="d-flex flex-column gap-6">
+          <div class="profile-area d-center justify-content-between">
+            <div class="avatar-item d-flex gap-3 align-items-center">
+              <div class="avatar-item">
+                <img
+                  class="avatar-img max-un"
+                  src="assets/images/avatar-9.png"
+                  alt="avatar"
+                />
+              </div>
+              <div class="info-area">
+                <h6 class="m-0">
+                  <a ublic-p class="mdtxt">Piter Maio</a>
+                </h6>
+              </div>
+            </div>
+            <div class="btn-group cus-dropdown dropend">
+              <button
+                type="button"
+                class="dropdown-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <ul class="dropdown-menu p-4 pt-2">
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                    <span>Unfollow</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                    <span>Hide Contact</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="profile-area d-center justify-content-between">
+            <div class="avatar-item d-flex gap-3 align-items-center">
+              <div class="avatar-item">
+                <img
+                  class="avatar-img max-un"
+                  src="assets/images/avatar-7.png"
+                  alt="avatar"
+                />
+              </div>
+              <div class="info-area">
+                <h6 class="m-0">
+                  <a ublic-p class="mdtxt">Floyd Miles</a>
+                </h6>
+              </div>
+            </div>
+            <div class="btn-group cus-dropdown dropend">
+              <button
+                type="button"
+                class="dropdown-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <ul class="dropdown-menu p-4 pt-2">
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                    <span>Unfollow</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                    <span>Hide Contact</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="profile-area d-center justify-content-between">
+            <div class="avatar-item d-flex gap-3 align-items-center">
+              <div class="avatar-item">
+                <img
+                  class="avatar-img max-un"
+                  src="assets/images/avatar-8.png"
+                  alt="avatar"
+                />
+              </div>
+              <div class="info-area">
+                <h6 class="m-0">
+                  <a ublic-p class="mdtxt">Darrell Steward</a>
+                </h6>
+              </div>
+            </div>
+            <div class="btn-group cus-dropdown dropend">
+              <button
+                type="button"
+                class="dropdown-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <ul class="dropdown-menu p-4 pt-2">
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                    <span>Unfollow</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                    <span>Hide Contact</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="profile-area d-center justify-content-between">
+            <div class="avatar-item d-flex gap-3 align-items-center">
+              <div class="avatar-item">
+                <img
+                  class="avatar-img max-un"
+                  src="assets/images/avatar-2.png"
+                  alt="avatar"
+                />
+              </div>
+              <div class="info-area">
+                <h6 class="m-0">
+                  <a ublic-p class="mdtxt">Kristin Watson</a>
+                </h6>
+              </div>
+            </div>
+            <div class="btn-group cus-dropdown dropend">
+              <button
+                type="button"
+                class="dropdown-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <ul class="dropdown-menu p-4 pt-2">
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                    <span>Unfollow</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                    <span>Hide Contact</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="profile-area d-center justify-content-between">
+            <div class="avatar-item d-flex gap-3 align-items-center">
+              <div class="avatar-item">
+                <img
+                  class="avatar-img max-un"
+                  src="assets/images/avatar-3.png"
+                  alt="avatar"
+                />
+              </div>
+              <div class="info-area">
+                <h6 class="m-0">
+                  <a ublic-p class="mdtxt">Jane Cooper</a>
+                </h6>
+              </div>
+            </div>
+            <div class="btn-group cus-dropdown dropend">
+              <button
+                type="button"
+                class="dropdown-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <ul class="dropdown-menu p-4 pt-2">
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                    <span>Unfollow</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                    <span>Hide Contact</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="profile-area d-center justify-content-between">
+            <div class="avatar-item d-flex gap-3 align-items-center">
+              <div class="avatar-item">
+                <img
+                  class="avatar-img max-un"
+                  src="assets/images/avatar-4.png"
+                  alt="avatar"
+                />
+              </div>
+              <div class="info-area">
+                <h6 class="m-0">
+                  <a ublic-p class="mdtxt">Devon Lane</a>
+                </h6>
+              </div>
+            </div>
+            <div class="btn-group cus-dropdown dropend">
+              <button
+                type="button"
+                class="dropdown-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <ul class="dropdown-menu p-4 pt-2">
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                    <span>Unfollow</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                    <span>Hide Contact</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="profile-area d-center justify-content-between">
+            <div class="avatar-item d-flex gap-3 align-items-center">
+              <div class="avatar-item">
+                <img
+                  class="avatar-img max-un"
+                  src="assets/images/avatar-9.png"
+                  alt="avatar"
+                />
+              </div>
+              <div class="info-area">
+                <h6 class="m-0">
+                  <a ublic-p class="mdtxt">Annette Black</a>
+                </h6>
+              </div>
+            </div>
+            <div class="btn-group cus-dropdown dropend">
+              <button
+                type="button"
+                class="dropdown-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <ul class="dropdown-menu p-4 pt-2">
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                    <span>Unfollow</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                    <span>Hide Contact</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="profile-area d-center justify-content-between">
+            <div class="avatar-item d-flex gap-3 align-items-center">
+              <div class="avatar-item">
+                <img
+                  class="avatar-img max-un"
+                  src="assets/images/avatar-10.png"
+                  alt="avatar"
+                />
+              </div>
+              <div class="info-area">
+                <h6 class="m-0">
+                  <a ublic-p class="mdtxt">Jerome Bell</a>
+                </h6>
+              </div>
+            </div>
+            <div class="btn-group cus-dropdown dropend">
+              <button
+                type="button"
+                class="dropdown-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <ul class="dropdown-menu p-4 pt-2">
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                    <span>Unfollow</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                    <span>Hide Contact</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="profile-area d-center justify-content-between">
+            <div class="avatar-item d-flex gap-3 align-items-center">
+              <div class="avatar-item">
+                <img
+                  class="avatar-img max-un"
+                  src="assets/images/avatar-11.png"
+                  alt="avatar"
+                />
+              </div>
+              <div class="info-area">
+                <h6 class="m-0">
+                  <a ublic-p>Guy Hawkins</a>
+                </h6>
+              </div>
+            </div>
+            <div class="btn-group cus-dropdown dropend">
+              <button
+                type="button"
+                class="dropdown-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <ul class="dropdown-menu p-4 pt-2">
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> person_remove </i>
+                    <span>Unfollow</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="droplist d-flex align-items-center gap-2" >
+                    <i class="material-symbols-outlined mat-icon"> hide_source </i>
+                    <span>Hide Contact</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+    <!-- <div class="your-shortcuts">
+      <h6>Your shortcuts</h6>
+      <ul>
+        <li>
+          <a
+            ublic-p
+            class="d-flex align-items-center gap-3"
+          >
+            <img src="assets/images/shortcuts-1.png" alt="icon" />
+            <span>Game Community</span>
+          </a>
+        </li>
+        <li>
+          <a
+            ublic-p
+            class="d-flex align-items-center gap-3"
+          >
+            <img src="assets/images/shortcuts-2.png" alt="icon" />
+            <span>Pixel Think (Member)</span>
+          </a>
+        </li>
+        <li>
+          <a
+            ublic-p
+            class="d-flex align-items-center gap-3"
+          >
+            <img src="assets/images/shortcuts-3.png" alt="icon" />
+            <span>8 Ball Pool</span>
+          </a>
+        </li>
+        <li>
+          <a
+            ublic-p
+            class="d-flex align-items-center gap-3"
+          >
+            <img src="assets/images/shortcuts-4.png" alt="icon" />
+            <span>Gembio</span>
+          </a>
+        </li>
+      </ul>
+    </div> -->
+  </div>
+</div>

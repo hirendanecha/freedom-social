@@ -1,0 +1,321 @@
+.header-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background-color: var(--body-color);
+}
+
+.header-section.header-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    border-color: transparent;
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.3);
+    background-color: var(--body-color);
+}
+
+.header-section .navbar-toggler {
+    padding-right: 0;
+    display: none;
+    border: none;
+}
+
+.header-section .navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.header-section .navbar-toggler i {
+    color: var(--primary-color);
+}
+
+.header-section .navbar .search-active {
+    border-radius: 50%;
+    background: var(--box-1st-color);
+    padding: 8px;
+}
+
+.header-section .navbar form b i {
+    color: var(--para-3rd-color);
+}
+
+.header-section .navbar .navbar-nav a {
+    text-transform: capitalize;
+    font-weight: 600;
+    background-color: transparent;
+    color: var(--para-3rd-color);
+    transition: 0.3s;
+}
+
+.header-section .navbar .navbar-nav a i {
+    margin: 0;
+}
+
+.header-section .navbar .navbar-nav a.active,
+.header-section .navbar .navbar-nav a:hover {
+    color: var(--primary-color);
+}
+
+.header-section .navbar .dropdown-toggle {
+    position: relative;
+    z-index: 1;
+}
+
+.header-section .navbar .dropdown-toggle::after {
+    position: absolute;
+    content: "\0044";
+    border: none;
+    font-family: "arafat font";
+    font-weight: 400;
+    transform: rotate(270deg);
+    font-size: 10px;
+    bottom: -2px;
+    z-index: -1;
+}
+
+.header-section .navbar .dropdown-menu {
+    padding-right: 20px;
+}
+
+.header-section .navbar .dropdown-menu a {
+    padding: 3px 15px;
+}
+
+.header-section .navbar .dropdown-menu a::after {
+    bottom: 1px;
+}
+
+.header-section .navbar .dropdown-menu,
+.header-section .navbar .sub-menu {
+    background-color: var(--body-color);
+    box-shadow: 0px 12px 12px rgba(44, 44, 77, 0.49);
+}
+
+.header-section .navbar .sub-dropdown {
+    position: relative;
+}
+
+.header-section .navbar .sub-dropdown .sub-menu {
+    display: none;
+    position: absolute;
+    left: 150px;
+    top: 0;
+    background-color: var(--section-1st-color);
+    z-index: 1;
+}
+
+.header-section .navbar .sub-dropdown .sub-menu a {
+    font-weight: 500;
+}
+
+.header-section .navbar .navbar-toggler:focus {
+    outline: 0;
+    box-shadow: none;
+}
+
+.header-section .navbar .show-dropdown {
+    margin-right: 15px;
+}
+
+.header-section .navbar .show-dropdown:hover .dropdown-menu {
+    display: block !important;
+}
+
+.header-section .navbar .sub-dropdown:hover .sub-menu {
+    display: block !important;
+}
+
+.header-menu {
+    background-color: var(--section-1st-color);
+    box-shadow: var(--box-shadow);
+    z-index: 999;
+}
+
+.header-menu .abs-area {
+    width: 20px;
+    height: 20px;
+    background: var(--highlight-color);
+    border-radius: 50%;
+    color: var(--bs-white);
+}
+
+.header-menu .cmn-head {
+    cursor: pointer;
+}
+
+.header-menu .cmn-head .icon-area {
+    width: 50px;
+    height: 50px;
+    background: var(--box-2nd-color);
+    border-radius: 15px;
+}
+
+.header-menu .cmn-head .icon-area i {
+    color: var(--para-3rd-color);
+}
+
+.header-menu .cmn-head .icon-area .abs-area {
+    right: initial;
+    top: -4px;
+    left: -4px;
+}
+
+.header-menu .single-item.active .main-area {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0px);
+}
+
+.header-menu .single-item .main-area {
+    position: absolute;
+    top: 50px;
+    white-space: nowrap;
+    right: 0;
+    transform: translateY(150px);
+    background: var(--section-1st-color);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--box-shadow);
+    border-radius: 10px;
+    opacity: 0;
+    transition: 0.3s;
+    visibility: hidden;
+    overflow-x: auto;
+    max-height: 70vh;
+}
+
+.header-menu .single-item .avatar .avatar-img {
+    border-radius: 15px;
+}
+
+.header-menu .single-item.messages-area h6 {
+    font-weight: 400;
+}
+
+.header-menu .single-item.messages-area p {
+    color: var(--para-1st-color);
+}
+
+.header-menu .single-item.messages-area .sms {
+    color: #0085ff;
+}
+
+.header-menu .single-item.messages-area .abs-area {
+    right: -25px;
+}
+
+.header-menu .single-item.messages-area .btn-area a {
+    color: var(--highlight-color);
+}
+
+.header-menu .single-item.notification-area .abs-item {
+    bottom: -5px;
+    right: -5px;
+}
+
+.header-menu .single-item.notification-area .main-area {
+    min-width: 390px;
+}
+
+.header-menu .single-item.profile-area::before {
+    position: absolute;
+    content: '';
+    width: 16px;
+    height: 16px;
+    background: #21e900;
+    border-radius: 50%;
+    top: -4px;
+    left: -4px;
+}
+
+.header-menu .single-item.profile-area .view-profile a {
+    background-color: var(--box-1st-color);
+    color: var(--primary-color);
+}
+
+.header-menu .single-item.profile-area .avatar-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.header-menu .single-item.profile-area .text-area p {
+    color: var(--para-1st-color);
+}
+
+.header-menu .single-item.profile-area ul a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0;
+    color: var(--heading-1st-color);
+}
+
+.header-menu .single-item.profile-area ul a:hover {
+    color: var(--primary-color);
+}
+
+.header-menu .single-item.profile-area ul li:last-child {
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-menu .single-item .switch-wrapper .icon {
+    color: var(--para-1st-color);
+    font-size: 20px;
+}
+
+.header-menu .single-item .switch-wrapper .icon.active {
+    color: var(--primary-color);
+}
+
+.header-menu .single-item .switch-wrapper .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 23px;
+}
+
+.header-menu .single-item .switch-wrapper .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.header-menu .single-item .switch-wrapper .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--primary-color);
+    border-radius: 30px;
+    transition: 0.4s;
+}
+
+.header-menu .single-item .switch-wrapper .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    border-radius: 50%;
+    background-color: var(--bs-white);
+    transition: 0.4s;
+}
+
+.header-menu .single-item .switch-wrapper input:checked+.slider {
+    background-color: var(--primary-color);
+}
+
+.header-menu .single-item .switch-wrapper input:focus+.slider {
+    box-shadow: 0 0 1px var(--primary-color);
+}
+
+.header-menu .single-item .switch-wrapper input:checked+.slider:before {
+    transform: translateX(16px);
+}

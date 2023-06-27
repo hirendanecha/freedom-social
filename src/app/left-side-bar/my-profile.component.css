@@ -1,0 +1,15 @@
+.profile-content {
+  /* background: var(--section-1st-color);
+  border-radius: 15px;
+  box-shadow: var(--box-shadow); */
+  position: sticky;
+  top: 115px;
+}
+
+.profile-content li {
+  margin-top: 15px;
+}
+
+.profile-sidebar .profile-pic .avatar-img {
+  border-radius: 15px;
+}

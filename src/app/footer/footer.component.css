@@ -1,0 +1,38 @@
+.main-area .view-profile a {
+  background-color: var(--box-1st-color);
+  color: var(--primary-color);
+}
+
+.main-area ul a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+  color: var(--heading-1st-color);
+}
+
+.main-area ul li:last-child {
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.main-area .switch-wrapper .fa-solid {
+  font-size: 22px;
+}
+
+.notification-content {
+  min-width: 400px;
+}
+
+.notification-content .abs-item {
+  bottom: -5px;
+  right: -5px;
+}
+
+::ng-deep .footer-menu-panale {
+  position: fixed;
+  right: 315px;
+  bottom: 50px;
+  top: unset !important;
+  display: flex;
+}

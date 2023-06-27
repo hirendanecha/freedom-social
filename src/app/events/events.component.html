@@ -1,0 +1,67 @@
+<div class="head-area mb-4 mb-lg-5 mt-5 mt-lg-0">
+  <h6>Discover Events</h6>
+</div>
+<div class="top-area mb-5 d-center flex-wrap gap-3 justify-content-between">
+  <ul class="nav flex-wrap gap-2 tab-area" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link d-center"
+        type="button"
+        (click)="activeTab = 1"
+        [ngClass]="activeTab === 1 ? 'active' : ''"
+      >
+        top
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link d-center"
+        type="button"
+        (click)="activeTab = 2"
+        [ngClass]="activeTab === 2 ? 'active' : ''"
+      >
+        local
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link d-center"
+        type="button"
+        (click)="activeTab = 3"
+        [ngClass]="activeTab === 3 ? 'active' : ''"
+      >
+        online
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link d-center"
+        type="button"
+        (click)="activeTab = 4"
+        [ngClass]="activeTab === 4 ? 'active' : ''"
+      >
+        saved
+      </button>
+    </li>
+  </ul>
+  <div class="btn-item">
+    <a href="event.html" class="cmn-btn gap-1">
+      <i class="material-symbols-outlined mat-icon"> add </i>
+      Create Event
+    </a>
+  </div>
+</div>
+<div class="tab-content">
+  <ng-container *ngIf="activeTab === 1">
+    <app-top></app-top>
+  </ng-container>
+  <ng-container *ngIf="activeTab === 2">
+    <app-local></app-local>
+  </ng-container>
+  <ng-container *ngIf="activeTab === 3">
+    <app-online></app-online>
+  </ng-container>
+  <ng-container *ngIf="activeTab === 4">
+    <app-saved></app-saved>
+  </ng-container>
+</div>
