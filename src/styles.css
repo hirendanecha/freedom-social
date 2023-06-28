@@ -1493,7 +1493,7 @@ li {
 }
 
 .main-content {
-  padding: 40px 0 40px;
+  padding: 40px 0 40px !important; 
 }
 
 .main-content .profile-sidebar {
