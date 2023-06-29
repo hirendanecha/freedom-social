@@ -27,7 +27,7 @@ export class TopComponent {
       eventDate: '15 AUG 2023'
     },
     {
-      eventName: 'Martio Music Festival',
+      eventName: 'Martio Music Event Festival',
       eventImg: '/assets/images/avtar/music.png',
       eventLocation: 'Alaska,CA',
       eventDate: '2 DEC 2022'
@@ -45,7 +45,7 @@ export class TopComponent {
       eventDate: '15 AUG 2023'
     },
     {
-      eventName: 'Martio Music Festival',
+      eventName: 'Martio Music Event Festival',
       eventImg: '/assets/images/avtar/music.png',
       eventLocation: 'Alaska,CA',
       eventDate: '2 DEC 2022'

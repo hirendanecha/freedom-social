@@ -1,5 +1,5 @@
 import { Component, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-header',

@@ -8,6 +8,7 @@ import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 })
 export class ShellComponent {
   isShow = false;
+  isShowMyProfile = false;
   constructor(
     private router: Router
   ) {
@@ -17,6 +18,7 @@ export class ShellComponent {
           event.url.includes('/events') ||
           event.url.includes('/community') ||
           event.url.includes('/settings') || false;
+        this.isShowMyProfile = event.url.includes('/edit-profile') || false;
       }
     })
   }

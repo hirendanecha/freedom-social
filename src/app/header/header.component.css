@@ -35,6 +35,10 @@
   right: -5px;
 }
 
+.logo {
+  border-radius: 15px;
+}
+
 ::ng-deep .user-menu-panale {
   position: fixed;
   right: 315px;

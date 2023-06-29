@@ -1493,7 +1493,7 @@ li {
 }
 
 .main-content {
-  padding: 40px 0 40px !important; 
+  padding: 30px 0 30px !important;
 }
 
 .main-content .profile-sidebar {
@@ -3135,4 +3135,8 @@ li {
   box-shadow: 0px 17px 12px var(--box-shadow);
   background-color: var(--section-1st-color);
   /* padding: 30px; */
+}
+
+.fade {
+  transition: opacity .15s linear;
 }
