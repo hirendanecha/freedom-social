@@ -26,14 +26,14 @@ export class FooterComponent {
     this.userMenusOverlayDialog = this.modaleService.open(this.userMenuList, {
       keyboard: true,
       size: 'sm',
-      modalDialogClass: 'footer-menu-panale'
+      modalDialogClass: 'footer-user-menu-panale'
     });
   }
 
   openNotificationList(): void {
     this.userMenusOverlayDialog = this.modaleService.open(this.notificationList, {
       keyboard: true,
-      modalDialogClass: 'footer-menu-panale'
+      modalDialogClass: 'footer-notification-menu-panale'
     });
   }
 
@@ -41,7 +41,7 @@ export class FooterComponent {
     this.userMenusOverlayDialog = this.modaleService.open(this.messageList, {
       keyboard: true,
       size: 'sm',
-      modalDialogClass: 'footer-menu-panale'
+      modalDialogClass: 'footer-message-menu-panale'
     });
   }
 

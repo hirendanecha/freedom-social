@@ -10,6 +10,7 @@ import { ShellComponent } from './shell.component';
 import { PostComponent } from '../poast-modal/post.component';
 import { FooterComponent } from '../footer/footer.component';
 import { PeopleModule } from '../people/people.module';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PeopleModule } from '../people/people.module';
   ],
   imports: [
     ShellRoutingModule,
-    CommonModule
+    CommonModule,
+    NgbModule
   ],
   exports: [
     HeaderComponent,
@@ -31,6 +33,9 @@ import { PeopleModule } from '../people/people.module';
     MyListComponent,
     ShellComponent,
     FooterComponent
+  ],
+  providers: [
+    NgbActiveModal,
   ]
 })
 export class ShellModule { }

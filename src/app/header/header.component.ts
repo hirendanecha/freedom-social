@@ -17,7 +17,8 @@ export class HeaderComponent {
   isBreakpointLessThenSmall = false;
   isDark = false;
   constructor(
-    private modaleService: NgbModal
+    private modaleService: NgbModal,
+    public activeteModal: NgbActiveModal
   ) {
     if (localStorage.getItem('theme') === 'dark') {
       this.isDark = true;
@@ -62,6 +63,10 @@ export class HeaderComponent {
     this.isDark = false;
     document.body.classList.remove('dark-ui');
     localStorage.setItem('theme', 'light');
+  }
+
+  closeMenu() {
+    this.activeteModal.dismiss('cancel');
   }
 
 }

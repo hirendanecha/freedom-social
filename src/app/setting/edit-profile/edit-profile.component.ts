@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-edit-profile',
@@ -9,9 +9,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class EditProfileComponent {
 
   constructor(
-    private modalService: NgbModal
+    private modalService: NgbActiveModal
   ) {
-
+  }
+  
+  ngOnInIt() { 
+    this.modalService.close();
   }
 
 }

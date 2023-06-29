@@ -79,13 +79,19 @@
           </button>
           <ul class="dropdown-menu p-4 pt-2" [ngClass]="isExpand ? 'show' : ''">
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> bookmark_add </i>
                 <span>Saved Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon">
                   person_remove
                 </i>
@@ -93,19 +99,28 @@
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> hide_source </i>
                 <span>Hide Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> lock </i>
                 <span>Block</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> flag </i>
                 <span>Report Post</span>
               </a>
@@ -236,19 +251,26 @@
             type="button"
             class="dropdown-btn"
             data-bs-toggle="dropdown"
-            aria-expanded="false"
+            (click)="openDropDown()"
+            [ngClass]="isExpand ? 'show' : ''"
           >
             <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
           </button>
-          <!-- <ul class="dropdown-menu p-4 pt-2">
+          <ul class="dropdown-menu p-4 pt-2" [ngClass]="isExpand ? 'show' : ''">
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> bookmark_add </i>
                 <span>Saved Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon">
                   person_remove
                 </i>
@@ -256,24 +278,33 @@
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> hide_source </i>
                 <span>Hide Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> lock </i>
                 <span>Block</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> flag </i>
                 <span>Report Post</span>
               </a>
             </li>
-          </ul> -->
+          </ul>
         </div>
       </div>
       <div class="py-4">
@@ -554,19 +585,26 @@
             type="button"
             class="dropdown-btn"
             data-bs-toggle="dropdown"
-            aria-expanded="false"
+            (click)="openDropDown()"
+            [ngClass]="isExpand ? 'show' : ''"
           >
             <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
           </button>
-          <ul class="dropdown-menu p-4 pt-2">
+          <ul class="dropdown-menu p-4 pt-2" [ngClass]="isExpand ? 'show' : ''">
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> bookmark_add </i>
                 <span>Saved Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon">
                   person_remove
                 </i>
@@ -574,19 +612,28 @@
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> hide_source </i>
                 <span>Hide Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> lock </i>
                 <span>Block</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> flag </i>
                 <span>Report Post</span>
               </a>
@@ -1018,19 +1065,26 @@
             type="button"
             class="dropdown-btn"
             data-bs-toggle="dropdown"
-            aria-expanded="false"
+            (click)="openDropDown()"
+            [ngClass]="isExpand ? 'show' : ''"
           >
             <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
           </button>
-          <ul class="dropdown-menu p-4 pt-2">
+          <ul class="dropdown-menu p-4 pt-2" [ngClass]="isExpand ? 'show' : ''">
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> bookmark_add </i>
                 <span>Saved Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon">
                   person_remove
                 </i>
@@ -1038,19 +1092,28 @@
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> hide_source </i>
                 <span>Hide Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> lock </i>
                 <span>Block</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> flag </i>
                 <span>Report Post</span>
               </a>
@@ -1186,19 +1249,26 @@
             type="button"
             class="dropdown-btn"
             data-bs-toggle="dropdown"
-            aria-expanded="false"
+            (click)="openDropDown()"
+            [ngClass]="isExpand ? 'show' : ''"
           >
             <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
           </button>
-          <ul class="dropdown-menu p-4 pt-2">
+          <ul class="dropdown-menu p-4 pt-2" [ngClass]="isExpand ? 'show' : ''">
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> bookmark_add </i>
                 <span>Saved Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon">
                   person_remove
                 </i>
@@ -1206,19 +1276,28 @@
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> hide_source </i>
                 <span>Hide Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> lock </i>
                 <span>Block</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="isExpand = false"
+              >
                 <i class="material-symbols-outlined mat-icon"> flag </i>
                 <span>Report Post</span>
               </a>
