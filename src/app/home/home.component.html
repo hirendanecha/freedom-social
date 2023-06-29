@@ -1,6 +1,6 @@
 <div class="share-post d-flex gap-3 gap-sm-5 p-3 p-sm-5">
   <div class="profile-box">
-    <a 
+    <a
       ><img src="assets/images/add-post-avatar.png" class="max-un" alt="icon"
     /></a>
   </div>
@@ -56,7 +56,7 @@
           <div class="avatar position-relative">
             <img
               class="avatar-img max-un"
-              src="assets/images/avatar-1.png"
+              src="assets/images/avtar/avtar.png"
               alt="avatar"
             />
           </div>
@@ -72,19 +72,20 @@
             type="button"
             class="dropdown-btn"
             data-bs-toggle="dropdown"
-            aria-expanded="false"
+            (click)="openDropDown()"
+            [ngClass]="isExpand ? 'show' : ''"
           >
             <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
           </button>
-          <!-- <ul class="dropdown-menu p-4 pt-2">
+          <ul class="dropdown-menu p-4 pt-2" [ngClass]="isExpand ? 'show' : ''">
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> bookmark_add </i>
                 <span>Saved Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon">
                   person_remove
                 </i>
@@ -92,24 +93,24 @@
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> hide_source </i>
                 <span>Hide Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> lock </i>
                 <span>Block</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> flag </i>
                 <span>Report Post</span>
               </a>
             </li>
-          </ul> -->
+          </ul>
         </div>
       </div>
       <div class="py-4">
@@ -143,7 +144,11 @@
     <div
       class="like-comment-share py-5 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
     >
-      <button class="d-center gap-1 gap-sm-2 mdtxt">
+      <button
+        class="d-center gap-1 gap-sm-2 mdtxt"
+        (click)="clickOnLike()"
+        [ngClass]="isLike ? 'actvie' : ''"
+      >
         <i class="material-symbols-outlined mat-icon"> favorite </i>
         Like
       </button>
@@ -159,7 +164,7 @@
     <form action="#">
       <div class="d-flex mt-5 gap-3">
         <div class="profile-box d-none d-xxl-block">
-          <a 
+          <a
             ><img
               src="assets/images/add-post-avatar.png"
               class="max-un"
@@ -215,7 +220,7 @@
           <div class="avatar position-relative">
             <img
               class="avatar-img max-un"
-              src="assets/images/avatar-1.png"
+              src="assets/images/avtar/avtar.png"
               alt="avatar"
             />
           </div>
@@ -326,7 +331,7 @@
     <form action="#">
       <div class="d-flex mt-5 gap-3">
         <div class="profile-box d-none d-xxl-block">
-          <a 
+          <a
             ><img
               src="assets/images/add-post-avatar.png"
               class="max-un"
@@ -410,10 +415,7 @@
                 </button>
                 <ul class="dropdown-menu p-4 pt-2">
                   <li>
-                    <a
-                      class="droplist d-flex align-items-center gap-2"
-                      
-                    >
+                    <a class="droplist d-flex align-items-center gap-2">
                       <i class="material-symbols-outlined mat-icon">
                         hide_source
                       </i>
@@ -421,10 +423,7 @@
                     </a>
                   </li>
                   <li>
-                    <a
-                      class="droplist d-flex align-items-center gap-2"
-                      
-                    >
+                    <a class="droplist d-flex align-items-center gap-2">
                       <i class="material-symbols-outlined mat-icon"> flag </i>
                       <span>Report Comments</span>
                     </a>
@@ -489,10 +488,7 @@
                   </button>
                   <ul class="dropdown-menu p-4 pt-2">
                     <li>
-                      <a
-                        class="droplist d-flex align-items-center gap-2"
-                        
-                      >
+                      <a class="droplist d-flex align-items-center gap-2">
                         <i class="material-symbols-outlined mat-icon">
                           hide_source
                         </i>
@@ -500,10 +496,7 @@
                       </a>
                     </li>
                     <li>
-                      <a
-                        class="droplist d-flex align-items-center gap-2"
-                        
-                      >
+                      <a class="droplist d-flex align-items-center gap-2">
                         <i class="material-symbols-outlined mat-icon"> flag </i>
                         <span>Report Comments</span>
                       </a>
@@ -567,13 +560,13 @@
           </button>
           <ul class="dropdown-menu p-4 pt-2">
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> bookmark_add </i>
                 <span>Saved Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon">
                   person_remove
                 </i>
@@ -581,19 +574,19 @@
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> hide_source </i>
                 <span>Hide Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> lock </i>
                 <span>Block</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> flag </i>
                 <span>Report Post</span>
               </a>
@@ -632,7 +625,11 @@
     <div
       class="like-comment-share py-5 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
     >
-      <button class="d-center gap-1 gap-sm-2 mdtxt">
+      <button
+        class="d-center gap-1 gap-sm-2 mdtxt"
+        (click)="clickOnLike()"
+        [ngClass]="isLike ? 'actvie' : ''"
+      >
         <i class="material-symbols-outlined mat-icon"> favorite </i>
         Like
       </button>
@@ -648,7 +645,7 @@
     <form action="#">
       <div class="d-flex mt-5 gap-3">
         <div class="profile-box d-none d-xxl-block">
-          <a 
+          <a
             ><img
               src="assets/images/add-post-avatar.png"
               class="max-un"
@@ -732,10 +729,7 @@
                 </button>
                 <ul class="dropdown-menu p-4 pt-2">
                   <li>
-                    <a
-                      class="droplist d-flex align-items-center gap-2"
-                      
-                    >
+                    <a class="droplist d-flex align-items-center gap-2">
                       <i class="material-symbols-outlined mat-icon">
                         hide_source
                       </i>
@@ -743,10 +737,7 @@
                     </a>
                   </li>
                   <li>
-                    <a
-                      class="droplist d-flex align-items-center gap-2"
-                      
-                    >
+                    <a class="droplist d-flex align-items-center gap-2">
                       <i class="material-symbols-outlined mat-icon"> flag </i>
                       <span>Report Comments</span>
                     </a>
@@ -811,10 +802,7 @@
                   </button>
                   <ul class="dropdown-menu p-4 pt-2">
                     <li>
-                      <a
-                        class="droplist d-flex align-items-center gap-2"
-                        
-                      >
+                      <a class="droplist d-flex align-items-center gap-2">
                         <i class="material-symbols-outlined mat-icon">
                           hide_source
                         </i>
@@ -822,10 +810,7 @@
                       </a>
                     </li>
                     <li>
-                      <a
-                        class="droplist d-flex align-items-center gap-2"
-                        
-                      >
+                      <a class="droplist d-flex align-items-center gap-2">
                         <i class="material-symbols-outlined mat-icon"> flag </i>
                         <span>Report Comments</span>
                       </a>
@@ -891,10 +876,7 @@
                   </button>
                   <ul class="dropdown-menu p-4 pt-2">
                     <li>
-                      <a
-                        class="droplist d-flex align-items-center gap-2"
-                        
-                      >
+                      <a class="droplist d-flex align-items-center gap-2">
                         <i class="material-symbols-outlined mat-icon">
                           hide_source
                         </i>
@@ -902,10 +884,7 @@
                       </a>
                     </li>
                     <li>
-                      <a
-                        class="droplist d-flex align-items-center gap-2"
-                        
-                      >
+                      <a class="droplist d-flex align-items-center gap-2">
                         <i class="material-symbols-outlined mat-icon"> flag </i>
                         <span>Report Comments</span>
                       </a>
@@ -974,10 +953,7 @@
                 </button>
                 <ul class="dropdown-menu p-4 pt-2">
                   <li>
-                    <a
-                      class="droplist d-flex align-items-center gap-2"
-                      
-                    >
+                    <a class="droplist d-flex align-items-center gap-2">
                       <i class="material-symbols-outlined mat-icon">
                         hide_source
                       </i>
@@ -985,10 +961,7 @@
                     </a>
                   </li>
                   <li>
-                    <a
-                      class="droplist d-flex align-items-center gap-2"
-                      
-                    >
+                    <a class="droplist d-flex align-items-center gap-2">
                       <i class="material-symbols-outlined mat-icon"> flag </i>
                       <span>Report Comments</span>
                     </a>
@@ -1029,7 +1002,7 @@
           <div class="avatar position-relative">
             <img
               class="avatar-img max-un"
-              src="assets/images/avatar-1.png"
+              src="assets/images/avtar/avtar.png"
               alt="avatar"
             />
           </div>
@@ -1051,13 +1024,13 @@
           </button>
           <ul class="dropdown-menu p-4 pt-2">
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> bookmark_add </i>
                 <span>Saved Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon">
                   person_remove
                 </i>
@@ -1065,19 +1038,19 @@
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> hide_source </i>
                 <span>Hide Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> lock </i>
                 <span>Block</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> flag </i>
                 <span>Report Post</span>
               </a>
@@ -1088,8 +1061,8 @@
       <div class="py-4">
         <p class="description">My Travel Video</p>
         <p class="hastag d-flex gap-2">
-          <a >#Viral</a>
-          <a >#travel</a>
+          <a>#Viral</a>
+          <a>#travel</a>
         </p>
       </div>
       <!-- <div class="post-img video-item">
@@ -1121,7 +1094,11 @@
     <div
       class="like-comment-share py-5 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
     >
-      <button class="d-center gap-1 gap-sm-2 mdtxt">
+      <button
+        class="d-center gap-1 gap-sm-2 mdtxt"
+        (click)="clickOnLike()"
+        [ngClass]="isLike ? 'actvie' : ''"
+      >
         <i class="material-symbols-outlined mat-icon"> favorite </i>
         Like
       </button>
@@ -1137,7 +1114,7 @@
     <form action="#">
       <div class="d-flex mt-5 gap-3">
         <div class="profile-box d-none d-xxl-block">
-          <a 
+          <a
             ><img
               src="assets/images/add-post-avatar.png"
               class="max-un"
@@ -1193,7 +1170,7 @@
           <div class="avatar position-relative">
             <img
               class="avatar-img max-un"
-              src="assets/images/avatar-1.png"
+              src="assets/images/avtar/avtar.png"
               alt="avatar"
             />
           </div>
@@ -1215,13 +1192,13 @@
           </button>
           <ul class="dropdown-menu p-4 pt-2">
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> bookmark_add </i>
                 <span>Saved Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon">
                   person_remove
                 </i>
@@ -1229,19 +1206,19 @@
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> hide_source </i>
                 <span>Hide Post</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> lock </i>
                 <span>Block</span>
               </a>
             </li>
             <li>
-              <a class="droplist d-flex align-items-center gap-2" >
+              <a class="droplist d-flex align-items-center gap-2">
                 <i class="material-symbols-outlined mat-icon"> flag </i>
                 <span>Report Post</span>
               </a>
@@ -1296,7 +1273,7 @@
     <form action="#">
       <div class="d-flex mt-5 gap-3">
         <div class="profile-box d-none d-xxl-block">
-          <a 
+          <a
             ><img
               src="assets/images/add-post-avatar.png"
               class="max-un"
@@ -1346,4 +1323,3 @@
     </form>
   </div>
 </div>
-

@@ -6,13 +6,15 @@ import { CommunityComponent } from './community.component';
 import { PopularComponent } from './popular/popular.component';
 import { MembersComponent } from './most-member/members.component';
 import { GroupComponent } from './group/group.component';
+import { AddCommunityComponent } from './add-community/add-community.component';
 
 @NgModule({
   declarations: [
     CommunityComponent,
     PopularComponent,
     MembersComponent,
-    GroupComponent
+    GroupComponent,
+    AddCommunityComponent
   ],
   imports: [
     CommunityRoutingModule,

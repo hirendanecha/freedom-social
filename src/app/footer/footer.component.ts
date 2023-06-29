@@ -47,5 +47,6 @@ export class FooterComponent {
 
   changeDarkUi() {
     this.isDark = !this.isDark;
-  }
+    document.body.classList.toggle('dark-ui');
+  } 
 }

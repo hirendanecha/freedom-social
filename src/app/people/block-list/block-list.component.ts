@@ -7,10 +7,44 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./block-list.component.css']
 })
 export class BlockListComponent {
+
+  blockList = [
+    {
+      name: 'Jerome Bell',
+      profilePic: '/assets/images/avtar/profile-icon.png',
+      blockDate: '27/08/2022'
+    },
+    {
+      name: 'Piter Maio',
+      profilePic: '/assets/images/avtar/profile-icon.png',
+      blockDate: '07/02/2023'
+    },
+    {
+      name: 'Floyd Miles',
+      profilePic: '/assets/images/avtar/profile-icon.png',
+      blockDate: '14/02/2020'
+    },
+    {
+      name: 'Devon Lane',
+      profilePic: '/assets/images/avtar/profile-icon.png',
+      blockDate: '22/02/2023'
+    },
+    {
+      name: 'Arlene McCoy',
+      profilePic: '/assets/images/avtar/profile-icon.png',
+      blockDate: '24/11/2021'
+    },
+    {
+      name: 'Darlene Robertson',
+      profilePic: '/assets/images/avtar/profile-icon.png',
+      blockDate: '01/01/2020'
+    },
+
+  ];
   constructor(
     private modalService: NgbModal
   ) {
 
   }
-  
+
 }

@@ -3129,3 +3129,10 @@ li {
   padding: 40px 0;
   background: var(--body-color);
 }
+
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0px 17px 12px var(--box-shadow);
+  background-color: var(--section-1st-color);
+  /* padding: 30px; */
+}

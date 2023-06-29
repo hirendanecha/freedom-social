@@ -32,21 +32,21 @@
             >
           </li>
           <li>
-            <a routerLink="/" class="nav-icon feed"
+            <a routerLink="/favorite" class="nav-icon feed"
               ><i class="mat-icon fs-xxl material-symbols-outlined mat-icon"
                 >feed</i
               ></a
             >
           </li>
           <li>
-            <a routerLink="/community" class="nav-icon"
+            <a routerLink="/people/all-friends" class="nav-icon"
               ><i class="mat-icon fs-xxl material-symbols-outlined mat-icon"
                 >group</i
               ></a
             >
           </li>
           <li>
-            <a routerLink="/" class="nav-icon"
+            <a routerLink="/community" class="nav-icon"
               ><i class="mat-icon fs-xxl material-symbols-outlined mat-icon"
                 >smart_display</i
               ></a
@@ -89,7 +89,7 @@
               <span class="avatar cmn-head active-status">
                 <img
                   class="avatar-img max-un"
-                  src="assets/images/avatar-1.png"
+                  src="assets/images/avtar/avtar.png"
                   alt="avatar"
                   id="userMenuList"
                   (click)="openUserMenu()"
@@ -110,7 +110,7 @@
         <div class="avatar-item">
           <img
             class="avatar-img max-un"
-            src="assets/images/avatar-1.png"
+            src="assets/images/avtar/avtar.png"
             alt="avatar"
           />
         </div>
@@ -138,7 +138,12 @@
       </li>
     </ul>
     <div class="switch-wrapper mt-4 d-flex gap-1 align-items-center">
-      <i class="mat-icon material-symbols-outlined sun icon"> light_mode </i>
+      <i
+        class="mat-icon material-symbols-outlined sun icon"
+        [ngClass]="!isDark ? 'active' : ''"
+      >
+        light_mode
+      </i>
       <i
         class="fa-solid fa-toggle-on"
         *ngIf="isDark"
@@ -154,8 +159,13 @@
         <span class="slider">
         </span>
       </label> -->
-      <i class="mat-icon material-symbols-outlined moon icon"> dark_mode </i>
-      <span class="mdtxt ms-2">Dark mode</span>
+      <i
+        class="mat-icon material-symbols-outlined moon icon"
+        [ngClass]="isDark ? 'active' : ''"
+        >
+        dark_mode
+      </i>
+      <span class="mdtxt ms-2">Mode</span>
     </div>
   </div>
 </ng-template>
@@ -169,7 +179,7 @@
           <div class="avatar position-relative d-inline-flex">
             <img
               class="avatar-img max-un"
-              src="assets/images/avatar-1.png"
+              src="assets/images/avtar/avtar.png"
               alt="avatar"
             />
             <img
@@ -301,7 +311,7 @@
         <div class="avatar">
           <img
             class="avatar-img max-un"
-            src="assets/images/avatar-1.png"
+            src="assets/images/avtar/avtar.png"
             alt="avatar"
           />
         </div>

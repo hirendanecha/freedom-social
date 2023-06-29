@@ -10,6 +10,8 @@ import { CreatePostComponent } from '../create-post-modal/create-post.component'
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  isLike = false;
+  isExpand = false;
   constructor(
     private modalService: NgbModal
   ) {
@@ -44,5 +46,13 @@ export class HomeComponent {
     // modelRef.result.then(res => {
     //   return res = user_id
     // });
+  }
+
+  clickOnLike() {
+    this.isLike = !this.isLike;
+  }
+
+  openDropDown() {
+    this.isExpand = !this.isExpand;
   }
 }

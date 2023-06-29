@@ -7,97 +7,24 @@
         </div>
         <table class="table m-0">
           <tbody>
-            <tr>
+            <tr *ngFor="let block of blockList">
               <th scope="row">
                 <div class="d-flex gap-3 align-items-center">
                   <div class="avatar-item">
                     <img
                       class="avatar-img max-un"
-                      src="assets/images/avatar-1.png"
+                      [src]="block.profilePic"
                       alt="avatar"
                     />
                   </div>
                   <a ublic-p class="text-area">
-                    <p class="m-0">Jerome Bell</p>
+                    <p class="m-0">{{ block.name }}</p>
                   </a>
                 </div>
               </th>
-              <td><p class="blocked">Blocked 27/08/2022</p></td>
               <td>
-                <div class="btn-area d-flex justify-content-end gap-3">
-                  <button class="cmn-btn">Unblock</button>
-                  <button class="d-center cmn-btn alt px-2">
-                    <i class="material-symbols-outlined"> delete </i>
-                  </button>
-                </div>
+                <p class="blocked">Blocked {{ block.blockDate }}</p>
               </td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <div class="d-flex gap-3 align-items-center">
-                  <div class="avatar-item">
-                    <img
-                      class="avatar-img max-un"
-                      src="assets/images/avatar-2.png"
-                      alt="avatar"
-                    />
-                  </div>
-                  <a ublic-p class="text-area">
-                    <p class="m-0">Piter Maio</p>
-                  </a>
-                </div>
-              </th>
-              <td><p class="blocked">Blocked 26/08/2022</p></td>
-              <td>
-                <div class="btn-area d-flex justify-content-end gap-3">
-                  <button class="cmn-btn">Unblock</button>
-                  <button class="d-center cmn-btn alt px-2">
-                    <i class="material-symbols-outlined"> delete </i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <div class="d-flex gap-3 align-items-center">
-                  <div class="avatar-item">
-                    <img
-                      class="avatar-img max-un"
-                      src="assets/images/avatar-3.png"
-                      alt="avatar"
-                    />
-                  </div>
-                  <a ublic-p class="text-area">
-                    <p class="m-0">Floyd Miles</p>
-                  </a>
-                </div>
-              </th>
-              <td><p class="blocked">Blocked 26/08/2022</p></td>
-              <td>
-                <div class="btn-area d-flex justify-content-end gap-3">
-                  <button class="cmn-btn">Unblock</button>
-                  <button class="d-center cmn-btn alt px-2">
-                    <i class="material-symbols-outlined"> delete </i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <div class="d-flex gap-3 align-items-center">
-                  <div class="avatar-item">
-                    <img
-                      class="avatar-img max-un"
-                      src="assets/images/avatar-4.png"
-                      alt="avatar"
-                    />
-                  </div>
-                  <a ublic-p class="text-area">
-                    <p class="m-0">Devon Lane</p>
-                  </a>
-                </div>
-              </th>
-              <td><p class="blocked">Blocked 26/08/2022</p></td>
               <td>
                 <div class="btn-area d-flex justify-content-end gap-3">
                   <button class="cmn-btn">Unblock</button>

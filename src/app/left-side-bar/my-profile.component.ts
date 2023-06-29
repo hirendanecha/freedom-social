@@ -24,7 +24,6 @@ export class MyProfileComponent {
   ) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
-        console.log(event.url)
         this.isHome = event.url.includes('/home') || false;
         this.isShowPeoplePages = event.url.includes('/people') || false;
         this.isAllFriends = event.url.includes('/people/all-friends') || false;
@@ -33,7 +32,8 @@ export class MyProfileComponent {
         this.isFriendRequest = event.url.includes('/friend-request') || false;
         this.isEvents = event.url.includes('/events') || false;
         this.isCommunity = event.url.includes('/community') || false;
-        console.log(this.isAllFriends);
+        this.isPageResearch = event.url.includes('/favorite') || false;
+        this.isSetting = event.url.includes('/settings') || false;
       }
     })
     // if (this.route.snapshot.url === '/people') {

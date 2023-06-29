@@ -7,6 +7,7 @@ import { LocalComponent } from './local/local.component';
 import { OnlineComponent } from './online/online.component';
 import { TopComponent } from './top/top.component';
 import { SavedComponent } from './saved/saved.component';
+import { AddEventComponent } from './add-event/add-event.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { SavedComponent } from './saved/saved.component';
     LocalComponent,
     OnlineComponent,
     TopComponent,
-    SavedComponent
+    SavedComponent,
+    AddEventComponent
   ],
   imports: [
     EventsRoutingModule,

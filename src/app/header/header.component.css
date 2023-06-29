@@ -21,7 +21,9 @@
 }
 
 .main-area .switch-wrapper .fa-solid {
-  font-size: 22px;
+  font-size: 28px;
+  color: var(--primary-color);
+  height: 26px;
 }
 
 .notification-content {

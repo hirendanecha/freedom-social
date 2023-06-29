@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddEventComponent } from './add-event/add-event.component';
 
 @Component({
   selector: 'app-events',
@@ -14,4 +15,13 @@ export class EventsComponent {
 
   }
 
+  createEvent() {
+    const modalRef = this.modalService.open(AddEventComponent, { centered: true, backdrop: 'static', keyboard: false });
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.confirmButtonLabel = 'Post';
+    modalRef.componentInstance.closeIcon = true;
+    // modelRef.result.then(res => {
+    //   return res = user_id
+    // });
+  }
 }

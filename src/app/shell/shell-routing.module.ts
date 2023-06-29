@@ -3,6 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 const routes: Routes = [
   {
+    path: '',
+    component: HomeComponent,
+  },
+  {
     path: 'home',
     component: HomeComponent,
   },
@@ -17,6 +21,14 @@ const routes: Routes = [
   {
     path: 'community',
     loadChildren: () => import('../community/community.module').then((m) => m.CommunityModule)
+  },
+  {
+    path: 'favorite',
+    loadChildren: () => import('../favorites/favorite.module').then((m) => m.FavoriteModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('../setting/setting.module').then((m) => m.SettingModule)
   },
 
 
