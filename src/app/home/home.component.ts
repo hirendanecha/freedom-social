@@ -45,7 +45,7 @@ export class HomeComponent {
     modalRef.componentInstance.closeIcon = true;
     // modelRef.result.then(res => {
     //   return res = user_id
-    // });
+    // });  
   }
 
   clickOnLike() {

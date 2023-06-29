@@ -19,7 +19,13 @@ export class HeaderComponent {
   constructor(
     private modaleService: NgbModal
   ) {
-
+    if (localStorage.getItem('theme') === 'dark') {
+      this.isDark = true;
+      document.body.classList.toggle('dark-ui');
+    } else {
+      this.isDark = false;
+      document.body.classList.remove('dark-ui');
+    }
   }
 
 
@@ -47,8 +53,15 @@ export class HeaderComponent {
   }
 
   changeDarkUi() {
-    this.isDark = !this.isDark;
+    this.isDark = true;
     document.body.classList.toggle('dark-ui');
+    localStorage.setItem('theme', 'dark');
+  }
+
+  changeLightUi() {
+    this.isDark = false;
+    document.body.classList.remove('dark-ui');
+    localStorage.setItem('theme', 'light');
   }
 
 }

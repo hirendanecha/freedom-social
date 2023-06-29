@@ -147,7 +147,7 @@
       <i
         class="fa-solid fa-toggle-on"
         *ngIf="isDark"
-        (click)="changeDarkUi()"
+        (click)="changeLightUi()"
       ></i>
       <i
         class="fa-solid fa-toggle-off"
@@ -162,7 +162,7 @@
       <i
         class="mat-icon material-symbols-outlined moon icon"
         [ngClass]="isDark ? 'active' : ''"
-        >
+      >
         dark_mode
       </i>
       <span class="mdtxt ms-2">Mode</span>
