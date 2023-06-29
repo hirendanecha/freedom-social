@@ -15,7 +15,6 @@ import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     HeaderComponent,
-    HomeComponent,
     MyProfileComponent,
     MyListComponent,
     ShellComponent,
