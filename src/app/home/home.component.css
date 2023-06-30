@@ -1,0 +1,33 @@
+::ng-deep .emoji-menu-panale {
+  position: fixed;
+  right: 36%;
+  top: 160px;
+  display: flex;
+  bottom: unset !important;
+  max-width: 400px;
+}
+
+::ng-deep .emoji-menu-panale .modal-content .emoji-mart {
+  background-color: var(--body-color);
+  width: 314px !important;
+  height: 220px;
+  border-color: var(--body-color);
+}
+
+::ng-deep .emoji-menu-panale .modal-content .emoji-mart emoji-search {
+  display: none;
+}
+
+::ng-deep .emoji-menu-panale .modal-content .emoji-mart .emoji-mart-bar {
+  display: none;
+}
+
+::ng-deep .emoji-menu-panale .modal-content .emoji-mart .emoji-mart-scroll .emoji-mart-category .emoji-mart-category-label {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG);
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}

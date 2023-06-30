@@ -17,7 +17,9 @@
 }
 
 .main-area .switch-wrapper .fa-solid {
-  font-size: 22px;
+  font-size: 28px;
+  color: var(--primary-color);
+  height: 26px;
 }
 
 .notification-content {
@@ -27,6 +29,13 @@
 .notification-content .abs-item {
   bottom: -5px;
   right: -5px;
+}
+
+.notification-content .btn-area a {
+  color: var(--heading-1st-color);
+}
+.messages-content .btn-area a {
+  color: var(--heading-1st-color);
 }
 
 ::ng-deep .footer-notification-menu-panale {

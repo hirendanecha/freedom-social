@@ -85,7 +85,7 @@
   }
 }
 
-body {
+/* body {
   margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
@@ -96,7 +96,7 @@ body {
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-}
+} */
 
 hr {
   margin: 1rem 0;
@@ -271,7 +271,7 @@ sup {
 
 a {
   color: var(--bs-link-color);
-  text-decoration: underline
+  /* text-decoration: underline */
 }
 
 a:hover {
@@ -6951,7 +6951,7 @@ fieldset:disabled .btn {
   width: 100%;
   color: var(--bs-modal-color);
   pointer-events: auto;
-  background-color: var(--bs-modal-bg);
+  background-color: var(--body-color);
   background-clip: padding-box;
   border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
   border-radius: var(--bs-modal-border-radius);

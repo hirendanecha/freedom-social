@@ -39,6 +39,14 @@
   border-radius: 15px;
 }
 
+.messages-content .btn-area a {
+  color: var(--heading-1st-color);
+}
+
+.notification-content .btn-area a {
+  color: var(--heading-1st-color);
+}
+
 ::ng-deep .user-menu-panale {
   position: fixed;
   right: 315px;
@@ -96,7 +104,7 @@
   }
 }
 
-@media (min-width :2641px)  {
+@media (min-width :2641px) {
   ::ng-deep.user-menu-panale {
     position: fixed;
     right: 23% !important;

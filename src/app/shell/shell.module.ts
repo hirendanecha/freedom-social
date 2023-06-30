@@ -11,6 +11,8 @@ import { PostComponent } from '../poast-modal/post.component';
 import { FooterComponent } from '../footer/footer.component';
 import { PeopleModule } from '../people/people.module';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     ShellRoutingModule,
     CommonModule,
-    NgbModule
+    NgbModule,
+    PickerModule,
+    FormsModule
   ],
   exports: [
     HeaderComponent,

@@ -47,4 +47,5 @@ export class MyProfileComponent {
   openToggle() {
     this.isEXpand = !this.isEXpand;
   }
+  
 }

@@ -5,16 +5,22 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { FormsModule } from '@angular/forms';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     HomeRoutingModule,
-    CommonModule
+    CommonModule,
+    PickerModule,
+    FormsModule
   ],
   exports: [
     LoginComponent,

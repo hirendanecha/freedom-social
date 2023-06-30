@@ -33,7 +33,8 @@ export class FooterComponent {
   openNotificationList(): void {
     this.userMenusOverlayDialog = this.modaleService.open(this.notificationList, {
       keyboard: true,
-      modalDialogClass: 'footer-notification-menu-panale'
+      modalDialogClass: 'footer-notification-menu-panale',
+      size: 'sm',
     });
   }
 
