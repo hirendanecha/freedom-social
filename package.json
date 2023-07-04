@@ -8,7 +8,7 @@
     "test": "ng test",
     "start:dev": "npm start --configuration=dev",
     "start:local": "npm start --configuration=test",
-    "build": "ng build",
+    "build": "npm install --force && ng build",
     "build:prod": "npm run env -s && ng build --configuration=production",
     "build:dev": "npm run env -s && ng build --configuration=dev",
     "build:test": "npm run env -s && ng build --configuration=test",
