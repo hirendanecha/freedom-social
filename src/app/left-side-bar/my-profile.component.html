@@ -576,6 +576,24 @@
         </li>
         <li>
           <a
+            class="d-flex gap-4"
+            (click)="openWalletPopUp()"
+          >
+            <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+            <span>Download 1776 Wallet</span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="d-flex gap-4"
+            (click)="openClaimTokenPopUp()"
+          >
+            <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+            <span>Claim 50 free 1776</span>
+          </a>
+        </li>
+        <li>
+          <a
             routerLink="favorite"
             class="d-flex gap-4"
             [ngClass]="isPageResearch ? 'active' : ''"

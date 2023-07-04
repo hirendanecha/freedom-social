@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PostComponent } from '../poast-modal/post.component';
 import { LiveComponent } from '../live-modal/live.component';
@@ -8,7 +8,7 @@ import { CreatePostComponent } from '../create-post-modal/create-post.component'
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, AfterViewInit {
   isLike = false;
   isExpand = false;
   message = '';
@@ -19,15 +19,26 @@ export class HomeComponent {
     'twitter',
     'facebook',
     'emojione',
-    'messenger'
+    'messenger',
+    'apple'
   ]
-  set = 'twitter';
   @ViewChild('emojiMenu') emojiMenu: EventEmitter<NgbModalRef[]> | undefined;
   emojiMenuDialog: any
   constructor(
     private modalService: NgbModal
   ) {
 
+  }
+
+  ngOnInit(): void {
+    // if (localStorage.getItem('theme') === 'dark') {
+    //   document.body.classList.toggle('dark-ui');
+    // } else {
+    //   document.body.classList.remove('dark-ui');
+    // }
+  }
+
+  ngAfterViewInit(): void {
   }
 
   addPost() {
@@ -81,14 +92,9 @@ export class HomeComponent {
   }
 
   addEmoji(event: { emoji: { native: any; }; }) {
-    console.log(this.message)
     const { message } = this;
-    console.log(message);
-    console.log(`${event.emoji.native}`)
     const text = `${message}${event.emoji.native}`;
-
     this.message = text;
-    // this.showEmojiPicker = false;
   }
 
   onFocus() {

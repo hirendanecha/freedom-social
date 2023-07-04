@@ -1,0 +1,7 @@
+# disable assets
+user-agent: *
+disallow: /assets/
+Disallow: /ghost/
+Disallow: /p/
+User-agent: *
+Allow: /

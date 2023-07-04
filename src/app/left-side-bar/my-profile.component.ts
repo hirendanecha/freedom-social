@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { WalletLinkComponent } from './wallet-download-modal/1776-wallet.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ClaimTokenComponent } from './clai-1776-token/claim-token.component';
 
 @Component({
   selector: 'app-my-profile',
@@ -20,7 +23,8 @@ export class MyProfileComponent {
   isSetting = false;
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: NgbModal
   ) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
@@ -44,8 +48,29 @@ export class MyProfileComponent {
     // }
   }
 
+  openWalletPopUp() {
+    const modalRef = this.modalService.open(WalletLinkComponent, {
+      centered: true,
+      keyboard: true,
+      size: 'md'
+    })
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.confirmButtonLabel = 'Post';
+    modalRef.componentInstance.closeIcon = true;
+  }
+  openClaimTokenPopUp() {
+    const modalRef = this.modalService.open(ClaimTokenComponent, {
+      centered: true,
+      keyboard: true,
+      size: 'lg'
+    })
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.confirmButtonLabel = 'Post';
+    modalRef.componentInstance.closeIcon = true;
+  }
+
   openToggle() {
     this.isEXpand = !this.isEXpand;
   }
-  
+
 }
