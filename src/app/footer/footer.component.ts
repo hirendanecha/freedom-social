@@ -1,6 +1,7 @@
 import { Component, EventEmitter, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from '../services/shared.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -27,7 +28,8 @@ export class FooterComponent {
   isDark = false;
   constructor(
     private modaleService: NgbModal,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private router: Router
   ) {}
 
   openUserMenu(): void {
@@ -65,8 +67,10 @@ export class FooterComponent {
 
       switch (type) {
         case 'logout':
+          this.router.navigate['/home'];
           break;
         case 'setting':
+          this.router.navigate['/edit-profile'];
           break;
         case 'profile':
           break;

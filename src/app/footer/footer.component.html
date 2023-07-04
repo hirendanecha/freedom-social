@@ -69,24 +69,17 @@
     </div>
     <ul class="ps-0">
       <li>
-        <a class="mdtxt">
-          <i
-            class="material-symbols-outlined mat-icon"
-            (click)="closeMenu($event, 'setting')"
-          >
-            settings
-          </i>
+        <a
+          class="mdtxt"
+          (click)="closeMenu($event, 'setting')"
+        >
+          <i class="material-symbols-outlined mat-icon"> settings </i>
           Settings & Privacy
         </a>
       </li>
       <li>
-        <a class="mdtxt">
-          <i
-            class="material-symbols-outlined mat-icon"
-            (click)="closeMenu($event, 'logout')"
-          >
-            power_settings_new
-          </i>
+        <a class="mdtxt" (click)="closeMenu($event, 'logout')">
+          <i class="material-symbols-outlined mat-icon"> power_settings_new </i>
           Sign Out
         </a>
       </li>
