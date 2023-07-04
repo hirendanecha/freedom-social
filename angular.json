@@ -35,42 +35,128 @@
           },
           "configurations": {
             "production": {
+              "optimization": true,
+              "aot": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "commonChunk": true,
+              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "20mb",
+                  "maximumError": "25mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "5kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "200kb",
+                  "maximumError": "450kb"
                 }
               ],
-              "outputHashing": "all"
+              "serviceWorker": false,
+              "assets": [
+                "src/assets",
+                {
+                  "glob": "robots.txt",
+                  "input": "src/robots/prod",
+                  "output": "/"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
-            "development": {
-              "buildOptimizer": false,
+            "dev": {
               "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
+              "aot": false,
+              "outputHashing": "all",
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "commonChunk": false,
+              "buildOptimizer": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "20mb",
+                  "maximumError": "25mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "200kb",
+                  "maximumError": "450kb"
+                }
+              ],
+              "assets": [
+                "src/assets",
+                {
+                  "glob": "robots.txt",
+                  "input": "src/robots/dev",
+                  "output": "/"
+                }
+              ],
+              "serviceWorker": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ]
+            },
+            "test": {
+              "optimization": false,
+              "aot": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "namedChunks": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "commonChunk": false,
+              "buildOptimizer": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "20mb",
+                  "maximumError": "25mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "200kb",
+                  "maximumError": "450kb"
+                }
+              ],
+              "serviceWorker": false
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "freedom:build",
+            "hmr": true
+          },
           "configurations": {
             "production": {
-              "browserTarget": "freedom:build:production"
+              "browserTarget": "freedom:build:prod"
             },
             "development": {
-              "browserTarget": "freedom:build:development"
-            }
+              "browserTarget": "freedom:build:dev"
+            },
+            "local": {
+              "browserTarget": "freedom:build:local",
+              "hmr": false
+            },
+            "ci": {}
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": ""
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

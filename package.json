@@ -3,10 +3,16 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run env -s && ng serve",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "start:dev": "npm start --configuration=dev",
+    "start:local": "npm start --configuration=test",
+    "build": "ng build",
+    "build:prod": "npm run env -s && ng build --configuration=production",
+    "build:dev": "npm run env -s && ng build --configuration=dev",
+    "build:test": "npm run env -s && ng build --configuration=test",
+    "generate": "ng generate"
   },
   "private": true,
   "dependencies": {
