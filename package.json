@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run env -s && ng serve",
+    "start": "npm run env -s && ng serve --configuration=test",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "start:dev": "npm start --configuration=dev",
@@ -25,7 +25,9 @@
     "@angular/material": "^16.1.2",
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
+    "@angular/platform-server": "^16.1.3",
     "@angular/router": "^16.1.0",
+    "@angularclass/hmr": "^3.0.0",
     "@ctrl/ngx-emoji-mart": "^9.2.0",
     "@ng-bootstrap/ng-bootstrap": "^15.0.1",
     "bootstrap": "^5.3.0",

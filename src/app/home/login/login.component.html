@@ -43,7 +43,7 @@
             <div class="col-11 col-md-8 col-lg-7 col-xl-6 mx-auto">
               <p class="text-2 mb-5">
                 Not a member?
-                <a class="fw-500" routerLink="register">Register</a>
+                <a class="fw-500" (click)="goToRegestration()">Register</a>
               </p>
               <h3 class="mb-4">Log In to Your Account</h3>
               <div class="d-flex">
@@ -97,7 +97,7 @@
                 <button
                   class="btn btn-primary my-2 login-button"
                   type="submit"
-                  (click)="toToHomePage()"
+                  (click)="goToHomePage()"
                 >
                   Log in
                 </button>

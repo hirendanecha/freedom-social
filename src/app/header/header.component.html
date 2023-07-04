@@ -137,17 +137,17 @@
       </div>
     </div>
     <div class="view-profile my-2">
-      <a class="mdtxt w-100 text-center py-2">View profile</a>
+      <a class="mdtxt w-100 text-center py-2" (click)="closeMenu($event,'profile')">View profile</a>
     </div>
     <ul class="ps-0">
       <li>
-        <a class="mdtxt" routerLink="settings/edit-profile">
+        <a class="mdtxt" routerLink="settings/edit-profile" (click)="closeMenu($event,'setting')">
           <i class="material-symbols-outlined mat-icon"> settings </i>
           Settings & Privacy
         </a>
       </li>
       <li>
-        <a class="mdtxt">
+        <a class="mdtxt" (click)="closeMenu($event,'logout')">
           <i class="material-symbols-outlined mat-icon"> power_settings_new </i>
           Sign Out
         </a>
@@ -162,13 +162,13 @@
       </i>
       <i
         class="fa-solid fa-toggle-on"
-        *ngIf="isDark"
-        (click)="changeLightUi()"
+        *ngIf="sharedService.isDark"
+        (click)="sharedService.changeLightUi()"
       ></i>
       <i
         class="fa-solid fa-toggle-off"
-        *ngIf="!isDark"
-        (click)="changeDarkUi()"
+        *ngIf="!sharedService.isDark"
+        (click)="sharedService.changeDarkUi()"
       ></i>
       <!-- <label class="switch">
         <input type="checkbox" class="checkbox" />

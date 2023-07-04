@@ -9,10 +9,5 @@ export class SignUpComponent {
   constructor(
     private modalService: NgbModal
   ) {
-    // if (localStorage.getItem('theme') === 'dark') {
-    //   document.body.classList.toggle('dark-ui');
-    // } else {
-    //   document.body.classList.remove('dark-ui');
-    // }
   }
 }

@@ -135,7 +135,7 @@
               "serviceWorker": false
             }
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "dev"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -145,13 +145,15 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "freedom:build:prod"
+              "browserTarget": "freedom:build:prod",
+              "hmr": false
             },
             "development": {
-              "browserTarget": "freedom:build:dev"
+              "browserTarget": "freedom:build:dev",
+              "hmr": false
             },
-            "local": {
-              "browserTarget": "freedom:build:local",
+            "test": {
+              "browserTarget": "freedom:build:test",
               "hmr": false
             },
             "ci": {}

@@ -20,8 +20,5 @@ export class EventsComponent {
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
-    // modelRef.result.then(res => {
-    //   return res = user_id
-    // });
   }
 }

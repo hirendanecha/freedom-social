@@ -16,8 +16,12 @@ export class AppComponent {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
         console.log(event);
-        this.isLoginPgae = event.url.includes('/login') || false;
-        this.isSignUpPgae = event.url.includes('/register') || false;
+        if (event.url === '/') {
+          this.isLoginPgae = true;
+        } else {
+          this.isLoginPgae = event.url.includes('/login') || false;
+          this.isSignUpPgae = event.url.includes('/register') || false;
+        }
       }
     })
   }

@@ -3,41 +3,44 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 import { LoginComponent } from '../home/login/login.component';
 const routes: Routes = [
-
   {
     path: '',
-    component: HomeComponent
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
   {
     path: 'home',
-    loadChildren: () => import('../home/home.module').then((m) => m.HomeModule)
+    loadChildren: () => import('../home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'people',
-    loadChildren: () => import('../people/people.module').then((m) => m.PeopleModule)
+    loadChildren: () =>
+      import('../people/people.module').then((m) => m.PeopleModule),
   },
   {
     path: 'events',
-    loadChildren: () => import('../events/event.module').then((m) => m.EventsModule)
+    loadChildren: () =>
+      import('../events/event.module').then((m) => m.EventsModule),
   },
   {
     path: 'community',
-    loadChildren: () => import('../community/community.module').then((m) => m.CommunityModule)
+    loadChildren: () =>
+      import('../community/community.module').then((m) => m.CommunityModule),
   },
   {
     path: 'favorite',
-    loadChildren: () => import('../favorites/favorite.module').then((m) => m.FavoriteModule)
+    loadChildren: () =>
+      import('../favorites/favorite.module').then((m) => m.FavoriteModule),
   },
   {
     path: 'settings',
-    loadChildren: () => import('../setting/setting.module').then((m) => m.SettingModule)
+    loadChildren: () =>
+      import('../setting/setting.module').then((m) => m.SettingModule),
   },
-
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ShellRoutingModule { }
+export class ShellRoutingModule {}

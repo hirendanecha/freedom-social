@@ -4,22 +4,20 @@ import { HomeComponent } from './home/home.component';
 import { ShellComponent } from './shell/shell.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: ShellComponent
-  // },
-  {
-    path: 'home',
-    component: HomeComponent
-  },
   {
     path: '',
-    loadChildren: () => import('./shell/shell.module').then((m) => m.ShellModule)
+    loadChildren: () =>
+      import('./shell/shell.module').then((m) => m.ShellModule),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
