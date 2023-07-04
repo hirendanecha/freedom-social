@@ -31,7 +31,7 @@ export class MyListComponent {
   createCommunity() {
     const modalRef = this.modalService.open(AddCommunityComponent, { centered: true, backdrop: 'static', keyboard: false });
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.componentInstance.confirmButtonLabel = 'Post';
+    modalRef.componentInstance.confirmButtonLabel = 'Create';
     modalRef.componentInstance.closeIcon = true;
     // modelRef.result.then(res => {
     //   return res = user_id
