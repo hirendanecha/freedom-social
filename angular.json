@@ -29,7 +29,8 @@
               "src/assets/css/responsive.css",
               "src/assets/css/section.css",
               "src/assets/css/banner-footer.css",
-              "src/assets/css/bootstrap.min.css"
+              "src/assets/css/bootstrap.min.css",
+              "node_modules/ngx-spinner/animations/ball-spin-clockwise.css"
             ],
             "scripts": []
           },

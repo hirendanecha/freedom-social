@@ -10,6 +10,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     NgbModule,
     PickerModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   exports: [
     HeaderComponent,

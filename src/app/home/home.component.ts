@@ -1,12 +1,21 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PostComponent } from '../poast-modal/post.component';
 import { LiveComponent } from '../live-modal/live.component';
 import { CreatePostComponent } from '../create-post-modal/create-post.component';
+import { MyListComponent } from '../right-side-bar/my-list.component';
+import { MyProfileComponent } from '../left-side-bar/my-profile.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   isLike = false;
@@ -20,15 +29,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
     'facebook',
     'emojione',
     'messenger',
-    'apple'
-  ]
+    'apple',
+  ];
   @ViewChild('emojiMenu') emojiMenu: EventEmitter<NgbModalRef[]> | undefined;
-  emojiMenuDialog: any
+  emojiMenuDialog: any;
   constructor(
-    private modalService: NgbModal
-  ) {
-
-  }
+    private modalService: NgbModal,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     // if (localStorage.getItem('theme') === 'dark') {
@@ -36,13 +44,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // } else {
     //   document.body.classList.remove('dark-ui');
     // }
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 2000);
   }
 
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void {}
 
   addPost() {
-    const modalRef = this.modalService.open(PostComponent, { centered: true, backdrop: 'static', keyboard: false });
+    const modalRef = this.modalService.open(PostComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+    });
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
@@ -52,7 +67,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   goLive() {
-    const modalRef = this.modalService.open(LiveComponent, { centered: true, backdrop: 'static', keyboard: false });
+    const modalRef = this.modalService.open(LiveComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+    });
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Go Live';
     modalRef.componentInstance.closeIcon = true;
@@ -62,19 +81,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   createPost() {
-    const modalRef = this.modalService.open(CreatePostComponent, { centered: true, backdrop: 'static', keyboard: false });
+    const modalRef = this.modalService.open(CreatePostComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+    });
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
     // modelRef.result.then(res => {
     //   return res = user_id
-    // });  
+    // });
   }
   openEmojiMenu(): void {
     this.emojiMenuDialog = this.modalService.open(this.emojiMenu, {
       keyboard: true,
       size: 'xs',
-      modalDialogClass: 'emoji-menu-panale'
+      modalDialogClass: 'emoji-menu-panale',
     });
   }
 
@@ -86,12 +109,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.isExpand = !this.isExpand;
   }
 
-
   toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
   }
 
-  addEmoji(event: { emoji: { native: any; }; }) {
+  addEmoji(event: { emoji: { native: any } }) {
     const { message } = this;
     const text = `${message}${event.emoji.native}`;
     this.message = text;
@@ -102,6 +124,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.showEmojiPicker = false;
   }
   onBlur() {
-    console.log('onblur')
+    console.log('onblur');
+  }
+
+  openMenuList() {
+    const modalRef = this.modalService.open(MyProfileComponent, {
+      centered: true,
+      keyboard: false,
+    });
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.confirmButtonLabel = 'Post';
+    modalRef.componentInstance.closeIcon = true;
   }
 }
