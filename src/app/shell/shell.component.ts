@@ -13,7 +13,6 @@ export class ShellComponent {
   constructor(private router: Router) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
-        console.log(event);
         if (event.url === '/') {
           this.isShow = true;
           this.isShowMyProfile = true;

@@ -46,7 +46,7 @@
                 <a class="fw-500" (click)="goToRegestration()">Register</a>
               </p>
               <h3 class="mb-4">Log In to Your Account</h3>
-              <div class="d-flex">
+              <!-- <div class="d-flex">
                 <button
                   type="button"
                   class="btn btn-primary btn-sm fw-400 rounded-3 shadow-none goggle-login"
@@ -71,8 +71,23 @@
                 <hr class="col-1 bg-dark-4" />
                 <span class="mx-3 text-2 text-muted">OR</span>
                 <hr class="flex-grow-1 bg-dark-4" />
-              </div>
-              <form id="loginForm" class="form-dark">
+              </div> -->
+              <form
+                id="loginForm"
+                class="form-dark"
+                #signInForm="ngForm"
+                [formGroup]="loginForm"
+                (ngSubmit)="signInForm.form.valid && onSubmit()"
+                *ngIf="!isLoggedIn"
+                novalidate
+              >
+                <div
+                  class="alert alert-{{ type }}"
+                  role="alert"
+                  *ngIf="errorMessage || msg"
+                >
+                  {{ errorMessage || msg }}
+                </div>
                 <div class="mb-3">
                   <label class="form-label text-light">Email Address</label>
                   <input
@@ -80,25 +95,45 @@
                     class="form-control input-area"
                     required
                     placeholder="Enter Your Email"
+                    formControlName="username"
                   />
+                  <div
+                    class="srv-validation-message text-danger"
+                    *ngIf="
+                        signInForm.submitted &&
+                           loginForm.controls['username'].invalid &&
+                           loginForm.controls['username'].errors?.['required']
+                         "
+                  >
+                    Email field is required.
+                  </div>
                 </div>
                 <div class="mb-3">
                   <div class="d-flex justify-content-between">
                     <label class="form-label text-light">Password</label>
-                    <label class="text-2" (click)="forgotPasswordOpen()">Forgot Password ?</label>
+                    <label class="text-2" (click)="forgotPasswordOpen()"
+                      >Forgot Password ?</label
+                    >
                   </div>
                   <input
                     type="password"
                     class="form-control input-area"
                     required
                     placeholder="Enter Password"
+                    formControlName="password"
                   />
+                  <div
+                    class="srv-validation-message text-danger"
+                    *ngIf="
+                        signInForm.submitted &&
+                           loginForm.controls['password'].invalid &&
+                           loginForm.controls['password'].errors?.['username']
+                         "
+                  >
+                    Please enter valid email!
+                  </div>
                 </div>
-                <button
-                  class="btn btn-primary my-2 login-button"
-                  type="submit"
-                  (click)="goToHomePage()"
-                >
+                <button class="btn btn-primary my-2 login-button" type="submit">
                   Log in
                 </button>
               </form>

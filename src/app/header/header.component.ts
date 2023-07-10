@@ -5,6 +5,9 @@ import {
   NgbModalRef,
 } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from '../services/shared.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { TokenStorageService } from '../services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -32,7 +35,10 @@ export class HeaderComponent {
   constructor(
     private modaleService: NgbModal,
     public activeteModal: NgbActiveModal,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private spinner: NgxSpinnerService,
+    private router: Router,
+    private tokenStorageService: TokenStorageService
   ) {}
 
   openUserMenu(): void {
@@ -75,20 +81,36 @@ export class HeaderComponent {
 
   closeMenu(e: MouseEvent, type: string) {
     this.userMenusOverlayDialog.close();
-    console.log(e);
     if (e && type) {
       e.preventDefault();
 
       switch (type) {
         case 'logout':
+          this.logout();
           break;
         case 'setting':
+          this.goToSetting();
           break;
-        case 'profile':
-          break;
+        // case 'profile':
+        //   break;
         default:
           break;
       }
     }
+  }
+
+  logout(): void {
+    this.spinner.show();
+    // this.isCollapsed = true;
+    this.tokenStorageService.signOut();
+    this.router.navigate(['/login']);
+    // this.sellService.cartData$.next(null);
+    // this.isDomain = false;
+  }
+
+  goToSetting() {
+    const userId = sessionStorage.getItem('user_id');
+    console.log(userId);
+    this.router.navigate([`settings/edit-profile/${userId}`]);
   }
 }

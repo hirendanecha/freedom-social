@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class SharedService {
   isDark = false;
   constructor(
     // private http: HttpClient,
-    private router: Router,
+    // private router: Router,
     public modalService: NgbModal
   ) {
     if (localStorage.getItem('theme') === 'dark') {

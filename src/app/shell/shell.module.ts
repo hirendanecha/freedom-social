@@ -9,7 +9,7 @@ import { PostComponent } from '../poast-modal/post.component';
 import { FooterComponent } from '../footer/footer.component';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MyListComponent,
     ShellComponent,
     PostComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     ShellRoutingModule,
@@ -27,17 +27,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgbModule,
     PickerModule,
     FormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ReactiveFormsModule,
   ],
   exports: [
     HeaderComponent,
     MyProfileComponent,
     MyListComponent,
     ShellComponent,
-    FooterComponent
+    FooterComponent,
   ],
-  providers: [
-    NgbActiveModal,
-  ]
+  providers: [NgbActiveModal],
 })
-export class ShellModule { }
+export class ShellModule {}

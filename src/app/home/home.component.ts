@@ -44,10 +44,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // } else {
     //   document.body.classList.remove('dark-ui');
     // }
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 2000);
+    // this.spinner.show();
+    // setTimeout(() => {
+    //   this.spinner.hide();
+    // }, 2000);
   }
 
   ngAfterViewInit(): void {}

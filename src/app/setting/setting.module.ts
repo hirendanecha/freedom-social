@@ -4,15 +4,15 @@ import { CommonModule } from '@angular/common';
 import { SettingComponent } from './setting.component';
 import { SettingRoutingModule } from './setting-routing.module';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    SettingComponent,
-    EditProfileComponent
-  ],
+  declarations: [SettingComponent, EditProfileComponent],
   imports: [
     SettingRoutingModule,
-    CommonModule
-  ]
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
-export class SettingModule { }
+export class SettingModule {}
