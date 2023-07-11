@@ -95,14 +95,14 @@
                     class="form-control input-area"
                     required
                     placeholder="Enter Your Email"
-                    formControlName="username"
+                    formControlName="UserName"
                   />
                   <div
                     class="srv-validation-message text-danger"
                     *ngIf="
                         signInForm.submitted &&
-                           loginForm.controls['username'].invalid &&
-                           loginForm.controls['username'].errors?.['required']
+                           loginForm.controls['UserName'].invalid &&
+                           loginForm.controls['UserName'].errors?.['required']
                          "
                   >
                     Email field is required.
@@ -111,23 +111,23 @@
                 <div class="mb-3">
                   <div class="d-flex justify-content-between">
                     <label class="form-label text-light">Password</label>
-                    <label class="text-2" (click)="forgotPasswordOpen()"
+                    <!-- <label class="text-2" (click)="forgotPasswordOpen()"
                       >Forgot Password ?</label
-                    >
+                    > -->
                   </div>
                   <input
                     type="password"
                     class="form-control input-area"
                     required
                     placeholder="Enter Password"
-                    formControlName="password"
+                    formControlName="Password"
                   />
                   <div
                     class="srv-validation-message text-danger"
                     *ngIf="
                         signInForm.submitted &&
-                           loginForm.controls['password'].invalid &&
-                           loginForm.controls['password'].errors?.['username']
+                           loginForm.controls['Password'].invalid &&
+                           loginForm.controls['Password'].errors?.['username']
                          "
                   >
                     Please enter valid email!

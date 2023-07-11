@@ -8,6 +8,7 @@ import { SharedService } from '../services/shared.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from '@angular/router';
+import { ForgotPasswordComponent } from '../home/forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-header',
@@ -91,8 +92,9 @@ export class HeaderComponent {
         case 'setting':
           this.goToSetting();
           break;
-        // case 'profile':
-        //   break;
+        case 'change-password':
+          this.forgotPasswordOpen();
+          break;
         default:
           break;
       }
@@ -112,5 +114,19 @@ export class HeaderComponent {
     const userId = sessionStorage.getItem('user_id');
     console.log(userId);
     this.router.navigate([`settings/edit-profile/${userId}`]);
+  }
+
+  forgotPasswordOpen() {
+    const modalRef = this.modaleService.open(ForgotPasswordComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+    });
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.confirmButtonLabel = 'Submit';
+    modalRef.componentInstance.closeIcon = true;
+    // modelRef.result.then(res => {
+    //   return res = user_id
+    // });
   }
 }

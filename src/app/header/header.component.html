@@ -122,7 +122,7 @@
 <ng-template #userMenuList>
   <div class="main-area p-5 profile-content">
     <div class="head-area">
-      <div class="d-flex gap-3 align-items-center">
+      <div class="d-flex gap-3">
         <div class="avatar-item">
           <img
             class="avatar-img max-un"
@@ -154,6 +154,12 @@
         <a class="mdtxt" (click)="closeMenu($event, 'logout')">
           <i class="material-symbols-outlined mat-icon"> power_settings_new </i>
           Sign Out
+        </a>
+      </li>
+      <li>
+        <a class="mdtxt" (click)="closeMenu($event, 'change-password')">
+          <i class="material-symbols-outlined mat-icon"> lock_reset </i>
+          Change Password
         </a>
       </li>
     </ul>

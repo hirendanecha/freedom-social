@@ -496,7 +496,7 @@
 <!-- Web View -->
 <div class="profile-content">
   <div class="profile-sidebar cus-scrollbar p-5 d-lg-block d-none">
-    <div class="profile-pic d-flex gap-2 align-items-center" routerLink="home">
+    <div class="profile-pic d-flex gap-2" routerLink="home">
       <div class="position-relative">
         <!-- avatar -->
         <img
@@ -507,14 +507,14 @@
       </div>
       <div class="text-area">
         <h6 class="m-0 mb-1">
-          <a>Lerio Mao</a>
+          <a>Kent Lewiss</a>
         </h6>
-        <p class="mdtxt">@maolio</p>
+        <p class="mdtxt">@clarkzkent</p>
       </div>
     </div>
     <ul class="profile-link mt-7 mb-7 pb-7 ps-0">
       <ng-container *ngIf="!isShowPeoplePages">
-        <li>
+        <!-- <li>
           <a
             routerLink="home"
             class="d-flex gap-4"
@@ -523,7 +523,7 @@
             <i class="material-symbols-outlined fs-xxl mat-icon"> home </i>
             <span>Home</span>
           </a>
-        </li>
+        </li> -->
         <!-- <li>
           <a routerLink="/people/all-friends" class="d-flex gap-4">
             <i class="material-symbols-outlined fs-xxl mat-icon"> person </i>
@@ -547,12 +547,17 @@
             routerLink="community"
             class="d-flex gap-4"
             [ngClass]="isCommunity ? 'active' : ''"
-            F
           >
             <i class="material-symbols-outlined fs-xxl mat-icon">
-              workspaces
+              bookmark_add
             </i>
-            <span>Find Local Community</span>
+            <span>Local Communities</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://1776token.com/" target="_blank" class="d-flex gap-4">
+            <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+            <span>1776 Token</span>
           </a>
         </li>
         <li>
@@ -576,16 +581,6 @@
           </a>
         </li>
         <li>
-          <a
-            href="https://1776token.com/"
-            target="_blank"
-            class="d-flex gap-4"
-          >
-            <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
-            <span>1776 Token</span>
-          </a>
-        </li>
-        <li>
           <a class="d-flex gap-4" (click)="openWalletPopUp()">
             <i class="material-symbols-outlined fs-xxl mat-icon"> Download </i>
             <span>Download 1776 Wallet</span>
@@ -597,18 +592,19 @@
             <span>Claim 50 free 1776</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a
-            routerLink="favorite"
+            routerLink="community"
             class="d-flex gap-4"
-            [ngClass]="isPageResearch ? 'active' : ''"
+            [ngClass]="isCommunity ? 'active' : ''"
+            F
           >
             <i class="material-symbols-outlined fs-xxl mat-icon">
-              bookmark_add
+              workspaces
             </i>
-            <span>Local Communities</span>
+            <span>Find Local Community</span>
           </a>
-        </li>
+        </li> -->
         <li>
           <a
             routerLink="settings"

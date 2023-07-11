@@ -32,19 +32,6 @@ export class LoginComponent {
     private spinner: NgxSpinnerService,
     private authService: AuthService
   ) {}
-  forgotPasswordOpen() {
-    const modalRef = this.modalService.open(ForgotPasswordComponent, {
-      centered: true,
-      backdrop: 'static',
-      keyboard: false,
-    });
-    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.componentInstance.confirmButtonLabel = 'Submit';
-    modalRef.componentInstance.closeIcon = true;
-    // modelRef.result.then(res => {
-    //   return res = user_id
-    // });
-  }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
@@ -53,8 +40,8 @@ export class LoginComponent {
     }
 
     this.loginForm = this.fb.group({
-      username: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]],
+      UserName: [null, [Validators.required, Validators.email]],
+      Password: [null, [Validators.required]],
     });
   }
 
@@ -70,10 +57,11 @@ export class LoginComponent {
     this.spinner.show();
     this.authService.customerlogin(this.loginForm.value).subscribe(
       (data: any) => {
+        console.log(data);
         if (data != null) {
           this.spinner.hide();
-          this.tokenStorage.saveToken('111');
-          this.tokenStorage.saveUser(data);
+          this.tokenStorage.saveToken(data?.accessToken);
+          this.tokenStorage.saveUser(data.user);
           window.sessionStorage.user_level_id = 2;
           window.sessionStorage.user_id = data.user.Id;
           window.sessionStorage.user_country = data.user.Country;

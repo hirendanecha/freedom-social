@@ -547,6 +547,7 @@
   height: 50%;
   background-color: var(--border-color);
   right: 0;
+  top: 8px;
 }
 
 .main-content .tab-area a.active,

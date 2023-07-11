@@ -40,12 +40,12 @@ export class AuthService {
     );
   }
 
-  customerlogin(login): Observable<Object> {
+  customerlogin(login: Login): Observable<Object> {
     return this.http.post(
       this.baseUrl + 'login',
       {
-        username: login.username,
-        password: login.password,
+        username: login.UserName,
+        password: login.Password,
       },
       httpOptions
     );
