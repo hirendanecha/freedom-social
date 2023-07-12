@@ -12,6 +12,7 @@ import { CreatePostComponent } from '../create-post-modal/create-post.component'
 import { MyListComponent } from '../right-side-bar/my-list.component';
 import { MyProfileComponent } from '../left-side-bar/my-profile.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PostService } from '../services/post.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -35,19 +36,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   emojiMenuDialog: any;
   constructor(
     private modalService: NgbModal,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private postService: PostService
   ) {}
 
   ngOnInit(): void {
-    // if (localStorage.getItem('theme') === 'dark') {
-    //   document.body.classList.toggle('dark-ui');
-    // } else {
-    //   document.body.classList.remove('dark-ui');
-    // }
-    // this.spinner.show();
-    // setTimeout(() => {
-    //   this.spinner.hide();
-    // }, 2000);
+    this.getPostList();
   }
 
   ngAfterViewInit(): void {}
@@ -135,5 +129,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
+  }
+
+  getPostList(): void {
+    this.spinner.show();
+    this.postService.getPosts().subscribe(
+      (res: any) => {
+        if (res) {
+          this.spinner.hide();
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
   }
 }

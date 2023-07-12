@@ -25,6 +25,7 @@ export class ShellComponent {
             event.url.includes('/settings') ||
             event.url.includes('/login') ||
             event.url.includes('/register') ||
+            event.url.includes('/favorite') ||
             false;
           this.isLoginPgae = event.url.includes('/login') || false;
           this.isShowMyProfile =

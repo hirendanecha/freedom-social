@@ -25,14 +25,24 @@
           class="navbar-nav feed flex-row gap-xl-20 gap-lg-10 gap-sm-7 gap-1 py-4 py-lg-0 m-lg-auto ms-auto ms-aut align-self-center"
         >
           <li>
-            <a routerLink="/" class="nav-icon home active"
+            <a
+              routerLink="/"
+              class="nav-icon home active"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Home"
               ><i class="mat-icon fs-xxl material-symbols-outlined mat-icon"
                 >home</i
               ></a
             >
           </li>
           <li>
-            <a routerLink="/favorite" class="nav-icon feed"
+            <a
+              routerLink="/favorite"
+              class="nav-icon feed"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Feed"
               ><i class="mat-icon fs-xxl material-symbols-outlined mat-icon"
                 >feed</i
               ></a
@@ -50,6 +60,9 @@
               href="https://freedom.social/cmpgm/daily"
               target="_blank"
               class="nav-icon"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="FreedomTube"
               ><i class="mat-icon fs-xxl material-symbols-outlined mat-icon"
                 >smart_display</i
               ></a
@@ -163,7 +176,10 @@
         </a>
       </li>
     </ul>
-    <div class="switch-wrapper mt-4 d-flex gap-1 align-items-center" (click)="closeMenu($event, '')">
+    <div
+      class="switch-wrapper mt-4 d-flex gap-1 align-items-center"
+      (click)="closeMenu($event, '')"
+    >
       <i
         class="mat-icon material-symbols-outlined sun icon"
         [ngClass]="!isDark ? 'active' : ''"
