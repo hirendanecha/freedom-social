@@ -14,6 +14,6 @@ export class PostService {
   constructor(private http: HttpClient) {}
 
   getPosts() {
-    return this.http.get(`${this.baseUrl}/posts/`);
+    return this.http.get(`${this.baseUrl}posts/`);
   }
 }
