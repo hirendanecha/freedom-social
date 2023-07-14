@@ -11,6 +11,7 @@ import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { PipeModule } from '../pipe/pipe.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     FormsModule,
     NgxSpinnerModule,
     ReactiveFormsModule,
+    PipeModule,
   ],
   exports: [
     HeaderComponent,

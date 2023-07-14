@@ -16,4 +16,8 @@ export class Customer {
   DateCreation: string;
   IsSuspended: number;
   IsAdmin: string;
+  ProfilePicName: string;
+  CoverPicName: string;
+  DateofBirth: Date;
+  Gender: string;
 }

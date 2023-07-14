@@ -45,4 +45,8 @@ export class CustomerService {
       `${this.baseUrl}/countries`
     );
   }
+
+  updateProfile(customer: Customer): Observable<Object> {
+    return this.http.post(`${this.baseUrl}/profile`, customer);
+  }
 }

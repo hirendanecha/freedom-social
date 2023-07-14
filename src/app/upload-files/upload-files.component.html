@@ -1,0 +1,95 @@
+<ng-container *ngIf="reset">
+  <div *ngFor="let progressInfo of progressInfos" class="mb-3">
+    <span>{{ progressInfo.fileName }}</span>
+    <div class="progress">
+      <div
+        class="progress-bar progress-bar-info progress-bar-striped"
+        role="progressbar"
+        attr.aria-valuenow="{{ progressInfo.value }}"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [ngStyle]="{ width: progressInfo.value + '%' }"
+      >
+        {{ progressInfo.value }}%
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<label class="btn btn-default mb-4">
+  <input
+    type="file"
+    accept="image/png, image/gif, image/jpeg"
+    [(ngModel)]="files"
+    multiple
+    (change)="selectFiles($event)"
+    #inputField
+  />
+  <span class="cmn-btn d-center gap-1">
+    <i class="material-symbols-outlined mat-icon fs-2"> edit_note </i>
+    {{ isProfile ? "Change Profile Photo" : "Change Cover Photo" }}
+  </span>
+</label>
+
+<!-- <button class="btn btn-success mb-4" type="button" (click)="uploadFiles()">
+  Upload
+</button> -->
+<div class="img-upload-card">
+  <!-- <div class="uploaded-img-div">
+    <a *ngFor="let file of fileInfos | async">
+      <img
+        [src]="file.url | getImageUrl | async | safe : 'resourceUrl'"
+        alt=""
+      />
+    </a>
+  </div> -->
+  <!-- <div class="card-header">Images you have uploaded</div>
+  <table width="50%">
+    <tr> -->
+  <!-- <a href="{{ file.url }}">{{ file.name }}</a> -->
+  <!-- <td *ngFor="let file of fileInfos | async">
+        <img
+          [src]="file.url | getImageUrl | async | safe: 'resourceUrl'"
+          alt=""
+          style="height: 90px; width: 100px"
+        />
+      </td>
+    </tr>
+  </table> -->
+</div>
+<!-- <ng-container *ngIf="!fileInfos">
+  <h4 class="mb-3 border-0">OR</h4>
+  <h4 class="mb-3 mt-3 border-0">
+    If you do not have an image to upload, select this image, Click on image to
+    select
+  </h4>
+  <div class="img-upload-card">
+    <div class="uploaded-img-div">
+      <ng-template #passDefault>
+        <a href="javascript:void(0)">
+          <img src="../../../assets/img/vegitable-bg.png" #defaultImage />
+        </a>
+      </ng-template>
+      <ng-container *ngIf="passDefaultImg; else passDefault">
+        <a
+          href="javascript:void(0)"
+          (click)="
+            !isSelected && !isDisable && uploadDefaultImage(defaultImage)
+          "
+        >
+          <img
+            [src]="passDefaultImg | getImageUrl | async | safe : 'resourceUrl'"
+            #defaultImage
+            [ngClass]="isSelected ? 'image-border' : ''"
+          />
+        </a>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="alert alert-light p-0" role="alert" style="color: red">
+    {{ message }}
+  </div>
+</ng-container> -->
+
+<!-- <h4 class="mb-3">Images you have uploaded</h4> -->

@@ -325,13 +325,14 @@
   }
 
   .main-content .profile-sidebar {
-    position: absolute;
-    transform: translateX(-200px);
-    top: initial;
+    position: absolute !important;
+    transform: translateX(0px);
+    top: 70px !important;
     z-index: 2;
-    opacity: 0;
+    opacity: 1;
     min-width: 290px;
     transition: 0.3s;
+    transition-delay: 0.1s;
   }
 
   .main-content .profile-sidebar.active {

@@ -15,12 +15,12 @@
             alt="Preview Image"
           />
         </div>
-        <div class="file-upload">
+        <!-- <div class="file-upload">
           <label class="file text-start mt-2">
             <input type="file" />
             <span class="cmn-btn">Change Profile</span>
           </label>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="col-md-12">
@@ -35,12 +35,12 @@
             alt="Preview Image"
           />
         </div>
-        <div class="file-upload">
-          <label class="file text-start mt-2">
+        <!-- <div class="file-upload">
+          <label class="file text-start mt-2 float-lg-end">
             <input type="file" />
             <span class="cmn-btn">Change Cover photo</span>
           </label>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -53,26 +53,26 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="single-input text-start">
-          <label for="name">Name</label>
+          <label for="name">Fisrt Name</label>
           <div class="input-area second">
             <input
               type="text"
-              value="Java World Group"
-              placeholder="Type name"
-              autocomplete="off"
+              name="fname"
+              [(ngModel)]="customer.FirstName"
+              disabled
             />
           </div>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="single-input text-start">
-          <label for="number">Number</label>
+          <label for="number">Last Name</label>
           <div class="input-area second">
             <input
               type="text"
-              value="(316) 555-0116"
-              placeholder="Number"
-              autocomplete="off"
+              name="lname"
+              [(ngModel)]="customer.LastName"
+              disabled
             />
           </div>
         </div>
@@ -83,25 +83,16 @@
           <div class="input-area second">
             <input
               type="text"
-              value="test@mail.com"
-              placeholder="Email"
-              autocomplete="off"
+              name="email"
+              [(ngModel)]="customer.UserName"
+              disabled
             />
           </div>
         </div>
       </div>
-      <div class="col-sm-7 col-9 mt-4">
-        <div class="single-input text-start">
-          <h6>Bio</h6>
-          <p class="mdtxt mt-6">
-            “Lorem ipsum dolor sit amet consectetur. Nec donec vestibulum
-            eleifend lectus ipsum ultrices et dictum”.
-          </p>
-        </div>
-      </div>
       <div class="col-sm-5 col-3 mt-4 d-center justify-content-end">
         <div class="single-input d-center text-start">
-          <div class="group-btn cus-dropdown dropend">
+          <!-- <div class="group-btn cus-dropdown dropend">
             <button
               type="button"
               class="dropdown-btn d-center"
@@ -130,8 +121,8 @@
                 </a>
               </li>
             </ul>
-          </div>
-          <div class="group-btn cus-dropdown dropend">
+          </div> -->
+          <!-- <div class="group-btn cus-dropdown dropend">
             <button
               type="button"
               class="dropdown-btn d-center ps-2"
@@ -154,12 +145,7 @@
                 </a>
               </li>
             </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 mt-4">
-        <div class="btn-area text-end">
-          <button class="cmn-btn">Saved Change</button>
+          </div> -->
         </div>
       </div>
     </div>

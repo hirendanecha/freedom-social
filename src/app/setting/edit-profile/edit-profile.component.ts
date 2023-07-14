@@ -9,10 +9,11 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { debounceTime, fromEvent } from 'rxjs';
+import { Subject, debounceTime, fromEvent } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { UploadFilesService } from 'src/app/services/upload-files.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -28,15 +29,18 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   msg = '';
   allCountryData: any;
   userId = '';
+  profilePic: any = {};
+  coverPic: any = {};
   @ViewChild('zipCode') zipCode: ElementRef;
-
+  uploadListSubject: Subject<void> = new Subject<void>();
   constructor(
     private modalService: NgbActiveModal,
     private route: ActivatedRoute,
     private router: Router,
     private customerService: CustomerService,
     private spinner: NgxSpinnerService,
-    private tokenStorage: TokenStorageService
+    private tokenStorage: TokenStorageService,
+    private uploadService: UploadFilesService
   ) {
     this.userId = this.route.snapshot.paramMap.get('id');
     this.getUserDetails(this.userId);
@@ -63,6 +67,18 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
         if (data) {
           this.customer = data[0];
           this.getAllCountries();
+          this.uploadService.getProfilePic().subscribe((res) => {
+            if (res.length) {
+              this.profilePic = res[0];
+              console.log(this.profilePic);
+            }
+          });
+          this.uploadService.getCoverPic().subscribe((res) => {
+            if (res.length) {
+              this.coverPic = res[0];
+              console.log(this.profilePic);
+            }
+          });
         }
       },
       (err) => {
@@ -126,8 +142,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   }
 
   updateCustomer(): void {
-    console.log(this.customer);
     this.spinner.show();
+    console.log(this.customer);
+    // this.customer.ProfilePicName = this.profilePic.url;
+    // this.customer.CoverPicName = this.coverPic.url;
+    // this.customer.Id = Number(this.userId);
     this.customerService
       .updateCustomer(this.customer.Id, this.customer)
       .subscribe(

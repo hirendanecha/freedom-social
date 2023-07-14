@@ -1,6 +1,6 @@
 <!-- Mobile View -->
 <ng-container>
-  <!-- <div class="d-block d-lg-none">
+  <div class="d-block d-lg-none">
     <button
       class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
     >
@@ -9,18 +9,13 @@
       </i>
       <span>My profile</span>
     </button>
-  </div> -->
+  </div>
   <div
     class="d-block d-lg-none profile-sidebar cus-scrollbar p-5"
     *ngIf="isEXpand"
   >
-    <!-- <div class="d-block d-lg-none position-absolute end-0 top-0">
-      <button class="button profile-close">
-        <i class="material-symbols-outlined mat-icon fs-xl"> close </i>
-      </button>
-    </div> -->
     <div class="profile-pic d-flex gap-2 align-items-center">
-      <div class="avatar position-relative">
+      <div class="avatar position-relative" routerLink="home">
         <img
           class="avatar-img max-un"
           src="assets/images/avtar/avatar.png"
@@ -29,467 +24,87 @@
       </div>
       <div class="text-area">
         <h6 class="m-0 mb-1">
-          <a>Lerio Mao</a>
+          <a>Kent Lewiss</a>
         </h6>
-        <p class="mdtxt">@maolio</p>
+        <p class="mdtxt">@clarkzkent</p>
+      </div>
+      <div class="d-block d-lg-none position-absolute end-0 top-0">
+        <button class="button profile-close" (click)="openToggle()">
+          <i class="material-symbols-outlined mat-icon fs-xl m-2"> close </i>
+        </button>
       </div>
     </div>
     <ul class="profile-link mt-7 mb-7 pb-7 ps-0">
       <li>
-        <a href="index.html" class="d-flex gap-4 active">
-          <i class="material-symbols-outlined fs-xxl mat-icon"> home </i>
-          <span>Home</span>
-        </a>
-      </li>
-      <li>
-        <a href="friend-request.html" class="d-flex gap-4">
-          <i class="material-symbols-outlined fs-xxl mat-icon"> person </i>
-          <span>People</span>
-        </a>
-      </li>
-      <li>
-        <a href="event.html" class="d-flex gap-4">
+        <a
+          routerLink="community"
+          [ngClass]="isCommunity ? 'active' : ''"
+          class="d-flex gap-4"
+          (click)="openToggle()"
+        >
           <i class="material-symbols-outlined fs-xxl mat-icon">
             workspace_premium
           </i>
-          <span>Event</span>
+          <span>Local Communities</span>
         </a>
       </li>
       <li>
-        <a class="d-flex gap-4">
-          <i class="material-symbols-outlined fs-xxl mat-icon"> perm_media </i>
-          <span>Pages</span>
+        <a
+          href="https://1776token.com/"
+          target="_blank"
+          class="d-flex gap-4"
+          (click)="openToggle()"
+        >
+          <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+          <span>1776 Token</span>
         </a>
       </li>
       <li>
-        <a href="group.html" class="d-flex gap-4">
-          <i class="material-symbols-outlined fs-xxl mat-icon"> workspaces </i>
-          <span>Group</span>
+        <a
+          href="https://localfoods.market/"
+          target="_blank"
+          class="d-flex gap-4"
+          (click)="openToggle()"
+        >
+          <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+          <span>Local Foods</span>
         </a>
       </li>
       <li>
-        <a href="marketplace.html" class="d-flex gap-4">
-          <i class="material-symbols-outlined fs-xxl mat-icon"> store </i>
-          <span>Marketplace</span>
+        <a
+          href="https://lamarslist.com/"
+          target="_blank"
+          class="d-flex gap-4"
+          (click)="openToggle()"
+        >
+          <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+          <span>Lamars List</span>
         </a>
       </li>
       <li>
-        <a href="saved-post.html" class="d-flex gap-4">
-          <i class="material-symbols-outlined fs-xxl mat-icon">
-            sync_saved_locally
-          </i>
-          <span>Saved</span>
+        <a class="d-flex gap-4" (click)="openWalletPopUp(); openToggle()">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> Download </i>
+          <span>Download 1776 Wallet</span>
         </a>
       </li>
       <li>
-        <a href="favorites.html" class="d-flex gap-4">
-          <i class="material-symbols-outlined fs-xxl mat-icon">
-            bookmark_add
-          </i>
-          <span>Favorites</span>
+        <a class="d-flex gap-4" (click)="openClaimTokenPopUp(); openToggle()">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> Token </i>
+          <span>Claim 50 free 1776</span>
         </a>
       </li>
       <li>
-        <a href="setting.html" class="d-flex gap-4">
+        <a
+          routerLink="settings"
+          class="d-flex gap-4"
+          [ngClass]="isSetting ? 'active' : ''"
+          (click)="openToggle()"
+        >
           <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
           <span>Settings</span>
         </a>
       </li>
     </ul>
-    <!-- <div class="mb-4">
-        <h6 class="d-inline-flex">Contact</h6>
-      </div>
-      <div class="d-flex flex-column gap-6">
-        <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="avatar-item">
-              <img
-                class="avatar-img max-un"
-                src="assets/images/avatar-9.png"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
-              <h6 class="m-0">
-                <a ublic-p class="mdtxt">Piter Maio</a>
-              </h6>
-            </div>
-          </div>
-          <div class="btn-group cus-dropdown dropend">
-            <button
-              type="button"
-              class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul class="dropdown-menu p-4 pt-2">
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
-                  <span>Unfollow</span>
-                </a>
-              </li>
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
-                  <span>Hide Contact</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="avatar-item">
-              <img
-                class="avatar-img max-un"
-                src="assets/images/avatar-7.png"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
-              <h6 class="m-0">
-                <a ublic-p class="mdtxt">Floyd Miles</a>
-              </h6>
-            </div>
-          </div>
-          <div class="btn-group cus-dropdown dropend">
-            <button
-              type="button"
-              class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul class="dropdown-menu p-4 pt-2">
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
-                  <span>Unfollow</span>
-                </a>
-              </li>
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
-                  <span>Hide Contact</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="avatar-item">
-              <img
-                class="avatar-img max-un"
-                src="assets/images/avatar-8.png"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
-              <h6 class="m-0">
-                <a ublic-p class="mdtxt">Darrell Steward</a>
-              </h6>
-            </div>
-          </div>
-          <div class="btn-group cus-dropdown dropend">
-            <button
-              type="button"
-              class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul class="dropdown-menu p-4 pt-2">
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
-                  <span>Unfollow</span>
-                </a>
-              </li>
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
-                  <span>Hide Contact</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="avatar-item">
-              <img
-                class="avatar-img max-un"
-                src="assets/images/avatar-2.png"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
-              <h6 class="m-0">
-                <a ublic-p class="mdtxt">Kristin Watson</a>
-              </h6>
-            </div>
-          </div>
-          <div class="btn-group cus-dropdown dropend">
-            <button
-              type="button"
-              class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul class="dropdown-menu p-4 pt-2">
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
-                  <span>Unfollow</span>
-                </a>
-              </li>
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
-                  <span>Hide Contact</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="avatar-item">
-              <img
-                class="avatar-img max-un"
-                src="assets/images/avatar-3.png"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
-              <h6 class="m-0">
-                <a ublic-p class="mdtxt">Jane Cooper</a>
-              </h6>
-            </div>
-          </div>
-          <div class="btn-group cus-dropdown dropend">
-            <button
-              type="button"
-              class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul class="dropdown-menu p-4 pt-2">
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
-                  <span>Unfollow</span>
-                </a>
-              </li>
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
-                  <span>Hide Contact</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="avatar-item">
-              <img
-                class="avatar-img max-un"
-                src="assets/images/avatar-4.png"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
-              <h6 class="m-0">
-                <a ublic-p class="mdtxt">Devon Lane</a>
-              </h6>
-            </div>
-          </div>
-          <div class="btn-group cus-dropdown dropend">
-            <button
-              type="button"
-              class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul class="dropdown-menu p-4 pt-2">
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
-                  <span>Unfollow</span>
-                </a>
-              </li>
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
-                  <span>Hide Contact</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="avatar-item">
-              <img
-                class="avatar-img max-un"
-                src="assets/images/avatar-9.png"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
-              <h6 class="m-0">
-                <a ublic-p class="mdtxt">Annette Black</a>
-              </h6>
-            </div>
-          </div>
-          <div class="btn-group cus-dropdown dropend">
-            <button
-              type="button"
-              class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul class="dropdown-menu p-4 pt-2">
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
-                  <span>Unfollow</span>
-                </a>
-              </li>
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
-                  <span>Hide Contact</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="avatar-item">
-              <img
-                class="avatar-img max-un"
-                src="assets/images/avatar-10.png"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
-              <h6 class="m-0">
-                <a ublic-p class="mdtxt">Jerome Bell</a>
-              </h6>
-            </div>
-          </div>
-          <div class="btn-group cus-dropdown dropend">
-            <button
-              type="button"
-              class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul class="dropdown-menu p-4 pt-2">
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
-                  <span>Unfollow</span>
-                </a>
-              </li>
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
-                  <span>Hide Contact</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="avatar-item">
-              <img
-                class="avatar-img max-un"
-                src="assets/images/avatar-11.png"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
-              <h6 class="m-0">
-                <a ublic-p>Guy Hawkins</a>
-              </h6>
-            </div>
-          </div>
-          <div class="btn-group cus-dropdown dropend">
-            <button
-              type="button"
-              class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul class="dropdown-menu p-4 pt-2">
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> person_remove </i>
-                  <span>Unfollow</span>
-                </a>
-              </li>
-              <li>
-                <a class="droplist d-flex align-items-center gap-2" >
-                  <i class="material-symbols-outlined mat-icon"> hide_source </i>
-                  <span>Hide Contact</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div> -->
-    <div class="your-shortcuts">
-      <h6>Your shortcuts</h6>
-      <ul>
-        <li>
-          <a ublic-p class="d-flex align-items-center gap-3">
-            <img src="assets/images/shortcuts-1.png" alt="icon" />
-            <span>Game Community</span>
-          </a>
-        </li>
-        <li>
-          <a ublic-p class="d-flex align-items-center gap-3">
-            <img src="assets/images/shortcuts-2.png" alt="icon" />
-            <span>Pixel Think (Member)</span>
-          </a>
-        </li>
-        <li>
-          <a ublic-p class="d-flex align-items-center gap-3">
-            <img src="assets/images/shortcuts-3.png" alt="icon" />
-            <span>8 Ball Pool</span>
-          </a>
-        </li>
-        <li>
-          <a ublic-p class="d-flex align-items-center gap-3">
-            <img src="assets/images/shortcuts-4.png" alt="icon" />
-            <span>Gembio</span>
-          </a>
-        </li>
-      </ul>
-    </div>
   </div>
 </ng-container>
 
@@ -530,7 +145,7 @@
             <span>People</span>
           </a>
         </li> -->
-        <li>
+        <!-- <li>
           <a
             routerLink="events"
             class="d-flex gap-4"
@@ -541,15 +156,15 @@
             </i>
             <span>Event and Actions</span>
           </a>
-        </li>
+        </li> -->
         <li>
           <a
-            routerLink="community"
             class="d-flex gap-4"
+            routerLink="community"
             [ngClass]="isCommunity ? 'active' : ''"
           >
             <i class="material-symbols-outlined fs-xxl mat-icon">
-              bookmark_add
+              workspaces
             </i>
             <span>Local Communities</span>
           </a>
@@ -592,7 +207,7 @@
             <span>Claim 50 free 1776</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a
             routerLink="favorite"
             class="d-flex gap-4"
@@ -604,7 +219,7 @@
             </i>
             <span>Find Local Community</span>
           </a>
-        </li>
+        </li> -->
         <li>
           <a
             routerLink="settings"

@@ -1,7 +1,7 @@
 <!-- #Mobile View -->
 <ng-container>
   <div class="cus-overflow cus-scrollbar sidebar-head d-block d-lg-none">
-    <div class="d-flex justify-content-end">
+    <!-- <div class="d-flex justify-content-end">
       <div class="d-block d-xl-none me-4">
         <button
           class="button toggler-btn mb-4 mb-lg-0 d-flex align-items-center gap-2"
@@ -12,7 +12,7 @@
           </i>
         </button>
       </div>
-    </div>
+    </div> -->
     <div class="cus-scrollbar side-wrapper d-block d-lg-none" *ngIf="isEXpand">
       <div class="sidebar-wrapper d-flex flex-column gap-6">
         <div class="sidebar-area p-5">
@@ -552,9 +552,7 @@
             does not reflect the 1776 Tokens in your offline wallet.
           </span>
         </div>
-        <button class="cmn-btn" (click)="createCommunity()">
-          Create Local Community
-        </button>
+
         <!-- </div> -->
         <!-- <div class="d-grid gap-6">
           <div class="single-single">
@@ -635,6 +633,9 @@
         <div class="mb-4">
           <h6 class="d-inline-flex">Local Communities</h6>
         </div>
+        <button class="cmn-btn" (click)="createCommunity()">
+          Create Local Community
+        </button>
         <!-- <div class="d-flex flex-column gap-6">
           <div
             class="profile-area d-center position-relative align-items-center justify-content-between"

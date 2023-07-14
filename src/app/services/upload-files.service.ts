@@ -11,18 +11,15 @@ export class UploadFilesService {
 
   constructor(private http: HttpClient) {}
 
-  upload(
-    file: File,
-    id: any,
-    idx: any,
-    defaultType: string
-  ): Observable<HttpEvent<any>> {
+  upload(file: File, id: any, defaultType: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-
+    if (defaultType === 'true') {
+      formData.append('folder', 'profile');
+    } else {
+      formData.append('folder', 'profile-cover');
+    }
     formData.append('file', file);
-    formData.append('folder', 'product');
     formData.append('id', id);
-    formData.append('index', idx);
     formData.append('default', defaultType);
 
     const req = new HttpRequest('POST', `${this.baseUrl}/upload`, formData, {
@@ -33,8 +30,13 @@ export class UploadFilesService {
     return this.http.request(req);
   }
 
-  getFiles(): Observable<any> {
-    let id = window.sessionStorage.product_id;
-    return this.http.get(`${this.baseUrl}/files/product/${id}`);
+  getProfilePic(): Observable<any> {
+    let id = window.sessionStorage.user_id;
+    return this.http.get(`${this.baseUrl}/files/profile/${id}`);
+  }
+
+  getCoverPic(): Observable<any> {
+    let id = window.sessionStorage.user_id;
+    return this.http.get(`${this.baseUrl}/files/profile-cover/${id}`);
   }
 }
