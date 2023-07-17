@@ -8,16 +8,13 @@ import { environment } from 'src/environments/environment';
 })
 export class UploadFilesService {
   private baseUrl = environment.serverUrl + 'utils';
+  private imgUrl = environment.imgUrl;
 
   constructor(private http: HttpClient) {}
 
   upload(file: File, id: any, defaultType: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-    if (defaultType === 'true') {
-      formData.append('folder', 'profile');
-    } else {
-      formData.append('folder', 'profile-cover');
-    }
+    formData.append('folder', defaultType);
     formData.append('file', file);
     formData.append('id', id);
     formData.append('default', defaultType);

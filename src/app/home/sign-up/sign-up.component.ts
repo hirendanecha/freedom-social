@@ -13,6 +13,7 @@ import { debounceTime, fromEvent } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomerService } from 'src/app/services/customer.service';
+import { ToastService } from 'src/app/services/toaster.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -37,7 +38,8 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private customerService: CustomerService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -75,7 +77,11 @@ export class SignUpComponent implements OnInit, AfterViewInit {
           'Your account has registered successfully. Kindly login with your email and password !!!';
         this.isragister = true;
         localStorage.setItem('register', String(this.isragister));
-        this.router.navigate(['/login']);
+        this.toastService.show(
+          'Please check your email and click the activation link to activate your account.',
+          { classname: 'bg-success text-light', delay: 10000 }
+        );
+        this.router.navigateByUrl('/login?isVerify=false');
       },
       (err) => {
         this.registrationMessage = err.error.message;

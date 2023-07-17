@@ -25,6 +25,7 @@ export class UploadFilesComponent implements OnInit {
   @Input() reset: boolean;
   @Input() passDefaultImg: any;
   @Input() isDisable: any;
+  @Input() type: any;
   @Input() isProfile: any;
 
   @Output() onImageUpload = new EventEmitter();
@@ -77,13 +78,13 @@ export class UploadFilesComponent implements OnInit {
     console.log(event.target.files);
     this.selectedFiles = event.target.files;
     this.defaultFile = undefined;
-    if (this.selectedFiles.length) {
-      if (!this.isProfile) {
-        this.message = this.upload(this.selectedFiles, 'false');
-      } else {
-        this.message = this.upload(this.selectedFiles, 'true');
-      }
-    }
+    // if (this.selectedFiles.length) {
+    //   if (!this.isProfile) {
+    //     this.message = this.upload(this.selectedFiles, 'false');
+    //   } else {
+    //   }
+    // }
+    this.message = this.upload(this.selectedFiles, this.type);
   }
 
   upload(file, defaultType): any {

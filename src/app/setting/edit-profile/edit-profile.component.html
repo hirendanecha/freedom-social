@@ -5,11 +5,8 @@
         <div class="profile-picture text-start">
           <img
             class="preview-image w-100"
-            [src]="
-              profilePic?.url
-                ? profilePic?.url
-                : 'assets/images/profile-picture.png'
-            "
+            loading="lazy"
+            data-src="{{ profilePic?.url }}"
             [alt]="profilePic?.name || 'Preview Image'"
           />
         </div>
@@ -18,6 +15,7 @@
             <app-upload-files
               [events]="uploadListSubject.asObservable()"
               [isProfile]="true"
+              [type]="'profile'"
             ></app-upload-files>
           </label>
         </div>
@@ -38,11 +36,7 @@
             <div class="profile-picture position-relative text-start">
               <img
                 class="preview-image w-100"
-                [src]="
-                  coverPic.url
-                    ? coverPic.url
-                    : 'assets/images/profile-edit-cover.png'
-                "
+                [src]="coverPic.url"
                 [alt]="coverPic.name || 'Preview Image'"
               />
               <div
@@ -52,6 +46,7 @@
                   <app-upload-files
                     [events]="uploadListSubject.asObservable()"
                     [isProfile]="false"
+                    [type]="'profile-cover'"
                   ></app-upload-files>
                 </label>
               </div>

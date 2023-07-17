@@ -14,7 +14,7 @@ export class SettingComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private customerService: CustomerService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) {}
 
   ngOnInit(): void {

@@ -12,6 +12,12 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { PipeModule } from '../pipe/pipe.module';
+import { ToastsContainer } from '../services/toast-container.component';
+import {
+  LAZYLOAD_IMAGE_HOOKS,
+  LazyLoadImageModule,
+  ScrollHooks,
+} from 'ng-lazyload-image';
 
 @NgModule({
   declarations: [
@@ -22,6 +28,17 @@ import { PipeModule } from '../pipe/pipe.module';
     PostComponent,
     FooterComponent,
   ],
+  exports: [
+    HeaderComponent,
+    MyProfileComponent,
+    MyListComponent,
+    ShellComponent,
+    FooterComponent,
+  ],
+  providers: [
+    NgbActiveModal,
+    { provide: LAZYLOAD_IMAGE_HOOKS, useClass: ScrollHooks },
+  ],
   imports: [
     ShellRoutingModule,
     CommonModule,
@@ -31,14 +48,8 @@ import { PipeModule } from '../pipe/pipe.module';
     NgxSpinnerModule,
     ReactiveFormsModule,
     PipeModule,
+    ToastsContainer,
+    LazyLoadImageModule,
   ],
-  exports: [
-    HeaderComponent,
-    MyProfileComponent,
-    MyListComponent,
-    ShellComponent,
-    FooterComponent,
-  ],
-  providers: [NgbActiveModal],
 })
 export class ShellModule {}

@@ -9,21 +9,23 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { ToastsContainer } from "../services/toast-container.component";
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    LoginComponent,
-    SignUpComponent,
-    ForgotPasswordComponent,
-  ],
-  imports: [
-    HomeRoutingModule,
-    CommonModule,
-    PickerModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  exports: [LoginComponent, SignUpComponent],
+    declarations: [
+        HomeComponent,
+        LoginComponent,
+        SignUpComponent,
+        ForgotPasswordComponent,
+    ],
+    exports: [LoginComponent, SignUpComponent],
+    imports: [
+        HomeRoutingModule,
+        CommonModule,
+        PickerModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ToastsContainer
+    ]
 })
 export class HomeModule {}

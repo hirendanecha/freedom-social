@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -30,8 +30,18 @@ export class LoginComponent {
     private tokenStorage: TokenStorageService,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) {
+    console.log(this.route);
+    console.log(typeof localStorage.getItem('register'));
+    const isVerify = this.route.snapshot.queryParams.isVerify;
+    if (isVerify === 'false') {
+      this.msg =
+        'Please check your email and click the activation link to activate your account.';
+      this.type = 'success';
+    }
+  }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
