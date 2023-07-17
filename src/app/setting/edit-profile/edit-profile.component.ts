@@ -31,6 +31,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   userId = '';
   profilePic: any = {};
   coverPic: any = {};
+  profileId = '';
   @ViewChild('zipCode') zipCode: ElementRef;
   uploadListSubject: Subject<void> = new Subject<void>();
   constructor(
@@ -61,27 +62,43 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   }
 
   getUserDetails(id): void {
+    this.spinner.show();
     this.customerService.getCustomer(id).subscribe(
       (data: any) => {
         console.log(data);
         if (data) {
+          this.spinner.hide();
           this.customer = data[0];
           this.getAllCountries();
-          this.uploadService.getProfilePic().subscribe((res) => {
-            if (res.length) {
-              this.profilePic = res[0];
-              console.log(this.profilePic);
+          this.uploadService.getProfilePic().subscribe(
+            (res) => {
+              if (res.length) {
+                this.spinner.hide();
+                this.profilePic = res[0];
+                console.log(this.profilePic);
+              }
+            },
+            (error) => {
+              this.spinner.hide();
+              console.log(error);
             }
-          });
-          this.uploadService.getCoverPic().subscribe((res) => {
-            if (res.length) {
-              this.coverPic = res[0];
-              console.log(this.profilePic);
+          );
+          this.uploadService.getCoverPic().subscribe(
+            (res) => {
+              if (res.length) {
+                this.coverPic = res[0];
+                console.log(this.profilePic);
+              }
+            },
+            (error) => {
+              this.spinner.hide();
+              console.log(error);
             }
-          });
+          );
         }
       },
       (err) => {
+        this.spinner.hide();
         console.log(err);
       }
     );
@@ -142,16 +159,16 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   }
 
   updateCustomer(): void {
-    this.spinner.show();
-    console.log(this.customer);
-    // this.customer.ProfilePicName = this.profilePic.url;
-    // this.customer.CoverPicName = this.coverPic.url;
-    // this.customer.Id = Number(this.userId);
-    this.customerService
-      .updateCustomer(this.customer.Id, this.customer)
-      .subscribe(
+    if (!this.profileId) {
+      this.spinner.show();
+      console.log(this.customer);
+      this.customer.ProfilePicName = this.profilePic.url;
+      this.customer.CoverPicName = this.coverPic.url;
+      this.customer.Id = Number(this.userId);
+      this.customerService.updateProfile(this.customer).subscribe(
         (data: any) => {
           this.spinner.hide();
+          this.profileId = data.data;
           console.log(data);
           this.getUserDetails(this.userId);
         },
@@ -159,5 +176,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
           this.spinner.hide();
         }
       );
+    }
   }
 }
