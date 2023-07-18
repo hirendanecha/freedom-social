@@ -19,6 +19,7 @@
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
+
 .main-area ul li:first-child {
   /* border-top: 1px solid var(--border-color); */
   border-bottom: 1px solid var(--border-color);
@@ -49,6 +50,18 @@
 
 .notification-content .btn-area a {
   color: var(--heading-1st-color);
+}
+
+.right-area .avatar-img {
+  max-width: 48px;
+  height: auto;
+  min-height: 48px;
+}
+
+.main-area .head-area .avatar-img {
+  max-width: 48px;
+  height: auto;
+  min-height: 48px;
 }
 
 ::ng-deep .user-menu-panale {

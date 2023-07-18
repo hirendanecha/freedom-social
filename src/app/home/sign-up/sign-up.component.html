@@ -115,7 +115,7 @@
                       class="form-control input-area"
                       required
                       placeholder="Enter your email"
-                      [(ngModel)]="customer.UserName"
+                      [(ngModel)]="customer.Username"
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
@@ -202,7 +202,7 @@
                       required
                       placeholder="Enter your zip code"
                       [disabled]="!customer.Country"
-                      [(ngModel)]="customer.ZipCode"
+                      [(ngModel)]="customer.Zip"
                       name="zip"
                       #zipCode
                     />

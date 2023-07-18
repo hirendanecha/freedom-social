@@ -1,12 +1,12 @@
 export class Customer {
   Id: number;
-  UserName: string;
+  Username: string;
   Password: string;
   FirstName: string;
   LastName: string;
   IsActive: string;
   Address: string;
-  ZipCode: string;
+  Zip: string;
   City: string;
   State: string;
   Country: string;

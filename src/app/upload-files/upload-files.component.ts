@@ -14,6 +14,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-upload-files',
@@ -48,7 +49,8 @@ export class UploadFilesComponent implements OnInit {
     private uploadService: UploadFilesService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
@@ -101,6 +103,7 @@ export class UploadFilesComponent implements OnInit {
           this.spinner.hide();
           this.selectedFiles = undefined;
           this.cd.detectChanges();
+          this.sharedService.getProfilePic();
         }
         // return '';
       },

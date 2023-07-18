@@ -6,21 +6,21 @@
           <img src="assets/images/icon.jpg" class="logo" alt="logo" />
         </a>
 
-        <!-- <button class="button search-active d-block d-md-none">
+        <button class="button search-active d-none">
           <i class="d-center material-symbols-outlined fs-xxl mat-icon">
             search
           </i>
-        </button> -->
-        <!-- <div class="search-form">
+        </button>
+        <div class="search-form">
           <form action="#" class="input-area d-flex align-items-center">
-            <i class="material-symbols-outlined mat-icon">search</i>
+            <i class="material-symbols-outlined mat-icon me-1">search</i>
             <input
               type="text"
-              placeholder="Search Circlehubtio"
+              placeholder="Search"
               autocomplete="off"
             />
           </form>
-        </div> -->
+        </div>
         <ul
           class="navbar-nav feed flex-row gap-xl-20 gap-lg-10 gap-sm-7 gap-1 py-4 py-lg-0 m-lg-auto ms-auto ms-aut align-self-center"
         >
@@ -118,7 +118,7 @@
               <span class="avatar cmn-head active-status">
                 <img
                   class="avatar-img max-un"
-                  src="assets/images/avtar/avatar.png"
+                  [src]="sharedService.profilePic?.url"
                   alt="avatar"
                   id="userMenuList"
                   (click)="openUserMenu()"
@@ -139,7 +139,7 @@
         <div class="avatar-item">
           <img
             class="avatar-img max-un"
-            src="assets/images/avtar/avatar.png"
+            [src]="sharedService.profilePic?.url"
             alt="avatar"
           />
         </div>

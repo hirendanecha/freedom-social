@@ -12,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, debounceTime, fromEvent } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
 import { CustomerService } from 'src/app/services/customer.service';
+import { SharedService } from 'src/app/services/shared.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UploadFilesService } from 'src/app/services/upload-files.service';
 
@@ -32,6 +33,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   profilePic: any = {};
   coverPic: any = {};
   profileId = '';
+  profileData: any = {};
   @ViewChild('zipCode') zipCode: ElementRef;
   uploadListSubject: Subject<void> = new Subject<void>();
   constructor(
@@ -41,10 +43,16 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     private customerService: CustomerService,
     private spinner: NgxSpinnerService,
     private tokenStorage: TokenStorageService,
-    private uploadService: UploadFilesService
+    private uploadService: UploadFilesService,
+    public sharedService: SharedService
   ) {
     this.userId = this.route.snapshot.paramMap.get('id');
-    this.getUserDetails(this.userId);
+    const profileId = sessionStorage.getItem('profileId');
+    if (profileId) {
+      this.getProfile(profileId);
+    } else {
+      this.getUserDetails(this.userId);
+    }
   }
   ngOnInit(): void {
     if (!this.tokenStorage.getToken()) {
@@ -74,8 +82,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
             (res) => {
               if (res.length) {
                 this.spinner.hide();
-                this.profilePic = res[0];
-                console.log(this.profilePic);
+                this.sharedService.profilePic = res[0];
               }
             },
             (error) => {
@@ -87,7 +94,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
             (res) => {
               if (res.length) {
                 this.coverPic = res[0];
-                console.log(this.profilePic);
               }
             },
             (error) => {
@@ -121,7 +127,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   }
 
   changeCountry() {
-    this.customer.ZipCode = '';
+    this.customer.Zip = '';
     this.customer.State = '';
     this.customer.City = '';
     this.customer.Place = '';
@@ -165,17 +171,51 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
       this.customer.ProfilePicName = this.profilePic.url;
       this.customer.CoverPicName = this.coverPic.url;
       this.customer.Id = Number(this.userId);
-      this.customerService.updateProfile(this.customer).subscribe(
+      this.customerService.createProfile(this.customer).subscribe(
         (data: any) => {
           this.spinner.hide();
           this.profileId = data.data;
+          sessionStorage.setItem('profileId', this.profileId);
           console.log(data);
-          this.getUserDetails(this.userId);
+          this.getProfile(this.profileId);
         },
         (err) => {
           this.spinner.hide();
         }
       );
+    } else {
+      this.spinner.show();
+      this.customerService
+        .updateProfile(this.profileId, this.customer)
+        .subscribe(
+          (res: any) => {
+            if (res) {
+              this.spinner.hide();
+              console.log(res.data[0]);
+            }
+          },
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+        );
     }
+  }
+
+  getProfile(id): void {
+    this.spinner.show();
+    this.customerService.getProfile(id).subscribe(
+      (res: any) => {
+        if (res.data) {
+          this.spinner.hide();
+          this.customer = res.data[0];
+          this.getAllCountries();
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
   }
 }

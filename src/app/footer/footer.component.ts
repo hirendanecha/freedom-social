@@ -35,7 +35,9 @@ export class FooterComponent {
     private router: Router,
     private tokenStorageService: TokenStorageService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) {
+    this.sharedService.getProfilePic();
+  }
 
   openUserMenu(): void {
     this.userMenusOverlayDialog = this.modaleService.open(this.userMenuList, {

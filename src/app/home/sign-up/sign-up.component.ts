@@ -119,7 +119,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   changeCountry() {
-    this.customer.ZipCode = '';
+    this.customer.Zip = '';
     this.customer.State = '';
     this.customer.City = '';
     this.customer.Place = '';

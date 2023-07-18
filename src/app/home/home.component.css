@@ -26,3 +26,23 @@
   display: none;
 }
 
+::ng-deep .post-item .post-single-box .post-description .postlink h3 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.post-item .post-single-box .post-description {
+  line-break: anywhere;
+}
+
+.post-item .post-single-box .post-profile {
+  max-width: 48px;
+  height: 100%;
+  min-height: 48px;
+}
+
+.share-post .profile-box a img {
+  max-width: 50px;
+  height: auto;
+  min-height: 50px;
+}

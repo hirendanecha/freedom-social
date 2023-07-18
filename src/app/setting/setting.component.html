@@ -11,7 +11,7 @@
         <div class="profile-picture text-start">
           <img
             class="preview-image w-100"
-            src="assets/images/profile-picture.png"
+            [src]="customer.ProfilePicName || sharedService?.profilePic?.url"
             alt="Preview Image"
           />
         </div>
@@ -31,7 +31,7 @@
         <div class="profile-picture text-start">
           <img
             class="preview-image w-100"
-            src="assets/images/profile-cover.png"
+            [src]="customer?.CoverPicName || sharedService?.coverPic?.url"
             alt="Preview Image"
           />
         </div>
@@ -84,7 +84,7 @@
             <input
               type="text"
               name="email"
-              [(ngModel)]="customer.UserName"
+              [(ngModel)]="customer.Username"
               disabled
             />
           </div>

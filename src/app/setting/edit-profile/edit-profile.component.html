@@ -6,8 +6,12 @@
           <img
             class="preview-image w-100"
             loading="lazy"
-            data-src="{{ profilePic?.url }}"
-            [alt]="profilePic?.name || 'Preview Image'"
+            data-src="{{
+              customer.ProfilePicName ||
+                profilePic?.url ||
+                sharedService?.profilePic?.url
+            }}"
+            [alt]="sharedService.profilePic?.name || 'Preview Image'"
           />
         </div>
         <div class="file-upload">
@@ -36,7 +40,7 @@
             <div class="profile-picture position-relative text-start">
               <img
                 class="preview-image w-100"
-                [src]="coverPic.url"
+                [src]="coverPic.url || sharedService?.coverPic.url"
                 [alt]="coverPic.name || 'Preview Image'"
               />
               <div
@@ -180,7 +184,7 @@
                 class="form-control input-area"
                 required
                 placeholder="Enter your email"
-                [(ngModel)]="customer.UserName"
+                [(ngModel)]="customer.Username"
               />
             </div>
             <div class="col-12 col-md-6 mb-3">
@@ -274,7 +278,7 @@
                 required
                 placeholder="Enter your zip code"
                 [disabled]="!customer.Country"
-                [(ngModel)]="customer.ZipCode"
+                [(ngModel)]="customer.Zip"
                 name="zip"
                 #zipCode
               />

@@ -44,6 +44,13 @@
   color: var(--heading-1st-color);
 }
 
+.main-area .head-area .avatar-img,
+.right-area .avatar-img {
+  max-width: 48px;
+  height: auto;
+  min-height: 48px;
+}
+
 ::ng-deep .footer-notification-menu-panale {
   position: fixed;
   right: 315px;

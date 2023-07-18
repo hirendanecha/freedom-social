@@ -33,7 +33,7 @@
         <span class="avatar cmn-head active-status">
           <img
             class="avatar-img max-un"
-            src="assets/images/avtar/avatar.png"
+            [src]="sharedService.profilePic?.url"
             alt="avatar"
             (click)="openUserMenu()"
           />
@@ -50,7 +50,7 @@
         <div class="avatar-item">
           <img
             class="avatar-img max-un"
-            src="assets/images/avtar/avatar.png"
+            [src]="sharedService.profilePic?.url"
             alt="avatar"
           />
         </div>

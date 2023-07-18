@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterEvent,
+} from '@angular/router';
 import { WalletLinkComponent } from './wallet-download-modal/1776-wallet.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClaimTokenComponent } from './clai-1776-token/claim-token.component';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.css']
+  styleUrls: ['./my-profile.component.css'],
 })
 export class MyProfileComponent {
   isEXpand = false;
@@ -24,7 +30,8 @@ export class MyProfileComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public sharedService: SharedService
   ) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
@@ -39,7 +46,9 @@ export class MyProfileComponent {
         this.isPageResearch = event.url.includes('/favorite') || false;
         this.isSetting = event.url.includes('/settings') || false;
       }
-    })
+    });
+
+    this.sharedService.getProfilePic();
     // if (this.route.snapshot.url === '/people') {
     //   this.isShowPeoplePages = true;
     // } else {
@@ -52,8 +61,8 @@ export class MyProfileComponent {
     const modalRef = this.modalService.open(WalletLinkComponent, {
       centered: true,
       keyboard: true,
-      size: 'md'
-    })
+      size: 'md',
+    });
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
@@ -62,8 +71,8 @@ export class MyProfileComponent {
     const modalRef = this.modalService.open(ClaimTokenComponent, {
       centered: true,
       keyboard: true,
-      size: 'lg'
-    })
+      size: 'lg',
+    });
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
@@ -72,5 +81,4 @@ export class MyProfileComponent {
   openToggle() {
     this.isEXpand = !this.isEXpand;
   }
-
 }

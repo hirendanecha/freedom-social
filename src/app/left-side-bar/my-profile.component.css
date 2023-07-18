@@ -12,4 +12,7 @@
 
 .profile-sidebar .profile-pic .avatar-img {
   border-radius: 15px;
+  max-width: 48px;
+  height: auto;
+  min-height: 48px;
 }

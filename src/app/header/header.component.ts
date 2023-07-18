@@ -40,7 +40,9 @@ export class HeaderComponent {
     private spinner: NgxSpinnerService,
     private router: Router,
     private tokenStorageService: TokenStorageService
-  ) {}
+  ) {
+    this.sharedService.getProfilePic();
+  }
 
   openUserMenu(): void {
     this.userMenusOverlayDialog = this.modaleService.open(this.userMenuList, {
