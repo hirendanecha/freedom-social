@@ -10,7 +10,7 @@ export class Customer {
   City: string;
   State: string;
   Country: string;
-  Mobile: string;
+  MobileNo: string;
   Place: string;
   PartnerId: string;
   DateCreation: string;

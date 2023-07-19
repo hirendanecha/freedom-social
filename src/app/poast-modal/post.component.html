@@ -11,28 +11,33 @@
   <div class="mid-area">
     <div class="d-flex mb-5 gap-3">
       <div class="profile-box">
-        <a 
-          ><img
-            src="assets/images/avtar/avatar.png"
-            class="max-un"
-            alt="icon"
+        <a
+          ><img src="assets/images/avtar/avatar.png" class="max-un" alt="icon"
         /></a>
       </div>
       <textarea
         cols="10"
         rows="2"
         placeholder="Write something to Lerio.."
+        [(ngModel)]="postData.postdescription"
+        required
       ></textarea>
     </div>
     <div class="file-upload">
       <label>Upload attachment</label>
       <label class="file mt-1">
-        <input type="file" />
-        <span class="file-custom pt-8 pb-8 d-grid text-center">
+        <input type="file" multiple (change)="selectFiles($event)" />
+        <span
+          *ngIf="!selectedFile"
+          class="file-custom pt-8 pb-8 d-grid text-center"
+        >
           <i class="material-symbols-outlined mat-icon"> perm_media </i>
           <span>Drag here or click to upload photo.</span>
         </span>
       </label>
+      <div class="selected-img">
+        <img [src]="selectedFile" alt="" />
+      </div>
     </div>
   </div>
 </div>
@@ -49,7 +54,7 @@
     id="common-filter-confirm"
     type="button"
     class="cmn-btn"
-    (click)="activeModal.close(confirmButtonLabel)"
+    (click)="addPost()"
   >
     {{ confirmButtonLabel }}
   </button>

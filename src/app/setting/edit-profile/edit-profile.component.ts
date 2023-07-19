@@ -47,7 +47,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     public sharedService: SharedService
   ) {
     this.userId = this.route.snapshot.paramMap.get('id');
-    const profileId = sessionStorage.getItem('profileId');
+    const profileId = localStorage.getItem('profileId');
     if (profileId) {
       this.getProfile(profileId);
     } else {
@@ -175,7 +175,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
         (data: any) => {
           this.spinner.hide();
           this.profileId = data.data;
-          sessionStorage.setItem('profileId', this.profileId);
+          localStorage.setItem('profileId', this.profileId);
           console.log(data);
           this.getProfile(this.profileId);
         },

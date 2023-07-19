@@ -58,7 +58,9 @@
         <span>Fallings/Activity</span>
       </li> -->
       <div class="btn-area d-flex d-none d-lg-block d-md-block">
-        <button class="cmn-btn px-2 px-sm-5 px-lg-6">Post</button>
+        <button class="cmn-btn px-2 px-sm-5 px-lg-6" (click)="createPost()">
+          Post
+        </button>
       </div>
     </ul>
   </form>
@@ -79,7 +81,7 @@
             </div>
             <div class="info-area">
               <h6 class="m-0">
-                <a ublic-p>{{ post.Username }}</a>
+                <a ublic-p>{{ post.FirstName || post.Username }}</a>
               </h6>
               <!-- <span class="mdtxt status">Active</span> -->
             </div>
@@ -155,18 +157,22 @@
         <div class="py-4">
           <p class="post-description" [innerHTML]="post.postdescription"></p>
         </div>
-        <div class="post-img">
-          <!-- <img src="assets/images/post-img-1.png" class="w-100" alt="image" /> -->
+        <div class="post-img" *ngIf="post.imageUrl">
+          <img [src]="post.imageUrl" class="w-100" alt="image" />
         </div>
       </div>
       <div
         class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between"
       >
         <div class="friends-list d-flex gap-3 align-items-center text-center">
-          <ul class="d-flex align-items-center justify-content-center">
-            <li><img src="assets/images/avatar-2.png" alt="image" /></li>
+          <ul class="d-flex align-items-center justify-content-center mb-0">
+            <li *ngIf="post?.likescount > 0">
+              <img src="assets/images/avatar-2.png" alt="image" />
+            </li>
             <li>
-              <span class="mdtxt d-center">{{ post?.likescount }}+</span>
+              <span class="mdtxt d-center">{{
+                post?.likescount > 0 ? post?.likescount : 0
+              }}</span>
             </li>
           </ul>
         </div>
@@ -204,14 +210,14 @@
       </div>
       <form action="#">
         <div class="d-flex mt-5 gap-3">
-          <div class="profile-box d-none d-xxl-block">
+          <!-- <div class="profile-box d-none d-xxl-block">
             <a
               ><img
-                src="assets/images/avtar/avatar.png"
+                [src]="sharedService.profilePic.url"
                 class="max-un"
                 alt="icon"
             /></a>
-          </div>
+          </div> -->
           <div
             class="form-content input-area py-1 d-flex gap-2 align-items-center w-100"
           >
@@ -237,11 +243,6 @@
                   </span>
                 </label>
               </div>
-              <span class="mood-area">
-                <span class="material-symbols-outlined mat-icon m-0 xxltxt">
-                  mood
-                </span>
-              </span>
             </div>
           </div>
           <div class="btn-area d-flex">
