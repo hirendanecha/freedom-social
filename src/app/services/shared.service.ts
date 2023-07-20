@@ -10,7 +10,7 @@ import { CustomerService } from './customer.service';
   providedIn: 'root',
 })
 export class SharedService {
-  isDark = false;
+  isDark = true;
   profilePic: any = {};
   coverPic: any = {};
   userData: any = {};
