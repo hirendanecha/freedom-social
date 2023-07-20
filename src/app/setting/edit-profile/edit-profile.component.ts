@@ -51,7 +51,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     if (this.profileId) {
       this.getProfile(this.profileId);
     } else {
-      // this.getUserDetails(this.userId);
+      this.getUserDetails(this.userId);
     }
   }
   ngOnInit(): void {
