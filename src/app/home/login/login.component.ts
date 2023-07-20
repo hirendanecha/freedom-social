@@ -50,7 +50,7 @@ export class LoginComponent {
     }
 
     this.loginForm = this.fb.group({
-      UserName: [null, [Validators.required, Validators.email]],
+      Email: [null, [Validators.required, Validators.email]],
       Password: [null, [Validators.required]],
     });
   }
@@ -79,7 +79,8 @@ export class LoginComponent {
           this.isLoginFailed = false;
           this.isLoggedIn = true;
           let lastloc = Utils.getLastLoc();
-          this.router.navigate([lastloc ? lastloc : 'home']);
+          // this.router.navigate([lastloc ? lastloc : 'home']);
+          this.router.navigate([`/home`]);
         } else {
           this.loginMessage = data.mesaage;
           this.spinner.hide();

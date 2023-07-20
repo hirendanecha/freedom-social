@@ -96,14 +96,14 @@
                     class="form-control input-area"
                     required
                     placeholder="Enter Your Email"
-                    formControlName="UserName"
+                    formControlName="Email"
                   />
                   <div
                     class="srv-validation-message text-danger"
                     *ngIf="
                         signInForm.submitted &&
-                           loginForm.controls['UserName'].invalid &&
-                           loginForm.controls['UserName'].errors?.['required']
+                           loginForm.controls['Email'].invalid &&
+                           loginForm.controls['Email'].errors?.['required']
                          "
                   >
                     Email field is required.

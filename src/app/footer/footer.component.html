@@ -34,6 +34,7 @@
           <img
             class="avatar-img max-un"
             [src]="sharedService.profilePic?.url"
+            onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
             alt="avatar"
             (click)="openUserMenu()"
           />
@@ -51,11 +52,12 @@
           <img
             class="avatar-img max-un"
             [src]="sharedService.profilePic?.url"
+            onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
             alt="avatar"
           />
         </div>
         <div class="text-area">
-          <h6 class="m-0 mb-1">Lori Ferguson</h6>
+          <h6 class="m-0 mb-1">{{ sharedService?.userData?.Username }}</h6>
           <p class="mdtxt">Web Developer</p>
         </div>
       </div>

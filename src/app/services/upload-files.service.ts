@@ -27,13 +27,11 @@ export class UploadFilesService {
     return this.http.request(req);
   }
 
-  getProfilePic(): Observable<any> {
-    let id = window.sessionStorage.user_id;
+  getProfilePic(id): Observable<any> {
     return this.http.get(`${this.baseUrl}/files/profile/${id}`);
   }
 
-  getCoverPic(): Observable<any> {
-    let id = window.sessionStorage.user_id;
+  getCoverPic(id): Observable<any> {
     return this.http.get(`${this.baseUrl}/files/profile-cover/${id}`);
   }
 }

@@ -44,45 +44,67 @@ export class SharedService {
   }
 
   getProfilePic() {
-    this.uploadService.getProfilePic().subscribe(
-      (res) => {
-        if (res.length) {
+    let id = window.sessionStorage.user_id;
+    if (id) {
+      this.uploadService.getProfilePic(id).subscribe(
+        (res) => {
+          if (res.length) {
+            this.spinner.hide();
+            this.profilePic = res[0];
+          }
+        },
+        (error) => {
           this.spinner.hide();
-          this.profilePic = res[0];
+          console.log(error);
         }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
-    this.uploadService.getCoverPic().subscribe(
-      (res) => {
-        if (res.length) {
-          this.coverPic = res[0];
+      );
+      this.uploadService.getCoverPic(id).subscribe(
+        (res) => {
+          if (res.length) {
+            this.coverPic = res[0];
+          }
+        },
+        (error) => {
+          this.spinner.hide();
+          console.log(error);
         }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+      );
+    }
   }
 
-  getUserDetails(id): void {
+  getUserDetails() {
     this.spinner.show();
-    this.customerService.getCustomer(id).subscribe(
-      (data: any) => {
-        console.log(data);
-        if (data) {
+    const id = window.sessionStorage.user_id;
+    const pid = sessionStorage.getItem('profileId');
+    if (pid) {
+      this.customerService.getProfile(pid).subscribe(
+        (res: any) => {
+          if (res.data) {
+            this.spinner.hide();
+            console.log(res.data);
+            this.userData = res.data[0];
+          }
+        },
+        (error) => {
           this.spinner.hide();
-          this.userData = data[0];
+          console.log(error);
         }
-      },
-      (err) => {
-        this.spinner.hide();
-        console.log(err);
-      }
-    );
+      );
+    } else {
+      this.customerService.getCustomer(id).subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data) {
+            this.spinner.hide();
+            this.userData = data[0];
+          }
+        },
+        (err) => {
+          this.spinner.hide();
+          console.log(err);
+        }
+      );
+    }
+    return this.userData;
   }
 }

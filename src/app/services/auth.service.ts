@@ -44,7 +44,7 @@ export class AuthService {
     return this.http.post(
       this.baseUrl + 'login',
       {
-        username: login.UserName,
+        email: login.Email,
         password: login.Password,
       },
       httpOptions

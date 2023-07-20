@@ -43,7 +43,7 @@
             <div class="col-11 col-md-8 col-lg-7 col-xl-6 mx-auto">
               <p class="text-2 mb-5">
                 Already a member?
-                <a class="fw-500" routerLink="login">Login</a>
+                <a class="fw-500" routerLink="/login">Login</a>
               </p>
               <h3 class="mb-4">Register Your Account</h3>
               <!-- <div class="d-flex">
@@ -79,8 +79,12 @@
                 autocomplete="off"
                 (ngSubmit)="onSubmit()"
               >
-                <div class="alert alert-{{ type }}" role="alert" *ngIf="msg">
-                  {{ msg }}
+                <div
+                  class="alert alert-{{ type }}"
+                  role="alert"
+                  *ngIf="registrationMessage || msg"
+                >
+                  {{ registrationMessage || msg }}
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
@@ -88,7 +92,6 @@
                     <input
                       type="text"
                       class="form-control input-area"
-                      required
                       name="fname"
                       placeholder="Enter Your Name"
                       [(ngModel)]="customer.FirstName"
@@ -100,7 +103,6 @@
                       type="text"
                       class="form-control input-area"
                       name="lname"
-                      required
                       placeholder="Enter Your Name"
                       [(ngModel)]="customer.LastName"
                     />
@@ -115,18 +117,17 @@
                       class="form-control input-area"
                       required
                       placeholder="Enter your email"
-                      [(ngModel)]="customer.Username"
+                      [(ngModel)]="customer.Email"
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Mobile</label>
+                    <label class="form-label text-light">User Name</label>
                     <input
                       type="text"
                       class="form-control input-area"
-                      required
-                      name="mobile"
-                      placeholder="Enter your mobile number"
-                      [(ngModel)]="customer.Mobile"
+                      name="uname"
+                      placeholder="Enter Your Username Name"
+                      [(ngModel)]="customer.Username"
                     />
                   </div>
                 </div>
@@ -163,14 +164,13 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Address</label>
+                    <label class="form-label text-light">Mobile</label>
                     <input
                       type="text"
                       class="form-control input-area"
-                      required
-                      name="address"
-                      placeholder="Enter your address"
-                      [(ngModel)]="customer.Address"
+                      name="mobile"
+                      placeholder="Enter your mobile number"
+                      [(ngModel)]="customer.MobileNo"
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
@@ -195,6 +195,16 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-light">Address</label>
+                    <input
+                      type="text"
+                      class="form-control input-area"
+                      name="address"
+                      placeholder="Enter your address"
+                      [(ngModel)]="customer.Address"
+                    />
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
                     <label class="form-label text-light">Zip Code</label>
                     <input
                       type="text"
@@ -207,6 +217,8 @@
                       #zipCode
                     />
                   </div>
+                </div>
+                <div class="row">
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label text-light">State</label>
                     <input
@@ -219,8 +231,6 @@
                       [(ngModel)]="customer.State"
                     />
                   </div>
-                </div>
-                <div class="row">
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label text-light">City</label>
                     <input
@@ -233,7 +243,7 @@
                       [(ngModel)]="customer.City"
                     />
                   </div>
-                  <div class="col-12 col-md-6 mb-3">
+                  <!-- <div class="col-12 col-md-6 mb-3">
                     <label class="form-label text-light">Place</label>
                     <input
                       type="text"
@@ -244,7 +254,7 @@
                       disabled
                       [(ngModel)]="customer.Place"
                     />
-                  </div>
+                  </div> -->
                 </div>
 
                 <div class="form-check my-4 d-flex">
@@ -254,7 +264,11 @@
                     <a>Privacy Policy</a>.</label
                   >
                 </div>
-                <button class="btn btn-primary my-2 login-button" type="submit">
+                <button
+                  class="btn btn-primary my-2 login-button"
+                  type="submit"
+                  [disabled]="submitted"
+                >
                   Register
                 </button>
               </form>

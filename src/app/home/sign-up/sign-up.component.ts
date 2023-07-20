@@ -70,9 +70,9 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     console.log(this.customer);
     this.spinner.show();
     this.customerService.createCustomer(this.customer).subscribe(
-      (data) => {
+      (data: any) => {
         this.spinner.hide();
-        window.sessionStorage.user_id = data['Id'];
+        window.sessionStorage.user_id = data.data;
         this.registrationMessage =
           'Your account has registered successfully. Kindly login with your email and password !!!';
         this.isragister = true;
@@ -81,10 +81,12 @@ export class SignUpComponent implements OnInit, AfterViewInit {
           'Please check your email and click the activation link to activate your account.',
           { classname: 'bg-success text-light', delay: 10000 }
         );
+        this.creatProfile(this.customer);
         this.router.navigateByUrl('/login?isVerify=false');
       },
       (err) => {
         this.registrationMessage = err.error.message;
+        this.type = 'danger';
         this.spinner.hide();
       }
     );
@@ -122,7 +124,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     this.customer.Zip = '';
     this.customer.State = '';
     this.customer.City = '';
-    this.customer.Place = '';
+    // this.customer.Place = '';
   }
 
   getAllCountries() {
@@ -143,7 +145,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         let zip_data = data[0];
         this.customer.State = zip_data ? zip_data.state : '';
         this.customer.City = zip_data ? zip_data.city : '';
-        this.customer.Place = zip_data ? zip_data.places : '';
+        // this.customer.Place = zip_data ? zip_data.places : '';
       },
       (err) => {
         console.log(err);
@@ -153,5 +155,35 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   changetopassword(event) {
     event.target.setAttribute('type', 'password');
     this.msg = '';
+  }
+
+  creatProfile(data): void {
+    this.spinner.show();
+    const profile = {
+      Username: data?.Username,
+      FirstName: data?.FirstName,
+      LastName: data?.LastName,
+      Address: data?.Address,
+      Country: data?.Country,
+      City: data?.FirstName,
+      State: data?.State,
+      Zip: data?.Zip,
+      MobileNo: data?.MobileNo,
+      UserID: window?.sessionStorage?.user_id,
+      IsActive: 'N',
+    };
+    this.customerService.createProfile(profile).subscribe(
+      (data: any) => {
+        if (data) {
+          this.spinner.hide();
+          const profileId = data.data;
+          sessionStorage.setItem('profileId', profileId);
+          console.log(data);
+        }
+      },
+      (err) => {
+        this.spinner.hide();
+      }
+    );
   }
 }

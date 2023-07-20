@@ -14,11 +14,7 @@
         <div class="search-form">
           <form action="#" class="input-area d-flex align-items-center">
             <i class="material-symbols-outlined mat-icon me-1">search</i>
-            <input
-              type="text"
-              placeholder="Search"
-              autocomplete="off"
-            />
+            <input type="text" placeholder="Search" autocomplete="off" />
           </form>
         </div>
         <ul
@@ -119,6 +115,7 @@
                 <img
                   class="avatar-img max-un"
                   [src]="sharedService.profilePic?.url"
+                  onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
                   alt="avatar"
                   id="userMenuList"
                   (click)="openUserMenu()"
@@ -140,11 +137,12 @@
           <img
             class="avatar-img max-un"
             [src]="sharedService.profilePic?.url"
+            onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
             alt="avatar"
           />
         </div>
         <div class="text-area">
-          <h6 class="m-0 mb-1">Lori Ferguson</h6>
+          <h6 class="m-0 mb-1">{{ sharedService?.userData?.Username }}</h6>
           <p class="mdtxt">Web Developer</p>
         </div>
       </div>

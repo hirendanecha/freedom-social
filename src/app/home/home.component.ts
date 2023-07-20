@@ -46,8 +46,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public sharedService: SharedService
   ) {
     this.sharedService.getProfilePic();
-    const id = window.sessionStorage.user_id;
-    this.sharedService.getUserDetails(id);
+    this.sharedService.getUserDetails();
   }
 
   ngOnInit(): void {
@@ -158,7 +157,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   createPost(): void {
-    this.postData.profileid = this?.sharedService?.userData?.profileId;
+    const id = sessionStorage.getItem('profileId');
+    console.log(this?.sharedService?.userData?.profileId);
+    this.postData.profileid = id;
     this.postData.postdescription = this.message;
     console.log(this.postData);
     this.spinner.show();

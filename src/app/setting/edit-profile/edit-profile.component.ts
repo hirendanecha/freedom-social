@@ -47,11 +47,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     public sharedService: SharedService
   ) {
     this.userId = this.route.snapshot.paramMap.get('id');
-    const profileId = localStorage.getItem('profileId');
-    if (profileId) {
-      this.getProfile(profileId);
+    this.profileId = sessionStorage.getItem('profileId');
+    if (this.profileId) {
+      this.getProfile(this.profileId);
     } else {
-      this.getUserDetails(this.userId);
+      // this.getUserDetails(this.userId);
     }
   }
   ngOnInit(): void {
@@ -77,8 +77,10 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
         if (data) {
           this.spinner.hide();
           this.customer = data[0];
+          console.log(this.customer.profileId);
+          sessionStorage.setItem('profileId', this.customer.profileId);
           this.getAllCountries();
-          this.uploadService.getProfilePic().subscribe(
+          this.uploadService.getProfilePic(this.customer.Id).subscribe(
             (res) => {
               if (res.length) {
                 this.spinner.hide();
@@ -90,7 +92,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
               console.log(error);
             }
           );
-          this.uploadService.getCoverPic().subscribe(
+          this.uploadService.getCoverPic(this.customer.Id).subscribe(
             (res) => {
               if (res.length) {
                 this.coverPic = res[0];
@@ -130,7 +132,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     this.customer.Zip = '';
     this.customer.State = '';
     this.customer.City = '';
-    this.customer.Place = '';
+    // this.customer.Place = '';
   }
 
   changetopassword(event) {
@@ -156,7 +158,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
         let zip_data = data[0];
         this.customer.State = zip_data ? zip_data.state : '';
         this.customer.City = zip_data ? zip_data.city : '';
-        this.customer.Place = zip_data ? zip_data.places : '';
+        // this.customer.Place = zip_data ? zip_data.places : '';
       },
       (err) => {
         console.log(err);
@@ -165,26 +167,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   }
 
   updateCustomer(): void {
-    if (!this.profileId) {
+    if (this.profileId) {
       this.spinner.show();
-      console.log(this.customer);
-      this.customer.ProfilePicName = this.profilePic.url;
-      this.customer.CoverPicName = this.coverPic.url;
-      this.customer.Id = Number(this.userId);
-      this.customerService.createProfile(this.customer).subscribe(
-        (data: any) => {
-          this.spinner.hide();
-          this.profileId = data.data;
-          localStorage.setItem('profileId', this.profileId);
-          console.log(data);
-          this.getProfile(this.profileId);
-        },
-        (err) => {
-          this.spinner.hide();
-        }
-      );
-    } else {
-      this.spinner.show();
+      this.customer.ProfilePicName = this.sharedService.profilePic.url;
+      this.customer.CoverPicName = this.sharedService.coverPic.url;
+      this.customer.IsActive = 'Y';
       this.customerService
         .updateProfile(this.profileId, this.customer)
         .subscribe(

@@ -1,6 +1,7 @@
 export class Customer {
   Id: number;
   Username: string;
+  Email: string;
   Password: string;
   FirstName: string;
   LastName: string;
@@ -11,7 +12,6 @@ export class Customer {
   State: string;
   Country: string;
   MobileNo: string;
-  Place: string;
   PartnerId: string;
   DateCreation: string;
   IsSuspended: number;
@@ -20,4 +20,5 @@ export class Customer {
   CoverPicName: string;
   DateofBirth: Date;
   Gender: string;
+  profileId: string;
 }

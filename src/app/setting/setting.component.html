@@ -12,6 +12,7 @@
           <img
             class="preview-image w-100"
             [src]="customer.ProfilePicName || sharedService?.profilePic?.url"
+            onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
             alt="Preview Image"
           />
         </div>
@@ -32,6 +33,7 @@
           <img
             class="preview-image w-100"
             [src]="customer?.CoverPicName || sharedService?.coverPic?.url"
+            onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
             alt="Preview Image"
           />
         </div>
@@ -79,7 +81,7 @@
       </div>
       <div class="col-sm-6">
         <div class="single-input text-start">
-          <label for="Email">Email</label>
+          <label for="Email">User Name</label>
           <div class="input-area second">
             <input
               type="text"

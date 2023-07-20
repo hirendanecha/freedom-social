@@ -46,15 +46,15 @@ export class CustomerService {
     );
   }
 
-  createProfile(customer: Customer): Observable<Object> {
-    return this.http.post(`${this.baseUrl}/profile`, customer);
+  createProfile(data: Object): Observable<Object> {
+    return this.http.post(`${this.baseUrl}/profile`, data);
   }
 
-  getProfile(id: number): Observable<Object> {
+  getProfile(id): Observable<Object> {
     return this.http.get<Object>(`${this.baseUrl}/profile/${id}`);
   }
 
   updateProfile(id, customer: Customer): Observable<Object> {
-    return this.http.post(`${this.baseUrl}/profile/${id}`, customer);
+    return this.http.put(`${this.baseUrl}/profile/${id}`, customer);
   }
 }

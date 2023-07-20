@@ -83,9 +83,9 @@ export class HeaderComponent {
   }
 
   closeMenu(e: MouseEvent, type: string) {
-    this.userMenusOverlayDialog.close();
     if (e && type) {
       e.preventDefault();
+      this.userMenusOverlayDialog.close();
 
       switch (type) {
         case 'logout':

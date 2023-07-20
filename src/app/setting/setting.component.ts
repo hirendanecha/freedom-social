@@ -11,54 +11,56 @@ import { SharedService } from '../services/shared.service';
   styleUrls: ['./setting.component.css'],
 })
 export class SettingComponent implements OnInit {
-  customer = new Customer();
+  customer: any;
   constructor(
     private modalService: NgbModal,
     private customerService: CustomerService,
     private spinner: NgxSpinnerService,
     public sharedService: SharedService
   ) {
-    // this.sharedService.getProfilePic();
+    this.sharedService.getProfilePic();
+    this.customer = this.sharedService.getUserDetails();
+    console.log(this.customer);
   }
 
   ngOnInit(): void {
     const userId = window.sessionStorage.user_id;
     const profileId = window.sessionStorage.profileId;
-    if (profileId) {
-      this.getProfile(profileId);
-    } else {
-      this.getUserDetails(userId);
-    }
+    // if (profileId) {
+    //   this.getProfile(profileId);
+    // } else {
+    //   this.getUserDetails(userId);
+    // }
   }
-  getUserDetails(id): void {
-    this.spinner.show();
-    this.customerService.getCustomer(id).subscribe(
-      (data: any) => {
-        if (data) {
-          this.spinner.hide();
-          this.customer = data[0];
-        }
-      },
-      (err) => {
-        this.spinner.hide();
-        console.log(err);
-      }
-    );
-  }
+  // getUserDetails(id): void {
+  //   this.spinner.show();
+  //   this.customerService.getCustomer(id).subscribe(
+  //     (data: any) => {
+  //       if (data) {
+  //         this.spinner.hide();
+  //         this.customer = data[0];
+  //       }
+  //     },
+  //     (err) => {
+  //       this.spinner.hide();
+  //       console.log(err);
+  //     }
+  //   );
+  // }
 
-  getProfile(id): void {
-    this.spinner.show();
-    this.customerService.getProfile(id).subscribe(
-      (res: any) => {
-        if (res.data) {
-          this.spinner.hide();
-          this.customer = res.data[0];
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
-  }
+  // getProfile(id): void {
+  //   this.spinner.show();
+  //   this.customerService.getProfile(id).subscribe(
+  //     (res: any) => {
+  //       if (res.data) {
+  //         this.spinner.hide();
+  //         this.customer = res.data[0];
+  //       }
+  //     },
+  //     (error) => {
+  //       this.spinner.hide();
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 }

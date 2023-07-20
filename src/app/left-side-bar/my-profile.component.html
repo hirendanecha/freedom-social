@@ -24,9 +24,9 @@
       </div>
       <div class="text-area">
         <h6 class="m-0 mb-1">
-          <a>Kent Lewiss</a>
+          <a>{{ sharedService.userData.FirstName }}</a>
         </h6>
-        <p class="mdtxt">@clarkzkent</p>
+        <p class="mdtxt">@{{ sharedService.userData.Username }}</p>
       </div>
       <div class="d-block d-lg-none position-absolute end-0 top-0">
         <button class="button profile-close" (click)="openToggle()">
@@ -117,14 +117,15 @@
         <img
           class="avatar-img max-un"
           [src]="sharedService?.profilePic?.url"
+          onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
           alt="avatar"
         />
       </div>
       <div class="text-area">
         <h6 class="m-0 mb-1">
-          <a>Kent Lewiss</a>
+          <a>{{ sharedService.userData.FirstName }}</a>
         </h6>
-        <p class="mdtxt">@clarkzkent</p>
+        <p class="mdtxt">@{{ sharedService?.userData?.Username }}</p>
       </div>
     </div>
     <ul class="profile-link mt-7 mb-7 pb-7 ps-0">

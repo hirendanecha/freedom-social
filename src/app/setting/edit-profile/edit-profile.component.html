@@ -7,10 +7,9 @@
             class="preview-image w-100"
             loading="lazy"
             data-src="{{
-              customer.ProfilePicName ||
-                profilePic?.url ||
-                sharedService?.profilePic?.url
+              customer.ProfilePicName || sharedService?.profilePic?.url
             }}"
+            onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
             [alt]="sharedService.profilePic?.name || 'Preview Image'"
           />
         </div>
@@ -40,7 +39,8 @@
             <div class="profile-picture position-relative text-start">
               <img
                 class="preview-image w-100"
-                [src]="coverPic.url || sharedService?.coverPic.url"
+                [src]="customer.CoverPicName || sharedService?.coverPic.url"
+                onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
                 [alt]="coverPic.name || 'Preview Image'"
               />
               <div
@@ -177,10 +177,10 @@
           </div>
           <div class="row">
             <div class="col-12 col-md-6 mb-3">
-              <label class="d-flex form-label">Email Address</label>
+              <label class="d-flex form-label">User Name</label>
               <input
-                type="email"
-                name="email"
+                type="text"
+                name="uname"
                 class="form-control input-area"
                 required
                 placeholder="Enter your email"
@@ -198,6 +198,17 @@
                 [(ngModel)]="customer.MobileNo"
               />
             </div>
+            <!-- <div class="col-12 col-md-6 mb-3">
+              <label class="d-flex form-label">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                class="form-control input-area"
+                required
+                placeholder="Enter your email"
+                [(ngModel)]="customer.Email"
+              />
+            </div> -->
           </div>
           <!-- <div class="row">
             <div class="col-12 col-md-6 mb-3">
@@ -239,17 +250,6 @@
           </div> -->
           <div class="row">
             <div class="col-12 col-md-6 mb-3">
-              <label class="d-flex form-label">Address</label>
-              <input
-                type="text"
-                class="form-control input-area"
-                required
-                name="address"
-                placeholder="Enter your address"
-                [(ngModel)]="customer.Address"
-              />
-            </div>
-            <div class="col-12 col-md-6 mb-3">
               <label class="d-flex form-label">Country</label>
               <select
                 id="country"
@@ -268,8 +268,6 @@
                 </option>
               </select>
             </div>
-          </div>
-          <div class="row">
             <div class="col-12 col-md-6 mb-3">
               <label class="d-flex form-label">Zip Code</label>
               <input
@@ -283,6 +281,21 @@
                 #zipCode
               />
             </div>
+          </div>
+          <div class="row">
+            <!-- <div class="col-12 col-md-6 mb-3">
+              <label class="d-flex form-label">Address</label>
+              <input
+                type="text"
+                class="form-control input-area"
+                required
+                name="address"
+                placeholder="Enter your address"
+                [(ngModel)]="customer.Address"
+              />
+            </div> -->
+          </div>
+          <div class="row">
             <div class="col-12 col-md-6 mb-3">
               <label class="d-flex form-label">State</label>
               <input
@@ -295,8 +308,6 @@
                 [(ngModel)]="customer.State"
               />
             </div>
-          </div>
-          <div class="row">
             <div class="col-12 col-md-6 mb-3">
               <label class="d-flex form-label">City</label>
               <input
@@ -309,7 +320,7 @@
                 [(ngModel)]="customer.City"
               />
             </div>
-            <div class="col-12 col-md-6 mb-3">
+            <!-- <div class="col-12 col-md-6 mb-3">
               <label class="d-flex form-label">Place</label>
               <input
                 type="text"
@@ -320,13 +331,13 @@
                 disabled
                 [(ngModel)]="customer.Place"
               />
-            </div>
+            </div> -->
           </div>
           <button
             class="btn btn-primary my-2 login-button float-end"
             type="submit"
           >
-            Save
+            Edit Profile
           </button>
         </form>
       </div>
