@@ -1,12 +1,15 @@
-<ng-container *ngIf="!isLoginPgae && !isSignUpPgae">
+<ng-container *ngIf="!isLoginPage && !isSignUpPage && !isResetPasswordPage">
   <app-header></app-header>
   <!-- <router-outlet></router-outlet> -->
   <app-shell></app-shell>
   <app-footer></app-footer>
 </ng-container>
-<ng-container *ngIf="isLoginPgae">
+<ng-container *ngIf="isLoginPage">
   <app-login></app-login>
 </ng-container>
-<ng-container *ngIf="isSignUpPgae">
+<ng-container *ngIf="isResetPasswordPage">
+  <app-reset-password></app-reset-password>
+</ng-container>
+<ng-container *ngIf="isSignUpPage">
   <app-sign-up></app-sign-up>
 </ng-container>

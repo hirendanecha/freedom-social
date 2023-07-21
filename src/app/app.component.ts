@@ -8,16 +8,19 @@ import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 })
 export class AppComponent {
   title = 'freedom';
-  isLoginPgae = false;
-  isSignUpPgae = false;
+  isLoginPage = false;
+  isSignUpPage = false;
+  isResetPasswordPage = false;
   constructor(private router: Router) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/') {
-          this.isLoginPgae = true;
+          this.isLoginPage = true;
         } else {
-          this.isLoginPgae = event.url.includes('/login') || false;
-          this.isSignUpPgae = event.url.includes('/register') || false;
+          this.isLoginPage = event.url.includes('/login') || false;
+          this.isResetPasswordPage =
+            event.url.includes('/reset-password') || false;
+          this.isSignUpPage = event.url.includes('/register') || false;
         }
       }
     });

@@ -71,18 +71,20 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.customerService.createCustomer(this.customer).subscribe(
       (data: any) => {
-        this.spinner.hide();
-        window.sessionStorage.user_id = data.data;
-        this.registrationMessage =
-          'Your account has registered successfully. Kindly login with your email and password !!!';
-        this.isragister = true;
-        localStorage.setItem('register', String(this.isragister));
-        this.toastService.show(
-          'Please check your email and click the activation link to activate your account.',
-          { classname: 'bg-success text-light', delay: 10000 }
-        );
-        this.creatProfile(this.customer);
-        this.router.navigateByUrl('/login?isVerify=false');
+        if (!data.error) {
+          this.spinner.hide();
+          window.sessionStorage.user_id = data.data;
+          this.registrationMessage =
+            'Your account has registered successfully. Kindly login with your email and password !!!';
+          this.isragister = true;
+          localStorage.setItem('register', String(this.isragister));
+          this.toastService.show(
+            'Please check your email and click the activation link to activate your account.',
+            { classname: 'bg-success text-light', delay: 10000 }
+          );
+          this.creatProfile(this.customer);
+          this.router.navigateByUrl('/login?isVerify=false');
+        }
       },
       (err) => {
         this.registrationMessage = err.error.message;

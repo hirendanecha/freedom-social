@@ -36,13 +36,12 @@ export class ForgotPasswordComponent {
     }
     this.loading = true;
     const user = this.tokenStorage.getUser();
-    const password = this.verifyEmail.form.controls?.password?.value;
-    const Cpassword = this.verifyEmail.form.controls?.confirmPassword?.value;
-    if (this.validatepassword(password, Cpassword)) {
+    const email = this.verifyEmail.form.controls['email'].value;
+    // const password = this.verifyEmail.form.controls?.password?.value;
+    if (email) {
       this.authService
-        .setPassword({
-          userId: user?.Id,
-          password: password,
+        .forgotPassword({
+          email: email,
         })
         .subscribe(
           (result: any) => {

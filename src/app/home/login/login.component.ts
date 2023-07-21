@@ -115,4 +115,18 @@ export class LoginComponent {
         }
       );
   }
+
+  forgotPasswordOpen() {
+    const modalRef = this.modalService.open(ForgotPasswordComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+    });
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.confirmButtonLabel = 'Submit';
+    modalRef.componentInstance.closeIcon = true;
+    // modelRef.result.then(res => {
+    //   return res = user_id
+    // });
+  }
 }
