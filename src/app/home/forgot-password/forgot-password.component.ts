@@ -50,6 +50,9 @@ export class ForgotPasswordComponent {
             if (!result.error) {
               this.activeModal.close(this.cancelButtonLabel);
               this.loading = false;
+              this.msg =
+                'Please check your email and click the link to set new password.';
+              this.type = 'success';
             } else {
               this.spinner.hide();
               this.msg = result.message;
