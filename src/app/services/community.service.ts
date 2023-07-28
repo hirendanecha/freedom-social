@@ -19,6 +19,9 @@ export class CommunityService {
   createCommunity(communityData: Community): Observable<Community> {
     return this.http.post<Community>(`${this.baseUrl}/create`, communityData);
   }
+  createCommunityAdmin(data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/create-community-admin`, data);
+  }
 
   getLogoImg(id): Observable<any> {
     return this.http.get(`${this.baseUrl}/files/community-logo/${id}`);
@@ -27,9 +30,11 @@ export class CommunityService {
   getCoverImg(id): Observable<any> {
     return this.http.get(`${this.baseUrl}/files/community-cover/${id}`);
   }
-  
+
   changeAccountType(id): Observable<any> {
-    const type = 'communityAdmin'
-    return this.http.get(`${this.baseUrl}/change-user-type/${id}/?type=${type}`);
+    const type = 'communityAdmin';
+    return this.http.get(
+      `${this.baseUrl}/change-user-type/${id}/?type=${type}`
+    );
   }
 }

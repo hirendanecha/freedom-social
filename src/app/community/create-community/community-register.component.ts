@@ -196,4 +196,23 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
       }
     );
   }
+
+  createCommunityAdmin(id): void {
+    const data = {
+      userId: this.userId,
+      communityId: id,
+      isActive: 'Y',
+      isAdmin: 'Y',
+    };
+    this.communityService.createCommunityAdmin(data).subscribe(
+      (res: any) => {
+        if (res) {
+          return res;
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }
