@@ -6,20 +6,17 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-my-list',
   templateUrl: './my-list.component.html',
-  styleUrls: ['./my-list.component.css']
+  styleUrls: ['./my-list.component.css'],
 })
 export class MyListComponent {
   isEXpand = false;
   isShow = false;
-  constructor(
-    private router: Router,
-    private modalService: NgbModal
-  ) {
+  constructor(private router: Router, private modalService: NgbModal) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
         this.isShow = event.url.includes('/people') || false;
       }
-    })
+    });
   }
 
   openToggle() {
@@ -29,6 +26,7 @@ export class MyListComponent {
   }
 
   createCommunity() {
+    this.router.navigateByUrl('community');
     // const modalRef = this.modalService.open(AddCommunityComponent, { centered: true, backdrop: 'static', keyboard: false });
     // modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     // modalRef.componentInstance.confirmButtonLabel = 'Create';

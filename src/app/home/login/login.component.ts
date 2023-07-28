@@ -50,7 +50,7 @@ export class LoginComponent {
     }
 
     this.loginForm = this.fb.group({
-      Email: [null, [Validators.required, Validators.email]],
+      Email: [null, [Validators.required]],
       Password: [null, [Validators.required]],
     });
   }
@@ -68,7 +68,7 @@ export class LoginComponent {
     this.authService.customerlogin(this.loginForm.value).subscribe(
       (data: any) => {
         console.log(data);
-        if (data != null) {
+        if (!data.error) {
           this.spinner.hide();
           this.tokenStorage.saveToken(data?.accessToken);
           this.tokenStorage.saveUser(data.user);

@@ -1,0 +1,201 @@
+<div class="main-content">
+  <div class="container-fluid px-0">
+    <div class="row g-0">
+      <div class="login-content d-flex flex-column align-items-center">
+        <div class="container py-5 py-lg-0">
+          <div class="row g-0">
+            <div class="col-11 col-md-8 col-lg-7 col-xl-6 mx-auto">
+              <p class="text-2 mb-5">
+                Already Register with Community?
+                <a class="fw-500" routerLink="/favorite">Community</a>
+              </p>
+              <h3 class="mb-4">Create Your Account With Community</h3>
+              <form
+                id="loginForm"
+                class="form-dark"
+                ngNativeValidate
+                autocomplete="off"
+                (ngSubmit)="onSubmit()"
+              >
+                <div
+                  class="alert alert-{{ type }}"
+                  role="alert"
+                  *ngIf="registrationMessage || msg"
+                >
+                  {{ registrationMessage || msg }}
+                </div>
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <label class="form-label text-light">Community Name</label>
+                    <input
+                      type="text"
+                      class="form-control input-area"
+                      name="cname"
+                      placeholder="Enter your community name"
+                      [(ngModel)]="communityDetails.CommunityName"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <label class="form-label text-light"
+                      >Community Description</label
+                    >
+                    <textarea
+                      name="dec"
+                      cols="30"
+                      rows="3"
+                      placeholder="Enter your description"
+                      [(ngModel)]="communityDetails.CommunityDescription"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <label class="form-label text-light">Logo Image</label>
+                    <input
+                      type="file"
+                      name="logo"
+                      (change)="selectFiles($event, 'community-logo')"
+                    />
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label text-light">Cover Image</label>
+                    <input
+                      name="cover"
+                      type="file"
+                      placeholder="Enter your description"
+                      (change)="selectFiles($event, 'community-cover')"
+                    />
+                  </div>
+                </div>
+
+                <h3 class="mb-4 mt-4">User Details</h3>
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-light">First Name</label>
+                    <input
+                      type="text"
+                      class="form-control input-area"
+                      name="fname"
+                      placeholder="Enter Your Name"
+                      [(ngModel)]="customer.FirstName"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-light">Last Name</label>
+                    <input
+                      type="text"
+                      class="form-control input-area"
+                      name="lname"
+                      placeholder="Enter Your Name"
+                      [(ngModel)]="customer.LastName"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-light">User Name</label>
+                    <input
+                      type="text"
+                      class="form-control input-area"
+                      name="id"
+                      placeholder="Enter Your Username Name"
+                      [(ngModel)]="customer.Username"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-light">Email Address</label>
+                    <input
+                      type="email"
+                      name="email"
+                      class="form-control input-area"
+                      placeholder="Enter your email"
+                      [(ngModel)]="customer.Email"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-light">Zip Code</label>
+                    <input
+                      type="text"
+                      class="form-control input-area"
+                      placeholder="Enter your zip code"
+                      [(ngModel)]="customer.Zip"
+                      name="zip"
+                      #zipCode
+                      disabled
+                    />
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-light">Country</label>
+                    <select
+                      id="country"
+                      name="country"
+                      class="form-control"
+                      [(ngModel)]="customer.Country"
+                      disabled
+                    >
+                      <option value="">United states</option>
+                      <option
+                        [value]="item.country_code"
+                        *ngFor="let item of allCountryData"
+                      >
+                        {{ item.country }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-light">State</label>
+                    <input
+                      type="text"
+                      class="form-control input-area"
+                      placeholder="Enter your state"
+                      disabled
+                      name="state"
+                      [(ngModel)]="customer.State"
+                    />
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-light">City</label>
+                    <input
+                      type="text"
+                      class="form-control input-area"
+                      name="city"
+                      placeholder="Enter your city"
+                      disabled
+                      [(ngModel)]="customer.City"
+                    />
+                  </div>
+                </div>
+
+                <!-- <div class="form-check my-4 d-flex">
+                  <input class="form-check-input p-0" type="checkbox" />
+                  <label class="form-check-label ms-2"
+                    >I agree to the <a>Terms</a> and
+                    <a>Privacy Policy</a>.</label
+                  >
+                </div> -->
+                <button
+                  class="btn btn-primary my-2 login-button"
+                  type="submit"
+                  [disabled]="submitted"
+                >
+                  Create Community
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Login Form End -->
+    </div>
+  </div>
+</div>

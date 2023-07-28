@@ -30,6 +30,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   submitted = false;
   allCountryData: any;
   type = 'danger';
+  defaultCountry = 'US';
 
   @ViewChild('zipCode') zipCode: ElementRef;
   constructor(
@@ -72,6 +73,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     this.customerService.createCustomer(this.customer).subscribe(
       (data: any) => {
         if (!data.error) {
+          this.submitted = true;
           this.spinner.hide();
           window.sessionStorage.user_id = data.data;
           this.registrationMessage =
@@ -103,7 +105,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         'Password must be a minimum of 8 characters and include one uppercase letter, one lowercase letter and one special character';
     }
     if (this.customer.Password !== this.confirm_password) {
-      this.msg = 'Passwords does not match.';
+      this.msg = 'Passwords is incorrect';
       return false;
     }
 
@@ -117,7 +119,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     if (this.userId) {
       // this.updateCustomer();
     } else {
-      this.submitted = true;
+      // this.submitted = true;
       this.save();
     }
   }
@@ -126,6 +128,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     this.customer.Zip = '';
     this.customer.State = '';
     this.customer.City = '';
+    console.log(this.customer.Country);
     // this.customer.Place = '';
   }
 

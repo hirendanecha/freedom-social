@@ -110,24 +110,27 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Email Address</label>
-                    <input
-                      type="email"
-                      name="email"
-                      class="form-control input-area"
-                      required
-                      placeholder="Enter your email"
-                      [(ngModel)]="customer.Email"
-                    />
-                  </div>
-                  <div class="col-12 col-md-6 mb-3">
                     <label class="form-label text-light">User Name</label>
                     <input
                       type="text"
                       class="form-control input-area"
-                      name="uname"
+                      name="id"
                       placeholder="Enter Your Username Name"
                       [(ngModel)]="customer.Username"
+                      required
+                      autocomplete="username"
+                    />
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-light">Email Address</label>
+                    <input
+                      type="email"
+                      name="id"
+                      class="form-control input-area"
+                      required
+                      placeholder="Enter your email"
+                      [(ngModel)]="customer.Email"
+                      autocomplete="email"
                     />
                   </div>
                 </div>
@@ -183,7 +186,9 @@
                       [(ngModel)]="customer.Country"
                       (change)="changeCountry()"
                     >
-                      <option value="">Select Country</option>
+                      <option [value]="defaultCountry">
+                        United states
+                      </option>
                       <option
                         [value]="item.country_code"
                         *ngFor="let item of allCountryData"

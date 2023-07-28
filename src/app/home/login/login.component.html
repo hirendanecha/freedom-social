@@ -81,6 +81,7 @@
                 (ngSubmit)="signInForm.form.valid && onSubmit()"
                 *ngIf="!isLoggedIn"
                 novalidate
+                autocomplete="none"
               >
                 <div
                   class="alert alert-{{ type }}"
@@ -97,6 +98,7 @@
                     required
                     placeholder="Enter Your Email"
                     formControlName="Email"
+                    autocomplete="email"
                   />
                   <div
                     class="srv-validation-message text-danger"

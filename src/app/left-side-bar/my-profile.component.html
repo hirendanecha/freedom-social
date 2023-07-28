@@ -19,6 +19,7 @@
         <img
           class="avatar-img max-un"
           [src]="sharedService?.profilePic?.url"
+          onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
           alt="avatar"
         />
       </div>

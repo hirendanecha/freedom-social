@@ -1,18 +1,16 @@
 <!-- #Mobile View -->
 <ng-container>
   <div class="cus-overflow cus-scrollbar sidebar-head d-block d-lg-none">
-    <!-- <div class="d-flex justify-content-end">
-      <div class="d-block d-xl-none me-4">
-        <button
-          class="button toggler-btn mb-4 mb-lg-0 d-flex align-items-center gap-2"
-        >
-          <span>My List</span>
-          <i class="material-symbols-outlined mat-icon" (click)="openToggle()">
-            tune
-          </i>
-        </button>
-      </div>
-    </div> -->
+    <div class="d-block d-lg-none">
+      <button
+        class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
+      >
+        <i class="material-symbols-outlined mat-icon" (click)="openToggle()">
+          tune
+        </i>
+        <span>My List</span>
+      </button>
+    </div>
     <div class="cus-scrollbar side-wrapper d-block d-lg-none" *ngIf="isEXpand">
       <div class="sidebar-wrapper d-flex flex-column gap-6">
         <div class="sidebar-area p-5">

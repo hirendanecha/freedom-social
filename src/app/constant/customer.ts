@@ -1,7 +1,7 @@
 export class Customer {
   Id: number;
-  Username: string;
   Email: string;
+  Username: string;
   Password: string;
   FirstName: string;
   LastName: string;
@@ -10,7 +10,7 @@ export class Customer {
   Zip: string;
   City: string;
   State: string;
-  Country: string;
+  Country = 'US';
   MobileNo: string;
   PartnerId: string;
   DateCreation: string;
@@ -21,4 +21,14 @@ export class Customer {
   DateofBirth: Date;
   Gender: string;
   profileId: string;
+}
+
+export class Community {
+  userId: string;
+  profileId: string;
+  CommunityName: string;
+  CommunityDescription: string;
+  logoImg: string;
+  coverImg: string;
+  isApprove: string;
 }
