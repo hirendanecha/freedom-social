@@ -29,6 +29,7 @@ export class CommunityService {
   }
   
   changeAccountType(id): Observable<any> {
-    return this.http.get(`${this.baseUrl}/change-user-type/${id}`);
+    const type = 'communityAdmin'
+    return this.http.get(`${this.baseUrl}/change-user-type/${id}/?type=${type}`);
   }
 }
