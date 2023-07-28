@@ -9,6 +9,7 @@ import { WalletLinkComponent } from './wallet-download-modal/1776-wallet.compone
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClaimTokenComponent } from './clai-1776-token/claim-token.component';
 import { SharedService } from '../services/shared.service';
+import { TokenStorageService } from '../services/token-storage.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -27,11 +28,13 @@ export class MyProfileComponent {
   isCommunity = false;
   isPageResearch = false;
   isSetting = false;
+  isShowMyList = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private tokenStorageService: TokenStorageService
   ) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
@@ -80,5 +83,17 @@ export class MyProfileComponent {
 
   openToggle() {
     this.isEXpand = !this.isEXpand;
+  }
+  openMyListToggle() {
+    this.isShowMyList = !this.isShowMyList;
+  }
+
+  openLoacalCommunity() {
+    const user = this.tokenStorageService.getUser();
+    if (user.AccountType === 'user') {
+      this.router.navigateByUrl('community');
+    } else {
+      this.router.navigateByUrl('community/community-post');
+    }
   }
 }

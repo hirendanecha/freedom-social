@@ -21,6 +21,7 @@ export class Customer {
   DateofBirth: Date;
   Gender: string;
   profileId: string;
+  AccountType: string;
 }
 
 export class Community {

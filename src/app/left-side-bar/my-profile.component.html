@@ -1,15 +1,31 @@
 <!-- Mobile View -->
 <ng-container>
-  <div class="d-block d-lg-none">
-    <button
-      class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
-    >
-      <i class="material-symbols-outlined mat-icon" (click)="openToggle()">
-        tune
-      </i>
-      <span>My profile</span>
-    </button>
+  <div class="d-flex d-lg-none justify-content-between">
+    <div class="d-block d-lg-none">
+      <button
+        class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
+      >
+        <i class="material-symbols-outlined mat-icon" (click)="openToggle()">
+          tune
+        </i>
+        <span>My profile</span>
+      </button>
+    </div>
+    <div class="d-block d-lg-none">
+      <button
+        class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
+      >
+        <i
+          class="material-symbols-outlined mat-icon"
+          (click)="openMyListToggle()"
+        >
+          tune
+        </i>
+        <span>My List</span>
+      </button>
+    </div>
   </div>
+  <!-- My Profile -->
   <div
     class="d-block d-lg-none profile-sidebar cus-scrollbar p-5"
     *ngIf="isEXpand"
@@ -107,6 +123,72 @@
       </li>
     </ul>
   </div>
+  <!-- MY list -->
+  <div
+    class="cus-scrollbar side-wrapper d-block d-lg-none mb-3"
+    *ngIf="isShowMyList"
+  >
+    <div class="cus-scrollbar side-wrapper">
+      <div class="sidebar-wrapper d-flex flex-column gap-6">
+        <div class="sidebar-area p-5">
+          <div class="dashboard-img">
+            <img class="w-100" src="/assets/images/freedom-dashboard.png" />
+            <span class="mt-3">
+              Get paid to Post, Reactions, Share and View and Refer family and
+              friends to Freedom!
+            </span>
+          </div>
+          <ul class="list-unstyled fs-11 d-flex text-center">
+            <!-- <li class="d-block m-0">All Time</li> -->
+            <li><span>Posts</span><br /><span class="posts_likes">3</span></li>
+            <li>
+              <span>Reactions</span><br /><span class="posts_likes">2</span>
+            </li>
+            <li><span>Views</span><br /><span class="posts_likes"> 0</span></li>
+            <li>
+              <span>Comments</span><br /><span class="posts_likes">0</span>
+            </li>
+            <li>
+              <span>Refferals</span><br /><span class="posts_likes">0</span>
+            </li>
+          </ul>
+          <ul class="bg-gray-div list-unstyled fs-11 d-flex text-center">
+            <!-- <li class="d-block m-0">Monthly</li> -->
+            <li><span>Posts</span><br /><span class="posts_likes">0</span></li>
+            <li>
+              <span>Reactions</span><br /><span class="posts_likes">0</span>
+            </li>
+            <li><span>Views</span><br /><span class="posts_likes">0</span></li>
+            <li>
+              <span>Comments</span><br /><span class="posts_likes">0</span>
+            </li>
+            <li>
+              <span>Refferals</span><br /><span class="posts_likes">0</span>
+            </li>
+          </ul>
+          <div class="amount-dashboard d-flex justify-content-around">
+            <span><img src="/assets/images/logo1776.png" /></span
+            ><span class="ml-2">0.8750 </span><span class="ml-4">3.50</span
+            ><span class="ml-2">(1776)</span>
+          </div>
+          <div class="dashboard-txt mt-2 mb-3 border p-2">
+            <span>
+              Dashboard only reflects 1776 earned by posting, liking, etc. and
+              does not reflect the 1776 Tokens in your offline wallet.
+            </span>
+          </div>
+        </div>
+        <div class="sidebar-area p-5">
+          <div class="mb-4">
+            <h6 class="d-inline-flex">Local Communities</h6>
+          </div>
+          <button class="cmn-btn" (click)="openLoacalCommunity()">
+            Create Local Community
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>
 
 <!-- Web View -->
@@ -162,7 +244,7 @@
         <li>
           <a
             class="d-flex gap-4"
-            routerLink="community"
+            (click)="openLoacalCommunity()"
             [ngClass]="isCommunity ? 'active' : ''"
           >
             <i class="material-symbols-outlined fs-xxl mat-icon">

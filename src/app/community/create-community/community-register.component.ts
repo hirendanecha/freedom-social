@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CommunityService } from 'src/app/services/community.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { ToastService } from 'src/app/services/toaster.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UploadFilesService } from 'src/app/services/upload-files.service';
 @Component({
   selector: 'app-community-register',
@@ -49,7 +50,8 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
     private uploadService: UploadFilesService,
     private router: Router,
     private fb: FormBuilder,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private tokenStorageService: TokenStorageService
   ) {}
 
   ngOnInit(): void {
@@ -100,7 +102,7 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
               this.submitted = true;
               this.spinner.hide();
               this.changeUserType();
-              this.router.navigateByUrl('community/community-post');
+              this.router.navigateByUrl('/favorite');
             }
           },
           (err) => {
