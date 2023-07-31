@@ -97,12 +97,14 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
       console.log(this.communityDetails);
       if (this.communityDetails) {
         this.communityService.createCommunity(this.communityDetails).subscribe(
-          (data: any) => {
-            if (!data.error) {
+          (res: any) => {
+            if (!res.error) {
               this.submitted = true;
               this.spinner.hide();
               this.changeUserType();
-              this.router.navigateByUrl('/favorite');
+              console.log(res);
+              this.createCommunityAdmin(res.data);
+              this.router.navigateByUrl('/home');
             }
           },
           (err) => {
