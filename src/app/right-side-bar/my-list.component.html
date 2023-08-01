@@ -550,8 +550,19 @@
         <div class="mb-4">
           <h6 class="d-inline-flex">Local Communities</h6>
         </div>
-        <button class="cmn-btn" (click)="createCommunity()">
+        <button
+          class="cmn-btn"
+          *ngIf="user.AccountType === 'user'"
+          (click)="createCommunity()"
+        >
           Create Local Community
+        </button>
+        <button
+          class="cmn-btn"
+          *ngIf="user.AccountType !== 'user'"
+          (click)="createCommunity()"
+        >
+          Find Local Community
         </button>
       </div>
     </div>

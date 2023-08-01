@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Community } from '../constant/customer';
@@ -12,13 +12,34 @@ export class CommunityService {
 
   constructor(private http: HttpClient) {}
 
-  getCommunity(): Observable<Community> {
-    return this.http.get<Community>(`${this.baseUrl}/`);
+  upload(file: File, id: any, defaultType: string): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('folder', defaultType);
+    formData.append('file', file);
+    formData.append('id', id);
+    formData.append('default', defaultType);
+
+    const req = new HttpRequest(
+      'POST',
+      `${this.baseUrl}/upload-community`,
+      formData,
+      {
+        reportProgress: true,
+        responseType: 'json',
+      }
+    );
+
+    return this.http.request(req);
+  }
+
+  getCommunity(id): Observable<Community> {
+    return this.http.get<Community>(`${this.baseUrl}/?id=${id}`);
   }
 
   createCommunity(communityData: Community): Observable<Community> {
     return this.http.post<Community>(`${this.baseUrl}/create`, communityData);
   }
+
   createCommunityAdmin(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/create-community-admin`, data);
   }

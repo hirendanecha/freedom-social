@@ -10,7 +10,7 @@
 <div class="modal-body text-center">
   <div class="mid-area">
     <div class="d-flex mb-5 gap-3">
-      <div class="profile-box">
+      <!-- <div class="profile-box">
         <a
           ><img
             src="assets/images/avtar/avatar.png"
@@ -22,9 +22,76 @@
         cols="10"
         rows="2"
         placeholder="Write something to Lerio.."
-      ></textarea>
+      ></textarea> -->
+      <form
+        id="loginForm"
+        class="form-dark"
+        ngNativeValidate
+        autocomplete="off"
+      >
+        <div class="row">
+          <div class="col-12 mb-3">
+            <label class="form-label text-light d-flex">Community Name</label>
+            <input
+              type="text"
+              class="form-control input-area"
+              name="cname"
+              placeholder="Enter your community name"
+              [(ngModel)]="communityDetails.CommunityName"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <label class="form-label text-light d-flex"
+              >Community Description</label
+            >
+            <textarea
+              name="dec"
+              cols="30"
+              rows="3"
+              placeholder="Enter your description"
+              [(ngModel)]="communityDetails.CommunityDescription"
+            ></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <label class="form-label text-light d-flex">Logo Image</label>
+            <input
+              type="file"
+              name="logo"
+              (change)="selectFiles($event, 'community-logo')"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <label class="form-label text-light d-flex">Cover Image</label>
+            <input
+              name="cover"
+              type="file"
+              placeholder="Enter your description"
+              (change)="selectFiles($event, 'community-cover')"
+            />
+          </div>
+        </div>
+
+        <!-- <div class="form-check my-4 d-flex">
+                  <input class="form-check-input p-0" type="checkbox" />
+                  <label class="form-check-label ms-2"
+                    >I agree to the <a>Terms</a> and
+                    <a>Privacy Policy</a>.</label
+                  >
+                </div> -->
+        <!-- <button
+          class="btn btn-primary my-2 login-button"
+          type="submit"
+          [disabled]="submitted"
+        >
+          Create Community
+        </button> -->
+      </form>
     </div>
-    <div class="file-upload">
+    <!-- <div class="file-upload">
       <label>Upload attachment</label>
       <label class="file mt-1">
         <input type="file" />
@@ -33,7 +100,7 @@
           <span>Drag here or click to upload photo.</span>
         </span>
       </label>
-    </div>
+    </div> -->
     <!-- <div class="tooltips-area d-flex mt-3 gap-2">
       <button
         type="button"
@@ -93,10 +160,11 @@
   </button>
   <button
     id="common-filter-confirm"
-    type="button"
+    type="submit"
     class="cmn-btn"
-    (click)="activeModal.close(confirmButtonLabel)"
+    (click)="onSubmit()"
   >
+    <!-- (click)="" -->
     {{ confirmButtonLabel }}
   </button>
 </div>

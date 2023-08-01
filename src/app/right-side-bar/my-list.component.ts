@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { AddCommunityComponent } from '../community/add-community/add-community.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -9,9 +9,10 @@ import { TokenStorageService } from '../services/token-storage.service';
   templateUrl: './my-list.component.html',
   styleUrls: ['./my-list.component.css'],
 })
-export class MyListComponent {
+export class MyListComponent implements OnInit {
   isEXpand = false;
   isShow = false;
+  user: any;
   constructor(
     private router: Router,
     private modalService: NgbModal,
@@ -24,6 +25,10 @@ export class MyListComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.user = this.tokenStorageService.getUser();
+  }
+
   openToggle() {
     console.log('before', this.isEXpand);
     this.isEXpand = !this.isEXpand;
@@ -31,18 +36,10 @@ export class MyListComponent {
   }
 
   createCommunity() {
-    const user = this.tokenStorageService.getUser();
-    if (user.AccountType === 'user') {
+    if (this.user.AccountType === 'user') {
       this.router.navigateByUrl('community');
     } else {
       this.router.navigateByUrl('community/community-post');
     }
-    // const modalRef = this.modalService.open(AddCommunityComponent, { centered: true, backdrop: 'static', keyboard: false });
-    // modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    // modalRef.componentInstance.confirmButtonLabel = 'Create';
-    // modalRef.componentInstance.closeIcon = true;
-    // modelRef.result.then(res => {
-    //   return res = user_id
-    // });
   }
 }

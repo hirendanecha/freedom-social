@@ -29,7 +29,7 @@ export class ShellComponent {
             event.url.includes('/login') ||
             event.url.includes('/reset-password') ||
             event.url.includes('/register') ||
-            event.url.includes('/favorite') ||
+            // event.url.includes('/favorite') ||
             false;
           this.isLoginPgae = event.url.includes('/login') || false;
           this.isShowMyProfile =
