@@ -1,0 +1,197 @@
+<div class="row profile-picture-area justify-content-center mb-15 mb-lg-0">
+  <div class="col-xl-12 col-lg-8">
+    <div class="single-box p-5">
+      <div class="col-md-12">
+        <div class="upload-single cover-img">
+          <div class="profile-picture position-relative text-start">
+            <!-- src="/assets/images/profile-cover.png" -->
+            <img
+              [src]="customer.CoverPicName || sharedService?.coverPic.url"
+              class="preview-image w-100"
+              onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
+              [alt]="coverPic.name || 'Preview Image'"
+            />
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-4 profile text-start d-flex align-items-center">
+            <!-- src="/assets/images/avtar/avtar.png" -->
+            <img
+              class="preview-image w-100"
+              loading="lazy"
+              data-src="{{
+                customer.ProfilePicName || sharedService?.profilePic?.url
+              }}"
+              onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
+              [alt]="sharedService.profilePic?.name || 'Preview Image'"
+            />
+            <div class="user-details ms-2">
+              <h3>
+                {{ customer?.FirstName }}
+                {{ customer?.LastName }}
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="page-details">
+            <ul class="nav mt-5 pt-4 flex-wrap gap-2 tab-area">
+              <li class="nav-item" role="presentation" (click)="activeTab = 1">
+                <a
+                  class="nav-link d-center"
+                  [ngClass]="activeTab === 1 ? 'active' : ''"
+                  >Post</a
+                >
+              </li>
+              <li class="nav-item" role="presentation" (click)="activeTab = 2">
+                <a
+                  class="nav-link d-center"
+                  [ngClass]="activeTab === 2 ? 'active' : ''"
+                  >About</a
+                >
+              </li>
+              <li class="nav-item" role="presentation" (click)="activeTab = 3">
+                <a
+                  class="nav-link d-center"
+                  [ngClass]="activeTab === 3 ? 'active' : ''"
+                  >Photos</a
+                >
+              </li>
+              <li class="nav-item" role="presentation" (click)="activeTab = 4">
+                <a
+                  class="nav-link d-center"
+                  [ngClass]="activeTab === 4 ? 'active' : ''"
+                  >Community</a
+                >
+              </li>
+              <!-- <li class="nav-item" role="presentation">
+                <a class="nav-link d-center">Connections</a>
+              </li> -->
+              <!-- <li class="nav-item" role="presentation">
+                <a class="nav-link d-center">Events</a>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="single-box p-3 p-sm-5">
+    </div> -->
+    <div class="row justify-content-between">
+      <div class="col-lg-8 col-12 justify-content-center">
+        <ng-container *ngIf="activeTab === 1">
+          <app-user-post [profileId]="profileId"></app-user-post>
+        </ng-container>
+        <ng-container *ngIf="activeTab === 2">
+          <h3>Hello About</h3>
+        </ng-container>
+        <ng-container *ngIf="activeTab === 3">
+          <h3>Hello Photos</h3>
+        </ng-container>
+        <ng-container *ngIf="activeTab === 4">
+          <h3>Hello Communities</h3>
+        </ng-container>
+      </div>
+      <div class="col-lg-3 d-none d-md-block justify-content-center">
+        <!-- <app-my-list></app-my-list> -->
+        <div class="cus-overflow cus-scrollbar sidebar-head d-lg-block d-none">
+          <div class="cus-scrollbar side-wrapper">
+            <div class="sidebar-wrapper d-flex flex-column gap-6">
+              <div class="sidebar-area p-5">
+                <div class="dashboard-img">
+                  <img
+                    class="w-100"
+                    src="/assets/images/freedom-dashboard.png"
+                  />
+                  <span class="mt-3">
+                    Get paid to Post, Reactions, Share and View and Refer family
+                    and friends to Freedom!
+                  </span>
+                </div>
+                <ul class="list-unstyled fs-11">
+                  <!-- <li class="d-block m-0">All Time</li> -->
+                  <li>
+                    <span>Posts</span><br /><span class="posts_likes">3</span>
+                  </li>
+                  <li>
+                    <span>Reactions</span><br /><span class="posts_likes"
+                      >2</span
+                    >
+                  </li>
+                  <li>
+                    <span>Views</span><br /><span class="posts_likes"> 0</span>
+                  </li>
+                  <li>
+                    <span>Comments</span><br /><span class="posts_likes"
+                      >0</span
+                    >
+                  </li>
+                  <li>
+                    <span>Refferals</span><br /><span class="posts_likes"
+                      >0</span
+                    >
+                  </li>
+                </ul>
+                <ul class="bg-gray-div list-unstyled fs-11">
+                  <!-- <li class="d-block m-0">Monthly</li> -->
+                  <li>
+                    <span>Posts</span><br /><span class="posts_likes">0</span>
+                  </li>
+                  <li>
+                    <span>Reactions</span><br /><span class="posts_likes"
+                      >0</span
+                    >
+                  </li>
+                  <li>
+                    <span>Views</span><br /><span class="posts_likes">0</span>
+                  </li>
+                  <li>
+                    <span>Comments</span><br /><span class="posts_likes"
+                      >0</span
+                    >
+                  </li>
+                  <li>
+                    <span>Refferals</span><br /><span class="posts_likes"
+                      >0</span
+                    >
+                  </li>
+                </ul>
+                <div class="amount-dashboard d-flex justify-content-around">
+                  <span><img src="/assets/images/logo1776.png" /></span
+                  ><span class="ml-2">0.8750 </span
+                  ><span class="ml-4">3.50</span
+                  ><span class="ml-2">(1776)</span>
+                </div>
+                <div class="dashboard-txt mt-2 mb-3 border p-2">
+                  <span>
+                    Dashboard only reflects 1776 earned by posting, liking, etc.
+                    and does not reflect the 1776 Tokens in your offline wallet.
+                  </span>
+                </div>
+              </div>
+              <!-- <div class="sidebar-area p-5">
+                <div class="mb-4">
+                  <h6 class="d-inline-flex">Local Communities</h6>
+                </div>
+                <button
+                  class="cmn-btn"
+                  *ngIf="user.AccountType === 'user'"
+                  (click)="createCommunity()"
+                >
+                  Create Local Community
+                </button>
+                <button
+                  class="cmn-btn"
+                  *ngIf="user.AccountType !== 'user'"
+                  (click)="createCommunity()"
+                >
+                  Find Local Community
+                </button>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

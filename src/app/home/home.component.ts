@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   postData: any = {};
   @ViewChild('emojiMenu') emojiMenu: EventEmitter<NgbModalRef[]> | undefined;
   emojiMenuDialog: any;
+  isSubmitted = false;
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -157,24 +158,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   createPost(): void {
-    const id = sessionStorage.getItem('profileId');
-    console.log(this?.sharedService?.userData?.profileId);
-    this.postData.profileid = id;
-    this.postData.postdescription = this.message;
-    console.log(this.postData);
-    this.spinner.show();
-    if (this.postData) {
-      this.postService.createPost(this.postData).subscribe(
-        (res: any) => {
-          this.spinner.hide();
-          console.log(res);
-          this.getPostList();
-        },
-        (error) => {
-          this.spinner.hide();
-          console.log(error);
-        }
-      );
+    if (this.message) {
+      const id = sessionStorage.getItem('profileId');
+      console.log(this?.sharedService?.userData?.profileId);
+      this.postData.profileid = id;
+      this.postData.postdescription = this.message;
+      console.log(this.postData);
+      this.spinner.show();
+      if (this.postData) {
+        this.postService.createPost(this.postData).subscribe(
+          (res: any) => {
+            this.spinner.hide();
+            console.log(res);
+            this.getPostList();
+          },
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+        );
+      }
     }
   }
 

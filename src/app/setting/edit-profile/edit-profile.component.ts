@@ -78,7 +78,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
           this.spinner.hide();
           this.customer = data[0];
           console.log(this.customer.profileId);
-          sessionStorage.setItem('profileId', this.customer.profileId);
           this.getAllCountries();
           this.uploadService.getProfilePic(this.customer.Id).subscribe(
             (res) => {

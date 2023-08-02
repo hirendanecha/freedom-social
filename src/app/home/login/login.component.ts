@@ -72,6 +72,7 @@ export class LoginComponent {
           this.spinner.hide();
           this.tokenStorage.saveToken(data?.accessToken);
           this.tokenStorage.saveUser(data.user);
+          sessionStorage.setItem('profileId', data.user.profileId);
           window.sessionStorage.user_level_id = 2;
           window.sessionStorage.user_id = data.user.Id;
           window.sessionStorage.user_country = data.user.Country;

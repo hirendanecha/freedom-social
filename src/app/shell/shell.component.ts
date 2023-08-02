@@ -34,6 +34,7 @@ export class ShellComponent {
           this.isLoginPgae = event.url.includes('/login') || false;
           this.isShowMyProfile =
             event.url.includes('/edit-profile') ||
+            event.url.includes('/view-profile') ||
             event.url.includes('/login') ||
             event.url.includes('/register') ||
             event.url.includes('/reset-password') ||

@@ -88,6 +88,9 @@ export class HeaderComponent {
       this.userMenusOverlayDialog.close();
 
       switch (type) {
+        case 'profile':
+          this.goToViewProfile();
+          break;
         case 'logout':
           this.logout();
           break;
@@ -116,6 +119,12 @@ export class HeaderComponent {
     const userId = sessionStorage.getItem('user_id');
     console.log(userId);
     this.router.navigate([`settings/edit-profile/${userId}`]);
+  }
+
+  goToViewProfile() {
+    const userId = sessionStorage.getItem('user_id');
+    console.log(userId);
+    this.router.navigate([`settings/view-profile/${userId}`]);
   }
 
   forgotPasswordOpen() {

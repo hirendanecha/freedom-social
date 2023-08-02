@@ -47,6 +47,10 @@ export class PostService {
     return this.http.get(`${this.baseUrl}/`);
   }
 
+  getPostsByProfileId(id) {
+    return this.http.get(`${this.baseUrl}/${id}`);
+  }
+
   getPostImg(): Observable<any> {
     let id = window.sessionStorage.user_id;
     return this.http.get(`${this.baseUrl}/files/post/${id}`);
