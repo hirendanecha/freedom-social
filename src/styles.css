@@ -585,7 +585,7 @@ li {
   text-align: center;
   z-index: 9;
   cursor: pointer;
-  transition: all 1s;
+  transition: all 4s;
   transform: translateY(100%);
 }
 

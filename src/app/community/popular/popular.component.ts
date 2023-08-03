@@ -220,4 +220,8 @@ export class PopularComponent implements OnInit {
       }
     );
   }
+
+  goToCommunityDetails(id): void {
+    this.router.navigate([`community/${id}`]);
+  }
 }

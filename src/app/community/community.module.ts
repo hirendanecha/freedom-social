@@ -9,6 +9,7 @@ import { GroupComponent } from './group/group.component';
 import { AddCommunityComponent } from './add-community/add-community.component';
 import { CommunityRegisterComponent } from './create-community/community-register.component';
 import { FormsModule } from '@angular/forms';
+import { ViewCommunityComponent } from './view-community/view-community.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { FormsModule } from '@angular/forms';
     GroupComponent,
     AddCommunityComponent,
     CommunityRegisterComponent,
+    ViewCommunityComponent,
   ],
   imports: [CommunityRoutingModule, CommonModule, FormsModule],
   exports: [PopularComponent, MembersComponent, GroupComponent],

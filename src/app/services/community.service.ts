@@ -58,4 +58,11 @@ export class CommunityService {
       `${this.baseUrl}/change-user-type/${id}/?type=${type}`
     );
   }
+  getCommunityByUserId(id): Observable<any> {
+    return this.http.get(`${this.baseUrl}/user/${id}`);
+  }
+
+  getCommunityById(id): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`);
+  }
 }

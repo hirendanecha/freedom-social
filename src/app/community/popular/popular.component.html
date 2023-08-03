@@ -8,7 +8,7 @@
   >
     <div class="row cus-mar friend-request">
       <div
-        class="col-xl-4 col-sm-6 "
+        class="col-xl-4 col-sm-6"
         *ngFor="let community of popularCommunityList"
       >
         <div class="single-box p-5">
@@ -85,7 +85,12 @@
             >
               Joined
             </button>
-            <button class="cmn-btn alt third">Invite</button>
+            <button
+              class="cmn-btn alt third"
+              (click)="goToCommunityDetails(community.Id)"
+            >
+              View
+            </button>
           </div>
         </div>
       </div>

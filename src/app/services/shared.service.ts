@@ -74,7 +74,6 @@ export class SharedService {
 
   getUserDetails() {
     this.spinner.show();
-    const id = window.sessionStorage.user_id;
     const pid = sessionStorage.getItem('profileId');
     if (pid) {
       this.customerService.getProfile(pid).subscribe(
@@ -83,6 +82,7 @@ export class SharedService {
             this.spinner.hide();
             console.log(res.data);
             this.userData = res.data[0];
+            return this.userData;
           }
         },
         (error) => {
@@ -90,21 +90,6 @@ export class SharedService {
           console.log(error);
         }
       );
-    } else {
-      this.customerService.getCustomer(id).subscribe(
-        (data: any) => {
-          console.log(data);
-          if (data) {
-            this.spinner.hide();
-            this.userData = data[0];
-          }
-        },
-        (err) => {
-          this.spinner.hide();
-          console.log(err);
-        }
-      );
     }
-    return this.userData;
   }
 }

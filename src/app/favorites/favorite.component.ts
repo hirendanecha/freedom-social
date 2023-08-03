@@ -99,7 +99,8 @@ export class FavoriteComponent implements OnInit {
 
   getPostList(): void {
     this.spinner.show();
-    this.postService.getPosts().subscribe(
+    const page = 1;
+    this.postService.getPosts(page).subscribe(
       (res: any) => {
         if (res) {
           this.postList = res;

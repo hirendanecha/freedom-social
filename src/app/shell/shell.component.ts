@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { animate, query, style } from '@angular/animations';
+import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 
 @Component({
@@ -11,6 +12,7 @@ export class ShellComponent {
   isShowMyProfile = false;
   isLoginPgae = false;
   isResetPasswordPage = false;
+  showButton = false;
   constructor(private router: Router) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
@@ -42,6 +44,23 @@ export class ShellComponent {
             false;
         }
       }
+    });
+    this.onWindowScroll();
+  }
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (window.scrollY > 300) {
+      this.showButton = true;
+    } else {
+      this.showButton = false;
+    }
+  }
+
+  scrollToTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
     });
   }
 }

@@ -18,11 +18,11 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UploadFilesService } from 'src/app/services/upload-files.service';
 
 @Component({
-  selector: 'app-view-profile',
-  templateUrl: './view-profile.component.html',
-  styleUrls: ['./view-profile.component.css'],
+  selector: 'app-view-community',
+  templateUrl: './view-community.component.html',
+  styleUrls: ['./view-community.component.css'],
 })
-export class ViewProfileComponent implements OnInit, AfterViewInit {
+export class ViewCommunityComponent implements OnInit, AfterViewInit {
   customer: Customer = new Customer();
   registerForm!: FormGroup;
   isragister = false;
@@ -30,63 +30,35 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
   confirm_password = '';
   msg = '';
   allCountryData: any;
-  userId = '';
+  communityId = '';
   profilePic: any = {};
   coverPic: any = {};
   profileId = '';
   activeTab = 1;
-  communityList: any = [];
+  communityDetails: any = {};
   constructor(
-    private modalService: NgbActiveModal,
     private route: ActivatedRoute,
-    private router: Router,
-    private customerService: CustomerService,
     private spinner: NgxSpinnerService,
-    private tokenStorage: TokenStorageService,
-    private uploadService: UploadFilesService,
     public sharedService: SharedService,
     private communityService: CommunityService
   ) {
-    this.userId = this.route.snapshot.paramMap.get('id');
-    this.profileId = sessionStorage.getItem('profileId');
-    if (this.profileId) {
-      this.getProfile(this.profileId);
-    }
+    this.communityId = this.route.snapshot.paramMap.get('id');
   }
   ngOnInit(): void {
-    if (!this.tokenStorage.getToken()) {
-      this.router.navigate([`/login`]);
-    }
-    this.modalService.close();
+    this.getCommunityDetails();
   }
 
   ngAfterViewInit(): void {}
 
-  getProfile(id): void {
+  getCommunityDetails(): void {
     this.spinner.show();
-    this.customerService.getProfile(id).subscribe(
+    this.communityService.getCommunityById(this.communityId).subscribe(
       (res: any) => {
-        if (res.data) {
+        if (res) {
           this.spinner.hide();
-          this.customer = res.data[0];
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
-  }
-
-  getCommunities(): void {
-    this.spinner.show();
-    this.communityService.getCommunityByUserId(this.userId).subscribe(
-      (res: any) => {
-        if (res.data) {
-          this.spinner.hide();
-          res.data.forEach((element) => {
+          res.forEach((element) => {
             if (element.Id) {
-              this.communityList.push(element);
+              this.communityDetails = element;
             }
           });
         }
@@ -96,9 +68,5 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
         console.log(error);
       }
     );
-  }
-
-  goToCommunityDetails(id): void {
-    this.router.navigate([`community/${id}`]);
   }
 }

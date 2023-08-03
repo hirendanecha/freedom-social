@@ -562,7 +562,7 @@ li {
 
 .scrollToTop {
   position: fixed;
-  bottom: 0;
+  bottom: 8%;
   right: 30px;
   width: 45px;
   height: 45px;
@@ -574,8 +574,8 @@ li {
   text-align: center;
   z-index: 9;
   cursor: pointer;
-  transition: all 1s;
-  transform: translateY(100%);
+  /* transition: all 1s; */
+  /* transform: translateY(100%); */
 }
 
 .scrollToTop:hover {

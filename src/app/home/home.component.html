@@ -59,7 +59,11 @@
         <span>Fallings/Activity</span>
       </li> -->
       <div class="btn-area d-flex d-none d-lg-block d-md-block">
-        <button class="cmn-btn px-2 px-sm-5 px-lg-6" [disabled]="isSubmitted" (click)="createPost()">
+        <button
+          class="cmn-btn px-2 px-sm-5 px-lg-6"
+          [disabled]="isSubmitted"
+          (click)="createPost()"
+        >
           Post
         </button>
       </div>
@@ -87,24 +91,22 @@
               <!-- <span class="mdtxt status">Active</span> -->
             </div>
           </div>
-          <!-- <div class="btn-group cus-dropdown">
+          <div class="btn-group cus-dropdown">
             <button
               type="button"
               class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              (click)="openDropDown()"
-              [ngClass]="isExpand ? 'show' : ''"
+              (click)="openDropDown(post.id)"
             >
               <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
             </button>
             <ul
-              class="dropdown-menu p-4 pt-2"
-              [ngClass]="isExpand ? 'show' : ''"
+              class="dropdown-menu p-4 pt-2 mt-6"
+              [ngClass]="postId === post.id ? 'show' : ''"
             >
               <li>
                 <a
                   class="droplist d-flex align-items-center gap-2"
-                  (click)="isExpand = false"
+                  (click)="postId = null"
                 >
                   <i class="material-symbols-outlined mat-icon">
                     bookmark_add
@@ -115,7 +117,7 @@
               <li>
                 <a
                   class="droplist d-flex align-items-center gap-2"
-                  (click)="isExpand = false"
+                  (click)="postId = null"
                 >
                   <i class="material-symbols-outlined mat-icon">
                     person_remove
@@ -123,11 +125,8 @@
                   <span>Unfollow</span>
                 </a>
               </li>
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="isExpand = false"
-                >
+              <!-- <li>
+                <a class="droplist d-flex align-items-center gap-2">
                   <i class="material-symbols-outlined mat-icon">
                     hide_source
                   </i>
@@ -135,10 +134,7 @@
                 </a>
               </li>
               <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="isExpand = false"
-                >
+                <a class="droplist d-flex align-items-center gap-2">
                   <i class="material-symbols-outlined mat-icon"> lock </i>
                   <span>Block</span>
                 </a>
@@ -146,14 +142,13 @@
               <li>
                 <a
                   class="droplist d-flex align-items-center gap-2"
-                  (click)="isExpand = false"
                 >
                   <i class="material-symbols-outlined mat-icon"> flag </i>
                   <span>Report Post</span>
                 </a>
-              </li>
+              </li> -->
             </ul>
-          </div> -->
+          </div>
         </div>
         <div class="py-4">
           <p class="post-description" [innerHTML]="post.postdescription"></p>
@@ -286,6 +281,11 @@
       </form>
     </div>
   </ng-container>
+
+  <span class="text-center d-center" (click)="loadMore()">
+    Load More
+    <i class="material-symbols-outlined mat-icon">autorenew</i>
+  </span>
 
   <!-- <div class="post-single-box p-3 p-sm-5">
     <div class="top-area pb-5">

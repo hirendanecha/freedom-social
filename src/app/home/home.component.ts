@@ -40,6 +40,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('emojiMenu') emojiMenu: EventEmitter<NgbModalRef[]> | undefined;
   emojiMenuDialog: any;
   isSubmitted = false;
+  activePage = 1;
+  postId = '';
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -109,8 +111,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.isLike = !this.isLike;
   }
 
-  openDropDown() {
-    this.isExpand = !this.isExpand;
+  openDropDown(id) {
+    this.postId = id;
+    if (this.postId) {
+      this.isExpand = true;
+    } else {
+      this.isExpand = false;
+    }
   }
 
   toggleEmojiPicker() {
@@ -142,8 +149,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getPostList(): void {
+    const page = 1;
     this.spinner.show();
-    this.postService.getPosts().subscribe(
+    this.postService.getPosts(page).subscribe(
       (res: any) => {
         if (res) {
           this.postList = res;
@@ -181,7 +189,31 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
+  loadMore(): void {
+    this.spinner.show();
+    const page = this.activePage + 1;
+    this.postService.getPosts(page).subscribe(
+      (res: any) => {
+        if (res) {
+          this.spinner.hide();
+          res.forEach((element) => {
+            this.postList.push(element);
+          });
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
+  }
+
   // getMetaFromLink(event): void {
   //   console.log(event.target);
   // }
+
+  hover(e) {
+    this.isExpand = e;
+    console.log(this.isExpand);
+  }
 }
