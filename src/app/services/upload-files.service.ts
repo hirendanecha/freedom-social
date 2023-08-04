@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 })
 export class UploadFilesService {
   private baseUrl = environment.serverUrl + 'utils';
-  private imgUrl = environment.imgUrl;
 
   constructor(private http: HttpClient) {}
 
