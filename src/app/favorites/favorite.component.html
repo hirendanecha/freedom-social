@@ -82,16 +82,8 @@
           <i class="material-symbols-outlined mat-icon">add_a_photo</i>
           <span>Photo</span>
         </li>
-        <!-- <li class="d-flex align-items-center gap-2" (click)="createPost()">
-          <img
-            src="assets/images/icon/emoji-laughing.png"
-            class="max-un"
-            alt="icon"
-          />
-          <span>Fallings/Activity</span>
-        </li> -->
-        <div class="btn-area d-flex d-none d-lg-block d-md-block">
-          <button class="cmn-btn px-2 px-sm-5 px-lg-6" (click)="createPost()">
+        <div class="btn-area d-flex d-lg-block d-md-block">
+          <button class="cmn-btn px-2 px-sm-5 px-lg-6 p-2" (click)="createPost()">
             Post
           </button>
         </div>
@@ -155,73 +147,6 @@
               </li>
             </ul>
           </div>
-          <!-- <div class="btn-group cus-dropdown">
-            <button
-              type="button"
-              class="dropdown-btn"
-              data-bs-toggle="dropdown"
-              (click)="openDropDown()"
-              [ngClass]="isExpand ? 'show' : ''"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul
-              class="dropdown-menu p-4 pt-2"
-              [ngClass]="isExpand ? 'show' : ''"
-            >
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="isExpand = false"
-                >
-                  <i class="material-symbols-outlined mat-icon">
-                    bookmark_add
-                  </i>
-                  <span>Saved Post</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="isExpand = false"
-                >
-                  <i class="material-symbols-outlined mat-icon">
-                    person_remove
-                  </i>
-                  <span>Unfollow</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="isExpand = false"
-                >
-                  <i class="material-symbols-outlined mat-icon">
-                    hide_source
-                  </i>
-                  <span>Hide Post</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="isExpand = false"
-                >
-                  <i class="material-symbols-outlined mat-icon"> lock </i>
-                  <span>Block</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="isExpand = false"
-                >
-                  <i class="material-symbols-outlined mat-icon"> flag </i>
-                  <span>Report Post</span>
-                </a>
-              </li>
-            </ul>
-          </div> -->
         </div>
         <div class="py-4">
           <p class="post-description" [innerHTML]="post.postdescription"></p>
@@ -236,12 +161,12 @@
         <div
           class="friends-list d-flex gap-3 align-items-center text-center w-100"
         >
-          <ul
+        <!-- <li *ngIf="post?.likescount > 0">
+          <img src="assets/images/avatar-2.png" alt="image" />
+        </li> -->
+          <!-- <ul
             class="d-flex align-items-center justify-content-around mb-0 w-100"
           >
-            <!-- <li *ngIf="post?.likescount > 0">
-              <img src="assets/images/avatar-2.png" alt="image" />
-            </li> -->
             <li>
               <i class="material-symbols-outlined mat-icon"> thumb_up </i>
               <span class="mdtxt d-center">{{
@@ -272,7 +197,7 @@
                 post?.dislikecount > 0 ? post?.dislikecount : 0
               }}</span>
             </li>
-          </ul>
+          </ul> -->
         </div>
         <!-- <div
           class="react-list d-flex flex-wrap gap-6 align-items-center text-center"

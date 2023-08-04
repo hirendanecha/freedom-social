@@ -24,13 +24,11 @@ export class SettingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const userId = window.sessionStorage.user_id;
+    // const userId = window.sessionStorage.user_id;
     const profileId = window.sessionStorage.profileId;
-    // if (profileId) {
-    //   this.getProfile(profileId);
-    // } else {
-    //   this.getUserDetails(userId);
-    // }
+    if (profileId) {
+      this.getProfile(profileId);
+    }
   }
   // getUserDetails(id): void {
   //   this.spinner.show();
@@ -48,19 +46,19 @@ export class SettingComponent implements OnInit {
   //   );
   // }
 
-  // getProfile(id): void {
-  //   this.spinner.show();
-  //   this.customerService.getProfile(id).subscribe(
-  //     (res: any) => {
-  //       if (res.data) {
-  //         this.spinner.hide();
-  //         this.customer = res.data[0];
-  //       }
-  //     },
-  //     (error) => {
-  //       this.spinner.hide();
-  //       console.log(error);
-  //     }
-  //   );
-  // }
+  getProfile(id): void {
+    this.spinner.show();
+    this.customerService.getProfile(id).subscribe(
+      (res: any) => {
+        if (res.data) {
+          this.spinner.hide();
+          this.customer = res.data[0];
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
+  }
 }

@@ -44,45 +44,41 @@
       <div class="col-sm-6">
         <div class="single-input text-start">
           <label for="name">Fisrt Name</label>
-          <div class="input-area second">
-            <input
-              type="text"
-              name="fname"
-              [(ngModel)]="customer.FirstName"
-              disabled
-            />
-          </div>
+          <input
+            type="text"
+            name="fname"
+            class="input-area"
+            [(ngModel)]="customer.FirstName"
+            disabled
+          />
         </div>
       </div>
       <div class="col-sm-6">
         <div class="single-input text-start">
-          <label for="number">Last Name</label>
-          <div class="input-area second">
-            <input
-              type="text"
-              name="lname"
-              [(ngModel)]="customer.LastName"
-              disabled
-            />
-          </div>
+          <label>Last Name</label>
+          <input
+            type="text"
+            name="lname"
+            class="input-area"
+            [(ngModel)]="customer.LastName"
+            disabled
+          />
         </div>
       </div>
       <div class="col-sm-6">
         <div class="single-input text-start">
-          <label for="Email">User Name</label>
-          <div class="input-area second">
-            <input
-              type="text"
-              name="email"
-              [(ngModel)]="customer.Username"
-              disabled
-            />
-          </div>
+          <label>User Name</label>
+          <input
+            type="text"
+            name="email"
+            class="input-area"
+            [(ngModel)]="customer.Username"
+            disabled
+          />
         </div>
       </div>
       <div class="col-sm-5 col-3 mt-4 d-center justify-content-end">
-        <div class="single-input d-center text-start">
-        </div>
+        <div class="single-input d-center text-start"></div>
       </div>
     </div>
   </form>

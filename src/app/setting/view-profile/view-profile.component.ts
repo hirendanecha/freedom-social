@@ -35,7 +35,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
   coverPic: any = {};
   profileId = '';
   activeTab = 1;
-  communityList: any = [];
+  communityList = [];
   communityId = '';
   isExpand = false;
   constructor(
@@ -86,11 +86,12 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
       (res: any) => {
         if (res.data) {
           this.spinner.hide();
-          res.data.forEach((element) => {
-            if (element.Id) {
-              this.communityList.push(element);
-            }
-          });
+          this.communityList = res.data;
+          // res.data.forEach((element) => {
+          //   if (element.Id) {
+          //     this.communityList.push(element);
+          //   }
+          // });
         }
       },
       (error) => {

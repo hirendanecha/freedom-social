@@ -31,7 +31,7 @@
       >
         <div class="row">
           <div class="col-12 mb-3">
-            <label class="form-label text-light d-flex">Community Name</label>
+            <label class="form-label d-flex">Community Name</label>
             <input
               type="text"
               class="form-control input-area"
@@ -43,9 +43,7 @@
         </div>
         <div class="row">
           <div class="col-12 mb-3">
-            <label class="form-label text-light d-flex"
-              >Community Description</label
-            >
+            <label class="form-label d-flex">Community Description</label>
             <textarea
               name="dec"
               cols="30"
@@ -57,7 +55,7 @@
         </div>
         <div class="row">
           <div class="col-12 mb-3">
-            <label class="form-label text-light d-flex">Logo Image</label>
+            <label class="form-label d-flex">Logo Image</label>
             <input
               type="file"
               name="logo"
@@ -65,7 +63,7 @@
             />
           </div>
           <div class="col-12 mb-3">
-            <label class="form-label text-light d-flex">Cover Image</label>
+            <label class="form-label d-flex">Cover Image</label>
             <input
               name="cover"
               type="file"
@@ -153,7 +151,7 @@
   <button
     id="common-filter-cancel"
     type="button"
-    class="cmn-btn alt"
+    class="cmn-btn alt p-2"
     (click)="activeModal.close(cancelButtonLabel)"
   >
     {{ cancelButtonLabel }}
@@ -161,7 +159,7 @@
   <button
     id="common-filter-confirm"
     type="submit"
-    class="cmn-btn"
+    class="cmn-btn p-2"
     (click)="onSubmit()"
   >
     <!-- (click)="" -->
