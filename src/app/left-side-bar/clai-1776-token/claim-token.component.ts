@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-claim-token',
   templateUrl: './claim-token.component.html',
-  styleUrls: ['./claim-token.component.css']
+  styleUrls: ['./claim-token.component.scss']
 })
 export class ClaimTokenComponent {
   @Input() cancelButtonLabel: string | undefined;

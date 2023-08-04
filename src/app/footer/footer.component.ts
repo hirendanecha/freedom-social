@@ -9,7 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css'],
+  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
   @ViewChild('userMenuOrigin') userMenuOrigin:
@@ -72,6 +72,9 @@ export class FooterComponent {
       e.preventDefault();
 
       switch (type) {
+        case 'profile':
+          this.goToViewProfile();
+          break;
         case 'logout':
           this.logout();
           break;
@@ -100,6 +103,12 @@ export class FooterComponent {
     const userId = sessionStorage.getItem('user_id');
     console.log(userId);
     this.router.navigate([`settings/edit-profile/${userId}`]);
+  }
+  
+  goToViewProfile() {
+    const userId = sessionStorage.getItem('user_id');
+    console.log(userId);
+    this.router.navigate([`settings/view-profile/${userId}`]);
   }
 
   forgotPasswordOpen() {

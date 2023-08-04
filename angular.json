@@ -5,7 +5,11 @@
   "projects": {
     "freedom": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -25,11 +29,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "src/assets/css/responsive.css",
-              "src/assets/css/section.css",
-              "src/assets/css/banner-footer.css",
-              "src/assets/css/bootstrap.min.css",
+              "src/assets/scss/style.scss",
+              "src/assets/scss/bootstrap.scss",
               "node_modules/ngx-spinner/animations/ball-spin-clockwise.css"
             ],
             "scripts": []
@@ -180,7 +181,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/scss/style.scss"
             ],
             "scripts": []
           }

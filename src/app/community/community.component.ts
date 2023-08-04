@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-community',
   templateUrl: './community.component.html',
-  styleUrls: ['./community.component.css'],
+  styleUrls: ['./community.component.scss'],
 })
 export class CommunityComponent {
   activeTab = 1;

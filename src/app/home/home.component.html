@@ -10,7 +10,7 @@
   </div>
   <form class="w-100 position-relative">
     <input
-      placeholder="Write something to Lerio.."
+      placeholder="Write something to post.."
       [(ngModel)]="message"
       name="message"
       type="text"
@@ -58,9 +58,9 @@
         />
         <span>Fallings/Activity</span>
       </li> -->
-      <div class="btn-area d-flex d-none d-lg-block d-md-block">
+      <div class="btn-area d-flex d-lg-block d-md-block">
         <button
-          class="cmn-btn px-2 px-sm-5 px-lg-6"
+          class="cmn-btn p-2 px-2 px-sm-5 px-lg-6"
           [disabled]="isSubmitted"
           (click)="createPost()"
         >
@@ -70,7 +70,7 @@
     </ul>
   </form>
 </div>
-<div class="post-item d-flex flex-column gap-5 gap-md-7 mt-3" id="news-feed">
+<div class="post-item d-flex flex-column gap-3 mt-3" id="news-feed">
   <ng-container *ngFor="let post of postList">
     <div class="post-single-box p-3 p-sm-5" *ngIf="post.postdescription">
       <div class="top-area pb-5">
@@ -91,6 +91,10 @@
               <!-- <span class="mdtxt status">Active</span> -->
             </div>
           </div>
+          <!-- <span>{{
+            post.postcreationdate.toString() | date : "d/MM/yyyy"
+          }}</span> -->
+
           <div class="btn-group cus-dropdown">
             <button
               type="button"
@@ -102,6 +106,7 @@
             <ul
               class="dropdown-menu p-4 pt-2 mt-6"
               [ngClass]="postId === post.id ? 'show' : ''"
+              (mouseleave)="postId = null"
             >
               <li>
                 <a
@@ -125,28 +130,6 @@
                   <span>Unsubscribe</span>
                 </a>
               </li>
-              <!-- <li>
-                <a class="droplist d-flex align-items-center gap-2">
-                  <i class="material-symbols-outlined mat-icon">
-                    hide_source
-                  </i>
-                  <span>Hide Post</span>
-                </a>
-              </li>
-              <li>
-                <a class="droplist d-flex align-items-center gap-2">
-                  <i class="material-symbols-outlined mat-icon"> lock </i>
-                  <span>Block</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                >
-                  <i class="material-symbols-outlined mat-icon"> flag </i>
-                  <span>Report Post</span>
-                </a>
-              </li> -->
             </ul>
           </div>
         </div>
@@ -169,7 +152,7 @@
             <!-- <li *ngIf="post?.likescount > 0">
               <img src="assets/images/avatar-2.png" alt="image" />
             </li> -->
-            <li>
+            <!-- <li>
               <i class="material-symbols-outlined mat-icon"> thumb_up </i>
               <span class="mdtxt d-center">{{
                 post?.likescount > 0 ? post?.likescount : 0
@@ -198,7 +181,7 @@
               <span class="mdtxt d-center">{{
                 post?.dislikecount > 0 ? post?.dislikecount : 0
               }}</span>
-            </li>
+            </li> -->
           </ul>
         </div>
         <!-- <div

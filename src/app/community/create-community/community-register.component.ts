@@ -22,7 +22,7 @@ import { UploadFilesService } from 'src/app/services/upload-files.service';
 @Component({
   selector: 'app-community-register',
   templateUrl: './community-register.component.html',
-  styleUrls: ['./community-register.component.css'],
+  styleUrls: ['./community-register.component.scss'],
 })
 export class CommunityRegisterComponent implements OnInit, AfterViewInit {
   customer = new Customer();

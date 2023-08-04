@@ -3189,7 +3189,7 @@ progress {
 .form-control {
   display: block;
   width: 100%;
-  padding: .375rem .75rem;
+  padding: 15px 20px !important;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -3219,7 +3219,7 @@ progress {
 }
 
 .form-control:focus {
-  /* color: #212529; */
+  color: var(--heading-1st-color) !important;
   background-color: #fff;
   border-color: #86b7fe;
   outline: 0;

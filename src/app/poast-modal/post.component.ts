@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-post-modal',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css'],
+  styleUrls: ['./post.component.scss'],
 })
 export class PostComponent implements OnInit {
   @Input() cancelButtonLabel: string | undefined;

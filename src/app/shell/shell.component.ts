@@ -5,7 +5,7 @@ import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 @Component({
   selector: 'app-shell',
   templateUrl: './shell.component.html',
-  styleUrls: ['./shell.component.css'],
+  styleUrls: ['./shell.component.scss'],
 })
 export class ShellComponent {
   isShow = false;

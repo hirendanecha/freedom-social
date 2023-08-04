@@ -13,7 +13,7 @@ import { ForgotPasswordComponent } from '../home/forgot-password/forgot-password
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
   @ViewChild('userMenuOrigin') userMenuOrigin:

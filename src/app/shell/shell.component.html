@@ -23,13 +23,13 @@
             ? ''
             : isShow
             ? 'col-xl-9 col-lg-8 flex-column gap-4 cus-z mb-15 mb-lg-0'
-            : 'col-xxl-6 col-xl-6 col-lg-6 mt-0 mt-lg-10 mt-xl-0  flex-column gap-4 cus-z mb-15 mb-lg-0'
+            : 'col-xxl-6 col-xl-6 col-lg-5 mt-0 mt-lg-10 flex-column gap-4 cus-z mb-15 mb-lg-0'
         "
       >
         <router-outlet></router-outlet>
       </div>
       <div
-        class="col-xxl-3 col-xl-3 col-lg-3 col-12 mt-xl-0 d-lg-block d-none"
+        class="col-xxl-3 col-xl-3 col-lg-4 col-12 mt-xl-0 d-lg-block d-none"
         *ngIf="!isShow"
       >
         <app-my-list></app-my-list>

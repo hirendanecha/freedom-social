@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-members',
   templateUrl: './members.component.html',
-  styleUrls: ['./members.component.css']
+  styleUrls: ['./members.component.scss']
 })
 export class MembersComponent {
   mostCommunityList = [

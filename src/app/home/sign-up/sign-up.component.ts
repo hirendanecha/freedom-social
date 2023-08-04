@@ -7,17 +7,15 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { debounceTime, fromEvent } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
-import { AuthService } from 'src/app/services/auth.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { ToastService } from 'src/app/services/toaster.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css'],
+  styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit, AfterViewInit {
   customer = new Customer();
@@ -34,9 +32,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   @ViewChild('zipCode') zipCode: ElementRef;
   constructor(
-    private modalService: NgbModal,
     private spinner: NgxSpinnerService,
-    private authService: AuthService,
     private route: ActivatedRoute,
     private customerService: CustomerService,
     private router: Router,

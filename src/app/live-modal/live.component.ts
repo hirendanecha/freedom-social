@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-live-modal',
   templateUrl: './live.component.html',
-  styleUrls: ['./live.component.css']
+  styleUrls: ['./live.component.scss']
 })
 export class LiveComponent {
   @Input() cancelButtonLabel: string | undefined;

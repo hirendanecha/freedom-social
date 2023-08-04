@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
-  styleUrls: ['./group.component.css']
+  styleUrls: ['./group.component.scss']
 })
 export class GroupComponent {
   groupCommunityList = [

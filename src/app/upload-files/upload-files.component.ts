@@ -19,7 +19,7 @@ import { SharedService } from '../services/shared.service';
 @Component({
   selector: 'app-upload-files',
   templateUrl: './upload-files.component.html',
-  styleUrls: ['./upload-files.component.css'],
+  styleUrls: ['./upload-files.component.scss'],
 })
 export class UploadFilesComponent implements OnInit {
   @Input() events: Observable<void>;

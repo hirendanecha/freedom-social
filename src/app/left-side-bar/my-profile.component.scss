@@ -1,0 +1,20 @@
+/* background: var(--section-1st-color);
+border-radius: 15px;
+box-shadow: var(--box-shadow); */
+.profile-content {
+  position: sticky;
+  top: 115px;
+  li {
+    margin-top: 15px;
+  }
+}
+.profile-sidebar {
+  .profile-pic {
+    .avatar-img {
+      border-radius: 15px;
+      max-width: 48px;
+      height: auto;
+      min-height: 48px;
+    }
+  }
+}

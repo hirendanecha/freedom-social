@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-create-post-modal',
   templateUrl: './create-post.component.html',
-  styleUrls: ['./create-post.component.css']
+  styleUrls: ['./create-post.component.scss']
 })
 export class CreatePostComponent {
   @Input() cancelButtonLabel: string | undefined;

@@ -9,7 +9,7 @@ import { UploadFilesService } from 'src/app/services/upload-files.service';
 @Component({
   selector: 'app-add-community-modal',
   templateUrl: './add-community.component.html',
-  styleUrls: ['./add-community.component.css'],
+  styleUrls: ['./add-community.component.scss'],
 })
 export class AddCommunityComponent {
   @Input() cancelButtonLabel: string | undefined;

@@ -16,7 +16,7 @@ import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'app-user-post',
   templateUrl: './user-post.component.html',
-  styleUrls: ['./user-post.component.css'],
+  styleUrls: ['./user-post.component.scss'],
 })
 export class UserPostComponent implements OnInit {
   @Input() profileId: any;
@@ -31,6 +31,8 @@ export class UserPostComponent implements OnInit {
     'messenger',
     'apple',
   ];
+  postId = '';
+  isExpand = false;
   @ViewChild('emojiMenu') emojiMenu: EventEmitter<NgbModalRef[]> | undefined;
   emojiMenuDialog: any;
   postList = [];
@@ -66,5 +68,14 @@ export class UserPostComponent implements OnInit {
 
   clickOnLike() {
     this.isLike = !this.isLike;
+  }
+
+  openDropDown(id) {
+    this.postId = id;
+    if (this.postId) {
+      this.isExpand = true;
+    } else {
+      this.isExpand = false;
+    }
   }
 }

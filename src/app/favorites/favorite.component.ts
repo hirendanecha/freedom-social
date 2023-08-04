@@ -10,7 +10,7 @@ import { SharedService } from '../services/shared.service';
 @Component({
   selector: 'app-favorite',
   templateUrl: './favorite.component.html',
-  styleUrls: ['./favorite.component.css'],
+  styleUrls: ['./favorite.component.scss'],
 })
 export class FavoriteComponent implements OnInit {
   message = '';
@@ -28,6 +28,8 @@ export class FavoriteComponent implements OnInit {
   emojiMenuDialog: any;
   postList = [];
   isLike = false;
+  postId = '';
+  isExpand = false;
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -116,5 +118,14 @@ export class FavoriteComponent implements OnInit {
 
   clickOnLike() {
     this.isLike = !this.isLike;
+  }
+
+  openDropDown(id) {
+    this.postId = id;
+    if (this.postId) {
+      this.isExpand = true;
+    } else {
+      this.isExpand = false;
+    }
   }
 }

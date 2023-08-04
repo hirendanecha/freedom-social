@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-1776-wallet',
   templateUrl: './1776-wallet.component.html',
-  styleUrls: ['./1776-wallet.component.css']
+  styleUrls: ['./1776-wallet.component.scss']
 })
 export class WalletLinkComponent {
   @Input() cancelButtonLabel: string | undefined;

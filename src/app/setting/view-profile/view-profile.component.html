@@ -1,4 +1,4 @@
-<div class="row profile-picture-area justify-content-center mb-15 mb-lg-0">
+<div class="row profile-picture-area justify-content-center mb-15 mt-5">
   <div class="col-xl-12 col-lg-8">
     <div class="single-box p-5">
       <div class="col-md-12">
@@ -57,7 +57,6 @@
                   >Photos</a
                 >
               </li>
-              <!-- <ng-container *ngIf=""></ng-container> -->
               <li
                 class="nav-item"
                 role="presentation"
@@ -69,21 +68,13 @@
                   >Community</a
                 >
               </li>
-              <!-- <li class="nav-item" role="presentation">
-                <a class="nav-link d-center">Connections</a>
-              </li> -->
-              <!-- <li class="nav-item" role="presentation">
-                <a class="nav-link d-center">Events</a>
-              </li> -->
             </ul>
           </div>
         </div>
       </div>
     </div>
-    <!-- <div class="single-box p-3 p-sm-5">
-    </div> -->
     <div class="row justify-content-between">
-      <div class="col-lg-8 col-12 justify-content-center">
+      <div class="col-xl-8 col-xxl-8 col-12 justify-content-center">
         <ng-container *ngIf="activeTab === 1">
           <app-user-post [profileId]="profileId"></app-user-post>
         </ng-container>
@@ -111,34 +102,43 @@
                     class="abs-area w-100 position-absolute top-0 p-3 d-center justify-content-end"
                   >
                     <div class="btn-group cus-dropdown dropend">
-                      <button
-                        type="button"
-                        class="dropdown-btn d-center px-2"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <i class="material-symbols-outlined fs-xxl m-0">
-                          more_horiz
-                        </i>
-                      </button>
-                      <!-- <ul class="dropdown-menu p-4 pt-2">
-                    <li>
-                      <a class="droplist d-flex align-items-center gap-2">
-                        <i class="material-symbols-outlined mat-icon">
-                          person_remove
-                        </i>
-                        <span>Unfollow</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="droplist d-flex align-items-center gap-2">
-                        <i class="material-symbols-outlined mat-icon">
-                          hide_source
-                        </i>
-                        <span>Hide</span>
-                      </a>
-                    </li>
-                  </ul> -->
+                      <div class="btn-group cus-dropdown">
+                        <button
+                          type="button"
+                          class="dropdown-btn"
+                          (click)="openDropDown(community.id)"
+                        >
+                          <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+                        </button>
+                        <ul
+                          class="dropdown-menu p-4 pt-2 mt-6"
+                          [ngClass]="communityId === community.id ? 'show' : ''"
+                          (mouseleave)="communityId = null"
+                        >
+                          <li>
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
+                              (click)="communityId = null"
+                            >
+                              <i class="material-symbols-outlined mat-icon">
+                                edit
+                              </i>
+                              <span>Edit</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
+                              (click)="communityId = null"
+                            >
+                              <i class="material-symbols-outlined mat-icon">
+                                delete
+                              </i>
+                              <span>Delete</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -158,26 +158,9 @@
                   {{ community.CommunityDescription }}
                 </p>
                 <div class="friends-list d-center mt-3 gap-1 text-center">
-                  <!-- <ul class="d-center">
-                <li *ngFor="let join of community.membersJoin">
-                  <img [src]="join.profilePic" alt="image" />
-                </li>
-                <li>
-                  <img src="assets/images/avatar-3.png" alt="image" />
-                </li>
-                <li>
-                  <img src="assets/images/avatar-4.png" alt="image" />
-                </li>
-              </ul> -->
                   <span class="smtxt m-0">{{ community.members }} Member</span>
                 </div>
                 <div class="d-center btn-border pt-5 gap-2 mt-4">
-                  <!-- <button
-                    class="cmn-btn fourth"
-                    (click)="joinCommunity(community.Id)"
-                  >
-                    Joined
-                  </button> -->
                   <button
                     class="cmn-btn alt third"
                     (click)="goToCommunityDetails(community.Id)"
@@ -195,7 +178,7 @@
           </ng-template>
         </ng-container>
       </div>
-      <div class="col-lg-3 d-none d-md-block justify-content-center">
+      <div class="col-xl-3 d-none d-xl-block justify-content-center">
         <!-- <app-my-list></app-my-list> -->
         <div class="cus-overflow cus-scrollbar sidebar-head d-lg-block d-none">
           <div class="cus-scrollbar side-wrapper">
@@ -272,25 +255,6 @@
                   </span>
                 </div>
               </div>
-              <!-- <div class="sidebar-area p-5">
-                <div class="mb-4">
-                  <h6 class="d-inline-flex">Local Communities</h6>
-                </div>
-                <button
-                  class="cmn-btn"
-                  *ngIf="user.AccountType === 'user'"
-                  (click)="createCommunity()"
-                >
-                  Create Local Community
-                </button>
-                <button
-                  class="cmn-btn"
-                  *ngIf="user.AccountType !== 'user'"
-                  (click)="createCommunity()"
-                >
-                  Find Local Community
-                </button>
-              </div> -->
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ import { UploadFilesService } from 'src/app/services/upload-files.service';
 @Component({
   selector: 'app-view-profile',
   templateUrl: './view-profile.component.html',
-  styleUrls: ['./view-profile.component.css'],
+  styleUrls: ['./view-profile.component.scss'],
 })
 export class ViewProfileComponent implements OnInit, AfterViewInit {
   customer: Customer = new Customer();
@@ -36,6 +36,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
   profileId = '';
   activeTab = 1;
   communityList: any = [];
+  communityId = '';
+  isExpand = false;
   constructor(
     private modalService: NgbActiveModal,
     private route: ActivatedRoute,
@@ -100,5 +102,14 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
 
   goToCommunityDetails(id): void {
     this.router.navigate([`community/${id}`]);
+  }
+
+  openDropDown(id) {
+    this.communityId = id;
+    if (this.communityId) {
+      this.isExpand = true;
+    } else {
+      this.isExpand = false;
+    }
   }
 }

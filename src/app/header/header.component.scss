@@ -1,0 +1,155 @@
+.header-section {
+  position: sticky;
+}
+
+.main-area {
+  .view-profile {
+    a {
+      background-color: var(--box-1st-color);
+      color: var(--primary-color);
+    }
+  }
+
+  ul {
+    a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 16px 0;
+      color: var(--heading-1st-color);
+    }
+
+    li {
+      &:last-child {
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      &:first-child {
+        border-bottom: 1px solid var(--border-color);
+      }
+    }
+  }
+
+  .switch-wrapper {
+    .fa-solid {
+      font-size: 28px;
+      color: var(--primary-color);
+      height: 26px;
+    }
+  }
+
+  .head-area {
+    .avatar-img {
+      max-width: 48px;
+      height: auto;
+      min-height: 48px;
+    }
+  }
+}
+
+.notification-content {
+  min-width: 400px;
+
+  .abs-item {
+    bottom: -5px;
+    right: -5px;
+  }
+
+  .btn-area {
+    a {
+      color: var(--heading-1st-color);
+    }
+  }
+}
+
+.logo {
+  border-radius: 15px;
+}
+
+.messages-content {
+  .btn-area {
+    a {
+      color: var(--heading-1st-color);
+    }
+  }
+}
+
+.right-area {
+  .avatar-img {
+    max-width: 48px;
+    height: auto;
+    min-height: 48px;
+  }
+}
+
+
+::ng-deep .user-menu-panale {
+  position: fixed;
+  right: 315px;
+  top: 50px;
+  display: flex;
+  bottom: unset !important;
+}
+
+@media (max-width :1024px) {
+  ::ng-deep.user-menu-panale {
+    position: fixed;
+    right: 40px !important;
+  }
+}
+
+@media (width :1180px) {
+  ::ng-deep.user-menu-panale {
+    position: fixed;
+    right: 112px !important;
+  }
+}
+
+@media (min-width :1300px) and (max-width :1368px) {
+  ::ng-deep.user-menu-panale {
+    position: fixed;
+    right: 112px !important;
+  }
+}
+
+@media (width :1114px) {
+  ::ng-deep.user-menu-panale {
+    position: fixed;
+    right: 90px !important;
+  }
+}
+
+@media (min-width :1200px) and (width :1280px) {
+  ::ng-deep.user-menu-panale {
+    position: fixed;
+    right: 90px !important;
+  }
+}
+
+@media (min-width :1400px) and (max-width:1680px) {
+  ::ng-deep.user-menu-panale {
+    position: fixed;
+    right: 90px !important;
+  }
+}
+
+@media (min-width :1941px) and (max-width: 2580px) {
+  ::ng-deep.user-menu-panale {
+    position: fixed;
+    right: 23% !important;
+  }
+}
+
+@media (min-width :2641px) {
+  ::ng-deep.user-menu-panale {
+    position: fixed;
+    right: 23% !important;
+  }
+}
+
+/* 1180
+   1024
+   1368
+   1114
+ */
