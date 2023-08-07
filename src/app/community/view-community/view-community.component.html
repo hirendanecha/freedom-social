@@ -91,7 +91,54 @@
           <h3>Hello Photos</h3>
         </ng-container>
         <ng-container *ngIf="activeTab === 4">
-          <h3>Hello Memebers</h3>
+          <h3>Community Memebers</h3>
+          <div class="row">
+            <div class="col-md-6" *ngFor="let member of memberList">
+              <div class="single-box member-single p-3">
+                <div class="profile-area d-center justify-content-between">
+                  <div class="avatar-item d-flex gap-3 align-items-center">
+                    <div class="avatar-item">
+                      <img
+                        class="member-profile avatar-img max-un"
+                        [src]="
+                          member.ProfilePicName ||
+                          '/assets/images/avtar/placeholder-user.png'
+                        "
+                        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png'"
+                        alt="avatar"
+                      />
+                    </div>
+                    <div class="info-area text-start">
+                      <h6 class="m-0">
+                        {{ member.FirstName }} {{ member.LastName }}
+                      </h6>
+                      <p class="mdtxt status">
+                        {{ member.isAdmin ? "Admin" : "Member" }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <table class="table table-striped border rounded-5">
+            <thead>
+              <tr class="text-center">
+                <th class="p-2">No</th>
+                <th class="p-2">Username</th>
+                <th class="p-2">Join Date</th>
+                <th class="p-2">Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let member of memberList; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ member.Username }}</td>
+                <td>{{ member.joinDate | date : "dd/MM/YYYY" }}</td>
+                <td>{{ member.isAdmin ? "Admin" : "Member" }}</td>
+              </tr>
+            </tbody>
+          </table> -->
         </ng-container>
       </div>
       <div class="col-lg-3 d-none d-md-block justify-content-center">

@@ -37,12 +37,15 @@ export class UserPostComponent implements OnInit {
   emojiMenuDialog: any;
   postList = [];
   isLike = false;
+  userProfileId = '';
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private postService: PostService,
     private sharedService: SharedService
-  ) {}
+  ) {
+    this.userProfileId = sessionStorage.getItem('profileId');
+  }
 
   ngOnInit(): void {
     this.getPostList();

@@ -12,7 +12,7 @@
     <div class="d-flex mb-5 gap-3">
       <div class="profile-box">
         <a
-          ><img src="assets/images/avtar/avatar.png" class="max-un" alt="icon"
+          ><img [src]="sharedService.profilePic?.url" class="" alt="icon"
         /></a>
       </div>
       <textarea
@@ -45,7 +45,7 @@
   <button
     id="common-filter-cancel"
     type="button"
-    class="cmn-btn alt"
+    class="cmn-btn alt p-2"
     (click)="activeModal.close(cancelButtonLabel)"
   >
     {{ cancelButtonLabel }}
@@ -53,7 +53,7 @@
   <button
     id="common-filter-confirm"
     type="button"
-    class="cmn-btn"
+    class="cmn-btn p-2"
     (click)="addPost()"
   >
     {{ confirmButtonLabel }}

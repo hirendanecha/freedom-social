@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -22,7 +23,7 @@ import { UploadFilesService } from 'src/app/services/upload-files.service';
   templateUrl: './view-profile.component.html',
   styleUrls: ['./view-profile.component.scss'],
 })
-export class ViewProfileComponent implements OnInit, AfterViewInit {
+export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   customer: Customer = new Customer();
   registerForm!: FormGroup;
   isragister = false;
@@ -49,10 +50,11 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
     public sharedService: SharedService,
     private communityService: CommunityService
   ) {
-    this.userId = this.route.snapshot.paramMap.get('id');
-    this.profileId = sessionStorage.getItem('profileId');
+    this.profileId = this.route.snapshot.paramMap.get('id');
     if (this.profileId) {
       this.getProfile(this.profileId);
+    } else {
+      this.profileId = sessionStorage.getItem('profileId');
     }
   }
   ngOnInit(): void {
@@ -71,6 +73,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
         if (res.data) {
           this.spinner.hide();
           this.customer = res.data[0];
+          this.userId = res.data[0].UserID;
+          console.log(this.userId);
         }
       },
       (error) => {
@@ -82,16 +86,17 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
 
   getCommunities(): void {
     this.spinner.show();
+    this.communityList = [];
     this.communityService.getCommunityByUserId(this.userId).subscribe(
       (res: any) => {
         if (res.data) {
           this.spinner.hide();
-          this.communityList = res.data;
-          // res.data.forEach((element) => {
-          //   if (element.Id) {
-          //     this.communityList.push(element);
-          //   }
-          // });
+          // this.communityList = res.data;
+          res.data.forEach((element) => {
+            if (element.Id) {
+              this.communityList.push(element);
+            }
+          });
         }
       },
       (error) => {
@@ -112,5 +117,9 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
     } else {
       this.isExpand = false;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.communityList = [];
   }
 }

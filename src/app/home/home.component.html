@@ -113,9 +113,7 @@
                   class="droplist d-flex align-items-center gap-2"
                   (click)="postId = null"
                 >
-                  <i class="material-symbols-outlined mat-icon">
-                    bookmark_add
-                  </i>
+                  <i class="material-symbols-outlined mat-icon"> visibility </i>
                   <span>See First</span>
                 </a>
               </li>
@@ -128,6 +126,15 @@
                     person_remove
                   </i>
                   <span>Unsubscribe</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="goToViewProfile(post.profileid)"
+                >
+                  <i class="material-symbols-outlined mat-icon"> person </i>
+                  <span>View Profile</span>
                 </a>
               </li>
             </ul>
@@ -265,10 +272,15 @@
     </div>
   </ng-container>
 
-  <span class="text-center d-center" (click)="loadMore()">
+  <!-- <span class="text-center d-center" >
     Load More
     <i class="material-symbols-outlined mat-icon">autorenew</i>
-  </span>
+  </span> -->
+  <div class="col-12 my-5 text-center">
+    <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
+      Load More
+    </button>
+  </div>
 
   <!-- <div class="post-single-box p-3 p-sm-5">
     <div class="top-area pb-5">

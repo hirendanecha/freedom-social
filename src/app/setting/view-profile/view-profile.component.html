@@ -6,10 +6,12 @@
           <div class="profile-picture position-relative text-start">
             <!-- src="/assets/images/profile-cover.png" -->
             <img
-              [src]="customer.CoverPicName || sharedService?.coverPic.url"
+              [src]="
+                customer.CoverPicName || '/assets/images/profile-cover.png'
+              "
               class="preview-image w-100"
               onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
-              [alt]="coverPic.name || 'Preview Image'"
+              alt="Preview Image"
             />
           </div>
         </div>
@@ -20,16 +22,20 @@
               class="preview-image w-100"
               loading="lazy"
               data-src="{{
-                customer.ProfilePicName || sharedService?.profilePic?.url
+                customer.ProfilePicName || '/assets/images/avtar/avtar.png'
               }}"
               onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
-              [alt]="sharedService.profilePic?.name || 'Preview Image'"
+              alt="Preview Image"
             />
             <div class="user-details ms-2">
               <h3>
-                {{ customer?.FirstName }}
+                {{ customer?.FirstName || customer?.Username }}
                 {{ customer?.LastName }}
               </h3>
+              <!-- <h5 class="d-flex">
+                <i class="material-symbols-outlined md m-0"> location_on </i>
+                {{ customer.State }}
+              </h5> -->
             </div>
           </div>
         </div>
@@ -108,7 +114,9 @@
                           class="dropdown-btn"
                           (click)="openDropDown(community.id)"
                         >
-                        <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+                          <i class="material-symbols-outlined fs-xxl m-0">
+                            more_horiz
+                          </i>
                         </button>
                         <ul
                           class="dropdown-menu p-4 pt-2 mt-6"

@@ -16,6 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostService } from '../services/post.service';
 import { SharedService } from '../services/shared.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -46,7 +47,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private postService: PostService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private router: Router
   ) {
     this.sharedService.getProfilePic();
     this.sharedService.getUserDetails();
@@ -215,5 +217,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   hover(e) {
     this.isExpand = e;
     console.log(this.isExpand);
+  }
+
+  goToViewProfile(id) {
+    console.log(id);
+    this.postId = null;
+    this.router.navigate([`settings/view-profile/${id}`]);
   }
 }

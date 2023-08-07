@@ -9,37 +9,6 @@
 </div>
 <div class="post-item d-flex flex-column gap-5 gap-md-7 mt-3">
   <div class="post-single-box p-3 p-sm-5">
-    <!-- <div class="top-area pb-4">
-      <div class="post-img">
-        <img src="assets/images/post-img-8.png" class="w-100" alt="image" />
-      </div>
-      <div class="pt-4">
-        <h5 class="post-head">
-          A New Way to Stay Up to Date With Those You Choose
-        </h5>
-      </div>
-    </div> -->
-    <!-- <div
-      class="total-react-share d-center gap-2 flex-wrap justify-content-between"
-    >
-      <div class="friends-list d-flex gap-1 align-items-center text-center">
-        <ul class="d-flex align-items-center justify-content-center">
-          <li>
-            <img src="assets/images/avatar-2.png" alt="image" />
-          </li>
-          <li>
-            <img src="assets/images/avatar-3.png" alt="image" />
-          </li>
-          <li>
-            <img src="assets/images/avatar-4.png" alt="image" />
-          </li>
-        </ul>
-        <p class="mdtxt">200+ Favorites</p>
-      </div>
-      <div class="react-list text-center">
-        <a href="#" class="mdtxt py-2 cmn-btn">Learn More</a>
-      </div>
-    </div> -->
     <form class="w-100 position-relative">
       <input
         placeholder="Write something to Lerio.."
@@ -64,12 +33,6 @@
           data-placement="bottom"
           title="Comming Soon!"
         >
-          <!-- (click)="goLive()" -->
-          <!-- <img
-            src="assets/images/icon/live-video.png"
-            class="max-un"
-            alt="icon"
-          /> -->
           <i class="material-symbols-outlined mat-icon">stream</i>
           <span>Live</span>
         </li>
@@ -78,14 +41,11 @@
           cursor
           (click)="addPost()"
         >
-          <!-- <img src="assets/images/icon/vgallery.png" class="max-un" alt="icon" /> -->
           <i class="material-symbols-outlined mat-icon">add_a_photo</i>
           <span>Photo</span>
         </li>
         <div class="btn-area d-flex d-lg-block d-md-block">
-          <button class="cmn-btn px-2 px-sm-5 px-lg-6 p-2" (click)="createPost()">
-            Post
-          </button>
+          <button class="cmn-btn px-2 px-sm-5 px-lg-6 p-2">Post</button>
         </div>
       </ul>
     </form>
@@ -161,7 +121,7 @@
         <div
           class="friends-list d-flex gap-3 align-items-center text-center w-100"
         >
-        <!-- <li *ngIf="post?.likescount > 0">
+          <!-- <li *ngIf="post?.likescount > 0">
           <img src="assets/images/avatar-2.png" alt="image" />
         </li> -->
           <!-- <ul

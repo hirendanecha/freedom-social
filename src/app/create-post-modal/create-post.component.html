@@ -11,11 +11,8 @@
   <div class="mid-area">
     <div class="d-flex mb-5 gap-3">
       <div class="profile-box">
-        <a 
-          ><img
-            src="assets/images/avtar/avatar.png"
-            class="max-un"
-            alt="icon"
+        <a
+          ><img [src]="sharedService?.profilePic?.url" class="max-un" alt="icon"
         /></a>
       </div>
       <textarea

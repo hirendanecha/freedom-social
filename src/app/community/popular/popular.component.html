@@ -22,34 +22,56 @@
               class="abs-area w-100 position-absolute top-0 p-3 d-center justify-content-end"
             >
               <div class="btn-group cus-dropdown dropend">
-                <button
-                  type="button"
-                  class="dropdown-btn d-center px-2"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i class="material-symbols-outlined fs-xxl m-0">
-                    more_horiz
-                  </i>
-                </button>
-                <!-- <ul class="dropdown-menu p-4 pt-2">
-                  <li>
-                    <a class="droplist d-flex align-items-center gap-2">
-                      <i class="material-symbols-outlined mat-icon">
-                        person_remove
-                      </i>
-                      <span>Unfollow</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="droplist d-flex align-items-center gap-2">
-                      <i class="material-symbols-outlined mat-icon">
-                        hide_source
-                      </i>
-                      <span>Hide</span>
-                    </a>
-                  </li>
-                </ul> -->
+                <div class="btn-group cus-dropdown">
+                  <button
+                    type="button"
+                    class="dropdown-btn"
+                    (click)="openDropDown(community.Id)"
+                  >
+                    <i class="material-symbols-outlined fs-xxl m-0">
+                      more_horiz
+                    </i>
+                  </button>
+                  <ul
+                    class="dropdown-menu p-4 pt-2 mt-6"
+                    [ngClass]="communityId === community.Id ? 'show' : ''"
+                    (mouseleave)="communityId = null"
+                  >
+                    <li>
+                      <a
+                        class="droplist d-flex align-items-center gap-2"
+                        (click)="communityId = null"
+                      >
+                        <i class="material-symbols-outlined mat-icon">
+                          visibility
+                        </i>
+                        <span>See First</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="droplist d-flex align-items-center gap-2"
+                        (click)="communityId = null"
+                      >
+                        <i class="material-symbols-outlined mat-icon">
+                          person_remove
+                        </i>
+                        <span>Unsubscribe</span>
+                      </a>
+                    </li>
+                    <!-- <li>
+                      <a
+                        class="droplist d-flex align-items-center gap-2"
+                        (click)="goToViewProfile(community.Id)"
+                      >
+                        <i class="material-symbols-outlined mat-icon">
+                          person
+                        </i>
+                        <span>View Profile</span>
+                      </a>
+                    </li> -->
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

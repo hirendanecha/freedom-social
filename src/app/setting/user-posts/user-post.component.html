@@ -33,24 +33,50 @@
               [ngClass]="postId === post.id ? 'show' : ''"
               (mouseleave)="postId = null"
             >
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="postId = null"
-                >
-                  <i class="material-symbols-outlined mat-icon"> edit </i>
-                  <span>Edit</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="postId = null"
-                >
-                  <i class="material-symbols-outlined mat-icon"> delete </i>
-                  <span>Delete</span>
-                </a>
-              </li>
+              <ng-container *ngIf="profileId === userProfileId">
+                <li>
+                  <a
+                    class="droplist d-flex align-items-center gap-2"
+                    (click)="postId = null"
+                  >
+                    <i class="material-symbols-outlined mat-icon"> edit </i>
+                    <span>Edit</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="droplist d-flex align-items-center gap-2"
+                    (click)="postId = null"
+                  >
+                    <i class="material-symbols-outlined mat-icon"> delete </i>
+                    <span>Delete</span>
+                  </a>
+                </li>
+              </ng-container>
+              <ng-container *ngIf="profileId != userProfileId">
+                <li>
+                  <a
+                    class="droplist d-flex align-items-center gap-2"
+                    (click)="postId = null"
+                  >
+                    <i class="material-symbols-outlined mat-icon">
+                      visibility
+                    </i>
+                    <span>See First</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="droplist d-flex align-items-center gap-2"
+                    (click)="postId = null"
+                  >
+                    <i class="material-symbols-outlined mat-icon">
+                      person_remove
+                    </i>
+                    <span>Unsubscribe</span>
+                  </a>
+                </li>
+              </ng-container>
             </ul>
           </div>
         </div>

@@ -122,9 +122,9 @@ export class HeaderComponent {
   }
 
   goToViewProfile() {
-    const userId = sessionStorage.getItem('user_id');
-    console.log(userId);
-    this.router.navigate([`settings/view-profile/${userId}`]);
+    const profileId = sessionStorage.getItem('profileId');
+    console.log(profileId);
+    this.router.navigate([`settings/view-profile/${profileId}`]);
   }
 
   forgotPasswordOpen() {

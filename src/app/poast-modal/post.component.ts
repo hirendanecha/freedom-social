@@ -25,9 +25,11 @@ export class PostComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private postService: PostService,
     private cd: ChangeDetectorRef,
-    private sharedService: SharedService,
+    public sharedService: SharedService,
     private router: Router
-  ) {}
+  ) {
+    this.sharedService.getProfilePic();
+  }
 
   ngOnInit(): void {
     this.pid = window.sessionStorage.user_id;

@@ -36,6 +36,7 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
   profileId = '';
   activeTab = 1;
   communityDetails: any = {};
+  memberList = [];
   constructor(
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -59,6 +60,8 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
           res.forEach((element) => {
             if (element.Id) {
               this.communityDetails = element;
+              this.memberList = element.memberList;
+              console.log(this.memberList);
             }
           });
         }
