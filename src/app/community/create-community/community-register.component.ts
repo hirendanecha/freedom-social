@@ -103,6 +103,7 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
               this.spinner.hide();
               this.changeUserType();
               console.log(res);
+              sessionStorage.setItem('communityId', res);
               this.createCommunityAdmin(res.data);
               this.router.navigateByUrl('/home');
             }

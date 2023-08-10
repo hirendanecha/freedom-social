@@ -1,11 +1,13 @@
 import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { PostComponent } from '../poast-modal/post.component';
+import { PostComponent } from '../home/poast-modal/post.component';
 import { LiveComponent } from '../live-modal/live.component';
-import { CreatePostComponent } from '../create-post-modal/create-post.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostService } from '../services/post.service';
 import { SharedService } from '../services/shared.service';
+import { SocketService } from '../services/socket.service';
+import { CommunityPostService } from '../services/community-post.service';
+import { CreatePostComponent } from './create-post-modal/create-post.component';
 
 @Component({
   selector: 'app-favorite',
@@ -30,11 +32,15 @@ export class FavoriteComponent implements OnInit {
   isLike = false;
   postId = '';
   isExpand = false;
+  activePage = 1;
+  postData: any = {};
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
-    private postService: PostService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private socketService: SocketService,
+    private communityPostService: CommunityPostService,
+    private postService: PostService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +50,7 @@ export class FavoriteComponent implements OnInit {
   }
 
   addPost() {
-    const modalRef = this.modalService.open(PostComponent, {
+    const modalRef = this.modalService.open(CreatePostComponent, {
       centered: true,
       backdrop: 'static',
       keyboard: false,
@@ -52,9 +58,32 @@ export class FavoriteComponent implements OnInit {
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
-    // modelRef.result.then(res => {
-    //   return res = user_id
-    // });
+    modalRef.result.then((res) => {
+      console.log(res);
+      if (res === 'success') {
+        this.communityPostService.postData.profileid =
+          sessionStorage.getItem('profileId');
+        this.communityPostService.postData.communityId =
+          sessionStorage.getItem('communityId');
+        this.communityPostService.postData.imageUrl =
+          this.communityPostService.selectedFile;
+        console.log(this.communityPostService.postData);
+        this.spinner.show();
+        if (this.communityPostService.postData) {
+          this.spinner.hide();
+          this.socketService.createCommunityPost(
+            this.communityPostService.postData,
+            (data) => {
+              console.log(data);
+            }
+          );
+          this.socketService.socket.on('create-community-post', (data) => {
+            this.postList.push(data);
+            this.getPostList();
+          });
+        }
+      }
+    });
   }
 
   goLive() {
@@ -65,20 +94,6 @@ export class FavoriteComponent implements OnInit {
     });
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Go Live';
-    modalRef.componentInstance.closeIcon = true;
-    // modelRef.result.then(res => {
-    //   return res = user_id
-    // });
-  }
-
-  createPost() {
-    const modalRef = this.modalService.open(CreatePostComponent, {
-      centered: true,
-      backdrop: 'static',
-      keyboard: false,
-    });
-    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
     // modelRef.result.then(res => {
     //   return res = user_id
@@ -100,13 +115,41 @@ export class FavoriteComponent implements OnInit {
   }
 
   getPostList(): void {
+    // this.spinner.show();
+    const page = this.activePage;
+    this.socketService.getCommunityPost({ page: page, size: 15 }, (data) => {
+      console.log(data);
+    });
+
+    this.socketService.socket.on('community-post', (data) => {
+      console.log('post==>',data);
+      this.postList = data;
+    });
+
+    // this.postService.getPosts(page).subscribe(
+    //   (res: any) => {
+    //     if (res) {
+    //       this.postList = res;
+    //       this.spinner.hide();
+    //     }
+    //   },
+    //   (error) => {
+    //     this.spinner.hide();
+    //     console.log(error);
+    //   }
+    // );
+  }
+
+  loadMore(): void {
     this.spinner.show();
-    const page = 1;
-    this.postService.getPosts(page).subscribe(
+    this.activePage = this.activePage + 1;
+    this.communityPostService.getPosts(this.activePage).subscribe(
       (res: any) => {
         if (res) {
-          this.postList = res;
           this.spinner.hide();
+          res.forEach((element) => {
+            this.postList.push(element);
+          });
         }
       },
       (error) => {
@@ -114,6 +157,40 @@ export class FavoriteComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  createNewPost(): void {
+    if (this.message) {
+      const id = sessionStorage.getItem('profileId');
+      const communityId = sessionStorage.getItem('communityId');
+      this.postData.profileid = id;
+      this.postData.description = this.message;
+      this.postData.communityId = communityId;
+      console.log(this.postData);
+      // this.spinner.show();
+      this.message = '';
+      this.socketService.createCommunityPost(this.postData, (data) => {
+        console.log(data);
+        this.spinner.hide();
+      });
+      this.socketService.socket.on('create-community-post', (res) => {
+        this.postList.push(res);
+        this.getPostList();
+      });
+      // if (this.postData) {
+      //   this.postService.createPost(this.postData).subscribe(
+      //     (res: any) => {
+      //       this.spinner.hide();
+      //       console.log(res);
+      //       this.getPostList();
+      //     },
+      //     (error) => {
+      //       this.spinner.hide();
+      //       console.log(error);
+      //     }
+      //   );
+      // }
+    }
   }
 
   clickOnLike() {

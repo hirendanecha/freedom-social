@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CreatePostComponent } from 'src/app/create-post-modal/create-post.component';
+import { CreatePostComponent } from 'src/app/favorites/create-post-modal/create-post.component';
 import { LiveComponent } from 'src/app/live-modal/live.component';
-import { PostComponent } from 'src/app/poast-modal/post.component';
+import { PostComponent } from 'src/app/home/poast-modal/post.component';
 import { PostService } from 'src/app/services/post.service';
 import { SharedService } from 'src/app/services/shared.service';
 
@@ -20,6 +20,7 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class UserPostComponent implements OnInit {
   @Input() profileId: any;
+  @Input() communityId: any;
   message = '';
   showEmojiPicker = false;
   sets = [

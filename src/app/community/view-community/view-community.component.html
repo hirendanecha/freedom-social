@@ -82,7 +82,190 @@
     <div class="row justify-content-between">
       <div class="col-lg-8 col-12 justify-content-center">
         <ng-container *ngIf="activeTab === 1">
-          <!-- <app-user-post [profileId]="profileId"></app-user-post> -->
+          <!-- <app-user-post [communityId]="communityId"></app-user-post> -->
+          <div class="post-item d-flex flex-column gap-5 gap-md-7 mt-3">
+            <ng-container *ngFor="let post of communityPostList">
+              <div class="post-single-box p-3 p-sm-5" *ngIf="post.description">
+                <div class="top-area pb-5">
+                  <div class="profile-area d-center justify-content-between">
+                    <div class="avatar-item d-flex gap-3 align-items-center">
+                      <div class="position-relative">
+                        <img
+                          class="post-profile avatar-img max-un"
+                          [src]="post.ProfilePicName"
+                          onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
+                          alt="avatar"
+                        />
+                      </div>
+                      <div class="info-area">
+                        <h6 class="m-0">
+                          <a ublic-p>{{ post.FirstName || post.Username }}</a>
+                        </h6>
+                        <!-- <span class="mdtxt status">Active</span> -->
+                      </div>
+                    </div>
+                    <div class="btn-group cus-dropdown">
+                      <button
+                        type="button"
+                        class="dropdown-btn"
+                        (click)="openDropDown(post.Id)"
+                      >
+                        <i class="material-symbols-outlined fs-xxl m-0">
+                          more_horiz
+                        </i>
+                      </button>
+                      <ul
+                        class="dropdown-menu p-4 pt-2 mt-6"
+                        [ngClass]="postId === post.id ? 'show' : ''"
+                        (mouseleave)="postId = null"
+                      >
+                        <ng-container *ngIf="profileId === userProfileId">
+                          <li>
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
+                              (click)="postId = null"
+                            >
+                              <i class="material-symbols-outlined mat-icon">
+                                edit
+                              </i>
+                              <span>Edit</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
+                              (click)="postId = null"
+                            >
+                              <i class="material-symbols-outlined mat-icon">
+                                delete
+                              </i>
+                              <span>Delete</span>
+                            </a>
+                          </li>
+                        </ng-container>
+                        <ng-container *ngIf="profileId != userProfileId">
+                          <li>
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
+                              (click)="postId = null"
+                            >
+                              <i class="material-symbols-outlined mat-icon">
+                                visibility
+                              </i>
+                              <span>See First</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
+                              (click)="postId = null"
+                            >
+                              <i class="material-symbols-outlined mat-icon">
+                                person_remove
+                              </i>
+                              <span>Unsubscribe</span>
+                            </a>
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="py-4">
+                    <p
+                      class="post-description"
+                      [innerHTML]="post.description"
+                    ></p>
+                  </div>
+                  <div class="post-img" *ngIf="post.imageUrl">
+                    <img [src]="post.imageUrl" class="w-100" alt="image" />
+                  </div>
+                </div>
+                <div
+                  class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between"
+                >
+                  <div
+                    class="friends-list d-flex gap-3 align-items-center text-center w-100"
+                  ></div>
+                </div>
+                <div
+                  class="like-comment-share py-5 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
+                >
+                  <button
+                    class="d-center gap-1 gap-sm-2 mdtxt"
+                    (click)="clickOnLike()"
+                    [ngClass]="isLike ? 'actvie' : ''"
+                  >
+                    <i class="material-symbols-outlined mat-icon"> favorite </i>
+                    Score Post
+                  </button>
+                  <button
+                    class="d-center gap-1 gap-sm-2 mdtxt position-relative reply-button"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="Comming Soon!"
+                  >
+                    <i class="material-symbols-outlined mat-icon"> chat </i>
+                    Video Reply
+                  </button>
+                  <button class="d-center gap-1 gap-sm-2 mdtxt">
+                    <i class="material-symbols-outlined mat-icon"> share </i>
+                    Share
+                  </button>
+                </div>
+                <form action="#">
+                  <div class="d-flex mt-5 gap-3">
+                    <div
+                      class="form-content input-area py-1 d-flex gap-2 align-items-center w-100"
+                    >
+                      <input placeholder="Write a comment.." />
+                      <div class="file-input d-flex gap-1 gap-md-2">
+                        <div class="file-upload">
+                          <label class="file">
+                            <input type="file" />
+                            <span
+                              class="file-custom border-0 d-grid text-center"
+                            >
+                              <span
+                                class="material-symbols-outlined mat-icon m-0 xxltxt"
+                              >
+                                gif_box
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="file-upload">
+                          <label class="file">
+                            <input type="file" />
+                            <span
+                              class="file-custom border-0 d-grid text-center"
+                            >
+                              <span
+                                class="material-symbols-outlined mat-icon m-0 xxltxt"
+                              >
+                                perm_media
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="btn-area d-flex">
+                      <button class="cmn-btn px-2 px-sm-5 px-lg-6">
+                        <i
+                          class="material-symbols-outlined mat-icon m-0 fs-xxl"
+                        >
+                          near_me
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </ng-container>
+            <div *ngIf="!communityPostList.length">
+              <h3>No post available</h3>
+            </div>
+          </div>
         </ng-container>
         <ng-container *ngIf="activeTab === 2">
           <h3>Hello About</h3>

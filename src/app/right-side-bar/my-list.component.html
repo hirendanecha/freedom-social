@@ -52,14 +52,14 @@
         </div>
         <button
           class="cmn-btn p-3"
-          *ngIf="user.AccountType === 'user'"
+          *ngIf="user?.AccountType === 'user'"
           (click)="createCommunity()"
         >
           Create Local Community
         </button>
         <button
           class="cmn-btn p-3"
-          *ngIf="user.AccountType !== 'user'"
+          *ngIf="user?.AccountType !== 'user'"
           (click)="createCommunity()"
         >
           Find Local Community

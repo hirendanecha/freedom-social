@@ -11,6 +11,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, debounceTime, fromEvent } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
+import { CommunityPostService } from 'src/app/services/community-post.service';
 import { CommunityService } from 'src/app/services/community.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -37,11 +38,18 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
   activeTab = 1;
   communityDetails: any = {};
   memberList = [];
+  postId = '';
+  isExpand = false;
+  isLike = false;
+  userProfileId = '';
+  communityPostList = [];
+
   constructor(
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     public sharedService: SharedService,
-    private communityService: CommunityService
+    private communityService: CommunityService,
+    private communityPostService: CommunityPostService
   ) {
     this.communityId = this.route.snapshot.paramMap.get('id');
   }
@@ -49,7 +57,9 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
     this.getCommunityDetails();
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.getCommunityPost();
+  }
 
   getCommunityDetails(): void {
     this.spinner.show();
@@ -71,5 +81,34 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
         console.log(error);
       }
     );
+  }
+
+  getCommunityPost(): void {
+    this.spinner.show();
+    this.communityPostService.getPostsByProfileId(this.communityId).subscribe(
+      (res: any) => {
+        if (res) {
+          console.log(res);
+          this.communityPostList = res;
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
+  }
+
+  clickOnLike() {
+    this.isLike = !this.isLike;
+  }
+
+  openDropDown(id) {
+    this.postId = id;
+    if (this.postId) {
+      this.isExpand = true;
+    } else {
+      this.isExpand = false;
+    }
   }
 }

@@ -41,9 +41,9 @@ export class PopularComponent implements OnInit {
   }
 
   joinCommunity(id): void {
-    const userId = window.sessionStorage.user_id;
+    const profileId = sessionStorage.getItem('profileId');
     const data = {
-      userId: userId,
+      profileId: profileId,
       communityId: id,
       IsActive: 'Y',
     };

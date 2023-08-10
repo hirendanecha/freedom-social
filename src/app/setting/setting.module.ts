@@ -10,6 +10,7 @@ import { PipeModule } from '../pipe/pipe.module';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { UserPostComponent } from './user-posts/user-post.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommunityModule } from '../community/community.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EditProfileComponent,
     UploadFilesComponent,
     ViewProfileComponent,
-    UserPostComponent
+    UserPostComponent,
   ],
   imports: [
     SettingRoutingModule,
@@ -26,6 +27,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     PipeModule,
     NgbModule,
+    CommunityModule
   ],
   exports: [UserPostComponent],
 })

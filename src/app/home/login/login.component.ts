@@ -73,6 +73,7 @@ export class LoginComponent {
           this.tokenStorage.saveToken(data?.accessToken);
           this.tokenStorage.saveUser(data.user);
           sessionStorage.setItem('profileId', data.user.profileId);
+          sessionStorage.setItem('communityId', data.user.communityId);
           window.sessionStorage.user_level_id = 2;
           window.sessionStorage.user_id = data.user.Id;
           window.sessionStorage.user_country = data.user.Country;

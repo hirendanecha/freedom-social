@@ -12,14 +12,18 @@
     <div class="d-flex mb-5 gap-3">
       <div class="profile-box">
         <a
-          ><img [src]="sharedService.profilePic?.url" class="" alt="icon"
+          ><img
+            [src]="sharedService.profilePic?.url"
+            onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+            class=""
+            alt="icon"
         /></a>
       </div>
       <textarea
         cols="10"
         rows="2"
         placeholder="Write something to Lerio.."
-        [(ngModel)]="postData.postdescription"
+        [(ngModel)]="postService.postData.postdescription"
         required
       ></textarea>
     </div>
@@ -54,7 +58,7 @@
     id="common-filter-confirm"
     type="button"
     class="cmn-btn p-2"
-    (click)="addPost()"
+    (click)="activeModal.close('success')"
   >
     {{ confirmButtonLabel }}
   </button>

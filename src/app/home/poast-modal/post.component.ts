@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { PostService } from '../services/post.service';
+import { PostService } from '../../services/post.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { SharedService } from '../services/shared.service';
+import { SharedService } from '../../services/shared.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,7 +23,7 @@ export class PostComponent implements OnInit {
   constructor(
     public activeModal: NgbActiveModal,
     private spinner: NgxSpinnerService,
-    private postService: PostService,
+    public postService: PostService,
     private cd: ChangeDetectorRef,
     public sharedService: SharedService,
     private router: Router
@@ -70,28 +70,28 @@ export class PostComponent implements OnInit {
   getSelectedImg(): void {
     this.postService.getPostImg().subscribe((res: any) => {
       console.log(res);
-      this.selectedFile = res[0].url;
+      this.postService.selectedFile = res[0].url;
     });
   }
 
-  addPost(): void {
-    this.postData.profileid = this?.sharedService?.userData?.profileId;
-    this.postData.imageUrl = this.selectedFile;
-    console.log(this.postData);
-    this.spinner.show();
-    if (this.postData) {
-      this.postService.createPost(this.postData).subscribe(
-        (res: any) => {
-          this.spinner.hide();
-          console.log(res);
-          this.activeModal.close();
-          this.router.navigate(['home']);
-        },
-        (error) => {
-          this.spinner.hide();
-          console.log(error);
-        }
-      );
-    }
-  }
+  // addPost(): void {
+  //   this.postData.profileid = this?.sharedService?.userData?.profileId;
+  //   this.postData.imageUrl = this.selectedFile;
+  //   console.log(this.postData);
+  //   this.spinner.show();
+  //   if (this.postData) {
+  //     this.postService.createPost(this.postData).subscribe(
+  //       (res: any) => {
+  //         this.spinner.hide();
+  //         console.log(res);
+  //         this.activeModal.close();
+  //         this.router.navigate(['home']);
+  //       },
+  //       (error) => {
+  //         this.spinner.hide();
+  //         console.log(error);
+  //       }
+  //     );
+  //   }
+  // }
 }

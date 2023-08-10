@@ -1,5 +1,7 @@
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
@@ -12,6 +14,7 @@ import { debounceTime, fromEvent } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { ToastService } from 'src/app/services/toaster.service';
+import { UploadFilesService } from 'src/app/services/upload-files.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -29,6 +32,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   allCountryData: any;
   type = 'danger';
   defaultCountry = 'US';
+  selectedFile: any;
 
   @ViewChild('zipCode') zipCode: ElementRef;
   constructor(
@@ -36,7 +40,9 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private customerService: CustomerService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private cd: ChangeDetectorRef,
+    private uploadService: UploadFilesService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +65,37 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       },
       (err) => {
         console.log(err);
+      }
+    );
+  }
+
+  selectFiles(event, type) {
+    // console.log(event.target.files, type);
+    this.selectedFile = event.target.files;
+    this.upload(this.selectedFile, type);
+  }
+
+  upload(file, defaultType): any {
+    if (file.size / (1024 * 1024) > 5) {
+      return 'Image file size exceeds 5 MB!';
+    }
+    console.log(file[0], defaultType);
+    this.spinner.show();
+    this.uploadService.upload(file[0], this.userId, defaultType).subscribe(
+      (event) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.spinner.hide();
+        } else if (event instanceof HttpResponse) {
+          this.spinner.hide();
+          this.selectedFile = undefined;
+          this.cd.detectChanges();
+        }
+        // return '';
+      },
+      (err) => {
+        this.spinner.hide();
+        this.selectedFile = undefined;
+        return 'Could not upload the file:' + file.name;
       }
     );
   }
