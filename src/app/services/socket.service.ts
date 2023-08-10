@@ -9,7 +9,7 @@ export class SocketService {
   public socket: any;
 
   constructor() {
-    this.socket = io(environment.serverUrl);
+    this.socket = io(environment.socketUrl);
   }
 
   // socket for posts //
