@@ -9,7 +9,7 @@ export class SocketService {
   public socket: any;
 
   constructor() {
-    this.socket = io('http://localhost:8080');
+    this.socket = io(environment.serverUrl);
   }
 
   // socket for posts //
