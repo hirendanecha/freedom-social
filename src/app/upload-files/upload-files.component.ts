@@ -96,16 +96,20 @@ export class UploadFilesComponent implements OnInit {
 
     this.spinner.show();
     this.uploadService.upload(file[0], this.pid, defaultType).subscribe(
-      (event) => {
-        if (event.type === HttpEventType.UploadProgress) {
+      (res: any) => {
+        // if (event.type === HttpEventType.UploadProgress) {
+        //   this.spinner.hide();
+        // } else if (event instanceof HttpResponse) {
+        //   this.spinner.hide();
+        //   this.selectedFiles = undefined;
+        //   this.cd.detectChanges();
+        //   // this.sharedService.getProfilePic();
+        // }
+        if (res.body) {
           this.spinner.hide();
-        } else if (event instanceof HttpResponse) {
-          this.spinner.hide();
-          this.selectedFiles = undefined;
-          this.cd.detectChanges();
-          this.sharedService.getProfilePic();
+          console.log(res?.body?.url);
+          this.sharedService.profilePic = res?.body?.url;
         }
-        // return '';
       },
       (err) => {
         this.spinner.hide();
@@ -113,30 +117,6 @@ export class UploadFilesComponent implements OnInit {
         return 'Could not upload the file:' + file.name;
       }
     );
-  }
-
-  productSaved() {
-    let pid = window.sessionStorage.user_id;
-    return pid && pid !== 'undefined' && pid !== 'new' && pid.trim().length > 0;
-  }
-
-  uploadDefaultImage(evn: any) {
-    this.isSelected = true;
-    this.isDisable = true;
-    console.log(this.isSelected);
-    fetch(evn.src)
-      .then((response) => response.blob())
-      .then((blob) => {
-        this.defaultFile = new File([blob], 'image.jpg', {
-          type: 'image/jpeg',
-        });
-        this.selectedFiles = undefined;
-        if (this.pid) {
-          this.onImageUpload.emit('true');
-          return;
-        }
-        this.upload(this.defaultFile, 'true');
-      });
   }
 
   ngOnDestroy() {

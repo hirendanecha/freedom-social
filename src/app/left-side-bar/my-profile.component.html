@@ -34,7 +34,7 @@
       <div class="avatar position-relative" routerLink="home">
         <img
           class="avatar-img max-un"
-          [src]="sharedService?.profilePic?.url"
+          [src]="sharedService?.profilePic"
           onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
           alt="avatar"
         />
@@ -196,7 +196,7 @@
       <div class="position-relative">
         <img
           class="avatar-img max-un"
-          [src]="sharedService?.profilePic?.url"
+          [src]="sharedService?.profilePic"
           onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
           alt="avatar"
         />
@@ -209,66 +209,60 @@
       </div>
     </div>
     <ul class="profile-link mt-7 mb-7 pb-7 ps-0">
-        <li>
-          <a
-            class="d-flex gap-4"
-            (click)="openLoacalCommunity()"
-            [ngClass]="isCommunity ? 'active' : ''"
-          >
-            <i class="material-symbols-outlined fs-xxl mat-icon">
-              workspaces
-            </i>
-            <span>Local Communities</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://1776token.com/" target="_blank" class="d-flex gap-4">
-            <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
-            <span>1776 Token</span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://localfoods.market/"
-            target="_blank"
-            class="d-flex gap-4"
-          >
-            <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
-            <span>Local Foods</span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://lamarslist.com/"
-            target="_blank"
-            class="d-flex gap-4"
-          >
-            <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
-            <span>Lamars List</span>
-          </a>
-        </li>
-        <li>
-          <a class="d-flex gap-4" (click)="openWalletPopUp()">
-            <i class="material-symbols-outlined fs-xxl mat-icon"> Download </i>
-            <span>Download 1776 Wallet</span>
-          </a>
-        </li>
-        <li>
-          <a class="d-flex gap-4" (click)="openClaimTokenPopUp()">
-            <i class="material-symbols-outlined fs-xxl mat-icon"> Token </i>
-            <span>Claim 50 free 1776</span>
-          </a>
-        </li>
-        <li>
-          <a
-            routerLink="settings"
-            class="d-flex gap-4"
-            [ngClass]="isSetting ? 'active' : ''"
-          >
-            <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
-            <span>Settings</span>
-          </a>
-        </li>
+      <li>
+        <a
+          class="d-flex gap-4"
+          (click)="openLoacalCommunity()"
+          [ngClass]="isCommunity ? 'active' : ''"
+        >
+          <i class="material-symbols-outlined fs-xxl mat-icon"> workspaces </i>
+          <span>Local Communities</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://1776token.com/" target="_blank" class="d-flex gap-4">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+          <span>1776 Token</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://localfoods.market/"
+          target="_blank"
+          class="d-flex gap-4"
+        >
+          <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+          <span>Local Foods</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://lamarslist.com/" target="_blank" class="d-flex gap-4">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+          <span>Lamars List</span>
+        </a>
+      </li>
+      <li>
+        <a class="d-flex gap-4" (click)="openWalletPopUp()">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> Download </i>
+          <span>Download 1776 Wallet</span>
+        </a>
+      </li>
+      <li>
+        <a class="d-flex gap-4" (click)="openClaimTokenPopUp()">
+          <i class="material-symbols-outlined fs-xxl mat-icon"> Token </i>
+          <span>Claim 50 free 1776</span>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="settings"
+          class="d-flex gap-4"
+          [ngClass]="isSetting ? 'active' : ''"
+        >
+          <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
+          <span>Settings</span>
+        </a>
+      </li>
     </ul>
   </div>
 </div>

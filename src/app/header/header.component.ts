@@ -41,7 +41,7 @@ export class HeaderComponent {
     private router: Router,
     private tokenStorageService: TokenStorageService
   ) {
-    this.sharedService.getProfilePic();
+    // this.sharedService.getProfilePic();
   }
 
   openUserMenu(): void {

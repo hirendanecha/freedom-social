@@ -25,8 +25,8 @@ export class PopularComponent implements OnInit {
 
   getCommunityList(): void {
     this.spinner.show();
-    const userId = window.sessionStorage.user_id;
-    this.communityService.getCommunity(userId).subscribe(
+    const profileId = sessionStorage.getItem('profileId');
+    this.communityService.getCommunity(profileId).subscribe(
       (res: any) => {
         if (res.data) {
           this.spinner.hide();

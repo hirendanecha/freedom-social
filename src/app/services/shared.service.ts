@@ -11,8 +11,8 @@ import { CustomerService } from './customer.service';
 })
 export class SharedService {
   isDark = true;
-  profilePic: any = {};
-  coverPic: any = {};
+  profilePic = '';
+  coverPic = '';
   userData: any = {};
   constructor(
     // private http: HttpClient,
@@ -43,34 +43,34 @@ export class SharedService {
     localStorage.setItem('theme', 'light');
   }
 
-  getProfilePic() {
-    let id = window.sessionStorage.user_id;
-    if (id) {
-      this.uploadService.getProfilePic(id).subscribe(
-        (res) => {
-          if (res.length) {
-            this.spinner.hide();
-            this.profilePic = res[0];
-          }
-        },
-        (error) => {
-          this.spinner.hide();
-          console.log(error);
-        }
-      );
-      this.uploadService.getCoverPic(id).subscribe(
-        (res) => {
-          if (res.length) {
-            this.coverPic = res[0];
-          }
-        },
-        (error) => {
-          this.spinner.hide();
-          console.log(error);
-        }
-      );
-    }
-  }
+  // getProfilePic() {
+  //   let id = window.sessionStorage.user_id;
+  //   if (id) {
+  //     this.uploadService.getProfilePic(id).subscribe(
+  //       (res) => {
+  //         if (res.length) {
+  //           this.spinner.hide();
+  //           this.profilePic = res[0];
+  //         }
+  //       },
+  //       (error) => {
+  //         this.spinner.hide();
+  //         console.log(error);
+  //       }
+  //     );
+  //     this.uploadService.getCoverPic(id).subscribe(
+  //       (res) => {
+  //         if (res.length) {
+  //           this.coverPic = res[0];
+  //         }
+  //       },
+  //       (error) => {
+  //         this.spinner.hide();
+  //         console.log(error);
+  //       }
+  //     );
+  //   }
+  // }
 
   getUserDetails() {
     this.spinner.show();
@@ -81,7 +81,9 @@ export class SharedService {
           if (res.data) {
             this.spinner.hide();
             console.log(res.data);
-            this.userData = res.data[0];
+            this.userData = res?.data[0];
+            this.profilePic = res?.data[0]?.ProfilePicName;
+            this.coverPic = res?.data[0]?.CoverPicName;
             return this.userData;
           }
         },

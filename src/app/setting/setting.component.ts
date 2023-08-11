@@ -18,7 +18,7 @@ export class SettingComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public sharedService: SharedService
   ) {
-    this.sharedService.getProfilePic();
+    // this.sharedService.getProfilePic();
     this.customer = this.sharedService.getUserDetails();
     console.log(this.customer);
   }

@@ -33,6 +33,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   type = 'danger';
   defaultCountry = 'US';
   selectedFile: any;
+  profilePic = '';
 
   @ViewChild('zipCode') zipCode: ElementRef;
   constructor(
@@ -69,28 +70,23 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     );
   }
 
-  selectFiles(event, type) {
-    // console.log(event.target.files, type);
+  selectFiles(event) {
     this.selectedFile = event.target.files;
-    this.upload(this.selectedFile, type);
   }
 
-  upload(file, defaultType): any {
+  upload(file, id, defaultType) {
     if (file.size / (1024 * 1024) > 5) {
       return 'Image file size exceeds 5 MB!';
     }
-    console.log(file[0], defaultType);
     this.spinner.show();
-    this.uploadService.upload(file[0], this.userId, defaultType).subscribe(
-      (event) => {
-        if (event.type === HttpEventType.UploadProgress) {
+    this.uploadService.upload(file[0], id, defaultType).subscribe(
+      (res: any) => {
+        if (res.body) {
           this.spinner.hide();
-        } else if (event instanceof HttpResponse) {
-          this.spinner.hide();
-          this.selectedFile = undefined;
-          this.cd.detectChanges();
+          console.log(res?.body?.url);
+          this.profilePic = res?.body?.url;
+          this.creatProfile(this.customer);
         }
-        // return '';
       },
       (err) => {
         this.spinner.hide();
@@ -112,13 +108,12 @@ export class SignUpComponent implements OnInit, AfterViewInit {
           this.registrationMessage =
             'Your account has registered successfully. Kindly login with your email and password !!!';
           this.isragister = true;
-          localStorage.setItem('register', String(this.isragister));
-          this.toastService.show(
-            'Please check your email and click the activation link to activate your account.',
-            { classname: 'bg-success text-light', delay: 10000 }
-          );
-          this.creatProfile(this.customer);
-          this.router.navigateByUrl('/login?isVerify=false');
+          const id = data.data;
+          if (id) {
+            this.upload(this.selectedFile, id, 'profile');
+            localStorage.setItem('register', String(this.isragister));
+            this.router.navigateByUrl('/login?isVerify=false');
+          }
         }
       },
       (err) => {
@@ -195,7 +190,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     this.msg = '';
   }
 
-  creatProfile(data): void {
+  creatProfile(data) {
     this.spinner.show();
     const profile = {
       Username: data?.Username,
@@ -209,6 +204,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       MobileNo: data?.MobileNo,
       UserID: window?.sessionStorage?.user_id,
       IsActive: 'N',
+      ProfilePicName: this.profilePic,
     };
     this.customerService.createProfile(profile).subscribe(
       (data: any) => {

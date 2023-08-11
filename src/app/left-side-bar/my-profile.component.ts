@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -10,13 +10,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClaimTokenComponent } from './clai-1776-token/claim-token.component';
 import { SharedService } from '../services/shared.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss'],
 })
-export class MyProfileComponent {
+export class MyProfileComponent implements OnInit {
   isEXpand = false;
   isShowPeoplePages = false;
   isFriendRequest = false;
@@ -29,12 +30,14 @@ export class MyProfileComponent {
   isPageResearch = false;
   isSetting = false;
   isShowMyList = false;
+  user: any = {};
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
     public sharedService: SharedService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private customerService: CustomerService
   ) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
@@ -50,14 +53,10 @@ export class MyProfileComponent {
         this.isSetting = event.url.includes('/settings') || false;
       }
     });
+  }
 
-    this.sharedService.getProfilePic();
-    // if (this.route.snapshot.url === '/people') {
-    //   this.isShowPeoplePages = true;
-    // } else {
-    //   this.isShowPeoplePages = false;
-    //   console.log(this.isShowPeoplePages);
-    // }
+  ngOnInit(): void {
+    this.getUserDetails();
   }
 
   openWalletPopUp() {
@@ -88,9 +87,23 @@ export class MyProfileComponent {
     this.isShowMyList = !this.isShowMyList;
   }
 
+  getUserDetails(): void {
+    const id = window.sessionStorage.user_id;
+    this.customerService.getCustomer(id).subscribe(
+      (data: any) => {
+        if (data[0]) {
+          this.user = data[0];
+        }
+        console.log(data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
   openLoacalCommunity() {
-    const user = this.tokenStorageService.getUser();
-    if (user.AccountType === 'user') {
+    if (this.user.AccountType === 'user') {
       this.router.navigateByUrl('community');
     } else {
       this.router.navigateByUrl('community/community-post');

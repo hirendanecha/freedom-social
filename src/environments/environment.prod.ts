@@ -5,5 +5,5 @@ export const environment = {
   serverUrl2: 'http://localhost:8080/api/v1/',
   imgUrl: 'root/storage/uploads',
   socketUrl: 'https://freedom-api.opash.in/',
-
+  socketUrl2: 'http://localhost:8080/',
 };

@@ -116,6 +116,26 @@
                   </div>
                 </div>
                 <div class="row">
+                  <div class="col-12 mb-3">
+                    <label class="form-label text-light">Profile Picture</label>
+                    <input
+                      type="file"
+                      name="logo"
+                      (change)="selectFiles($event)"
+                      required
+                    />
+                  </div>
+                  <!-- <div class="col-12 mb-3">
+                    <label class="form-label text-light">Cover Picture</label>
+                    <input
+                      name="cover"
+                      type="file"
+                      placeholder="Enter your description"
+                      (change)="selectFiles($event)"
+                    />
+                  </div> -->
+                </div>
+                <div class="row">
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label text-light">Mobile</label>
                     <input
@@ -197,25 +217,6 @@
                     />
                   </div>
                 </div>
-                <!-- <div class="row">
-                  <div class="col-12 mb-3">
-                    <label class="form-label text-light">Profile Picture</label>
-                    <input
-                      type="file"
-                      name="logo"
-                      (change)="selectFiles($event, 'profile')"
-                    />
-                  </div>
-                  <div class="col-12 mb-3">
-                    <label class="form-label text-light">Cover Picture</label>
-                    <input
-                      name="cover"
-                      type="file"
-                      placeholder="Enter your description"
-                      (change)="selectFiles($event, 'profile-cover')"
-                    />
-                  </div>
-                </div> -->
 
                 <div class="form-check my-4 d-flex">
                   <input class="form-check-input p-0" type="checkbox" />

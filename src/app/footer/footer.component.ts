@@ -36,7 +36,7 @@ export class FooterComponent {
     private tokenStorageService: TokenStorageService,
     private spinner: NgxSpinnerService
   ) {
-    this.sharedService.getProfilePic();
+    // this.sharedService.getProfilePic();
   }
 
   openUserMenu(): void {

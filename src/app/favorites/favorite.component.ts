@@ -45,7 +45,7 @@ export class FavoriteComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPostList();
-    this.sharedService.getProfilePic();
+    // this.sharedService.getProfilePic();
     this.sharedService.getUserDetails();
   }
 
@@ -115,16 +115,24 @@ export class FavoriteComponent implements OnInit {
   }
 
   getPostList(): void {
-    // this.spinner.show();
+    this.spinner.show();
     const page = this.activePage;
     this.socketService.getCommunityPost({ page: page, size: 15 }, (data) => {
       console.log(data);
     });
 
-    this.socketService.socket.on('community-post', (data) => {
-      console.log('post==>',data);
-      this.postList = data;
-    });
+    this.socketService.socket.on(
+      'community-post',
+      (data) => {
+        console.log('post==>', data);
+        this.spinner.hide();
+        this.postList = data;
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
 
     // this.postService.getPosts(page).subscribe(
     //   (res: any) => {

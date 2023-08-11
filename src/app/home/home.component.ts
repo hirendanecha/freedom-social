@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private router: Router,
     private socketService: SocketService
   ) {
-    this.sharedService.getProfilePic();
+    // this.sharedService.getProfilePic();
     this.sharedService.getUserDetails();
   }
 
@@ -159,7 +159,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getPostList(): void {
     const page = this.activePage;
-    // this.spinner.show();
+    this.spinner.show();
     this.socketService.getPost({ page: page, size: 15 }, (post) => {
       console.log('post', post);
       // this.spinner.hide();
@@ -176,10 +176,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
     //     console.log(error);
     //   }
     // );
-    this.socketService.socket.on('new-post', (data) => {
-      console.log(data);
-      this.postList = data;
-    });
+    this.socketService.socket.on(
+      'new-post',
+      (data) => {
+        console.log(data);
+        this.spinner.hide();
+        this.postList = data;
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
   }
 
   createPost(): void {
@@ -188,16 +196,24 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.postData.profileid = id;
       this.postData.postdescription = this.message;
       console.log(this.postData);
-      // this.spinner.show();
+      this.spinner.show();
       this.message = '';
       this.socketService.createPost(this.postData, (data) => {
         console.log(data);
-        this.spinner.hide();
+        // this.spinner.hide();
       });
-      this.socketService.socket.on('create-new-post', (res) => {
-        this.postList.push(res);
-        this.getPostList();
-      });
+      this.socketService.socket.on(
+        'create-new-post',
+        (res) => {
+          this.postList.push(res);
+          this.spinner.hide();
+          this.getPostList();
+        },
+        (error) => {
+          this.spinner.hide();
+          console.log(error);
+        }
+      );
       // if (this.postData) {
       //   this.postService.createPost(this.postData).subscribe(
       //     (res: any) => {

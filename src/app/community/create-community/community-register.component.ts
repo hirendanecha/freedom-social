@@ -32,14 +32,14 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
   registrationMessage = '';
   confirm_password = '';
   msg = '';
-  userId = '';
+  profileId = '';
   submitted = false;
   allCountryData: any;
   type = 'danger';
   defaultCountry = 'US';
   selectedFile: File;
-  logoImg: any;
-  coverImg: any;
+  logoImg = '';
+  coverImg = '';
 
   @ViewChild('zipCode') zipCode: ElementRef;
   constructor(
@@ -52,13 +52,13 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
     private tokenStorageService: TokenStorageService
-  ) {}
+  ) {
+    this.getCustomer();
+  }
 
   ngOnInit(): void {
-    this.userId = window.sessionStorage.user_id;
+    this.profileId = sessionStorage.getItem('profileId');
     this.getAllCountries();
-    this.getCustomer();
-
     this.communityForm = this.fb.group({
       CommunityName: [null, [Validators.required]],
       CommunityDescription: [null, [Validators.required]],
@@ -89,11 +89,11 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     this.spinner.show();
-    this.getProfilePic();
+    // this.getProfilePic();
     if (this.logoImg && this.coverImg) {
-      this.communityDetails.userId = this.userId;
-      this.communityDetails.logoImg = this.logoImg?.url;
-      this.communityDetails.coverImg = this.coverImg?.url;
+      this.communityDetails.profileId = this.profileId;
+      this.communityDetails.logoImg = this.logoImg;
+      this.communityDetails.coverImg = this.coverImg;
       console.log(this.communityDetails);
       if (this.communityDetails) {
         this.communityService.createCommunity(this.communityDetails).subscribe(
@@ -103,7 +103,7 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
               this.spinner.hide();
               this.changeUserType();
               console.log(res);
-              sessionStorage.setItem('communityId', res);
+              sessionStorage.setItem('communityId', res.data);
               this.createCommunityAdmin(res.data);
               this.router.navigateByUrl('/home');
             }
@@ -141,14 +141,15 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
     }
     console.log(file[0], defaultType);
     this.spinner.show();
-    this.uploadService.upload(file[0], this.userId, defaultType).subscribe(
-      (event) => {
-        if (event.type === HttpEventType.UploadProgress) {
+    this.uploadService.upload(file[0], this.profileId, defaultType).subscribe(
+      (res: any) => {
+        if (res.body) {
           this.spinner.hide();
-        } else if (event instanceof HttpResponse) {
-          this.spinner.hide();
-          this.selectedFile = undefined;
-          this.cd.detectChanges();
+          if (defaultType === 'community-logo') {
+            this.logoImg = res?.body?.url;
+          } else if (defaultType === 'community-cover') {
+            this.coverImg = res?.body?.url;
+          }
         }
         // return '';
       },
@@ -160,35 +161,36 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
     );
   }
 
-  getProfilePic() {
-    this.spinner.show();
-    this.communityService.getLogoImg(this.userId).subscribe(
-      (res: any) => {
-        if (res.length) {
-          this.spinner.hide();
-          this.logoImg = res[0];
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.communityService.getCoverImg(this.userId).subscribe(
-      (res: any) => {
-        if (res) {
-          this.spinner.hide();
-          this.coverImg = res[0];
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
-  }
+  // getProfilePic() {
+  //   this.spinner.show();
+  //   this.communityService.getLogoImg(this.userId).subscribe(
+  //     (res: any) => {
+  //       if (res.length) {
+  //         this.spinner.hide();
+  //         this.logoImg = res[0];
+  //       }
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  //   this.communityService.getCoverImg(this.userId).subscribe(
+  //     (res: any) => {
+  //       if (res) {
+  //         this.spinner.hide();
+  //         this.coverImg = res[0];
+  //       }
+  //     },
+  //     (error) => {
+  //       this.spinner.hide();
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
   changeUserType() {
-    this.communityService.changeAccountType(this.userId).subscribe(
+    const id = window.sessionStorage.user_id;
+    this.communityService.changeAccountType(id).subscribe(
       (res: any) => {
         if (res) {
           return res;
@@ -202,7 +204,7 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
 
   createCommunityAdmin(id): void {
     const data = {
-      userId: this.userId,
+      profileId: this.profileId,
       communityId: id,
       isActive: 'Y',
       isAdmin: 'Y',

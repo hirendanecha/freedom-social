@@ -28,7 +28,7 @@ export class PostComponent implements OnInit {
     public sharedService: SharedService,
     private router: Router
   ) {
-    this.sharedService.getProfilePic();
+    // this.sharedService.getProfilePic();
   }
 
   ngOnInit(): void {
@@ -48,15 +48,20 @@ export class PostComponent implements OnInit {
 
     this.spinner.show();
     this.postService.upload(files[0], this.pid, defaultType).subscribe(
-      (event) => {
-        if (event.type === HttpEventType.UploadProgress) {
+      (res: any) => {
+        console.log(res);
+        if (res.body) {
           this.spinner.hide();
-        } else if (event instanceof HttpResponse) {
-          this.spinner.hide();
-          this.selectedFiles = undefined;
-          this.cd.detectChanges();
-          this.getSelectedImg();
+          this.postService.selectedFile = res?.body?.url;
         }
+        // if (event.type === HttpEventType.UploadProgress) {
+        //   this.spinner.hide();
+        // } else if (event instanceof HttpResponse) {
+        //   this.spinner.hide();
+        //   this.selectedFiles = undefined;
+        //   this.cd.detectChanges();
+        //   // this.getSelectedImg();
+        // }
         // return '';
       },
       (err) => {
@@ -67,12 +72,12 @@ export class PostComponent implements OnInit {
     );
   }
 
-  getSelectedImg(): void {
-    this.postService.getPostImg().subscribe((res: any) => {
-      console.log(res);
-      this.postService.selectedFile = res[0].url;
-    });
-  }
+  // getSelectedImg(): void {
+  //   this.postService.getPostImg().subscribe((res: any) => {
+  //     console.log(res);
+  //     this.postService.selectedFile = res[0].url;
+  //   });
+  // }
 
   // addPost(): void {
   //   this.postData.profileid = this?.sharedService?.userData?.profileId;

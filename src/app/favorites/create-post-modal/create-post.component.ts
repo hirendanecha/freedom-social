@@ -43,15 +43,19 @@ export class CreatePostComponent implements OnInit {
 
     this.spinner.show();
     this.communityPostService.upload(files[0], this.pid, defaultType).subscribe(
-      (event) => {
-        if (event.type === HttpEventType.UploadProgress) {
+      (res: any) => {
+        if (res.body) {
           this.spinner.hide();
-        } else if (event instanceof HttpResponse) {
-          this.spinner.hide();
-          this.selectedFiles = undefined;
-          this.cd.detectChanges();
-          this.getSelectedImg();
+          this.communityPostService.selectedFile = res?.body?.url;
         }
+        // if (event.type === HttpEventType.UploadProgress) {
+        //   this.spinner.hide();
+        // } else if (event instanceof HttpResponse) {
+        //   this.spinner.hide();
+        //   this.selectedFiles = undefined;
+        //   this.cd.detectChanges();
+        //   this.getSelectedImg();
+        // }
         // return '';
       },
       (err) => {

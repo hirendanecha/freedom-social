@@ -3,6 +3,7 @@ import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { AddCommunityComponent } from '../community/add-community/add-community.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from '../services/token-storage.service';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
   selector: 'app-my-list',
@@ -16,7 +17,8 @@ export class MyListComponent implements OnInit {
   constructor(
     private router: Router,
     private modalService: NgbModal,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private customerService: CustomerService
   ) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {
@@ -26,7 +28,18 @@ export class MyListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = this.tokenStorageService.getUser();
+    const id = window.sessionStorage.user_id;
+    this.customerService.getCustomer(id).subscribe(
+      (data: any) => {
+        if (data[0]) {
+          this.user = data[0];
+        }
+        console.log(data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   openToggle() {

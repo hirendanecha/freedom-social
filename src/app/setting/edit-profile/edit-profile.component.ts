@@ -79,29 +79,29 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
           this.customer = data[0];
           console.log(this.customer.profileId);
           this.getAllCountries();
-          this.uploadService.getProfilePic(this.customer.Id).subscribe(
-            (res) => {
-              if (res.length) {
-                this.spinner.hide();
-                this.sharedService.profilePic = res[0];
-              }
-            },
-            (error) => {
-              this.spinner.hide();
-              console.log(error);
-            }
-          );
-          this.uploadService.getCoverPic(this.customer.Id).subscribe(
-            (res) => {
-              if (res.length) {
-                this.coverPic = res[0];
-              }
-            },
-            (error) => {
-              this.spinner.hide();
-              console.log(error);
-            }
-          );
+          // this.uploadService.getProfilePic(this.customer.Id).subscribe(
+          //   (res) => {
+          //     if (res.length) {
+          //       this.spinner.hide();
+          //       this.sharedService.profilePic = res[0];
+          //     }
+          //   },
+          //   (error) => {
+          //     this.spinner.hide();
+          //     console.log(error);
+          //   }
+          // );
+          // this.uploadService.getCoverPic(this.customer.Id).subscribe(
+          //   (res) => {
+          //     if (res.length) {
+          //       this.coverPic = res[0];
+          //     }
+          //   },
+          //   (error) => {
+          //     this.spinner.hide();
+          //     console.log(error);
+          //   }
+          // );
         }
       },
       (err) => {
@@ -168,8 +168,8 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   updateCustomer(): void {
     if (this.profileId) {
       this.spinner.show();
-      this.customer.ProfilePicName = this.sharedService.profilePic.url;
-      this.customer.CoverPicName = this.sharedService.coverPic.url;
+      this.customer.ProfilePicName = this.sharedService.profilePic;
+      this.customer.CoverPicName = this.sharedService.coverPic;
       this.customer.IsActive = 'Y';
       this.customerService
         .updateProfile(this.profileId, this.customer)
