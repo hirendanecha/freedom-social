@@ -354,16 +354,16 @@
 }
 
 @media (max-width: 767px) {
-  .search-form {
-    position: absolute;
-    transform: translateY(120px);
-    opacity: 0;
-    transition: 0.3s;
-    &.active {
-      transform: translateY(70px);
-      opacity: 1;
-    }
-  }
+  // .search-form {
+  //   position: absolute;
+  //   transform: translateY(120px);
+  //   opacity: 0;
+  //   transition: 0.3s;
+  //   &.active {
+  //     transform: translateY(70px);
+  //     opacity: 1;
+  //   }
+  // }
   .input-area {
     padding: 15px 10px;
   }

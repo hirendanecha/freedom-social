@@ -14,9 +14,39 @@
         <div class="search-form">
           <form action="#" class="input-area d-flex align-items-center">
             <i class="material-symbols-outlined mat-icon me-1">search</i>
-            <input type="text" placeholder="Search" autocomplete="off" />
+            <input
+              type="text"
+              name="search"
+              placeholder="Search"
+              [(ngModel)]="searchText"
+              autocomplete="off"
+              (keyup)="getUserList()"
+              (focusout)="searchText = ''"
+            />
           </form>
         </div>
+        <ng-container *ngIf="searchText">
+          <div class="search-user-list position-absolute">
+            <div class="row">
+              <div
+                class="user-details d-flex pb-2 pt-2 justify-content-start align-items-center"
+                *ngFor="let user of userList"
+              >
+                <div class="me-5" *ngIf="user">
+                  <img
+                    class="profile-pic"
+                    [src]="user.ProfilePicName"
+                    alt=""
+                    onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+                  />
+                </div>
+                <span class="" (click)="openProfile(user.Id)">
+                  {{ user.Username }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </ng-container>
         <ul
           class="navbar-nav feed flex-row gap-xl-20 gap-lg-10 gap-sm-7 gap-1 py-4 py-lg-0 m-lg-auto ms-auto ms-aut align-self-center"
         >

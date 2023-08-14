@@ -25,6 +25,7 @@ export class AddCommunityComponent {
   logoImg: any;
   coverImg: any;
   userId = '';
+  profileId = '';
   constructor(
     public activeModal: NgbActiveModal,
     private uploadService: UploadFilesService,
@@ -33,6 +34,7 @@ export class AddCommunityComponent {
     private cd: ChangeDetectorRef
   ) {
     this.userId = window.sessionStorage.user_id;
+    this.profileId = sessionStorage.getItem('profileId');
   }
 
   selectFiles(event, type) {
@@ -48,14 +50,14 @@ export class AddCommunityComponent {
     console.log(file[0], defaultType);
     this.spinner.show();
     this.communityService.upload(file[0], this.userId, defaultType).subscribe(
-      (event) => {
-        if (event.type === HttpEventType.UploadProgress) {
+      (res: any) => {
+        if (res.body) {
           this.spinner.hide();
-        } else if (event instanceof HttpResponse) {
-          this.spinner.hide();
-          this.selectedFile = undefined;
-          this.cd.detectChanges();
-          this.getProfilePic();
+          if (defaultType === 'community-logo') {
+            this.logoImg = res?.body?.url;
+          } else if (defaultType === 'community-cover') {
+            this.coverImg = res?.body?.url;
+          }
         }
         // return '';
       },
@@ -70,9 +72,9 @@ export class AddCommunityComponent {
   onSubmit() {
     this.spinner.show();
     if (this.logoImg && this.coverImg) {
-      this.communityDetails.userId = this.userId;
-      this.communityDetails.logoImg = this.logoImg?.url;
-      this.communityDetails.coverImg = this.coverImg?.url;
+      this.communityDetails.profileId = this.profileId;
+      this.communityDetails.logoImg = this.logoImg;
+      this.communityDetails.coverImg = this.coverImg;
       console.log(this.communityDetails);
       if (this.communityDetails) {
         this.communityService.createCommunity(this.communityDetails).subscribe(
@@ -125,7 +127,7 @@ export class AddCommunityComponent {
 
   createCommunityAdmin(id): void {
     const data = {
-      userId: this.userId,
+      profileId: this.profileId,
       communityId: id,
       isActive: 'Y',
       isAdmin: 'Y',

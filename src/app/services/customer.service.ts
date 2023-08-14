@@ -57,4 +57,10 @@ export class CustomerService {
   updateProfile(id, customer: Customer): Observable<Object> {
     return this.http.put(`${this.baseUrl}/profile/${id}`, customer);
   }
+
+  getProfileList(searchText): Observable<object> {
+    return this.http.get(
+      `${this.baseUrl}/search-user?searchText=${searchText}`
+    );
+  }
 }

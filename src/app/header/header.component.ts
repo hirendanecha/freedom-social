@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from '@angular/router';
 import { ForgotPasswordComponent } from '../home/forgot-password/forgot-password.component';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
   selector: 'app-header',
@@ -33,13 +34,16 @@ export class HeaderComponent {
   userMenus = [];
   isBreakpointLessThenSmall = false;
   isDark = false;
+  userList: any = [];
+  searchText = '';
   constructor(
     private modaleService: NgbModal,
     public activeteModal: NgbActiveModal,
     public sharedService: SharedService,
     private spinner: NgxSpinnerService,
     private router: Router,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private customerService: CustomerService
   ) {
     // this.sharedService.getProfilePic();
   }
@@ -139,5 +143,25 @@ export class HeaderComponent {
     // modelRef.result.then(res => {
     //   return res = user_id
     // });
+  }
+
+  getUserList(): void {
+    this.customerService.getProfileList(this.searchText).subscribe(
+      (res: any) => {
+        if (res) {
+          this.userList = res.data;
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  openProfile(id) {
+    if (id) {
+      this.router.navigate([`settings/view-profile/${id}`]);
+      this.searchText = '';
+    }
   }
 }

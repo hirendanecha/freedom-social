@@ -1,5 +1,41 @@
 .header-section {
   position: sticky;
+
+  .navbar {
+    .search-user-list {
+      top: 80px;
+      left: 70px;
+      width: 360px;
+      max-width: 360px;
+      background-color: var(--section-1st-color);
+      padding: 0 10px 0 10px;
+      border-radius: 10px;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+      height: fit-content;
+      max-height: 255px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      cursor: pointer;
+      .user-details {
+        border-bottom: 1px solid var(--border-color);
+        .profile-pic {
+          width: 35px;
+          border-radius: 50px;
+          height: 35px;
+        }
+        h5 {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 220px;
+        }
+        &:hover {
+          background-color: var(--box-1st-color);
+        }
+      }
+    }
+  }
 }
 
 .main-area {
@@ -83,7 +119,6 @@
   }
 }
 
-
 ::ng-deep .user-menu-panale {
   position: fixed;
   right: 315px;
@@ -92,56 +127,66 @@
   bottom: unset !important;
 }
 
-@media (max-width :1024px) {
+@media (max-width: 950px) {
+  .header-section {
+    .navbar {
+      .search-user-list {
+        left: 50px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
   ::ng-deep.user-menu-panale {
     position: fixed;
     right: 40px !important;
   }
 }
 
-@media (width :1180px) {
+@media (width: 1180px) {
   ::ng-deep.user-menu-panale {
     position: fixed;
     right: 112px !important;
   }
 }
 
-@media (min-width :1300px) and (max-width :1368px) {
+@media (min-width: 1300px) and (max-width: 1368px) {
   ::ng-deep.user-menu-panale {
     position: fixed;
     right: 112px !important;
   }
 }
 
-@media (width :1114px) {
+@media (width: 1114px) {
   ::ng-deep.user-menu-panale {
     position: fixed;
     right: 90px !important;
   }
 }
 
-@media (min-width :1200px) and (width :1280px) {
+@media (min-width: 1200px) and (width: 1280px) {
   ::ng-deep.user-menu-panale {
     position: fixed;
     right: 90px !important;
   }
 }
 
-@media (min-width :1400px) and (max-width:1680px) {
+@media (min-width: 1400px) and (max-width: 1680px) {
   ::ng-deep.user-menu-panale {
     position: fixed;
     right: 90px !important;
   }
 }
 
-@media (min-width :1941px) and (max-width: 2580px) {
+@media (min-width: 1941px) and (max-width: 2580px) {
   ::ng-deep.user-menu-panale {
     position: fixed;
     right: 23% !important;
   }
 }
 
-@media (min-width :2641px) {
+@media (min-width: 2641px) {
   ::ng-deep.user-menu-panale {
     position: fixed;
     right: 23% !important;
