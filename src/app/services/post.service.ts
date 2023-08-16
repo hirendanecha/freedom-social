@@ -7,10 +7,15 @@ import {
 } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import parse from 'node-html-parser';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
+httpOptions.headers.append(
+  'Access-Control-Allow-Origin',
+  'http://localhost:4200'
+);
 
 @Injectable({
   providedIn: 'root',
@@ -60,5 +65,9 @@ export class PostService {
 
   createPost(postData: any): Observable<Object> {
     return this.http.post(`${this.baseUrl}/create`, postData);
+  }
+
+  getMetaData(url) {
+    return this.http.post(`${this.baseUrl}/get-meta`, url);
   }
 }

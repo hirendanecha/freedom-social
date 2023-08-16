@@ -45,7 +45,7 @@ export class HeaderComponent {
     private tokenStorageService: TokenStorageService,
     private customerService: CustomerService
   ) {
-    // this.sharedService.getProfilePic();
+    this.sharedService.getUserDetails();
   }
 
   openUserMenu(): void {

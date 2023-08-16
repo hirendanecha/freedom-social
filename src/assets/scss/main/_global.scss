@@ -55,6 +55,9 @@
   --box-2nd-shadow: 0px 4px 26px rgba(66, 66, 66, 0.25);
   --hero-section-bg: #000428bf;
 }
+.cursor {
+  cursor: pointer;
+}
 .collapsing {
   transition: 0.3s;
 }
@@ -695,6 +698,7 @@ li {
     border-radius: 10px;
     width: max-content;
     right: 0;
+    cursor: pointer;
     span,
     button {
       font-size: 16px;

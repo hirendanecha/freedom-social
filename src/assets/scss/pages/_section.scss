@@ -1,5 +1,5 @@
 .main-content {
-//   padding: 115px 0 40px;
+  //   padding: 115px 0 40px;
   .profile-sidebar {
     background-color: var(--section-1st-color);
     box-shadow: var(--box-shadow);
@@ -827,6 +827,7 @@
   text-transform: capitalize;
   color: var(--para-1st-color);
   position: relative;
+  cursor: pointer;
 }
 .main-content .tab-area a::before,
 .main-content .tab-area button::before {

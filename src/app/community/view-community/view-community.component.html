@@ -1,4 +1,4 @@
-<div class="row profile-picture-area justify-content-center mb-15 mb-lg-0">
+<div class="row profile-picture-area mt-10 justify-content-center mb-15 mb-lg-0">
   <div class="col-xl-12 col-lg-8">
     <div class="single-box p-5">
       <div class="col-md-12">
@@ -117,7 +117,7 @@
                       <ul
                         class="dropdown-menu p-4 pt-2 mt-6"
                         [ngClass]="postId === post.id ? 'show' : ''"
-                        (mouseleave)="postId = null"
+                        (mouseleave)="postId = ''"
                       >
                         <ng-container *ngIf="profileId === userProfileId">
                           <li>

@@ -15,6 +15,7 @@
         [(ngModel)]="message"
         name="message"
         type="text"
+        (change)="getLinkData(message)"
       />
       <div class="abs-area position-absolute d-none d-sm-block">
         <i
@@ -115,6 +116,11 @@
         </div>
         <div class="py-4">
           <p class="post-description" [innerHTML]="post.description"></p>
+        </div>
+        <div class="pt-0" *ngIf="post.metalink">
+          <a class="post-description" [href]="post.metalink" target="_blank">{{
+            post.metalink
+          }}</a>
         </div>
         <div class="post-img" *ngIf="post.imageUrl">
           <img [src]="post.imageUrl" class="w-100" alt="image" />

@@ -80,7 +80,6 @@ export class SharedService {
         (res: any) => {
           if (res.data) {
             this.spinner.hide();
-            console.log(res.data);
             this.userData = res?.data[0];
             this.profilePic = res?.data[0]?.ProfilePicName;
             this.coverPic = res?.data[0]?.CoverPicName;

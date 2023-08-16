@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isSubmitted = false;
   activePage = 1;
   postId = '';
+  profileId = '';
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -52,8 +53,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private router: Router,
     private socketService: SocketService
   ) {
-    // this.sharedService.getProfilePic();
-    this.sharedService.getUserDetails();
+    this.profileId = sessionStorage.getItem('profileId');
   }
 
   ngOnInit(): void {
@@ -191,16 +191,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   createPost(): void {
-    if (this.message) {
-      const id = sessionStorage.getItem('profileId');
-      this.postData.profileid = id;
-      this.postData.postdescription = this.message;
-      console.log(this.postData);
-      this.spinner.show();
+    if (this.postData) {
       this.message = '';
+      this.spinner.show();
       this.socketService.createPost(this.postData, (data) => {
         console.log(data);
-        // this.spinner.hide();
       });
       this.socketService.socket.on(
         'create-new-post',
@@ -214,19 +209,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
           console.log(error);
         }
       );
-      // if (this.postData) {
-      //   this.postService.createPost(this.postData).subscribe(
-      //     (res: any) => {
-      //       this.spinner.hide();
-      //       console.log(res);
-      //       this.getPostList();
-      //     },
-      //     (error) => {
-      //       this.spinner.hide();
-      //       console.log(error);
-      //     }
-      //   );
-      // }
     }
   }
 
@@ -249,18 +231,57 @@ export class HomeComponent implements OnInit, AfterViewInit {
     );
   }
 
-  // getMetaFromLink(event): void {
-  //   console.log(event.target);
-  // }
-
   hover(e) {
     this.isExpand = e;
     console.log(this.isExpand);
   }
 
-  goToViewProfile(id) {
+  goToViewProfile(id: any): void {
     console.log(id);
-    this.postId = null;
     this.router.navigate([`settings/view-profile/${id}`]);
+    this.postId = null;
+  }
+
+  getLinkData(des: any): void {
+    const value = des;
+    if (
+      value.includes('http://') ||
+      value.includes('https://') ||
+      value.includes('www.')
+    ) {
+      this.postService.getMetaData({ url: value }).subscribe(
+        (res: any) => {
+          if (res.meta.image) {
+            console.log(res);
+            this.postData = {
+              imageUrl: res.meta?.image?.url,
+              metalink: res?.meta?.url,
+              postdescription: res?.meta?.description,
+              profileId: this.profileId,
+            };
+            return this.postData;
+          } else {
+            this.postData = {
+              profileId: this.profileId,
+              postdescription: value,
+            };
+            return this.postData;
+          }
+        },
+        (error) => {
+          this.postData = {
+            profileId: this.profileId,
+            postdescription: value,
+          };
+          return this.postData;
+        }
+      );
+    } else {
+      this.postData = {
+        profileId: this.profileId,
+        postdescription: value,
+      };
+      return this.postData;
+    }
   }
 }

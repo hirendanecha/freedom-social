@@ -34,6 +34,8 @@ export class FavoriteComponent implements OnInit {
   isExpand = false;
   activePage = 1;
   postData: any = {};
+  profileId = '';
+  communityId = '';
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -41,7 +43,10 @@ export class FavoriteComponent implements OnInit {
     private socketService: SocketService,
     private communityPostService: CommunityPostService,
     private postService: PostService
-  ) {}
+  ) {
+    this.profileId = sessionStorage.getItem('profileId');
+    this.communityId = sessionStorage.getItem('communityId');
+  }
 
   ngOnInit(): void {
     this.getPostList();
@@ -168,12 +173,7 @@ export class FavoriteComponent implements OnInit {
   }
 
   createNewPost(): void {
-    if (this.message) {
-      const id = sessionStorage.getItem('profileId');
-      const communityId = sessionStorage.getItem('communityId');
-      this.postData.profileid = id;
-      this.postData.description = this.message;
-      this.postData.communityId = communityId;
+    if (this.postData) {
       console.log(this.postData);
       // this.spinner.show();
       this.message = '';
@@ -211,6 +211,53 @@ export class FavoriteComponent implements OnInit {
       this.isExpand = true;
     } else {
       this.isExpand = false;
+    }
+  }
+
+  getLinkData(des: any): void {
+    const value = des;
+    if (
+      value.includes('http://') ||
+      value.includes('https://') ||
+      value.includes('www.')
+    ) {
+      this.postService.getMetaData({ url: value }).subscribe(
+        (res: any) => {
+          if (res.meta.image) {
+            console.log(res);
+            this.postData = {
+              imageUrl: res.meta?.image?.url,
+              metalink: res?.meta?.url,
+              description: res?.meta?.description,
+              profileId: this.profileId,
+              communityId: this.communityId,
+            };
+            return this.postData;
+          } else {
+            this.postData = {
+              communityId: this.communityId,
+              profileId: this.profileId,
+              description: value,
+            };
+            return this.postData;
+          }
+        },
+        (error) => {
+          this.postData = {
+            communityId: this.communityId,
+            profileId: this.profileId,
+            description: value,
+          };
+          return this.postData;
+        }
+      );
+    } else {
+      this.postData = {
+        communityId: this.communityId,
+        profileId: this.profileId,
+        description: value,
+      };
+      return this.postData;
     }
   }
 }

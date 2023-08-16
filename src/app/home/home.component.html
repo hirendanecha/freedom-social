@@ -11,10 +11,11 @@
   <form class="w-100 position-relative">
     <input
       placeholder="Write something to post.."
-      [(ngModel)]="message"
       name="message"
       type="text"
+      [(ngModel)]="message"
       autocomplete="off"
+      (change)="getLinkData(message)"
     />
     <div class="abs-area position-absolute d-none d-sm-block">
       <i
@@ -107,7 +108,7 @@
             <ul
               class="dropdown-menu p-4 pt-2 mt-6"
               [ngClass]="postId === post.id ? 'show' : ''"
-              (mouseleave)="postId = null"
+              (mouseleave)="postId = ''"
             >
               <li>
                 <a
@@ -129,11 +130,8 @@
                   <span>Unsubscribe</span>
                 </a>
               </li>
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="goToViewProfile(post.profileid)"
-                >
+              <li (click)="goToViewProfile(post.profileid)">
+                <a class="droplist d-flex align-items-center gap-2">
                   <i class="material-symbols-outlined mat-icon"> person </i>
                   <span>View Profile</span>
                 </a>
@@ -141,8 +139,13 @@
             </ul>
           </div>
         </div>
-        <div class="py-4">
+        <div class="pt-2">
           <p class="post-description" [innerHTML]="post.postdescription"></p>
+        </div>
+        <div class="pt-0" *ngIf="post.metalink">
+          <a class="post-description" [href]="post.metalink" target="_blank">{{
+            post.metalink
+          }}</a>
         </div>
         <div class="post-img" *ngIf="post.imageUrl">
           <img [src]="post.imageUrl" class="w-100" alt="image" />
