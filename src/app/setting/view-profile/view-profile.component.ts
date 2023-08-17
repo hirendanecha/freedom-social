@@ -74,7 +74,6 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
           this.spinner.hide();
           this.customer = res.data[0];
           this.userId = res.data[0].UserID;
-          console.log(this.userId);
         }
       },
       (error) => {

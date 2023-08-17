@@ -121,13 +121,11 @@ export class HeaderComponent {
 
   goToSetting() {
     const userId = sessionStorage.getItem('user_id');
-    console.log(userId);
     this.router.navigate([`settings/edit-profile/${userId}`]);
   }
 
   goToViewProfile() {
     const profileId = sessionStorage.getItem('profileId');
-    console.log(profileId);
     this.router.navigate([`settings/view-profile/${profileId}`]);
   }
 

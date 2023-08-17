@@ -30,7 +30,6 @@ export class ResetPasswordComponent {
     private authService: AuthService,
     private route: ActivatedRoute
   ) {
-    console.log(this.route)
     this.route.queryParams.subscribe((params) => {
       this.userAccessToken = params['accesstoken'];
     });

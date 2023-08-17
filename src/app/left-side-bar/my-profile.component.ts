@@ -89,12 +89,11 @@ export class MyProfileComponent implements OnInit {
 
   getUserDetails(): void {
     const id = window.sessionStorage.user_id;
-    this.customerService.getCustomer(id).subscribe(
+    this.customerService?.getCustomer(id).subscribe(
       (data: any) => {
         if (data[0]) {
           this.user = data[0];
         }
-        console.log(data);
       },
       (err) => {
         console.log(err);

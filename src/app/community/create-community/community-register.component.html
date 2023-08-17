@@ -25,11 +25,11 @@
                   {{ registrationMessage || msg }}
                 </div>
                 <div class="row">
-                  <div class="col-12 mb-3">
+                  <div class="col-6 mb-3">
                     <label class="form-label text-light">Community Name</label>
                     <input
                       type="text"
-                      class="form-control input-area"
+                      class="input-area"
                       name="cname"
                       placeholder="Enter your community name"
                       [(ngModel)]="communityDetails.CommunityName"
@@ -37,7 +37,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12 mb-3">
+                  <div class="col-6 mb-3">
                     <label class="form-label text-light"
                       >Community Description</label
                     >
@@ -51,22 +51,33 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12 mb-3">
+                  <div class="col-6 mb-3 d-grid">
                     <label class="form-label text-light">Logo Image</label>
-                    <input
-                      type="file"
-                      name="logo"
-                      (change)="selectFiles($event, 'community-logo')"
+                    <ng-container *ngIf="!logoImg">
+                      <input
+                        type="file"
+                        name="logo"
+                        (change)="selectFiles($event, 'community-logo')"
+                      />
+                    </ng-container>
+                    <img
+                      class="w-25"
+                      *ngIf="logoImg"
+                      [src]="logoImg"
+                      alt=""
                     />
                   </div>
-                  <div class="col-12 mb-3">
+                  <div class="col-6 mb-3 d-grid">
                     <label class="form-label text-light">Cover Image</label>
-                    <input
-                      name="cover"
-                      type="file"
-                      placeholder="Enter your description"
-                      (change)="selectFiles($event, 'community-cover')"
-                    />
+                    <ng-container *ngIf="!coverImg">
+                      <input
+                        name="cover"
+                        type="file"
+                        placeholder="Enter your description"
+                        (change)="selectFiles($event, 'community-cover')"
+                      />
+                    </ng-container>
+                    <img class="w-50" *ngIf="coverImg" [src]="coverImg" alt="" />
                   </div>
                 </div>
 

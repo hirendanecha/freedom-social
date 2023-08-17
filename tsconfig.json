@@ -37,6 +37,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "baseUrl": "./",
+    "strict": false,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

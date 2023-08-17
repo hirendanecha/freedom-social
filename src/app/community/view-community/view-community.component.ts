@@ -71,7 +71,6 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
             if (element.Id) {
               this.communityDetails = element;
               this.memberList = element.memberList;
-              console.log(this.memberList);
             }
           });
         }
@@ -88,7 +87,6 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
     this.communityPostService.getPostsByProfileId(this.communityId).subscribe(
       (res: any) => {
         if (res) {
-          console.log(res);
           this.communityPostList = res;
         }
       },

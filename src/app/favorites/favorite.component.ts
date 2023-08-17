@@ -8,6 +8,7 @@ import { SharedService } from '../services/shared.service';
 import { SocketService } from '../services/socket.service';
 import { CommunityPostService } from '../services/community-post.service';
 import { CreatePostComponent } from './create-post-modal/create-post.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-favorite',
@@ -39,10 +40,11 @@ export class FavoriteComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
-    private sharedService: SharedService,
+    public sharedService: SharedService,
     private socketService: SocketService,
     private communityPostService: CommunityPostService,
-    private postService: PostService
+    private postService: PostService,
+    private router: Router
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.communityId = sessionStorage.getItem('communityId');
@@ -64,7 +66,6 @@ export class FavoriteComponent implements OnInit {
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
     modalRef.result.then((res) => {
-      console.log(res);
       if (res === 'success') {
         this.communityPostService.postData.profileid =
           sessionStorage.getItem('profileId');
@@ -72,14 +73,13 @@ export class FavoriteComponent implements OnInit {
           sessionStorage.getItem('communityId');
         this.communityPostService.postData.imageUrl =
           this.communityPostService.selectedFile;
-        console.log(this.communityPostService.postData);
         this.spinner.show();
         if (this.communityPostService.postData) {
           this.spinner.hide();
           this.socketService.createCommunityPost(
             this.communityPostService.postData,
             (data) => {
-              console.log(data);
+              return data;
             }
           );
           this.socketService.socket.on('create-community-post', (data) => {
@@ -123,13 +123,12 @@ export class FavoriteComponent implements OnInit {
     this.spinner.show();
     const page = this.activePage;
     this.socketService.getCommunityPost({ page: page, size: 15 }, (data) => {
-      console.log(data);
+      return data;
     });
 
     this.socketService.socket.on(
       'community-post',
       (data) => {
-        console.log('post==>', data);
         this.spinner.hide();
         this.postList = data;
       },
@@ -174,11 +173,8 @@ export class FavoriteComponent implements OnInit {
 
   createNewPost(): void {
     if (this.postData) {
-      console.log(this.postData);
-      // this.spinner.show();
       this.message = '';
       this.socketService.createCommunityPost(this.postData, (data) => {
-        console.log(data);
         this.spinner.hide();
       });
       this.socketService.socket.on('create-community-post', (res) => {
@@ -221,10 +217,11 @@ export class FavoriteComponent implements OnInit {
       value.includes('https://') ||
       value.includes('www.')
     ) {
+      this.spinner.show();
       this.postService.getMetaData({ url: value }).subscribe(
         (res: any) => {
           if (res.meta.image) {
-            console.log(res);
+            this.spinner.hide();
             this.postData = {
               imageUrl: res.meta?.image?.url,
               metalink: res?.meta?.url,
@@ -234,6 +231,7 @@ export class FavoriteComponent implements OnInit {
             };
             return this.postData;
           } else {
+            this.spinner.hide();
             this.postData = {
               communityId: this.communityId,
               profileId: this.profileId,
@@ -243,6 +241,7 @@ export class FavoriteComponent implements OnInit {
           }
         },
         (error) => {
+          this.spinner.hide();
           this.postData = {
             communityId: this.communityId,
             profileId: this.profileId,
@@ -252,6 +251,7 @@ export class FavoriteComponent implements OnInit {
         }
       );
     } else {
+      this.spinner.hide();
       this.postData = {
         communityId: this.communityId,
         profileId: this.profileId,
@@ -259,5 +259,10 @@ export class FavoriteComponent implements OnInit {
       };
       return this.postData;
     }
+  }
+
+  goToViewProfile(id: any): void {
+    this.router.navigate([`settings/view-profile/${id}`]);
+    this.postId = null;
   }
 }

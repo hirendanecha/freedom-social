@@ -36,7 +36,6 @@ export class PostComponent implements OnInit {
   }
 
   selectFiles(event) {
-    console.log(event.target.files);
     this.selectedFiles = event.target.files;
     this.upload(this.selectedFiles, 'post');
   }
@@ -49,7 +48,6 @@ export class PostComponent implements OnInit {
     this.spinner.show();
     this.postService.upload(files[0], this.pid, defaultType).subscribe(
       (res: any) => {
-        console.log(res);
         if (res.body) {
           this.spinner.hide();
           this.postService.selectedFile = res?.body?.url;

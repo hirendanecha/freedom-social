@@ -33,8 +33,6 @@ export class LoginComponent {
     private authService: AuthService,
     private route: ActivatedRoute
   ) {
-    console.log(this.route);
-    console.log(typeof localStorage.getItem('register'));
     const isVerify = this.route.snapshot.queryParams.isVerify;
     if (isVerify === 'false') {
       this.msg =
@@ -67,7 +65,6 @@ export class LoginComponent {
     this.spinner.show();
     this.authService.customerlogin(this.loginForm.value).subscribe(
       (data: any) => {
-        console.log(data);
         if (!data.error) {
           this.spinner.hide();
           this.tokenStorage.saveToken(data?.accessToken);
@@ -80,8 +77,6 @@ export class LoginComponent {
           window.sessionStorage.user_zip = data.user.ZipCode;
           this.isLoginFailed = false;
           this.isLoggedIn = true;
-          let lastloc = Utils.getLastLoc();
-          // this.router.navigate([lastloc ? lastloc : 'home']);
           this.router.navigate([`/home`]);
         } else {
           this.loginMessage = data.mesaage;
@@ -90,8 +85,6 @@ export class LoginComponent {
             'Invalid Email and Password. Kindly try again !!!!';
           this.isLoginFailed = true;
         }
-
-        //this.reloadPage();
       },
       (err) => {
         this.spinner.hide();

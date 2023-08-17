@@ -31,7 +31,6 @@ export class CreatePostComponent implements OnInit {
   }
 
   selectFiles(event) {
-    console.log(event.target.files);
     this.selectedFiles = event.target.files;
     this.upload(this.selectedFiles, 'community-post');
   }
@@ -68,7 +67,6 @@ export class CreatePostComponent implements OnInit {
 
   getSelectedImg(): void {
     this.communityPostService.getPostImg().subscribe((res: any) => {
-      console.log(res);
       this.communityPostService.selectedFile = res[0].url;
     });
   }

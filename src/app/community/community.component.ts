@@ -17,6 +17,7 @@ export class CommunityComponent {
       centered: true,
       backdrop: 'static',
       keyboard: false,
+      size: 'lg'
     });
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Create';

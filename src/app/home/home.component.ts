@@ -72,17 +72,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
     modalRef.result.then((res) => {
-      console.log(res);
       if (res === 'success') {
         this.postService.postData.profileid =
           sessionStorage.getItem('profileId');
         this.postService.postData.imageUrl = this.postService.selectedFile;
-        console.log(this.postService.postData);
         // this.spinner.show();
         if (this.postService.postData) {
           // this.spinner.hide();
           this.socketService.createPost(this.postService.postData, (data) => {
-            console.log(data);
+            return data;
           });
           this.socketService.socket.on('create-new-post', (data) => {
             this.postList.push(data);
@@ -140,12 +138,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   onFocus() {
-    console.log('focus');
     this.showEmojiPicker = false;
   }
-  onBlur() {
-    console.log('onblur');
-  }
+  onBlur() {}
 
   openMenuList() {
     const modalRef = this.modalService.open(MyProfileComponent, {
@@ -161,7 +156,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     const page = this.activePage;
     this.spinner.show();
     this.socketService.getPost({ page: page, size: 15 }, (post) => {
-      console.log('post', post);
       // this.spinner.hide();
     });
     // this.postService.getPosts(page).subscribe(
@@ -179,7 +173,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.socketService.socket.on(
       'new-post',
       (data) => {
-        console.log(data);
         this.spinner.hide();
         this.postList = data;
       },
@@ -195,7 +188,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.message = '';
       this.spinner.show();
       this.socketService.createPost(this.postData, (data) => {
-        console.log(data);
+        return data;
       });
       this.socketService.socket.on(
         'create-new-post',
@@ -233,11 +226,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   hover(e) {
     this.isExpand = e;
-    console.log(this.isExpand);
   }
 
   goToViewProfile(id: any): void {
-    console.log(id);
     this.router.navigate([`settings/view-profile/${id}`]);
     this.postId = null;
   }
@@ -249,10 +240,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
       value.includes('https://') ||
       value.includes('www.')
     ) {
+      this.spinner.show();
       this.postService.getMetaData({ url: value }).subscribe(
         (res: any) => {
           if (res.meta.image) {
-            console.log(res);
+            this.spinner.hide();
             this.postData = {
               imageUrl: res.meta?.image?.url,
               metalink: res?.meta?.url,
@@ -261,6 +253,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             };
             return this.postData;
           } else {
+            this.spinner.hide();
             this.postData = {
               profileId: this.profileId,
               postdescription: value,
@@ -269,6 +262,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
         },
         (error) => {
+          this.spinner.hide();
           this.postData = {
             profileId: this.profileId,
             postdescription: value,
@@ -277,6 +271,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       );
     } else {
+      this.spinner.hide();
       this.postData = {
         profileId: this.profileId,
         postdescription: value,

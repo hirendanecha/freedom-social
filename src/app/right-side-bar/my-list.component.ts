@@ -34,7 +34,6 @@ export class MyListComponent implements OnInit {
         if (data[0]) {
           this.user = data[0];
         }
-        console.log(data);
       },
       (err) => {
         console.log(err);
@@ -43,9 +42,7 @@ export class MyListComponent implements OnInit {
   }
 
   openToggle() {
-    console.log('before', this.isEXpand);
     this.isEXpand = !this.isEXpand;
-    console.log('after', this.isEXpand);
   }
 
   createCommunity() {

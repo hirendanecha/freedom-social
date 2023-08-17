@@ -101,13 +101,11 @@ export class FooterComponent {
 
   goToSetting() {
     const userId = sessionStorage.getItem('user_id');
-    console.log(userId);
     this.router.navigate([`settings/edit-profile/${userId}`]);
   }
-  
+
   goToViewProfile() {
     const userId = sessionStorage.getItem('user_id');
-    console.log(userId);
     this.router.navigate([`settings/view-profile/${userId}`]);
   }
 

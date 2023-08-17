@@ -56,7 +56,6 @@ export class UploadFilesComponent implements OnInit {
   ngOnInit() {
     this.pid = window.sessionStorage.user_id;
     this.eventsSubscription = this.events.subscribe((res) => {
-      console.log('here event', res);
       this.pid = res;
     });
     // this.fileInfos = this.uploadService.getFiles();
@@ -68,7 +67,6 @@ export class UploadFilesComponent implements OnInit {
       this.fileInfos = null;
     }
     if (changes['reset'] && !changes['reset'].currentValue) {
-      console.log('changes', changes);
       this.files = null;
       this.inputField.nativeElement.file = undefined;
       this.selectedFiles = undefined;
@@ -77,7 +75,6 @@ export class UploadFilesComponent implements OnInit {
 
   selectFiles(event) {
     this.progressInfos = [];
-    console.log(event.target.files);
     this.selectedFiles = event.target.files;
     this.defaultFile = undefined;
     // if (this.selectedFiles.length) {
@@ -107,7 +104,6 @@ export class UploadFilesComponent implements OnInit {
         // }
         if (res.body) {
           this.spinner.hide();
-          console.log(res?.body?.url);
           this.sharedService.profilePic = res?.body?.url;
         }
       },

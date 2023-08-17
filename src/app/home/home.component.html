@@ -63,7 +63,7 @@
       <div class="btn-area d-flex d-lg-block d-md-block">
         <button
           class="cmn-btn p-2 px-2 px-sm-5 px-lg-6"
-          [disabled]="isSubmitted"
+          [disabled]="!message"
           (click)="createPost()"
         >
           Post
@@ -72,30 +72,34 @@
     </ul>
   </form>
 </div>
-<div class="post-item d-flex flex-column gap-3 mt-3" id="news-feed">
+<div class="post-item d-flex flex-column gap-1 mt-3" id="news-feed">
   <ng-container *ngFor="let post of postList">
-    <div class="post-single-box p-3 p-sm-5" *ngIf="post.postdescription">
-      <div class="top-area pb-5">
+    <div
+      class="post-single-box p-3 p-sm-5 d-flex gap-3"
+      *ngIf="post.postdescription"
+    >
+      <div class="profile-box">
+        <img
+          class="post-profile avatar-img max-un rounded-5"
+          [src]="post.ProfilePicName"
+          onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+          alt="avatar"
+        />
+      </div>
+      <div class="top-area pb-5 w-100">
         <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="position-relative">
-              <img
-                class="post-profile avatar-img max-un"
-                [src]="post.ProfilePicName"
-                onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
+          <div class="avatar-item d-flex align-items-center">
+            <div class="position-relative"></div>
+            <div class="info-area d-flex align-items-baseline">
               <h6 class="m-0">
-                <a ublic-p>{{ post.FirstName || post.Username }}</a>
+                <a ublic-p>{{ post.FirstName }}</a>
               </h6>
-              <!-- <span class="mdtxt status">Active</span> -->
+              <span class="mdtxt ms-1 username" *ngIf="post.Username"
+                >@{{ post.Username | lowercase }}</span
+              >
+              <!-- <span class="smtxt ms-1">:</span> -->
             </div>
           </div>
-          <!-- <span>{{
-            post.postcreationdate.toString() | date : "d/MM/yyyy"
-          }}</span> -->
 
           <div class="btn-group cus-dropdown">
             <button
@@ -110,169 +114,201 @@
               [ngClass]="postId === post.id ? 'show' : ''"
               (mouseleave)="postId = ''"
             >
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="postId = null"
-                >
-                  <i class="material-symbols-outlined mat-icon"> visibility </i>
-                  <span>See First</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="droplist d-flex align-items-center gap-2"
-                  (click)="postId = null"
-                >
-                  <i class="material-symbols-outlined mat-icon">
-                    person_remove
-                  </i>
-                  <span>Unsubscribe</span>
-                </a>
-              </li>
-              <li (click)="goToViewProfile(post.profileid)">
-                <a class="droplist d-flex align-items-center gap-2">
-                  <i class="material-symbols-outlined mat-icon"> person </i>
-                  <span>View Profile</span>
-                </a>
-              </li>
+              <ng-container *ngIf="profileId != post.profileid">
+                <li>
+                  <a
+                    class="droplist d-flex align-items-center gap-2"
+                    (click)="postId = null"
+                  >
+                    <i class="material-symbols-outlined mat-icon">
+                      visibility
+                    </i>
+                    <span>See First</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="droplist d-flex align-items-center gap-2"
+                    (click)="postId = null"
+                  >
+                    <i class="material-symbols-outlined mat-icon">
+                      person_remove
+                    </i>
+                    <span>Unsubscribe</span>
+                  </a>
+                </li>
+                <li (click)="goToViewProfile(post.profileid)">
+                  <a class="droplist d-flex align-items-center gap-2">
+                    <i class="material-symbols-outlined mat-icon"> person </i>
+                    <span>View Profile</span>
+                  </a>
+                </li>
+              </ng-container>
+              <ng-container *ngIf="profileId == post.profileid">
+                <li>
+                  <a
+                    class="droplist d-flex align-items-center gap-2"
+                    (click)="postId = null"
+                  >
+                    <i class="material-symbols-outlined mat-icon"> edit </i>
+                    <span>Edit</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="droplist d-flex align-items-center gap-2"
+                    (click)="postId = null"
+                  >
+                    <i class="material-symbols-outlined mat-icon"> delete </i>
+                    <span>Delete</span>
+                  </a>
+                </li>
+              </ng-container>
             </ul>
           </div>
         </div>
-        <div class="pt-2">
-          <p class="post-description" [innerHTML]="post.postdescription"></p>
-        </div>
-        <div class="pt-0" *ngIf="post.metalink">
-          <a class="post-description" [href]="post.metalink" target="_blank">{{
-            post.metalink
-          }}</a>
-        </div>
+        <p
+          class="post-description mdtxt"
+          [innerHTML]="post.postdescription"
+        ></p>
+        <a
+          *ngIf="post.metalink"
+          class="post-description mdtxt pt-0 pb-1"
+          [href]="post.metalink"
+          target="_blank"
+          >{{ post.metalink }}</a
+        >
         <div class="post-img" *ngIf="post.imageUrl">
           <img [src]="post.imageUrl" class="w-100" alt="image" />
         </div>
-      </div>
-      <div
-        class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between"
-      >
+        <!-- like -->
         <div
-          class="friends-list d-flex gap-3 align-items-center text-center w-100"
+          class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between"
         >
-          <ul
-            class="d-flex align-items-center justify-content-around mb-0 w-100"
-          >
-            <!-- <li *ngIf="post?.likescount > 0">
-              <img src="assets/images/avatar-2.png" alt="image" />
-            </li> -->
-            <!-- <li>
-              <i class="material-symbols-outlined mat-icon"> thumb_up </i>
-              <span class="mdtxt d-center">{{
-                post?.likescount > 0 ? post?.likescount : 0
-              }}</span>
-            </li>
-            <li>
-              <i class="material-symbols-outlined mat-icon"> favorite </i>
-              <span class="mdtxt d-center">{{
-                post?.lovecount > 0 ? post?.lovecount : 0
-              }}</span>
-            </li>
-            <li>
-              <i class="material-symbols-outlined mat-icon"> mood </i>
-              <span class="mdtxt d-center">{{
-                post?.haliriouscount > 0 ? post?.haliriouscount : 0
-              }}</span>
-            </li>
-            <li>
-              <i class="material-symbols-outlined mat-icon"> stars </i>
-              <span class="mdtxt d-center">{{
-                post?.wowcount > 0 ? post?.wowcount : 0
-              }}</span>
-            </li>
-            <li>
-              <i class="material-symbols-outlined mat-icon"> thumb_down </i>
-              <span class="mdtxt d-center">{{
-                post?.dislikecount > 0 ? post?.dislikecount : 0
-              }}</span>
-            </li> -->
-          </ul>
-        </div>
-        <!-- <div
-          class="react-list d-flex flex-wrap gap-6 align-items-center text-center"
-        >
-          <button class="mdtxt">4 Comments</button>
-          <button class="mdtxt">1 Shares</button>
-        </div> -->
-      </div>
-      <div
-        class="like-comment-share py-5 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
-      >
-        <button
-          class="d-center gap-1 gap-sm-2 mdtxt"
-          (click)="clickOnLike()"
-          [ngClass]="isLike ? 'actvie' : ''"
-        >
-          <i class="material-symbols-outlined mat-icon"> favorite </i>
-          Score Post
-        </button>
-        <button
-          class="d-center gap-1 gap-sm-2 mdtxt position-relative reply-button"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="Comming Soon!"
-        >
-          <i class="material-symbols-outlined mat-icon"> chat </i>
-          Video Reply
-        </button>
-        <button class="d-center gap-1 gap-sm-2 mdtxt">
-          <i class="material-symbols-outlined mat-icon"> share </i>
-          Share
-        </button>
-      </div>
-      <form action="#">
-        <div class="d-flex mt-5 gap-3">
-          <!-- <div class="profile-box d-none d-xxl-block">
-            <a
-              ><img
-                [src]="sharedService.profilePic.url"
-                class="max-un"
-                alt="icon"
-            /></a>
-          </div> -->
           <div
-            class="form-content input-area py-1 d-flex gap-2 align-items-center w-100"
+            class="friends-list d-flex gap-3 align-items-center text-center w-100"
           >
-            <input placeholder="Write a comment.." />
-            <div class="file-input d-flex gap-1 gap-md-2">
-              <div class="file-upload">
-                <label class="file">
-                  <input type="file" />
-                  <span class="file-custom border-0 d-grid text-center">
-                    <span class="material-symbols-outlined mat-icon m-0 xxltxt">
-                      gif_box
+            <ul
+              class="d-flex align-items-center justify-content-around mb-0 w-100"
+            >
+              <!-- <li *ngIf="post?.likescount > 0">
+                <img src="assets/images/avatar-2.png" alt="image" />
+              </li> -->
+              <!-- <li>
+                <i class="material-symbols-outlined mat-icon"> thumb_up </i>
+                <span class="mdtxt d-center">{{
+                  post?.likescount > 0 ? post?.likescount : 0
+                }}</span>
+              </li>
+              <li>
+                <i class="material-symbols-outlined mat-icon"> favorite </i>
+                <span class="mdtxt d-center">{{
+                  post?.lovecount > 0 ? post?.lovecount : 0
+                }}</span>
+              </li>
+              <li>
+                <i class="material-symbols-outlined mat-icon"> mood </i>
+                <span class="mdtxt d-center">{{
+                  post?.haliriouscount > 0 ? post?.haliriouscount : 0
+                }}</span>
+              </li>
+              <li>
+                <i class="material-symbols-outlined mat-icon"> stars </i>
+                <span class="mdtxt d-center">{{
+                  post?.wowcount > 0 ? post?.wowcount : 0
+                }}</span>
+              </li>
+              <li>
+                <i class="material-symbols-outlined mat-icon"> thumb_down </i>
+                <span class="mdtxt d-center">{{
+                  post?.dislikecount > 0 ? post?.dislikecount : 0
+                }}</span>
+              </li> -->
+            </ul>
+          </div>
+          <!-- <div
+            class="react-list d-flex flex-wrap gap-6 align-items-center text-center"
+          >
+            <button class="mdtxt">4 Comments</button>
+            <button class="mdtxt">1 Shares</button>
+          </div> -->
+        </div>
+        <div
+          class="like-comment-share py-5 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
+        >
+          <button
+            class="d-center gap-1 gap-sm-2 mdtxt"
+            (click)="clickOnLike()"
+            [ngClass]="isLike ? 'actvie' : ''"
+          >
+            <i class="material-symbols-outlined mat-icon"> favorite </i>
+            Score Post
+          </button>
+          <button
+            class="d-center gap-1 gap-sm-2 mdtxt position-relative reply-button"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Comming Soon!"
+          >
+            <i class="material-symbols-outlined mat-icon"> chat </i>
+            Video Reply
+          </button>
+          <button class="d-center gap-1 gap-sm-2 mdtxt">
+            <i class="material-symbols-outlined mat-icon"> share </i>
+            Share
+          </button>
+        </div>
+        <form action="#">
+          <div class="d-flex mt-5 gap-3">
+            <!-- <div class="profile-box d-none d-xxl-block">
+              <a
+                ><img
+                  [src]="sharedService.profilePic.url"
+                  class="max-un"
+                  alt="icon"
+              /></a>
+            </div> -->
+            <div
+              class="form-content input-area py-1 d-flex gap-2 align-items-center w-100"
+            >
+              <input placeholder="Write a comment.." />
+              <div class="file-input d-flex gap-1 gap-md-2">
+                <div class="file-upload">
+                  <label class="file">
+                    <input type="file" />
+                    <span class="file-custom border-0 d-grid text-center">
+                      <span
+                        class="material-symbols-outlined mat-icon m-0 xxltxt"
+                      >
+                        gif_box
+                      </span>
                     </span>
-                  </span>
-                </label>
-              </div>
-              <div class="file-upload">
-                <label class="file">
-                  <input type="file" />
-                  <span class="file-custom border-0 d-grid text-center">
-                    <span class="material-symbols-outlined mat-icon m-0 xxltxt">
-                      perm_media
+                  </label>
+                </div>
+                <div class="file-upload">
+                  <label class="file">
+                    <input type="file" />
+                    <span class="file-custom border-0 d-grid text-center">
+                      <span
+                        class="material-symbols-outlined mat-icon m-0 xxltxt"
+                      >
+                        perm_media
+                      </span>
                     </span>
-                  </span>
-                </label>
+                  </label>
+                </div>
               </div>
             </div>
+            <div class="btn-area d-flex">
+              <button class="cmn-btn px-2 px-sm-5 px-lg-6">
+                <i class="material-symbols-outlined mat-icon m-0 fs-xxl">
+                  near_me
+                </i>
+              </button>
+            </div>
           </div>
-          <div class="btn-area d-flex">
-            <button class="cmn-btn px-2 px-sm-5 px-lg-6">
-              <i class="material-symbols-outlined mat-icon m-0 fs-xxl">
-                near_me
-              </i>
-            </button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </ng-container>
 

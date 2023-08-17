@@ -11,21 +11,18 @@ import { SharedService } from '../services/shared.service';
   styleUrls: ['./setting.component.scss'],
 })
 export class SettingComponent implements OnInit {
-  customer: any;
+  customer = new Customer();
   constructor(
     private modalService: NgbModal,
     private customerService: CustomerService,
     private spinner: NgxSpinnerService,
     public sharedService: SharedService
   ) {
-    // this.sharedService.getProfilePic();
-    this.customer = this.sharedService.getUserDetails();
-    console.log(this.customer);
   }
 
   ngOnInit(): void {
     // const userId = window.sessionStorage.user_id;
-    const profileId = window.sessionStorage.profileId;
+    const profileId = sessionStorage.getItem('profileId');
     if (profileId) {
       this.getProfile(profileId);
     }

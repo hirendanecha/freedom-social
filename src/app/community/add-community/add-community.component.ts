@@ -1,4 +1,3 @@
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -38,7 +37,6 @@ export class AddCommunityComponent {
   }
 
   selectFiles(event, type) {
-    // console.log(event.target.files, type);
     this.selectedFile = event.target.files;
     this.upload(this.selectedFile, type);
   }
@@ -47,26 +45,26 @@ export class AddCommunityComponent {
     if (file.size / (1024 * 1024) > 5) {
       return 'Image file size exceeds 5 MB!';
     }
-    console.log(file[0], defaultType);
     this.spinner.show();
-    this.communityService.upload(file[0], this.userId, defaultType).subscribe(
-      (res: any) => {
-        if (res.body) {
-          this.spinner.hide();
-          if (defaultType === 'community-logo') {
-            this.logoImg = res?.body?.url;
-          } else if (defaultType === 'community-cover') {
-            this.coverImg = res?.body?.url;
+    this.communityService
+      .upload(file[0], this.profileId, defaultType)
+      .subscribe(
+        (res: any) => {
+          if (res.body) {
+            this.spinner.hide();
+            if (defaultType === 'community-logo') {
+              this.logoImg = res?.body?.url;
+            } else if (defaultType === 'community-cover') {
+              this.coverImg = res?.body?.url;
+            }
           }
+        },
+        (err) => {
+          this.spinner.hide();
+          this.selectedFile = undefined;
+          return 'Could not upload the file:' + file.name;
         }
-        // return '';
-      },
-      (err) => {
-        this.spinner.hide();
-        this.selectedFile = undefined;
-        return 'Could not upload the file:' + file.name;
-      }
-    );
+      );
   }
 
   onSubmit() {
@@ -75,26 +73,31 @@ export class AddCommunityComponent {
       this.communityDetails.profileId = this.profileId;
       this.communityDetails.logoImg = this.logoImg;
       this.communityDetails.coverImg = this.coverImg;
-      console.log(this.communityDetails);
       if (this.communityDetails) {
         this.communityService.createCommunity(this.communityDetails).subscribe(
           (res: any) => {
             if (!res.error) {
               this.submitted = true;
               this.spinner.hide();
-              console.log(res);
               this.createCommunityAdmin(res.data);
-              this.activeModal.close();
+              this.activeModal.close('success');
               // this.router.navigateByUrl('/home');
             }
           },
           (err) => {
-            this.registrationMessage = err.error.message;
+            this.msg = err.error.message;
             this.type = 'danger';
             this.spinner.hide();
           }
         );
       }
+    } else {
+      this.spinner.hide();
+      this.msg = 'Please enter a valid details';
+      setTimeout(() => {
+        this.msg = '';
+      }, 2500);
+      this.type = 'danger';
     }
   }
 

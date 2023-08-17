@@ -78,7 +78,6 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
           this.spinner.hide();
           this.customer = data[0];
         }
-        console.log(data);
       },
       (err) => {
         this.spinner.hide();
@@ -94,7 +93,6 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
       this.communityDetails.profileId = this.profileId;
       this.communityDetails.logoImg = this.logoImg;
       this.communityDetails.coverImg = this.coverImg;
-      console.log(this.communityDetails);
       if (this.communityDetails) {
         this.communityService.createCommunity(this.communityDetails).subscribe(
           (res: any) => {
@@ -102,7 +100,6 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
               this.submitted = true;
               this.spinner.hide();
               this.changeUserType();
-              console.log(res);
               sessionStorage.setItem('communityId', res.data);
               this.createCommunityAdmin(res.data);
               this.router.navigateByUrl('/home');
@@ -130,7 +127,6 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
   }
 
   selectFiles(event, type) {
-    // console.log(event.target.files, type);
     this.selectedFile = event.target.files;
     this.upload(this.selectedFile, type);
   }
@@ -139,7 +135,6 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
     if (file.size / (1024 * 1024) > 5) {
       return 'Image file size exceeds 5 MB!';
     }
-    console.log(file[0], defaultType);
     this.spinner.show();
     this.uploadService.upload(file[0], this.profileId, defaultType).subscribe(
       (res: any) => {

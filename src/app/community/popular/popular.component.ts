@@ -50,7 +50,6 @@ export class PopularComponent implements OnInit {
     this.communityService.createCommunityAdmin(data).subscribe(
       (res: any) => {
         if (res) {
-          console.log(res);
           this.router.navigate(['/favorite']);
         }
       },

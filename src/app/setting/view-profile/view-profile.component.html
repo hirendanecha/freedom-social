@@ -7,7 +7,7 @@
             <!-- src="/assets/images/profile-cover.png" -->
             <img
               [src]="
-                customer.CoverPicName || '/assets/images/profile-cover.png'
+                customer?.CoverPicName || '/assets/images/profile-cover.png'
               "
               class="preview-image w-100"
               onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
@@ -22,7 +22,7 @@
               class="preview-image w-100"
               loading="lazy"
               data-src="{{
-                customer.ProfilePicName || '/assets/images/avtar/placeholder-user.png'
+                customer?.ProfilePicName || '/assets/images/avtar/placeholder-user.png'
               }}"
               onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
               alt="Preview Image"
@@ -170,7 +170,7 @@
                 </div>
                 <div class="d-center btn-border pt-5 gap-2 mt-4">
                   <button
-                    class="cmn-btn alt third"
+                    class="cmn-btn p-2 alt third"
                     (click)="goToCommunityDetails(community.Id)"
                   >
                     View

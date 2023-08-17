@@ -73,11 +73,9 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.customerService.getCustomer(id).subscribe(
       (data: any) => {
-        console.log(data);
         if (data) {
           this.spinner.hide();
           this.customer = data[0];
-          console.log(this.customer.profileId);
           this.getAllCountries();
           // this.uploadService.getProfilePic(this.customer.Id).subscribe(
           //   (res) => {
@@ -112,7 +110,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   }
 
   validatepassword() {
-    console.log(this.customer.Password, this.confirm_password);
     const pattern =
       '(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[a-z])(?=.*[0-9].*[0-9]).{8}';
     if (!this.customer.Password.match(pattern)) {
@@ -153,7 +150,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   onZipChange(event) {
     this.customerService.getZipData(event, this.customer?.Country).subscribe(
       (data) => {
-        console.log('ZIP DATA >> ', data);
         let zip_data = data[0];
         this.customer.State = zip_data ? zip_data.state : '';
         this.customer.City = zip_data ? zip_data.city : '';
@@ -177,7 +173,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
           (res: any) => {
             if (res) {
               this.spinner.hide();
-              console.log(res.data[0]);
             }
           },
           (error) => {
