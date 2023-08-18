@@ -52,6 +52,7 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
     private communityPostService: CommunityPostService
   ) {
     this.communityId = this.route.snapshot.paramMap.get('id');
+    this.userProfileId = sessionStorage.getItem('profileId');
   }
   ngOnInit(): void {
     this.getCommunityDetails();
@@ -102,11 +103,27 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
   }
 
   openDropDown(id) {
+    console.log(id);
     this.postId = id;
     if (this.postId) {
       this.isExpand = true;
     } else {
       this.isExpand = false;
     }
+  }
+
+  deletePost(id): void {
+    this.spinner.show();
+    this.communityPostService.deletePost(id).subscribe(
+      (res) => {
+        if (res) {
+          this.spinner.hide();
+          this.getCommunityPost();
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+      }
+    );
   }
 }

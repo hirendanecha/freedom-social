@@ -116,10 +116,10 @@
                       </button>
                       <ul
                         class="dropdown-menu p-4 pt-2 mt-6"
-                        [ngClass]="postId === post.id ? 'show' : ''"
+                        [ngClass]="postId === post.Id ? 'show' : ''"
                         (mouseleave)="postId = ''"
                       >
-                        <ng-container *ngIf="profileId === userProfileId">
+                        <ng-container *ngIf="post.profileId == userProfileId">
                           <li>
                             <a
                               class="droplist d-flex align-items-center gap-2"
@@ -143,7 +143,7 @@
                             </a>
                           </li>
                         </ng-container>
-                        <ng-container *ngIf="profileId != userProfileId">
+                        <ng-container *ngIf="post.profileId != userProfileId">
                           <li>
                             <a
                               class="droplist d-flex align-items-center gap-2"

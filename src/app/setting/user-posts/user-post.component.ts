@@ -70,6 +70,22 @@ export class UserPostComponent implements OnInit {
     );
   }
 
+  deletePost(id): void {
+    this.spinner.show();
+    this.postId = null;
+    this.postService.deletePost(id).subscribe(
+      (res: any) => {
+        if (res) {
+          this.spinner.hide();
+          this.getPostList();
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+      }
+    );
+  }
+
   clickOnLike() {
     this.isLike = !this.isLike;
   }

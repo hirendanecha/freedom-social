@@ -127,20 +127,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  toggleEmojiPicker() {
-    this.showEmojiPicker = !this.showEmojiPicker;
-  }
-
   addEmoji(event: { emoji: { native: any } }) {
     const { message } = this;
     const text = `${message}${event.emoji.native}`;
     this.message = text;
   }
-
-  onFocus() {
-    this.showEmojiPicker = false;
-  }
-  onBlur() {}
 
   openMenuList() {
     const modalRef = this.modalService.open(MyProfileComponent, {
@@ -224,10 +215,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     );
   }
 
-  hover(e) {
-    this.isExpand = e;
-  }
-
   goToViewProfile(id: any): void {
     this.router.navigate([`settings/view-profile/${id}`]);
     this.postId = null;
@@ -278,5 +265,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
       };
       return this.postData;
     }
+  }
+
+  deletePost(id): void {
+    this.spinner.show();
+    this.postId = null;
+    this.postService.deletePost(id).subscribe(
+      (res: any) => {
+        if (res) {
+          this.spinner.hide();
+          this.getPostList();
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+      }
+    );
   }
 }

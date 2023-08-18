@@ -34,6 +34,6 @@ export class SocketService {
   }
 
   getCommunity(params, callback: (post: any) => void) {
-    this.socket.emit('create-new-community', params, callback);
+    this.socket.emit('get-new-community', params, callback);
   }
 }

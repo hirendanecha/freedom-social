@@ -50,4 +50,8 @@ export class CommunityPostService {
   createPost(postData: any): Observable<Object> {
     return this.http.post(`${this.baseUrl}/create`, postData);
   }
+
+  deletePost(id): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 }
