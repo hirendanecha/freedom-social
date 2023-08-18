@@ -70,4 +70,8 @@ export class PostService {
   getMetaData(url) {
     return this.http.post(`${this.baseUrl}/get-meta`, url);
   }
+
+  deletePost(id): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 }

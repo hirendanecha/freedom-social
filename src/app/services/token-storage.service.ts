@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenStorageService {
-
-  constructor(
-    private spinner: NgxSpinnerService
-  ) { }
+  isUserAuthenticated: Subject<boolean> = new BehaviorSubject<boolean>(false);
+  public _credentials: any = {};
+  constructor(private spinner: NgxSpinnerService) {}
 
   signOut(): void {
     this.spinner.hide();
@@ -27,7 +27,6 @@ export class TokenStorageService {
     return sessionStorage.getItem(TOKEN_KEY);
   }
 
-
   public saveUser(user): void {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -36,5 +35,14 @@ export class TokenStorageService {
   public getUser(): any {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
   }
+  public getCredentials(): any {
+    this._credentials = JSON.parse(sessionStorage.getItem(USER_KEY));
+    const isAuthenticate = Object.keys(this._credentials || {}).length > 0;
+    this.changeIsUserAuthenticated(isAuthenticate);
+    return isAuthenticate;
+  }
 
+  changeIsUserAuthenticated(flag: boolean = false) {
+    this.isUserAuthenticated.next(flag);
+  }
 }
