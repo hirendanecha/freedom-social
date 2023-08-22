@@ -10,6 +10,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ToastsContainer } from '../services/toast-container.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { PostComponent } from './poast-modal/post.component';
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
+import { SharedModule } from '../@shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,13 +23,6 @@ import { PostComponent } from './poast-modal/post.component';
     PostComponent,
   ],
   exports: [LoginComponent, SignUpComponent, ResetPasswordComponent],
-  imports: [
-    HomeRoutingModule,
-    CommonModule,
-    PickerModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ToastsContainer,
-  ],
+  imports: [HomeRoutingModule, PickerModule, ToastsContainer, SharedModule],
 })
 export class HomeModule {}

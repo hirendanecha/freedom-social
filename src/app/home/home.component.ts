@@ -18,6 +18,7 @@ import { SharedService } from '../services/shared.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SocketService } from '../services/socket.service';
+import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -114,8 +115,104 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  clickOnLike() {
-    this.isLike = !this.isLike;
+  reactLikeOnPost(post) {
+    post.likescount = post.likescount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'L';
+    const data = {
+      id: post.id,
+      profileId: this.profileId,
+      likeCount: post.likescount,
+      actionType: 'L',
+    };
+    this.likeDisLikePost(data);
+  }
+  reactLoveOnPost(post) {
+    post.lovecount = post.lovecount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'LO';
+    const data = {
+      id: post.id,
+      profileId: this.profileId,
+      likeCount: post.lovecount,
+      actionType: 'LO',
+    };
+    this.likeDisLikePost(data);
+  }
+  reactWowOnPost(post) {
+    post.wowcount = post.wowcount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'WO';
+    const data = {
+      id: post.id,
+      profileId: this.profileId,
+      likeCount: post.wowcount,
+      actionType: 'WO',
+    };
+    this.likeDisLikePost(data);
+  }
+  reactHaliriousOnPost(post) {
+    post.haliriouscount = post.haliriouscount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'HA';
+    const data = {
+      id: post.id,
+      profileId: this.profileId,
+      likeCount: post.haliriouscount,
+      actionType: 'HA',
+    };
+    this.likeDisLikePost(data);
+  }
+  reactSadOnPost(post) {
+    post.sadcount = post.sadcount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'SA';
+    const data = {
+      id: post.id,
+      profileId: this.profileId,
+      likeCount: post.sadcount,
+      actionType: 'SA',
+    };
+    this.likeDisLikePost(data);
+  }
+
+  dislikeFeedPost(post) {
+    if (post.react == 'L') {
+      post.likescount = post.likescount - 1;
+    } else if (post.react == 'LO') {
+      post.lovecount = post.lovecount - 1;
+    } else if (post.react == 'HA') {
+      post.haliriouscount = post.haliriouscount - 1;
+    } else if (post.react == 'WO') {
+      post.wowcount = post.wowcount - 1;
+    } else if (post.react == 'SA') {
+      post.sadcount = post.sadcount - 1;
+    }
+    post.totalReactCount = post.totalReactCount - 1;
+    post.react = null;
+    const data = {
+      id: post.id,
+      profileId: this.profileId,
+      likeCount: post.likescount,
+    };
+    this.likeDisLikePost(data);
+  }
+
+  likeDisLikePost(data): void {
+    this.socketService.likeFeedPost(data, (res) => {
+      console.log(res);
+    });
+    this.socketService.socket.on(
+      'new-post',
+      (data) => {
+        this.spinner.hide();
+        this.postList = data;
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
   }
 
   openDropDown(id) {
@@ -146,9 +243,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getPostList(): void {
     const page = this.activePage;
     this.spinner.show();
-    this.socketService.getPost({ page: page, size: 15 }, (post) => {
-      // this.spinner.hide();
-    });
+    this.socketService.getPost(
+      { profileId: this.profileId, page: page, size: 15 },
+      (post) => {
+        // this.spinner.hide();
+      }
+    );
     // this.postService.getPosts(page).subscribe(
     //   (res: any) => {
     //     if (res) {
@@ -166,6 +266,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
       (data) => {
         this.spinner.hide();
         this.postList = data;
+        this.postList.map((ele: any) => {
+          ele.totalReactCount =
+            ele.likescount +
+            ele.wowcount +
+            ele.haliriouscount +
+            ele.lovecount +
+            ele.sadcount;
+          return ele;
+        });
       },
       (error) => {
         this.spinner.hide();
@@ -203,7 +312,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       (res: any) => {
         if (res) {
           this.spinner.hide();
-          res.forEach((element) => {
+          res.data.forEach((element) => {
             this.postList.push(element);
           });
         }
@@ -221,65 +330,87 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getLinkData(des: any): void {
-    const value = des;
-    if (
-      value.includes('http://') ||
-      value.includes('https://') ||
-      value.includes('www.')
-    ) {
-      this.spinner.show();
-      this.postService.getMetaData({ url: value }).subscribe(
-        (res: any) => {
-          if (res.meta.image) {
+    const defaultValue = des.split('http')[0];
+    console.log(defaultValue);
+    const value = des.split(' ');
+    console.log(value);
+    value.forEach((element) => {
+      if (
+        element.includes('http://') ||
+        element.includes('https://') ||
+        element.includes('www.')
+      ) {
+        this.spinner.show();
+        this.postService.getMetaData({ url: element }).subscribe(
+          (res: any) => {
+            if (res.meta.image) {
+              this.spinner.hide();
+              this.postData = {
+                imageUrl: res.meta?.image?.url,
+                metalink: res?.meta?.url,
+                postdescription: des.split('http')[0],
+                metadescription: res?.meta?.description,
+                title: res?.meta?.title,
+                profileId: this.profileId,
+              };
+              return this.postData;
+            } else {
+              this.spinner.hide();
+              this.postData = {
+                profileId: this.profileId,
+                postdescription: des,
+              };
+              return this.postData;
+            }
+          },
+          (error) => {
             this.spinner.hide();
             this.postData = {
-              imageUrl: res.meta?.image?.url,
-              metalink: res?.meta?.url,
-              postdescription: res?.meta?.description,
               profileId: this.profileId,
-            };
-            return this.postData;
-          } else {
-            this.spinner.hide();
-            this.postData = {
-              profileId: this.profileId,
-              postdescription: value,
+              postdescription: des,
             };
             return this.postData;
           }
-        },
-        (error) => {
-          this.spinner.hide();
-          this.postData = {
-            profileId: this.profileId,
-            postdescription: value,
-          };
-          return this.postData;
-        }
-      );
-    } else {
-      this.spinner.hide();
-      this.postData = {
-        profileId: this.profileId,
-        postdescription: value,
-      };
-      return this.postData;
-    }
+        );
+      } else {
+        this.spinner.hide();
+        this.postData = {
+          profileId: this.profileId,
+          postdescription: des,
+        };
+        return this.postData;
+      }
+    });
   }
 
+  deleteUser(userId: any) {}
+
   deletePost(id): void {
-    this.spinner.show();
     this.postId = null;
-    this.postService.deletePost(id).subscribe(
-      (res: any) => {
-        if (res) {
-          this.spinner.hide();
-          this.getPostList();
-        }
-      },
-      (error) => {
-        this.spinner.hide();
+    console.log(id);
+    const modalRef = this.modalService.open(DeletePostComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = 'Delete Post';
+    modalRef.componentInstance.confirmButtonLabel = 'Delete';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.message =
+      'Are you sure want to delete this post?';
+    modalRef.result.then((res) => {
+      console.log(res);
+      if (res === 'success') {
+        this.postService.deletePost(id).subscribe(
+          (res: any) => {
+            if (res) {
+              this.spinner.hide();
+              this.getPostList();
+            }
+          },
+          (error) => {
+            this.spinner.hide();
+          }
+        );
       }
-    );
+    });
   }
 }

@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <h5 class="text-start">{{ title }}</h5>
+  <i
+    class="material-symbols-outlined mat-icon xxltxt"
+    (click)="activeModal.close('cancel')"
+  >
+    close
+  </i>
+</div>
+<div class="modal-body text-center">
+  <div class="mid-area border-top-1 border-bottom-1">
+    <h5>{{ message }}</h5>
+  </div>
+</div>
+<div class="modal-footer justify-content-end">
+  <button
+    id="common-filter-cancel"
+    type="button"
+    class="cmn-btn p-2"
+    (click)="activeModal.close('cancel')"
+  >
+    {{ cancelButtonLabel }}
+  </button>
+  <button
+    id="common-filter-confirm"
+    type="button"
+    class="cmn-btn alt p-2"
+    (click)="activeModal.close('success')"
+  >
+    {{ confirmButtonLabel }}
+  </button>
+</div>

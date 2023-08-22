@@ -17,14 +17,14 @@
       autocomplete="off"
       (change)="getLinkData(message)"
     />
-    <div class="abs-area position-absolute d-none d-sm-block">
+    <!-- <div class="abs-area position-absolute d-none d-sm-block">
       <i
         class="material-symbols-outlined mat-icon xxltxt"
         (click)="openEmojiMenu()"
       >
         sentiment_satisfied
       </i>
-    </div>
+    </div> -->
     <ul
       class="d-flex justify-content-between justify-content-lg-between flex-wrap mt-3 gap-3 ps-0"
     >
@@ -72,7 +72,7 @@
     </ul>
   </form>
 </div>
-<div class="post-item d-flex flex-column gap-1 mt-3" id="news-feed">
+<div class="post-item d-flex flex-column gap-1 mt-1" id="news-feed">
   <ng-container *ngFor="let post of postList">
     <div
       class="post-single-box p-3 p-sm-5 d-flex gap-3"
@@ -168,62 +168,124 @@
           </div>
         </div>
         <p
-          class="post-description mdtxt"
+          class="post-description mdtxt mb-0"
           [innerHTML]="post.postdescription"
         ></p>
-        <a
-          *ngIf="post.metalink"
-          class="post-description mdtxt pt-0 pb-1"
-          [href]="post.metalink"
-          target="_blank"
-          >{{ post.metalink }}</a
-        >
+        <ng-container *ngIf="post.metalink">
+          <a
+            class="post-description mdtxt pt-0 pb-1"
+            [href]="post.metalink"
+            target="_blank"
+            >{{ post.metalink }}</a
+          >
+          <hr />
+        </ng-container>
+
         <div class="post-img" *ngIf="post.imageUrl">
-          <img [src]="post.imageUrl" class="w-100" alt="image" />
+          <img [src]="post.imageUrl" class="w-100 rounded-3" alt="image" />
         </div>
+        <p class="post-description mdtxt mt-1 mb-1">{{ post?.title }}</p>
+        <p class="post-description mdtxt">{{ post?.metadescription }}</p>
         <!-- like -->
         <div
-          class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between"
+          class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between pt-4"
         >
           <div
-            class="friends-list d-flex gap-3 align-items-center text-center w-100"
+            class="like-count-section friends-list d-flex gap-3 align-items-center text-center w-100"
           >
             <ul
-              class="d-flex align-items-center justify-content-around mb-0 w-100"
+              class="d-flex align-items-center justify-content-around mb-0 w-100 ps-0"
             >
-              <!-- <li *ngIf="post?.likescount > 0">
-                <img src="assets/images/avatar-2.png" alt="image" />
-              </li> -->
-              <!-- <li>
-                <i class="material-symbols-outlined mat-icon"> thumb_up </i>
+              <li
+                class="d-flex gap-1"
+                (click)="
+                  post.react == 'L'
+                    ? dislikeFeedPost(post)
+                    : reactLikeOnPost(post)
+                "
+              >
+                <i
+                  class="material-symbols-outlined mat-icon"
+                  [ngClass]="post.react == 'L' ? 'active' : ''"
+                >
+                  thumb_up
+                </i>
                 <span class="mdtxt d-center">{{
                   post?.likescount > 0 ? post?.likescount : 0
                 }}</span>
               </li>
-              <li>
-                <i class="material-symbols-outlined mat-icon"> favorite </i>
+              <li
+                class="d-flex gap-1"
+                (click)="
+                  post.react == 'LO'
+                    ? dislikeFeedPost(post)
+                    : reactLoveOnPost(post)
+                "
+              >
+                <i
+                  class="material-symbols-outlined mat-icon"
+                  [ngClass]="post.react == 'LO' ? 'active' : ''"
+                >
+                  favorite
+                </i>
                 <span class="mdtxt d-center">{{
                   post?.lovecount > 0 ? post?.lovecount : 0
                 }}</span>
               </li>
-              <li>
-                <i class="material-symbols-outlined mat-icon"> mood </i>
+              <li
+                class="d-flex gap-1"
+                (click)="
+                  post.react == 'HA'
+                    ? dislikeFeedPost(post)
+                    : reactHaliriousOnPost(post)
+                "
+              >
+                <i
+                  class="material-symbols-outlined mat-icon"
+                  [ngClass]="post.react == 'HA' ? 'active' : ''"
+                >
+                  mood
+                </i>
                 <span class="mdtxt d-center">{{
                   post?.haliriouscount > 0 ? post?.haliriouscount : 0
                 }}</span>
               </li>
-              <li>
-                <i class="material-symbols-outlined mat-icon"> stars </i>
+              <li
+                class="d-flex gap-1"
+                (click)="
+                  post.react == 'WO'
+                    ? dislikeFeedPost(post)
+                    : reactWowOnPost(post)
+                "
+              >
+                <i
+                  class="material-symbols-outlined mat-icon"
+                  [ngClass]="post.react == 'WO' ? 'active' : ''"
+                >
+                  stars
+                </i>
                 <span class="mdtxt d-center">{{
                   post?.wowcount > 0 ? post?.wowcount : 0
                 }}</span>
               </li>
-              <li>
-                <i class="material-symbols-outlined mat-icon"> thumb_down </i>
+              <li
+                class="d-flex gap-1"
+                (click)="
+                  post.react == 'SA'
+                    ? dislikeFeedPost(post)
+                    : reactSadOnPost(post)
+                "
+              >
+                <i
+                  class="material-symbols-outlined mat-icon"
+                  [ngClass]="post.react == 'SA' ? 'active' : ''"
+                >
+                  sentiment_dissatisfied
+                </i>
                 <span class="mdtxt d-center">{{
-                  post?.dislikecount > 0 ? post?.dislikecount : 0
+                  post?.sadcount > 0 ? post?.sadcount : 0
                 }}</span>
-              </li> -->
+              </li>
             </ul>
           </div>
           <!-- <div
@@ -234,15 +296,16 @@
           </div> -->
         </div>
         <div
-          class="like-comment-share py-5 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
+          class="friends-list like-comment-share p-2 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
         >
-          <button
-            class="d-center gap-1 gap-sm-2 mdtxt"
-            (click)="clickOnLike()"
-            [ngClass]="isLike ? 'actvie' : ''"
-          >
-            <i class="material-symbols-outlined mat-icon"> favorite </i>
-            Score Post
+          <!-- (click)="post.react ? dislikeFeedPost(post) : likeFeedPost(post)"
+        [ngClass]="post.react ? 'active' : ''" -->
+          <button class="d-center gap-1 smtxt">
+            <!-- <i class="material-symbols-outlined mat-icon"> favorite </i> -->
+            Likes
+            <span class="smtxt d-center">{{
+              post?.totalReactCount > 0 ? post?.totalReactCount : 0
+            }}</span>
           </button>
           <button
             class="d-center gap-1 gap-sm-2 mdtxt position-relative reply-button"
@@ -316,7 +379,7 @@
     Load More
     <i class="material-symbols-outlined mat-icon">autorenew</i>
   </span> -->
-  <div class="col-12 my-5 text-center">
+  <div class="col-12 my-5 text-center" *ngIf="postList.length">
     <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
       Load More
     </button>

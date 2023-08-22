@@ -36,4 +36,12 @@ export class SocketService {
   getCommunity(params, callback: (post: any) => void) {
     this.socket.emit('get-new-community', params, callback);
   }
+
+  likeFeedPost(params, callback: (post: any) => void) {
+    this.socket.emit('likeOrDislike', params, callback);
+  }
+
+  disLikeFeedPost(params, callback: (post: any) => void) {
+    this.socket.emit('likeOrDislike', params, callback);
+  }
 }
