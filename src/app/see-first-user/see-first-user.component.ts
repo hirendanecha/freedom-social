@@ -23,9 +23,7 @@ export class SeeFirstUserComponent {
     if (profileId > 0) {
       this.seeFirstUserService.getByProfileId(profileId).subscribe({
         next: (res: any) => {
-          if (res?.length > 0) {
-            this.profiles = res;
-          }
+          this.profiles = res?.length > 0 ? res : [];
         }
       });
     }
