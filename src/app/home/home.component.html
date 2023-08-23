@@ -75,8 +75,9 @@
 <div class="post-item d-flex flex-column gap-1 mt-1" id="news-feed">
   <ng-container *ngFor="let post of postList">
     <div
+      @slideUp
       class="post-single-box p-3 p-sm-5 d-flex gap-3"
-      *ngIf="post.postdescription"
+      *ngIf="!post?.hide && post?.postdescription"
     >
       <div class="profile-box">
         <img
@@ -118,7 +119,7 @@
                 <li>
                   <a
                     class="droplist d-flex align-items-center gap-2"
-                    (click)="unsubscribe(post)"
+                    (click)="seeFirst(post?.profileid)"
                   >
                     <i class="material-symbols-outlined mat-icon">
                       visibility

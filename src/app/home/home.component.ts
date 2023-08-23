@@ -15,8 +15,9 @@ import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
 import { SocketService } from '../services/socket.service';
 import { slideUp } from '../animations/slideUp';
-import { UnsubscribeProfileService } from '../services/unsubscribe.service';
 import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
+import { UnsubscribeProfileService } from '../services/unsubscribe-profile.service';
+import { SeeFirstUserService } from '../services/see-first-user.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -52,7 +53,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public sharedService: SharedService,
     private router: Router,
     private socketService: SocketService,
-    private unsubscribeProfileService: UnsubscribeProfileService
+    private unsubscribeProfileService: UnsubscribeProfileService,
+    private seeFirstUserService: SeeFirstUserService
   ) {
     this.profileId = sessionStorage.getItem('profileId');
   }
@@ -321,6 +323,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     );
   }
 
+  seeFirst(postProfileId: number): void {
+    this.seeFirstUserService.create({ profileId: this.profileId, seeFirstProfileId: postProfileId }).subscribe({
+      next: (res) => {
+        console.log('Res : ', res);
+      }
+    });
+
+    this.postId = null;
+  }
+
   unsubscribe(post: any): void {
     post['hide'] = true;
 
@@ -329,6 +341,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         console.log('Res : ', res);
       }
     });
+
+    this.postId = null;
   }
 
   goToViewProfile(id: any): void {

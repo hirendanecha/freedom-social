@@ -40,6 +40,10 @@ const routes: Routes = [
         loadChildren: () => import('../setting/setting.module').then((m) => m.SettingModule),
       },
       {
+        path: 'see-first-users',
+        loadChildren: () => import('../see-first-user/see-first-user.module').then((m) => m.SeeFirstUserModule),
+      },
+      {
         path: 'unsubscribed-users',
         loadChildren: () => import('../unsubscribed-users/unsubscribed-users.module').then((m) => m.UnsubscribedUsersModule),
       },
