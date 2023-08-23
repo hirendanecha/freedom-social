@@ -98,12 +98,21 @@
         class="like-comment-share py-5 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
       >
         <button
-          class="d-center gap-1 gap-sm-2 mdtxt"
-          (click)="clickOnLike()"
-          [ngClass]="isLike ? 'actvie' : ''"
+          class="d-center gap-1 smtxt like-button"
+          (click)="
+            post.react == 'L' ? dislikeFeedPost(post) : reactLikeOnPost(post)
+          "
         >
-          <i class="material-symbols-outlined mat-icon"> favorite </i>
-          Score Post
+          <!-- <i class="material-symbols-outlined mat-icon"> favorite </i> -->
+          <i
+            class="material-symbols-outlined mat-icon"
+            [ngClass]="post.react == 'L' ? 'active' : ''"
+          >
+            thumb_up
+          </i>
+          <span class="mdtxt d-center">{{
+            post?.likescount > 0 ? post?.likescount : 0
+          }}</span>
         </button>
         <button
           class="d-center gap-1 gap-sm-2 mdtxt position-relative reply-button"

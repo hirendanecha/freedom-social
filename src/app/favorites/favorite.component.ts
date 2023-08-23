@@ -10,11 +10,13 @@ import { CommunityPostService } from '../services/community-post.service';
 import { CreatePostComponent } from './create-post-modal/create-post.component';
 import { Router } from '@angular/router';
 import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
+import { slideUp } from '../animations/slideUp';
 
 @Component({
   selector: 'app-favorite',
   templateUrl: './favorite.component.html',
   styleUrls: ['./favorite.component.scss'],
+  animations: [slideUp],
 })
 export class FavoriteComponent implements OnInit {
   message = '';
@@ -123,9 +125,12 @@ export class FavoriteComponent implements OnInit {
   getPostList(): void {
     this.spinner.show();
     const page = this.activePage;
-    this.socketService.getCommunityPost({ page: page, size: 15 }, (data) => {
-      return data;
-    });
+    this.socketService.getCommunityPost(
+      { profileId: this.profileId, page: page, size: 15 },
+      (data) => {
+        return data;
+      }
+    );
 
     this.socketService.socket.on(
       'community-post',
@@ -228,8 +233,8 @@ export class FavoriteComponent implements OnInit {
             if (res.meta.image) {
               this.spinner.hide();
               this.postData = {
-                imageUrl: res.meta?.image?.url,
-                metalink: res?.meta?.url,
+                metaimage: res.meta?.image?.url,
+                metalink: res?.meta?.url || element,
                 description: des.split('http')[0],
                 metadescription: res?.meta?.description,
                 title: res?.meta?.title,
@@ -274,9 +279,8 @@ export class FavoriteComponent implements OnInit {
     this.postId = null;
   }
 
-  deletePost(id): void {
+  deletePost(post): void {
     this.postId = null;
-    console.log(id);
     const modalRef = this.modalService.open(DeletePostComponent, {
       centered: true,
     });
@@ -288,7 +292,8 @@ export class FavoriteComponent implements OnInit {
     modalRef.result.then((res) => {
       console.log(res);
       if (res === 'success') {
-        this.communityPostService.deletePost(id).subscribe(
+        // post['hide'] = true;
+        this.communityPostService.deletePost(post.Id).subscribe(
           (res: any) => {
             if (res) {
               this.spinner.hide();
@@ -301,5 +306,105 @@ export class FavoriteComponent implements OnInit {
         );
       }
     });
+  }
+
+  reactLikeOnPost(post) {
+    post.likescount = post.likescount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'L';
+    const data = {
+      communityPostId: post.Id,
+      profileId: this.profileId,
+      likeCount: post.likescount,
+      actionType: 'L',
+    };
+    this.likeDisLikePost(data);
+  }
+  reactLoveOnPost(post) {
+    post.lovecount = post.lovecount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'LO';
+    const data = {
+      communityPostId: post.Id,
+      profileId: this.profileId,
+      likeCount: post.lovecount,
+      actionType: 'LO',
+    };
+    this.likeDisLikePost(data);
+  }
+  reactWowOnPost(post) {
+    post.wowcount = post.wowcount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'WO';
+    const data = {
+      communityPostId: post.Id,
+      profileId: this.profileId,
+      likeCount: post.wowcount,
+      actionType: 'WO',
+    };
+    this.likeDisLikePost(data);
+  }
+  reactHaliriousOnPost(post) {
+    post.haliriouscount = post.haliriouscount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'HA';
+    const data = {
+      communityPostId: post.Id,
+      profileId: this.profileId,
+      likeCount: post.haliriouscount,
+      actionType: 'HA',
+    };
+    this.likeDisLikePost(data);
+  }
+  reactSadOnPost(post) {
+    post.sadcount = post.sadcount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'SA';
+    const data = {
+      communityPostId: post.Id,
+      profileId: this.profileId,
+      likeCount: post.sadcount,
+      actionType: 'SA',
+    };
+    this.likeDisLikePost(data);
+  }
+
+  dislikeFeedPost(post) {
+    if (post.react == 'L') {
+      post.likescount = post.likescount - 1;
+    } else if (post.react == 'LO') {
+      post.lovecount = post.lovecount - 1;
+    } else if (post.react == 'HA') {
+      post.haliriouscount = post.haliriouscount - 1;
+    } else if (post.react == 'WO') {
+      post.wowcount = post.wowcount - 1;
+    } else if (post.react == 'SA') {
+      post.sadcount = post.sadcount - 1;
+    }
+    post.totalReactCount = post.totalReactCount - 1;
+    post.react = null;
+    const data = {
+      communityPostId: post.Id,
+      profileId: this.profileId,
+      likeCount: post.likescount,
+    };
+    this.likeDisLikePost(data);
+  }
+
+  likeDisLikePost(data): void {
+    this.socketService.likeFeedPost(data, (res) => {
+      console.log(res);
+    });
+    this.socketService.socket.on(
+      'community-post',
+      (data) => {
+        this.spinner.hide();
+        this.postList = data;
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
   }
 }

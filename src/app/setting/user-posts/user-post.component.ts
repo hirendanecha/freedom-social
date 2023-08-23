@@ -12,6 +12,7 @@ import { LiveComponent } from 'src/app/live-modal/live.component';
 import { PostComponent } from 'src/app/home/poast-modal/post.component';
 import { PostService } from 'src/app/services/post.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-user-post',
@@ -43,7 +44,8 @@ export class UserPostComponent implements OnInit {
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private postService: PostService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private socketService: SocketService
   ) {
     this.userProfileId = sessionStorage.getItem('profileId');
   }
@@ -86,8 +88,56 @@ export class UserPostComponent implements OnInit {
     );
   }
 
-  clickOnLike() {
-    this.isLike = !this.isLike;
+  reactLikeOnPost(post) {
+    post.likescount = post.likescount + 1;
+    post.totalReactCount = post.totalReactCount + 1;
+    post.react = 'L';
+    const data = {
+      postId: post.id,
+      profileId: this.profileId,
+      likeCount: post.likescount,
+      actionType: 'L',
+    };
+    this.likeDisLikePost(data);
+  }
+
+  dislikeFeedPost(post) {
+    if (post.react == 'L') {
+      post.likescount = post.likescount - 1;
+    } else if (post.react == 'LO') {
+      post.lovecount = post.lovecount - 1;
+    } else if (post.react == 'HA') {
+      post.haliriouscount = post.haliriouscount - 1;
+    } else if (post.react == 'WO') {
+      post.wowcount = post.wowcount - 1;
+    } else if (post.react == 'SA') {
+      post.sadcount = post.sadcount - 1;
+    }
+    post.totalReactCount = post.totalReactCount - 1;
+    post.react = null;
+    const data = {
+      postId: post.id,
+      profileId: this.profileId,
+      likeCount: post.likescount,
+    };
+    this.likeDisLikePost(data);
+  }
+
+  likeDisLikePost(data): void {
+    this.socketService.likeFeedPost(data, (res) => {
+      console.log(res);
+    });
+    this.socketService.socket.on(
+      'new-post',
+      (data) => {
+        this.spinner.hide();
+        this.postList = data;
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
   }
 
   openDropDown(id) {

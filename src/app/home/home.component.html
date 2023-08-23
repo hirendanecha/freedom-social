@@ -87,7 +87,7 @@
           alt="avatar"
         />
       </div>
-      <div class="top-area pb-5 w-100">
+      <div class="top-area w-100">
         <div class="profile-area d-center justify-content-between">
           <div class="avatar-item d-flex align-items-center">
             <div class="position-relative"></div>
@@ -158,7 +158,7 @@
                 <li>
                   <a
                     class="droplist d-flex align-items-center gap-2"
-                    (click)="deletePost(post.id)"
+                    (click)="deletePost(post)"
                   >
                     <i class="material-symbols-outlined mat-icon"> delete </i>
                     <span>Delete</span>
@@ -179,19 +179,29 @@
             target="_blank"
             >{{ post.metalink }}</a
           >
-          <hr />
+          <!-- <hr class="mt-0" /> -->
         </ng-container>
-
-        <div class="post-img" *ngIf="post.imageUrl">
-          <img [src]="post.imageUrl" class="w-100 rounded-3" alt="image" />
+        <div class="post-img rounded-3" *ngIf="post?.imageUrl">
+          <img [src]="post?.imageUrl" class="w-100 rounded-top-3" alt="image" />
         </div>
-        <p class="post-description mdtxt mt-1 mb-1">{{ post?.title }}</p>
-        <p class="post-description mdtxt">{{ post?.metadescription }}</p>
+        <div class="border rounded-3" *ngIf="post?.metaimage">
+          <a [href]="post.metalink" target="_blank" class="post-img">
+            <img
+              [src]="post?.metaimage"
+              class="w-100 rounded-top-3"
+              alt="image"
+            />
+            <p class="post-description mdtxt m-2">{{ post?.title }}</p>
+            <p class="post-description mdtxt m-2">
+              {{ post?.metadescription }}
+            </p>
+          </a>
+        </div>
         <!-- like -->
         <div
           class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between pt-4"
         >
-          <div
+          <!-- <div
             class="like-count-section friends-list d-flex gap-3 align-items-center text-center w-100"
           >
             <ul
@@ -288,24 +298,28 @@
                 }}</span>
               </li>
             </ul>
-          </div>
-          <!-- <div
-            class="react-list d-flex flex-wrap gap-6 align-items-center text-center"
-          >
-            <button class="mdtxt">4 Comments</button>
-            <button class="mdtxt">1 Shares</button>
           </div> -->
         </div>
         <div
-          class="friends-list like-comment-share p-2 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
+          class="friends-list like-comment-share p-3 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
         >
           <!-- (click)="post.react ? dislikeFeedPost(post) : likeFeedPost(post)"
         [ngClass]="post.react ? 'active' : ''" -->
-          <button class="d-center gap-1 smtxt">
+          <button
+            class="d-center gap-1 smtxt like-button"
+            (click)="
+              post.react == 'L' ? dislikeFeedPost(post) : reactLikeOnPost(post)
+            "
+          >
             <!-- <i class="material-symbols-outlined mat-icon"> favorite </i> -->
-            Likes
-            <span class="smtxt d-center">{{
-              post?.totalReactCount > 0 ? post?.totalReactCount : 0
+            <i
+              class="material-symbols-outlined mat-icon"
+              [ngClass]="post.react == 'L' ? 'active' : ''"
+            >
+              thumb_up
+            </i>
+            <span class="mdtxt d-center">{{
+              post?.likescount > 0 ? post?.likescount : 0
             }}</span>
           </button>
           <button
@@ -317,21 +331,26 @@
             <i class="material-symbols-outlined mat-icon"> chat </i>
             Video Reply
           </button>
-          <button class="d-center gap-1 gap-sm-2 mdtxt">
+          <button
+            class="d-center gap-1 gap-sm-2 mdtxt"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Comming Soon!"
+          >
             <i class="material-symbols-outlined mat-icon"> share </i>
             Share
           </button>
         </div>
-        <form action="#">
+        <!-- <form action="#">
           <div class="d-flex mt-5 gap-3">
-            <!-- <div class="profile-box d-none d-xxl-block">
+            <div class="profile-box d-none d-xxl-block">
               <a
                 ><img
-                  [src]="sharedService.profilePic.url"
+                  [src]="sharedService.profilePic"
                   class="max-un"
                   alt="icon"
               /></a>
-            </div> -->
+            </div>
             <div
               class="form-content input-area py-1 d-flex gap-2 align-items-center w-100"
             >
@@ -371,7 +390,7 @@
               </button>
             </div>
           </div>
-        </form>
+        </form> -->
       </div>
     </div>
   </ng-container>

@@ -104,9 +104,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Go Live';
     modalRef.componentInstance.closeIcon = true;
-    // modelRef.result.then(res => {
-    //   return res = user_id
-    // });
   }
 
   openEmojiMenu(): void {
@@ -122,7 +119,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'L';
     const data = {
-      id: post.id,
+      postId: post.id,
       profileId: this.profileId,
       likeCount: post.likescount,
       actionType: 'L',
@@ -134,7 +131,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'LO';
     const data = {
-      id: post.id,
+      postId: post.id,
       profileId: this.profileId,
       likeCount: post.lovecount,
       actionType: 'LO',
@@ -146,7 +143,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'WO';
     const data = {
-      id: post.id,
+      postId: post.id,
       profileId: this.profileId,
       likeCount: post.wowcount,
       actionType: 'WO',
@@ -158,7 +155,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'HA';
     const data = {
-      id: post.id,
+      postId: post.id,
       profileId: this.profileId,
       likeCount: post.haliriouscount,
       actionType: 'HA',
@@ -170,7 +167,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'SA';
     const data = {
-      id: post.id,
+      postId: post.id,
       profileId: this.profileId,
       likeCount: post.sadcount,
       actionType: 'SA',
@@ -193,7 +190,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     post.totalReactCount = post.totalReactCount - 1;
     post.react = null;
     const data = {
-      id: post.id,
+      postId: post.id,
       profileId: this.profileId,
       likeCount: post.likescount,
     };
@@ -245,9 +242,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getPostList(): void {
     const page = this.activePage;
     this.spinner.show();
-    this.socketService.getPost({ profileId: this.profileId, page: page, size: 15 }, (post) => {
-      // this.spinner.hide();
-    });
+    this.socketService.getPost(
+      { profileId: this.profileId, page: page, size: 15 },
+      (post) => {
+        // this.spinner.hide();
+      }
+    );
     // this.postService.getPosts(page).subscribe(
     //   (res: any) => {
     //     if (res) {
@@ -312,6 +312,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
         if (res) {
           this.spinner.hide();
           res.data.forEach((element) => {
+            element.totalReactCount =
+              element.likescount +
+              element.wowcount +
+              element.haliriouscount +
+              element.lovecount +
+              element.sadcount;
             this.postList.push(element);
           });
         }
@@ -324,11 +330,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   seeFirst(postProfileId: number): void {
-    this.seeFirstUserService.create({ profileId: this.profileId, seeFirstProfileId: postProfileId }).subscribe({
-      next: (res) => {
-        console.log('Res : ', res);
-      }
-    });
+    this.seeFirstUserService
+      .create({ profileId: this.profileId, seeFirstProfileId: postProfileId })
+      .subscribe({
+        next: (res) => {
+          console.log('Res : ', res);
+        },
+      });
 
     this.postId = null;
   }
@@ -336,17 +344,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
   unsubscribe(post: any): void {
     post['hide'] = true;
 
-    this.unsubscribeProfileService.create({ profileId: this.profileId, unsubscribeProfileId: post?.profileid }).subscribe({
-      next: (res) => {
-        console.log('Res : ', res);
-      }
-    });
+    this.unsubscribeProfileService
+      .create({
+        profileId: this.profileId,
+        unsubscribeProfileId: post?.profileid,
+      })
+      .subscribe({
+        next: (res) => {
+          console.log('Res : ', res);
+        },
+      });
 
     this.postId = null;
   }
 
   goToViewProfile(id: any): void {
-    this.router.navigate([`settings/view-profile/${id}`]);
+    this.router.navigate([`settings/general/view-profile/${id}`]);
     this.postId = null;
   }
 
@@ -367,8 +380,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
             if (res.meta.image) {
               this.spinner.hide();
               this.postData = {
-                imageUrl: res.meta?.image?.url,
-                metalink: res?.meta?.url,
+                metaimage: res.meta?.image?.url,
+                metalink: res?.meta?.url || element,
                 postdescription: des.split('http')[0],
                 metadescription: res?.meta?.description,
                 title: res?.meta?.title,
@@ -404,11 +417,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deleteUser(userId: any) {}
-
-  deletePost(id): void {
+  deletePost(post): void {
     this.postId = null;
-    console.log(id);
+    console.log(post.id);
     const modalRef = this.modalService.open(DeletePostComponent, {
       centered: true,
     });
@@ -420,7 +431,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     modalRef.result.then((res) => {
       console.log(res);
       if (res === 'success') {
-        this.postService.deletePost(id).subscribe(
+        // post['hide'] = true;
+        this.postService.deletePost(post.id).subscribe(
           (res: any) => {
             if (res) {
               this.spinner.hide();

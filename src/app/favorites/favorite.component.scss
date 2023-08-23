@@ -40,8 +40,16 @@
           }
         }
       }
+      a {
+        font-size: 16px;
+      }
+      br {
+        display: none;
+      }
       hr {
-        border-top: 1px solid var(--para-1st-color);
+        // border-top: 1px solid var(--para-1st-color);
+        // margin-top: 0;
+        display: none;
       }
     }
   }
@@ -69,6 +77,13 @@
       max-width: 48px;
       // height: 100%;
       min-height: 48px;
+    }
+    .like-comment-share {
+      .like-button {
+        .active {
+          color: var(--primary-color) !important;
+        }
+      }
     }
   }
 }
