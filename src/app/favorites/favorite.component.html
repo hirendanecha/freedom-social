@@ -21,14 +21,14 @@
         autocomplete="off"
         (change)="getLinkData(message)"
       />
-      <div class="abs-area position-absolute d-none d-sm-block">
+      <!-- <div class="abs-area position-absolute d-none d-sm-block">
         <i
           class="material-symbols-outlined mat-icon xxltxt"
           (click)="openEmojiMenu()"
         >
           sentiment_satisfied
         </i>
-      </div>
+      </div> -->
       <ul
         class="d-flex justify-content-between justify-content-lg-between flex-wrap mt-3 gap-3 ps-0"
       >
@@ -61,64 +61,6 @@
       </ul>
     </form>
   </div>
-  <!-- <div class="post-single-box p-3 p-sm-5">
-    <div class="profile-box">
-      <a
-        ><img
-          [src]="sharedService.profilePic"
-          onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
-          class="max-un rounded-3"
-          alt="icon"
-      /></a>
-    </div>
-    <form class="w-100 position-relative">
-      <input
-        placeholder="Write something to Lerio.."
-        [(ngModel)]="message"
-        name="message"
-        type="text"
-        (change)="getLinkData(message)"
-      />
-      <div class="abs-area position-absolute d-none d-sm-block">
-        <i
-          class="material-symbols-outlined mat-icon xxltxt"
-          (click)="openEmojiMenu()"
-        >
-          sentiment_satisfied
-        </i>
-      </div>
-      <ul
-        class="d-flex justify-content-between justify-content-lg-between flex-wrap mt-3 gap-3 ps-0"
-      >
-        <li
-          class="d-flex gap-2 align-items-center"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="Comming Soon!"
-        >
-          <i class="material-symbols-outlined mat-icon">stream</i>
-          <span>Live</span>
-        </li>
-        <li
-          class="d-flex align-items-center gap-2 pointer-events"
-          cursor
-          (click)="addPost()"
-        >
-          <i class="material-symbols-outlined mat-icon">add_a_photo</i>
-          <span>Photo</span>
-        </li>
-        <div class="btn-area d-flex d-lg-block d-md-block">
-          <button
-            class="cmn-btn px-2 px-sm-5 px-lg-6 p-2"
-            (click)="createNewPost()"
-            [disabled]="!message"
-          >
-            Post
-          </button>
-        </div>
-      </ul>
-    </form>
-  </div> -->
   <ng-container *ngFor="let post of postList">
     <div
       class="post-single-box p-3 p-sm-5 d-flex gap-3"
@@ -200,7 +142,7 @@
                 <li>
                   <a
                     class="droplist d-flex align-items-center gap-2"
-                    (click)="postId = null"
+                    (click)="deletePost(post.Id)"
                   >
                     <i class="material-symbols-outlined mat-icon"> delete </i>
                     <span>Delete</span>
@@ -210,17 +152,24 @@
             </ul>
           </div>
         </div>
-        <p class="post-description" [innerHTML]="post.description"></p>
-        <a
-          class="post-description pt-0"
-          *ngIf="post.metalink"
-          [href]="post.metalink"
-          target="_blank"
-          >{{ post.metalink }}</a
-        >
+        <p
+          class="post-description mb-0 mdtxt"
+          [innerHTML]="post.description"
+        ></p>
+        <ng-container *ngIf="post.metalink">
+          <a
+            class="post-description mdtxt pt-0 pb-1"
+            [href]="post.metalink"
+            target="_blank"
+            >{{ post.metalink }}</a
+          >
+          <hr />
+        </ng-container>
         <div class="post-img" *ngIf="post.imageUrl">
           <img [src]="post.imageUrl" class="w-100" alt="image" />
         </div>
+        <p class="post-description mdtxt mt-1 mb-1">{{ post?.title }}</p>
+        <p class="post-description mdtxt">{{ post?.metadescription }}</p>
         <div
           class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between"
         >
@@ -350,7 +299,7 @@
       </div>
     </div>
   </ng-container>
-  <div class="col-12 my-5 text-center">
+  <div class="col-12 my-5 text-center" *ngIf="postList.length">
     <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
       Load More
     </button>

@@ -9,6 +9,7 @@ import { SocketService } from '../services/socket.service';
 import { CommunityPostService } from '../services/community-post.service';
 import { CreatePostComponent } from './create-post-modal/create-post.component';
 import { Router } from '@angular/router';
+import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
 
 @Component({
   selector: 'app-favorite',
@@ -159,7 +160,7 @@ export class FavoriteComponent implements OnInit {
       (res: any) => {
         if (res) {
           this.spinner.hide();
-          res.forEach((element) => {
+          res.data.forEach((element) => {
             this.postList.push(element);
           });
         }
@@ -211,58 +212,94 @@ export class FavoriteComponent implements OnInit {
   }
 
   getLinkData(des: any): void {
-    const value = des;
-    if (
-      value.includes('http://') ||
-      value.includes('https://') ||
-      value.includes('www.')
-    ) {
-      this.spinner.show();
-      this.postService.getMetaData({ url: value }).subscribe(
-        (res: any) => {
-          if (res.meta.image) {
+    const defaultValue = des.split('http')[0];
+    console.log(defaultValue);
+    const value = des.split(' ');
+    console.log(value);
+    value.forEach((element) => {
+      if (
+        element.includes('http://') ||
+        element.includes('https://') ||
+        element.includes('www.')
+      ) {
+        this.spinner.show();
+        this.postService.getMetaData({ url: element }).subscribe(
+          (res: any) => {
+            if (res.meta.image) {
+              this.spinner.hide();
+              this.postData = {
+                imageUrl: res.meta?.image?.url,
+                metalink: res?.meta?.url,
+                description: des.split('http')[0],
+                metadescription: res?.meta?.description,
+                title: res?.meta?.title,
+                profileId: this.profileId,
+                communityId: this.communityId,
+              };
+              return this.postData;
+            } else {
+              this.spinner.hide();
+              this.postData = {
+                profileId: this.profileId,
+                description: des,
+                communityId: this.communityId,
+              };
+              return this.postData;
+            }
+          },
+          (error) => {
             this.spinner.hide();
             this.postData = {
-              imageUrl: res.meta?.image?.url,
-              metalink: res?.meta?.url,
-              description: res?.meta?.description,
               profileId: this.profileId,
+              description: des,
               communityId: this.communityId,
-            };
-            return this.postData;
-          } else {
-            this.spinner.hide();
-            this.postData = {
-              communityId: this.communityId,
-              profileId: this.profileId,
-              description: value,
             };
             return this.postData;
           }
-        },
-        (error) => {
-          this.spinner.hide();
-          this.postData = {
-            communityId: this.communityId,
-            profileId: this.profileId,
-            description: value,
-          };
-          return this.postData;
-        }
-      );
-    } else {
-      this.spinner.hide();
-      this.postData = {
-        communityId: this.communityId,
-        profileId: this.profileId,
-        description: value,
-      };
-      return this.postData;
-    }
+        );
+      } else {
+        this.spinner.hide();
+        this.postData = {
+          profileId: this.profileId,
+          description: des,
+          communityId: this.communityId,
+        };
+        return this.postData;
+      }
+    });
   }
 
   goToViewProfile(id: any): void {
     this.router.navigate([`settings/view-profile/${id}`]);
     this.postId = null;
+  }
+
+  deletePost(id): void {
+    this.postId = null;
+    console.log(id);
+    const modalRef = this.modalService.open(DeletePostComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = 'Delete Post';
+    modalRef.componentInstance.confirmButtonLabel = 'Delete';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.message =
+      'Are you sure want to delete this post?';
+    modalRef.result.then((res) => {
+      console.log(res);
+      if (res === 'success') {
+        this.communityPostService.deletePost(id).subscribe(
+          (res: any) => {
+            if (res) {
+              this.spinner.hide();
+              this.getPostList();
+            }
+          },
+          (error) => {
+            this.spinner.hide();
+          }
+        );
+      }
+    });
   }
 }

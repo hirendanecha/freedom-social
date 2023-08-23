@@ -39,12 +39,30 @@
             line-height: 2;
           }
         }
+        hr {
+          border-top: 1px solid var(--para-1st-color);
+        }
       }
       .post-description {
         .postlink {
+          img {
+            border-radius: 0.5rem;
+          }
           h3 {
             font-size: 18px;
             margin-top: 10px;
+          }
+        }
+      }
+      .total-react-share {
+        .like-count-section {
+          cursor: pointer;
+          ul {
+            li {
+              .active {
+                color: var(--primary-color) !important;
+              }
+            }
           }
         }
       }
