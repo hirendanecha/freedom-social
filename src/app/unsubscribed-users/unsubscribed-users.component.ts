@@ -24,9 +24,7 @@ export class UnsubscribedUsersComponent implements OnInit  {
     if (profileId > 0) {
       this.unsubscribeProfileService.getByProfileId(profileId).subscribe({
         next: (res: any) => {
-          if (res?.length > 0) {
-            this.profiles = res;
-          }
+          this.profiles = res?.length > 0 ? res : [];
         }
       });
     }
