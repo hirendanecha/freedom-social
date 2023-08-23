@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UnsubscribeProfileService } from '../services/unsubscribe.service';
+import { UnsubscribeProfileService } from '../services/unsubscribe-profile.service';
 
 @Component({
   selector: 'app-unsubscribed-users',

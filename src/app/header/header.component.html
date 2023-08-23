@@ -2,29 +2,33 @@
   <nav class="navbar navbar-expand-lg p-0">
     <div class="container">
       <nav class="navbar w-100 navbar-expand-lg justify-content-betweenm">
-        <a routerLink="/home" class="navbar-brand">
-          <img src="assets/images/icon.jpg" class="logo" alt="logo" />
-        </a>
+        <div class="d-flex w-25">
+          <a routerLink="/home" class="navbar-brand">
+            <img src="assets/images/icon.jpg" class="logo" alt="logo" />
+          </a>
 
-        <button class="button search-active d-none">
-          <i class="d-center material-symbols-outlined fs-xxl mat-icon">
-            search
-          </i>
-        </button>
-        <div class="search-form">
-          <form action="#" class="input-area d-flex align-items-center">
-            <i class="material-symbols-outlined mat-icon me-1">search</i>
-            <input
-              type="text"
-              name="search"
-              placeholder="Search"
-              [(ngModel)]="searchText"
-              autocomplete="off"
-              (keyup)="getUserList()"
-              (focusout)="searchText = ''"
-            />
-          </form>
+          <button class="button search-active d-none">
+            <i class="d-center material-symbols-outlined fs-xxl mat-icon">
+              search
+            </i>
+          </button>
+
+          <div class="search-form">
+            <form action="#" class="input-area d-flex align-items-center">
+              <i class="material-symbols-outlined mat-icon me-1">search</i>
+              <input
+                type="text"
+                name="search"
+                placeholder="Search"
+                [(ngModel)]="searchText"
+                autocomplete="off"
+                (keyup)="getUserList()"
+                (focusout)="searchText = ''"
+              />
+            </form>
+          </div>
         </div>
+
         <ng-container *ngIf="searchText">
           <div class="search-user-list position-absolute">
             <div class="row">
@@ -112,7 +116,7 @@
           </li> -->
         </ul>
         <div
-          class="right-area position-relative d-flex gap-3 gap-xxl-6 align-items-center"
+          class="right-area position-relative d-flex gap-3 gap-xxl-6 align-items-center w-25"
         >
           <div class="single-item d-none d-lg-block messages-area">
             <div class="messages-btn cmn-head">

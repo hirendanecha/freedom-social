@@ -1,5 +1,5 @@
-const url = 'https://freedom-api.opash.in';
-// const url = 'http://localhost:8080';
+// const url = 'https://freedom-api.opash.in';
+const url = 'http://localhost:8080';
 
 export const environment = {
   production: false,

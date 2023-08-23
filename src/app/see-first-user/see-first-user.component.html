@@ -1,5 +1,5 @@
 <div class="head-area mb-6 text-start mt-10">
-  <h5>Unsubscribe Users</h5>
+  <h5>See First Users</h5>
 </div>
 <div class="single-box p-sm-5 p-3">
   <ng-container *ngIf="profiles.length > 0">
@@ -7,13 +7,13 @@
       <ng-container *ngFor="let profile of profiles">
         <li class="list-group-item d-flex justify-content-between">
           <div>{{profile?.FirstName || profile?.Username}}</div>
-          <button class="btn btn-primary btn-sm" (click)="removeUnsubscribeProfile(profile?.Id)">Re-Subscribe</button>
+          <button class="btn btn-primary btn-sm" (click)="removeSeeFirstUser(profile?.Id)">Remove</button>
         </li>
       </ng-container>
     </ul>
   </ng-container>
 
   <ng-container *ngIf="profiles.length === 0">
-    No any users unsubscribed yet!
+    No any users set to see first yet!
   </ng-container>
 </div>
