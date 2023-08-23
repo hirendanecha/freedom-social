@@ -75,8 +75,9 @@
 <div class="post-item d-flex flex-column gap-1 mt-3" id="news-feed">
   <ng-container *ngFor="let post of postList">
     <div
+      @slideUp
       class="post-single-box p-3 p-sm-5 d-flex gap-3"
-      *ngIf="post.postdescription"
+      *ngIf="!post?.hide && post?.postdescription"
     >
       <div class="profile-box">
         <img
@@ -129,7 +130,7 @@
                 <li>
                   <a
                     class="droplist d-flex align-items-center gap-2"
-                    (click)="postId = null"
+                    (click)="unsubscribe(post)"
                   >
                     <i class="material-symbols-outlined mat-icon">
                       person_remove
@@ -157,7 +158,7 @@
                 <li>
                   <a
                     class="droplist d-flex align-items-center gap-2"
-                    (click)="deletePost(post.id)"
+                    (click)="postId = null"
                   >
                     <i class="material-symbols-outlined mat-icon"> delete </i>
                     <span>Delete</span>
@@ -169,7 +170,7 @@
         </div>
         <p
           class="post-description mdtxt"
-          [innerHTML]="post.postdescription"
+          [innerHTML]="post?.postdescription"
         ></p>
         <a
           *ngIf="post.metalink"

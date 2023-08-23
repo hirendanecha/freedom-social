@@ -253,15 +253,50 @@
           <span>Claim 50 free 1776</span>
         </a>
       </li>
+
       <li>
         <a
-          routerLink="settings"
           class="d-flex gap-4"
           [ngClass]="isSetting ? 'active' : ''"
+          (click)="collapse.toggle()"
         >
           <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
           <span>Settings</span>
         </a>
+
+        <div #collapse="ngbCollapse" [ngbCollapse]="true">
+          <ul class="ps-3">
+            <li>
+              <a
+                routerLink="settings/general"
+                class="d-flex gap-4"
+              >
+                <i class="material-symbols-outlined fs-xxl mat-icon"> person </i>
+                <span>General</span>
+              </a>
+            </li>
+
+            <li>
+              <a
+                routerLink="settings/unsubscribed-users"
+                class="d-flex gap-4"
+              >
+                <i class="material-symbols-outlined fs-xxl mat-icon"> group_remove </i>
+                <span>Unsubscribed Users</span>
+              </a>
+            </li>
+
+            <li>
+              <a
+                routerLink="settings/delete-profile"
+                class="d-flex gap-4"
+              >
+                <i class="material-symbols-outlined fs-xxl mat-icon"> person_remove </i>
+                <span>Delete Account</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>
