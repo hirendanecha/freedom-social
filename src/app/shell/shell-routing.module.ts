@@ -29,8 +29,25 @@ const routes: Routes = [
   {
     path: 'settings',
     // canActivate: [AuthenticationGuard],
-    loadChildren: () =>
-      import('../setting/setting.module').then((m) => m.SettingModule),
+    children: [
+      {
+        path: '',
+        redirectTo: 'general',
+        pathMatch: 'full',
+      },
+      {
+        path: 'general',
+        loadChildren: () => import('../setting/setting.module').then((m) => m.SettingModule),
+      },
+      {
+        path: 'unsubscribed-users',
+        loadChildren: () => import('../unsubscribed-users/unsubscribed-users.module').then((m) => m.UnsubscribedUsersModule),
+      },
+      {
+        path: 'delete-profile',
+        loadChildren: () => import('../setting/setting.module').then((m) => m.SettingModule),
+      }
+    ]
   },
 ];
 

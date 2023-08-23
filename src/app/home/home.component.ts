@@ -2,27 +2,26 @@ import {
   AfterViewInit,
   Component,
   EventEmitter,
-  HostListener,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PostComponent } from './poast-modal/post.component';
 import { LiveComponent } from '../live-modal/live.component';
-import { CreatePostComponent } from '../favorites/create-post-modal/create-post.component';
-import { MyListComponent } from '../right-side-bar/my-list.component';
 import { MyProfileComponent } from '../left-side-bar/my-profile.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostService } from '../services/post.service';
 import { SharedService } from '../services/shared.service';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SocketService } from '../services/socket.service';
+import { slideUp } from '../animations/slideUp';
+import { UnsubscribeProfileService } from '../services/unsubscribe.service';
 import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  animations: [slideUp],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   isLike = false;
@@ -52,7 +51,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private postService: PostService,
     public sharedService: SharedService,
     private router: Router,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private unsubscribeProfileService: UnsubscribeProfileService
   ) {
     this.profileId = sessionStorage.getItem('profileId');
   }
@@ -243,12 +243,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getPostList(): void {
     const page = this.activePage;
     this.spinner.show();
-    this.socketService.getPost(
-      { profileId: this.profileId, page: page, size: 15 },
-      (post) => {
-        // this.spinner.hide();
-      }
-    );
+    this.socketService.getPost({ profileId: this.profileId, page: page, size: 15 }, (post) => {
+      // this.spinner.hide();
+    });
     // this.postService.getPosts(page).subscribe(
     //   (res: any) => {
     //     if (res) {
@@ -322,6 +319,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
         console.log(error);
       }
     );
+  }
+
+  unsubscribe(post: any): void {
+    post['hide'] = true;
+
+    this.unsubscribeProfileService.create({ profileId: this.profileId, unsubscribeProfileId: post?.profileid }).subscribe({
+      next: (res) => {
+        console.log('Res : ', res);
+      }
+    });
   }
 
   goToViewProfile(id: any): void {
