@@ -1,4 +1,4 @@
-/*============================================ 
+/*============================================
 # Template Name: Circlehub
 # Version: 1.0
 # Date: 10/03/2023
@@ -6,11 +6,11 @@
 # Author URI: https://themeforest.net/user/uiaxis
 # Description: Circlehub - HTML Templates
 ============================================*/
- 
-/*============================================ 
+
+/*============================================
 ======== Table of Css Content =========
 # Typography
-# Normalize 
+# Normalize
 # Global style
 # Header Area
 # Banner Area
@@ -23,18 +23,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap');
 
 // CSS Plugin import
-@import "../css/bootstrap.min.css";
-@import "../css/plugins/fontawesome.min.css";
-@import "../css/plugins/plyr.css";
-@import "../css/plugins/nice-select.css";
-@import "../css/plugins/magnific-popup.css";
-@import "../css/plugins/slick.css";
-@import "../css/plugins/materialicons.css";
-@import "../css/plugins/animate.min.css";
+@import "plugins/materialicons.scss";
 
 // Sass Global
 @import "main/_global.scss";
-    
+
 // Pages
 @import "pages/_banner-footer.scss";
 @import "pages/_section.scss";
@@ -44,19 +37,17 @@
 
 
 .content-area {
-    padding: 40px 0;
-    background: var(--body-color);
-  }
-  
-  .modal-content {
-    border-radius: 10px;
-    box-shadow: 0px 17px 12px var(--box-shadow) !important;
-    background-color: var(--section-1st-color) !important;
-    /* padding: 30px; */
-  }
-  
-  .fade {
-    transition: opacity .15s linear;
-  }
+  padding: 40px 0;
+  background: var(--body-color);
+}
 
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0px 17px 12px var(--box-shadow) !important;
+  background-color: var(--section-1st-color) !important;
+  /* padding: 30px; */
+}
 
+.fade {
+  transition: opacity .15s linear;
+}

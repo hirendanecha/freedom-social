@@ -1,5 +1,4 @@
 // Custom.scss
-
 $spacer: 1rem !default;
 $spacers: (
   0: 0,
@@ -16,8 +15,17 @@ $spacers: (
     );
 }
 
-// Include any default variable overrides here (though functions won't be available)
-
-@import "/node_modules/bootstrap/scss/bootstrap.scss";
+@import 'bootstrap/scss/bootstrap';
 
 // Then add additional custom code here
+@for $i from 1 through 100 {
+  .w-#{$i*4}-px {
+    width: $i*4+px;
+    min-width: $i*4+px;
+  }
+
+  .h-#{$i*4}-px {
+    height: $i*4+px;
+    min-height: $i*4+px;
+  }
+}

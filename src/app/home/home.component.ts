@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdown, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PostComponent } from './poast-modal/post.component';
 import { LiveComponent } from '../live-modal/live.component';
 import { MyProfileComponent } from '../left-side-bar/my-profile.component';
@@ -18,6 +18,7 @@ import { slideUp } from '../animations/slideUp';
 import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
 import { UnsubscribeProfileService } from '../services/unsubscribe-profile.service';
 import { SeeFirstUserService } from '../services/see-first-user.service';
+import { CustomerService } from '../services/customer.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -46,6 +47,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   activePage = 1;
   postId = '';
   profileId = '';
+
+  isOpen = false;
+  userList = [];
+  userNameSearch = '';
+
+  @ViewChild('userSearchDropdownRef', { static:false, read: NgbDropdown }) userSearchNgbDropdown: NgbDropdown;
+
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -54,7 +62,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private router: Router,
     private socketService: SocketService,
     private unsubscribeProfileService: UnsubscribeProfileService,
-    private seeFirstUserService: SeeFirstUserService
+    private seeFirstUserService: SeeFirstUserService,
+    private customerService: CustomerService
   ) {
     this.profileId = sessionStorage.getItem('profileId');
   }
@@ -364,8 +373,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getLinkData(des: any): void {
-    const defaultValue = des.split('http')[0];
-    console.log(defaultValue);
+    // const defaultValue = des.split('http')[0];
+    // console.log(defaultValue);
     const value = des.split(' ');
     console.log(value);
     value.forEach((element) => {
@@ -415,6 +424,57 @@ export class HomeComponent implements OnInit, AfterViewInit {
         return this.postData;
       }
     });
+  }
+
+  messageOnKeyEvent(event: any): void {
+    const text = event.target.value;
+    const atSymbolIndex = text.lastIndexOf("@");
+    console.log('atSymbolIndex : ', atSymbolIndex);
+
+    if (atSymbolIndex !== -1) {
+      const query = text.substring(atSymbolIndex + 1);
+
+      if (query) {
+        this.getUserList(query);
+      } else {
+        this.userList = [];
+        this.userSearchNgbDropdown.close();
+      }
+    } else {
+      this.userList = [];
+      this.userSearchNgbDropdown.close();
+    }
+
+    // if (lastChar === '@' || this.userNameSearch) {
+    //   this.userNameSearch += lastChar;
+    //   console.log('userNameSearch : ', this.userNameSearch);
+    //   // value.startsWith('@')
+
+    //   // this.getUserList(value.slice(1));
+    //   // console.log('this.userList : ', this.userList);
+    // }
+  }
+
+  getUserList(search: string): void {
+    this.customerService.getProfileList(search).subscribe({
+      next: (res: any) => {
+        if (res?.data?.length > 0) {
+          this.userList = res.data;
+          this.userSearchNgbDropdown.open();
+        } else {
+          this.userList = [];
+          this.userSearchNgbDropdown.close();
+        }
+      },
+      error: () => {
+        this.userList = [];
+        this.userSearchNgbDropdown.close();
+      }
+    });
+  }
+
+  selectTagUser(user: string): void {
+    console.log('user : ', user);
   }
 
   deletePost(post): void {
