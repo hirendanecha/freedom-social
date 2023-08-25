@@ -33,7 +33,7 @@ export class SharedService {
 
   changeDarkUi() {
     this.isDark = true;
-    document.body.classList.toggle('dark-ui');
+    document.body.classList.add('dark-ui');
     localStorage.setItem('theme', 'dark');
   }
 
@@ -41,6 +41,14 @@ export class SharedService {
     this.isDark = false;
     document.body.classList.remove('dark-ui');
     localStorage.setItem('theme', 'light');
+  }
+
+  toggleUi(): void {
+    if (this.isDark) {
+      this.changeLightUi();
+    } else {
+      this.changeDarkUi();
+    }
   }
 
   // getProfilePic() {

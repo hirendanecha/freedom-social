@@ -28,6 +28,10 @@ $spacers: (
     height: $i*4+px;
     min-height: $i*4+px;
   }
+
+  .font-#{$i*4}-px {
+    font-size: $i*4+px;
+  }
 }
 
 

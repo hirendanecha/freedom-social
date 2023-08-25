@@ -219,21 +219,11 @@
       >
         light_mode
       </i>
-      <i
-        class="fa-solid fa-toggle-on"
-        *ngIf="sharedService.isDark"
-        (click)="sharedService.changeLightUi()"
-      ></i>
-      <i
-        class="fa-solid fa-toggle-off"
-        *ngIf="!sharedService.isDark"
-        (click)="sharedService.changeDarkUi()"
-      ></i>
-      <!-- <label class="switch">
-        <input type="checkbox" class="checkbox" />
-        <span class="slider">
-        </span>
-      </label> -->
+
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" [checked]="sharedService.isDark" (change)="sharedService.toggleUi()" >
+      </div>
+
       <i
         class="mat-icon material-symbols-outlined moon icon"
         [ngClass]="isDark ? 'active' : ''"
