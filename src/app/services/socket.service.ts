@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SocketService {
-  public socket: any;
+  public socket: any = io(environment.socketUrl);
 
   constructor() {
     this.socket = io(environment.socketUrl);

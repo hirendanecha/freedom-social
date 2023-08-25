@@ -119,8 +119,8 @@
     box-shadow: var(--box-shadow);
     z-index: 999;
     .abs-area{
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
         background: var(--highlight-color);
         border-radius: 50%;
         color: var(--bs-white);
@@ -138,7 +138,7 @@
             .abs-area{
                 right: initial;
                 top: -4px;
-                left: -4px;
+                left: 40px;
             }
         }
     }

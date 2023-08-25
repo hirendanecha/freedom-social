@@ -20,7 +20,75 @@
               <!-- <span class="mdtxt status">Active</span> -->
             </div>
           </div>
+
           <div class="btn-group cus-dropdown">
+            <div ngbDropdown class="d-inline-block">
+              <button class="dropdown-btn" ngbDropdownToggle>
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <div ngbDropdownMenu class="dropdown-menu">
+                <ng-container *ngIf="profileId != userProfileId">
+                  <button ngbDropdownItem>
+                    <!-- *ngIf="seeFirstList.includes(post?.profileid)" -->
+                    <a class="droplist d-flex alig n-items-center gap-2">
+                      <!-- (click)="removeSeeFirstUser(post?.profileid)" -->
+                      <i class="material-symbols-outlined mat-icon">
+                        visibility
+                      </i>
+                      <span>Stop see First</span>
+                    </a>
+                  </button>
+                  <button ngbDropdownItem>
+                    <!-- *ngIf="!seeFirstList.includes(post.profileid)" -->
+                    <a class="droplist d-flex align-items-center gap-2">
+                      <!-- (click)="seeFirst(post?.profileid)" -->
+                      <i class="material-symbols-outlined mat-icon">
+                        visibility
+                      </i>
+                      <span>See First</span>
+                    </a>
+                  </button>
+                  <button ngbDropdownItem>
+                    <a class="droplist d-flex align-items-center gap-2">
+                      <!-- (click)="unsubscribe(post)" -->
+                      <i class="material-symbols-outlined mat-icon">
+                        person_remove
+                      </i>
+                      <span>Unsubscribe</span>
+                    </a>
+                  </button>
+                  <button ngbDropdownItem>
+                    <!-- (click)="goToViewProfile(post.profileid)" -->
+                    <a class="droplist d-flex align-items-center gap-2">
+                      <i class="material-symbols-outlined mat-icon"> person </i>
+                      <span>View Profile</span>
+                    </a>
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="profileId === userProfileId">
+                  <button ngbDropdownItem>
+                    <a
+                      class="droplist d-flex align-items-center gap-2"
+                      (click)="postId = null"
+                    >
+                      <i class="material-symbols-outlined mat-icon"> edit </i>
+                      <span>Edit</span>
+                    </a>
+                  </button>
+                  <button ngbDropdownItem>
+                    <a
+                      class="droplist d-flex align-items-center gap-2"
+                      (click)="deletePost(post)"
+                    >
+                      <i class="material-symbols-outlined mat-icon"> delete </i>
+                      <span>Delete</span>
+                    </a>
+                  </button>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="btn-group cus-dropdown">
             <button
               type="button"
               class="dropdown-btn"
@@ -78,7 +146,7 @@
                 </li>
               </ng-container>
             </ul>
-          </div>
+          </div> -->
         </div>
         <div class="py-4">
           <p class="post-description" [innerHTML]="post.postdescription"></p>
@@ -128,7 +196,7 @@
           Share
         </button>
       </div>
-      <form action="#">
+      <!-- <form action="#">
         <div class="d-flex mt-5 gap-3">
           <div
             class="form-content input-area py-1 d-flex gap-2 align-items-center w-100"
@@ -165,7 +233,7 @@
             </button>
           </div>
         </div>
-      </form>
+      </form> -->
     </div>
   </ng-container>
 </div>

@@ -21,15 +21,15 @@
     </div>
 
     <div #userSearchDropdownRef ngbDropdown>
-			<div ngbDropdownMenu class="h-300-px w-100 overflow-auto">
+      <div ngbDropdownMenu class="h-300-px w-100 overflow-auto">
         <ng-container *ngFor="let user of userList">
           <div ngbDropdownItem class="d-flex gap-3 pe-auto overflow-hidden" role="button" (click)="selectTagUser(user)" >
             <img class="w-32-px h-32-px rounded" [src]="user.ProfilePicName" [alt]="user.Username" onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';" />
             <div>{{ user.Username }}</div>
           </div>
         </ng-container>
-			</div>
-		</div>
+      </div>
+    </div>
 
     <!-- <div class="abs-area position-absolute d-none d-sm-block">
       <i
@@ -88,8 +88,8 @@
 </div>
 <div class="post-item d-flex flex-column gap-1 mt-1" id="news-feed">
   <ng-container *ngFor="let post of postList">
+    <!-- @slideUp -->
     <div
-      @slideUp
       class="post-single-box p-3 p-sm-5 d-flex gap-3"
       *ngIf="!post?.hide && post?.postdescription"
     >
@@ -117,7 +117,84 @@
           </div>
 
           <div class="btn-group cus-dropdown">
-            <button
+            <div ngbDropdown class="d-inline-block">
+              <button class="dropdown-btn" ngbDropdownToggle>
+                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              </button>
+              <div ngbDropdownMenu class="dropdown-menu">
+                <ng-container *ngIf="profileId != post.profileid">
+                  <button
+                    ngbDropdownItem
+                    *ngIf="seeFirstList.includes(post?.profileid)"
+                  >
+                    <a
+                      class="droplist d-flex alig n-items-center gap-2"
+                      (click)="removeSeeFirstUser(post?.profileid)"
+                    >
+                      <i class="material-symbols-outlined mat-icon">
+                        visibility
+                      </i>
+                      <span>Stop see First</span>
+                    </a>
+                  </button>
+                  <button
+                    ngbDropdownItem
+                    *ngIf="!seeFirstList.includes(post.profileid)"
+                  >
+                    <a
+                      class="droplist d-flex align-items-center gap-2"
+                      (click)="seeFirst(post?.profileid)"
+                    >
+                      <i class="material-symbols-outlined mat-icon">
+                        visibility
+                      </i>
+                      <span>See First</span>
+                    </a>
+                  </button>
+                  <button ngbDropdownItem>
+                    <a
+                      class="droplist d-flex align-items-center gap-2"
+                      (click)="unsubscribe(post)"
+                    >
+                      <i class="material-symbols-outlined mat-icon">
+                        person_remove
+                      </i>
+                      <span>Unsubscribe</span>
+                    </a>
+                  </button>
+                  <button
+                    ngbDropdownItem
+                    (click)="goToViewProfile(post.profileid)"
+                  >
+                    <a class="droplist d-flex align-items-center gap-2">
+                      <i class="material-symbols-outlined mat-icon"> person </i>
+                      <span>View Profile</span>
+                    </a>
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="profileId == post.profileid">
+                  <button ngbDropdownItem>
+                    <a
+                      class="droplist d-flex align-items-center gap-2"
+                      (click)="postId = null"
+                    >
+                      <i class="material-symbols-outlined mat-icon"> edit </i>
+                      <span>Edit</span>
+                    </a>
+                  </button>
+                  <button ngbDropdownItem>
+                    <a
+                      class="droplist d-flex align-items-center gap-2"
+                      (click)="deletePost(post)"
+                    >
+                      <i class="material-symbols-outlined mat-icon"> delete </i>
+                      <span>Delete</span>
+                    </a>
+                  </button>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <button
               type="button"
               class="dropdown-btn"
               (click)="openDropDown(post.id)"
@@ -130,7 +207,18 @@
               (mouseleave)="postId = ''"
             >
               <ng-container *ngIf="profileId != post.profileid">
-                <li>
+                <li *ngIf="seeFirstList.includes(post?.profileid)">
+                  <a
+                    class="droplist d-flex alig n-items-center gap-2"
+                    (click)="removeSeeFirstUser(post?.profileid)"
+                  >
+                    <i class="material-symbols-outlined mat-icon">
+                      visibility
+                    </i>
+                    <span>Stop see First</span>
+                  </a>
+                </li>
+                <li *ngIf="!seeFirstList.includes(post.profileid)">
                   <a
                     class="droplist d-flex align-items-center gap-2"
                     (click)="seeFirst(post?.profileid)"
@@ -179,7 +267,7 @@
                   </a>
                 </li>
               </ng-container>
-            </ul>
+            </ul> -->
           </div>
         </div>
         <p
