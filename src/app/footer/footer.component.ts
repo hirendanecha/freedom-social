@@ -56,6 +56,7 @@ export class FooterComponent {
         size: 'sm',
       }
     );
+    this.sharedService.getNotificationList();
   }
 
   openMessageList(): void {
@@ -121,5 +122,10 @@ export class FooterComponent {
     // modelRef.result.then(res => {
     //   return res = user_id
     // });
+  }
+
+  viewUserProfile(profileId) {
+    this.router.navigate([`settings/general/view-profile/${profileId}`]);
+    this.userMenusOverlayDialog.close();
   }
 }

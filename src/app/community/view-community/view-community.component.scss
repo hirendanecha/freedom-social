@@ -62,6 +62,13 @@
 }
 .post-item {
   .post-single-box {
+    .top-area {
+      .dropdown-toggle {
+        &::after {
+          display: none;
+        }
+      }
+    }
     .post-profile {
       max-width: 48px;
       height: 100%;

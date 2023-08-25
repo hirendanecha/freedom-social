@@ -696,7 +696,8 @@ li {
     box-shadow: var(--box-shadow);
     border-radius: 10px;
     width: max-content;
-    right: 0;
+    inset: 25px 0px auto auto !important;
+    transform: unset !important;
     cursor: pointer;
     span,
     button {
@@ -716,6 +717,12 @@ li {
     }
     i {
       font-weight: 300;
+    }
+    .dropdown-item {
+      &:hover {
+        background-color: transparent;
+        color: var(--primary-color);
+      }
     }
   }
 }

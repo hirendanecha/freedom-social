@@ -47,13 +47,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   activePage = 1;
   postId = '';
   profileId = '';
-
   isOpen = false;
   userList = [];
   userNameSearch = '';
-
-  @ViewChild('userSearchDropdownRef', { static:false, read: NgbDropdown }) userSearchNgbDropdown: NgbDropdown;
-
+  @ViewChild('userSearchDropdownRef', { static: false, read: NgbDropdown })
+  userSearchNgbDropdown: NgbDropdown;
+  seeFirstList: any = [];
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -72,7 +71,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.getPostList();
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    console.log(this.socketService.socket);
+    if (!this.socketService.socket.connected) {
+      this.socketService.socket.connect();
+    }
+    console.log(this.socketService.socket);
+
+    this.socketService.socket.emit('join', { room: this.profileId });
+    this.socketService.socket.on('notification', (data) => {
+      console.log('notification data ==>', data);
+      this.sharedService.isNotify = true;
+    });
+  }
 
   addPost() {
     const modalRef = this.modalService.open(PostComponent, {
@@ -130,6 +141,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     const data = {
       postId: post.id,
       profileId: this.profileId,
+      toProfileId: Number(post.profileid),
       likeCount: post.likescount,
       actionType: 'L',
     };
@@ -210,26 +222,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.socketService.likeFeedPost(data, (res) => {
       console.log(res);
     });
-    this.socketService.socket.on(
-      'new-post',
-      (data) => {
-        this.spinner.hide();
-        this.postList = data;
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+    // this.socketService.socket.on(
+    //   'new-post',
+    //   (data) => {
+    //     this.spinner.hide();
+    //     this.postList = data;
+    //   },
+    //   (error) => {
+    //     this.spinner.hide();
+    //     console.log(error);
+    //   }
+    // );
   }
 
   openDropDown(id) {
     this.postId = id;
-    if (this.postId) {
-      this.isExpand = true;
-    } else {
-      this.isExpand = false;
-    }
+    // if (this.postId) {
+    //   this.isExpand = true;
+    // } else {
+    //   this.isExpand = false;
+    // }
   }
 
   addEmoji(event: { emoji: { native: any } }) {
@@ -289,6 +301,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         console.log(error);
       }
     );
+    this.getSeeFirstIdByProfileId(this.profileId);
   }
 
   createPost(): void {
@@ -344,6 +357,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: (res) => {
           console.log('Res : ', res);
+          this.getPostList();
         },
       });
 
@@ -428,7 +442,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   messageOnKeyEvent(event: any): void {
     const text = event.target.value;
-    const atSymbolIndex = text.lastIndexOf("@");
+    const atSymbolIndex = text.lastIndexOf('@');
     console.log('atSymbolIndex : ', atSymbolIndex);
 
     if (atSymbolIndex !== -1) {
@@ -469,7 +483,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       error: () => {
         this.userList = [];
         this.userSearchNgbDropdown.close();
-      }
+      },
     });
   }
 
@@ -505,5 +519,43 @@ export class HomeComponent implements OnInit, AfterViewInit {
         );
       }
     });
+  }
+
+  // getUserList(): void {
+  //   this.customerService.getProfileList(this.message).subscribe(
+  //     (res: any) => {
+  //       if (res) {
+  //         this.userList = res.data;
+  //       }
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
+
+  removeSeeFirstUser(id: number): void {
+    this.seeFirstUserService.remove(Number(this.profileId), id).subscribe({
+      next: (res) => {
+        this.getPostList();
+      },
+    });
+    this.postId = null;
+  }
+
+  getSeeFirstIdByProfileId(id): void {
+    this.seeFirstUserService.getSeeFirstIdByProfileId(id).subscribe(
+      (res: any) => {
+        if (res) {
+          res.forEach((element) => {
+            this.seeFirstList.push(element.SeeFirstProfileId);
+          });
+          console.log(this.seeFirstList);
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
