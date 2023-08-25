@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { debounceTime, fromEvent } from 'rxjs';
@@ -59,14 +59,16 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   getCustomer(id): void {
-    this.customerService.getCustomer(id).subscribe(
-      (data: any) => {
-        this.customer = data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    if (id) {
+      this.customerService.getCustomer(id).subscribe(
+        (data: any) => {
+          this.customer = data;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
 
   selectFiles(event) {
@@ -96,6 +98,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   save() {
     this.spinner.show();
+    console.log(this.registerForm.value);
     this.customerService.createCustomer(this.customer).subscribe(
       (data: any) => {
         if (!data.error) {

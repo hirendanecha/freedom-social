@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PostComponent } from '../home/poast-modal/post.component';
 import { LiveComponent } from '../live-modal/live.component';
@@ -11,6 +17,7 @@ import { CreatePostComponent } from './create-post-modal/create-post.component';
 import { Router } from '@angular/router';
 import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
 import { slideUp } from '../animations/slideUp';
+import { SeeFirstUserService } from '../services/see-first-user.service';
 
 @Component({
   selector: 'app-favorite',
@@ -18,7 +25,7 @@ import { slideUp } from '../animations/slideUp';
   styleUrls: ['./favorite.component.scss'],
   animations: [slideUp],
 })
-export class FavoriteComponent implements OnInit {
+export class FavoriteComponent implements OnInit, AfterViewInit {
   message = '';
   showEmojiPicker = false;
   sets = [
@@ -40,6 +47,7 @@ export class FavoriteComponent implements OnInit {
   postData: any = {};
   profileId = '';
   communityId = '';
+  seeFirstList: any = [];
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -47,7 +55,9 @@ export class FavoriteComponent implements OnInit {
     private socketService: SocketService,
     private communityPostService: CommunityPostService,
     private postService: PostService,
-    private router: Router
+    private router: Router,
+    private seeFirstUserService: SeeFirstUserService,
+    private unsubscribeProfileService: SeeFirstUserService
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.communityId = sessionStorage.getItem('communityId');
@@ -57,6 +67,20 @@ export class FavoriteComponent implements OnInit {
     this.getPostList();
     // this.sharedService.getProfilePic();
     this.sharedService.getUserDetails();
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.socketService.socket);
+    if (!this.socketService.socket.connected) {
+      this.socketService.socket.connect();
+    }
+    console.log(this.socketService.socket);
+
+    this.socketService.socket.emit('join', { room: this.profileId });
+    this.socketService.socket.on('notification', (data) => {
+      console.log('notification data ==>', data);
+      this.sharedService.isNotify = true;
+    });
   }
 
   addPost() {
@@ -315,6 +339,7 @@ export class FavoriteComponent implements OnInit {
     const data = {
       communityPostId: post.Id,
       profileId: this.profileId,
+      toProfileId: Number(post.profileId),
       likeCount: post.likescount,
       actionType: 'L',
     };
@@ -406,5 +431,60 @@ export class FavoriteComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  getSeeFirstIdByProfileId(id): void {
+    // this.seeFirstUserService.getSeeFirstIdByProfileId(id).subscribe(
+    //   (res: any) => {
+    //     if (res) {
+    //       res.forEach((element) => {
+    //         this.seeFirstList.push(element.SeeFirstProfileId);
+    //       });
+    //       console.log(this.seeFirstList);
+    //     }
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
+  }
+
+  removeSeeFirstUser(id: number): void {
+    // this.seeFirstUserService.remove(Number(this.profileId), id).subscribe({
+    //   next: (res) => {
+    //     this.getPostList();
+    //   },
+    // });
+    this.postId = null;
+  }
+
+  unsubscribe(post: any): void {
+    // post['hide'] = true;
+
+    // this.unsubscribeProfileService
+    //   .create({
+    //     profileId: this.profileId,
+    //     unsubscribeProfileId: post?.profileid,
+    //   })
+    //   .subscribe({
+    //     next: (res) => {
+    //       console.log('Res : ', res);
+    //     },
+    //   });
+
+    this.postId = null;
+  }
+
+  seeFirst(postProfileId: number): void {
+    // this.seeFirstUserService
+    //   .create({ profileId: this.profileId, seeFirstProfileId: postProfileId })
+    //   .subscribe({
+    //     next: (res) => {
+    //       console.log('Res : ', res);
+    //       this.getPostList();
+    //     },
+    //   });
+
+    this.postId = null;
   }
 }

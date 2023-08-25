@@ -1,6 +1,7 @@
 import { Component, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
 import {
   NgbActiveModal,
+  NgbDropdown,
   NgbModal,
   NgbModalRef,
 } from '@ng-bootstrap/ng-bootstrap';
@@ -29,6 +30,8 @@ export class HeaderComponent {
   @ViewChild('messageList') messageList:
     | EventEmitter<NgbModalRef[]>
     | undefined;
+  @ViewChild('userSearchDropdownRef', { static: false, read: NgbDropdown })
+  userSearchNgbDropdown: NgbDropdown;
   isOpenUserMenu = false;
   userMenusOverlayDialog: any;
   userMenus = [];
@@ -36,6 +39,7 @@ export class HeaderComponent {
   isDark = false;
   userList: any = [];
   searchText = '';
+
   constructor(
     private modaleService: NgbModal,
     public activeteModal: NgbActiveModal,
@@ -64,6 +68,7 @@ export class HeaderComponent {
         modalDialogClass: 'user-menu-panale',
       }
     );
+    this.sharedService.getNotificationList();
   }
 
   openMessageList(): void {
@@ -132,22 +137,32 @@ export class HeaderComponent {
   }
 
   getUserList(): void {
-    this.customerService.getProfileList(this.searchText).subscribe(
-      (res: any) => {
-        if (res) {
+    this.customerService.getProfileList(this.searchText).subscribe({
+      next: (res: any) => {
+        if (res?.data?.length > 0) {
           this.userList = res.data;
+          this.userSearchNgbDropdown.open();
+        } else {
+          this.userList = [];
+          this.userSearchNgbDropdown.close();
         }
       },
-      (error) => {
-        console.log(error);
-      }
-    );
+      error: () => {
+        this.userList = [];
+        this.userSearchNgbDropdown.close();
+      },
+    });
   }
 
   openProfile(id) {
     if (id) {
-      this.router.navigate([`settings/view-profile/${id}`]);
+      this.router.navigate([`settings/general/view-profile/${id}`]);
       this.searchText = '';
     }
+  }
+
+  viewUserProfile(profileId) {
+    this.router.navigate([`settings/general/view-profile/${profileId}`]);
+    this.userMenusOverlayDialog.close();
   }
 }

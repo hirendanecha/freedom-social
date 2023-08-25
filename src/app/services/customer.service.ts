@@ -63,4 +63,8 @@ export class CustomerService {
       `${this.baseUrl}/search-user?searchText=${searchText}`
     );
   }
+
+  getNotificationList(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/get-notification/${id}`);
+  }
 }

@@ -16,11 +16,21 @@ export class SeeFirstUserService {
     return this.http.post(`${this.baseUrl}/create`, data);
   }
 
-  remove(id: number): Observable<Object> {
-    return this.http.delete(`${this.baseUrl}/remove/${id}`);
+  remove(id: number, seeFirstProfileId = null): Observable<Object> {
+    return this.http.delete(
+      `${this.baseUrl}/remove/${id}${
+        seeFirstProfileId ? '/' + seeFirstProfileId : ''
+      }`
+    );
   }
 
   getByProfileId(profileId: number) {
     return this.http.get(`${this.baseUrl}/getByProfileId/${profileId}`);
+  }
+
+  getSeeFirstIdByProfileId(profileId: number) {
+    return this.http.get(
+      `${this.baseUrl}/getSeeFirstIdByProfileId/${profileId}`
+    );
   }
 }

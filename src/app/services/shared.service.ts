@@ -14,6 +14,8 @@ export class SharedService {
   profilePic = '';
   coverPic = '';
   userData: any = {};
+  notificationList: any = [];
+  isNotify = false;
   constructor(
     // private http: HttpClient,
     // private router: Router,
@@ -100,5 +102,19 @@ export class SharedService {
         }
       );
     }
+  }
+
+  getNotificationList() {
+    const id = sessionStorage.getItem('profileId');
+    this.customerService.getNotificationList(Number(id)).subscribe(
+      (res: any) => {
+        this.isNotify = false;
+        console.log(res);
+        this.notificationList = res?.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

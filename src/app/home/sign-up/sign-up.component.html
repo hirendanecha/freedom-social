@@ -26,8 +26,9 @@
                 id="loginForm"
                 class="form-dark"
                 ngNativeValidate
+                #signInForm="ngForm"
                 autocomplete="off"
-                (ngSubmit)="onSubmit()"
+                (ngSubmit)="signInForm.form.valid && onSubmit()"
               >
                 <div
                   class="alert alert-{{ type }}"
@@ -38,7 +39,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">First Name</label>
+                    <label class="form-label text-light">First Name<span>*</span></label>
                     <input
                       type="text"
                       class="input-area"
@@ -48,7 +49,7 @@
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Last Name</label>
+                    <label class="form-label text-light">Last Name<span>*</span></label>
                     <input
                       type="text"
                       class="input-area"
@@ -60,7 +61,9 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">User Name</label>
+                    <label class="form-label text-light"
+                      >User Name<span class="text-danger">*</span></label
+                    >
                     <input
                       type="text"
                       class="input-area"
@@ -71,7 +74,9 @@
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Email Address</label>
+                    <label class="form-label text-light"
+                      >Email Address<span class="text-danger">*</span></label
+                    >
                     <input
                       type="email"
                       name="id"
@@ -84,7 +89,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Password</label>
+                    <label class="form-label text-light">Password<span class="text-danger">*</span></label>
                     <input
                       type="password"
                       class="input-area"
@@ -115,7 +120,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 mb-3">
-                    <label class="form-label text-light">Profile Picture</label>
+                    <label class="form-label text-light">Profile Picture<span>*</span></label>
                     <input
                       type="file"
                       name="logo"
@@ -135,7 +140,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Mobile</label>
+                    <label class="form-label text-light">Mobile<span>*</span></label>
                     <input
                       type="text"
                       class="input-area"
@@ -145,7 +150,7 @@
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Country</label>
+                    <label class="form-label text-light">Country<span class="text-danger">*</span></label>
                     <select
                       id="country"
                       required
@@ -166,7 +171,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Address</label>
+                    <label class="form-label text-light">Address<span>*</span></label>
                     <input
                       type="text"
                       class="input-area"
@@ -176,7 +181,7 @@
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Zip Code</label>
+                    <label class="form-label text-light">Zip Code<span class="text-danger">*</span></label>
                     <input
                       type="text"
                       class="input-area"
@@ -191,7 +196,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">State</label>
+                    <label class="form-label text-light">State<span>*</span></label>
                     <input
                       type="text"
                       class="input-area"
@@ -203,7 +208,7 @@
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">City</label>
+                    <label class="form-label text-light">City<span>*</span></label>
                     <input
                       type="text"
                       class="input-area"
@@ -216,8 +221,8 @@
                   </div>
                 </div>
 
-                <div class="form-check my-4 d-flex">
-                  <input class="form-check-input p-0" type="checkbox" />
+                <div class="form-check ps-0 my-4 d-flex">
+                  <input class="p-0" type="checkbox" />
                   <label class="form-check-label ms-2"
                     >I agree to the <a>Terms</a> and
                     <a>Privacy Policy</a>.</label
