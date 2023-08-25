@@ -1,8 +1,10 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   OnInit,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import { NgbDropdown, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -53,6 +55,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   userNameSearch = '';
 
   @ViewChild('userSearchDropdownRef', { static:false, read: NgbDropdown }) userSearchNgbDropdown: NgbDropdown;
+  @ViewChild('postMessageInput', { static: false }) postMessageInput: ElementRef;
 
   constructor(
     private modalService: NgbModal,
@@ -63,7 +66,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private socketService: SocketService,
     private unsubscribeProfileService: UnsubscribeProfileService,
     private seeFirstUserService: SeeFirstUserService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private renderer: Renderer2
   ) {
     this.profileId = sessionStorage.getItem('profileId');
   }
@@ -426,23 +430,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  messageOnKeyEvent(event: any): void {
-    const text = event.target.value;
+  messageOnKeyEvent(): void {
+    const text = this.postMessageInput.nativeElement.innerHTML;
     const atSymbolIndex = text.lastIndexOf("@");
-    console.log('atSymbolIndex : ', atSymbolIndex);
 
     if (atSymbolIndex !== -1) {
-      const query = text.substring(atSymbolIndex + 1);
+      this.userNameSearch = text.substring(atSymbolIndex + 1);
+      console.log('userNameSearch : ', this.userNameSearch);
 
-      if (query) {
-        this.getUserList(query);
+      if (this.userNameSearch?.length > 2) {
+        this.getUserList(this.userNameSearch);
       } else {
-        this.userList = [];
-        this.userSearchNgbDropdown.close();
+        this.clearUserSearchData();
       }
     } else {
-      this.userList = [];
-      this.userSearchNgbDropdown.close();
+      this.clearUserSearchData();
     }
 
     // if (lastChar === '@' || this.userNameSearch) {
@@ -462,19 +464,38 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.userList = res.data;
           this.userSearchNgbDropdown.open();
         } else {
-          this.userList = [];
-          this.userSearchNgbDropdown.close();
+          this.clearUserSearchData();
         }
       },
       error: () => {
-        this.userList = [];
-        this.userSearchNgbDropdown.close();
+        this.clearUserSearchData();
       }
     });
   }
 
-  selectTagUser(user: string): void {
+  clearUserSearchData(): void {
+    this.userNameSearch = '';
+    this.userList = [];
+    this.userSearchNgbDropdown.close();
+  }
+
+  selectTagUser(user: any): void {
+    // const span = this.renderer.createElement('span');
+    // this.renderer.addClass(span, 'fw-bold');
+    // this.renderer.addClass(span, 'text-primary');
+    // this.renderer.setProperty(span, 'innerHTML', user?.Username);
+    const postHtml = this.postMessageInput.nativeElement.innerHTML;
+
+    this.renderer.setProperty(
+      this.postMessageInput.nativeElement,
+      'innerHTML',
+      postHtml.replace(`@${this.userNameSearch}`, `<a #username href="javascript:void(0)" class="fw-bold text-warning" (keyup)="removeTagUser(username)">@${user?.Username}</a>`)
+    );
     console.log('user : ', user);
+  }
+
+  removeTagUser(nameRef: any): void {
+    console.log('NameRef : ', nameRef);
   }
 
   deletePost(post): void {

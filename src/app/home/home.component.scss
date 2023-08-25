@@ -96,3 +96,22 @@
     }
   }
 }
+
+
+.share-post {
+  .post-message-input {
+    min-height: 56px;
+
+    &[placeholder]:empty {
+      &:before {
+        content: attr(placeholder);
+        color: #697495;
+      }
+      &:focus {
+        &:before {
+          content: "";
+        }
+      }
+    }
+  }
+}
