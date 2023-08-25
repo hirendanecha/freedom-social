@@ -29,3 +29,10 @@ $spacers: (
     min-height: $i*4+px;
   }
 }
+
+
+@each $val in (0, 90, 180, 270) {
+  .rotate-#{$val} {
+    transform: rotate(#{$val}deg);
+  }
+}
