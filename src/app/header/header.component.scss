@@ -69,10 +69,14 @@
   }
 
   .switch-wrapper {
-    .fa-solid {
-      font-size: 28px;
-      color: var(--primary-color);
-      height: 26px;
+    .form-switch {
+      margin-bottom: 0px;
+
+      .form-check-input {
+        width: 3rem;
+        padding: 12px;
+        margin-top: 0px;
+      }
     }
   }
 

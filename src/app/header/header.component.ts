@@ -74,18 +74,6 @@ export class HeaderComponent {
     });
   }
 
-  changeDarkUi() {
-    this.isDark = true;
-    document.body.classList.toggle('dark-ui');
-    localStorage.setItem('theme', 'dark');
-  }
-
-  changeLightUi() {
-    this.isDark = false;
-    document.body.classList.remove('dark-ui');
-    localStorage.setItem('theme', 'light');
-  }
-
   closeMenu(e: MouseEvent, type: string) {
     if (e && type) {
       e.preventDefault();

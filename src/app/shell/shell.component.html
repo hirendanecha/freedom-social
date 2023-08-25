@@ -38,11 +38,13 @@
   </div>
   <ng-container *ngIf="showButton">
     <button
-      class="scrollToTop d-none d-lg-block"
+      class="scrollToTop d-none d-lg-flex justify-content-center align-items-center"
       (click)="scrollToTop()"
       [ngClass]="showButton ? 'active' : ''"
     >
-      <i class="mat-icon fas fa-angle-double-up"></i>
+      <span class="material-symbols-outlined rotate-90">
+        keyboard_double_arrow_left
+      </span>
     </button>
   </ng-container>
 </div>
