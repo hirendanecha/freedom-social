@@ -15,8 +15,6 @@
       contenteditable
       placeholder="Write something to post.."
       class="post-message-input input-area"
-      (input)="message = $event.target?.['textContent']"
-      (change)="getLinkData(message)"
       (keyup)="messageOnKeyEvent()">
     </div>
 
@@ -77,7 +75,7 @@
       <div class="btn-area d-flex d-lg-block d-md-block">
         <button
           class="cmn-btn p-2 px-2 px-sm-5 px-lg-6"
-          [disabled]="!message"
+          [disabled]="!postData?.postdescription"
           (click)="createPost()"
         >
           Post

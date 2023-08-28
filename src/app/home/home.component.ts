@@ -31,7 +31,6 @@ import { ToastService } from '../services/toaster.service';
 export class HomeComponent implements OnInit, AfterViewInit {
   isLike = false;
   isExpand = false;
-  message = '';
   showEmojiPicker = false;
   sets = [
     'native',
@@ -43,7 +42,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     'apple',
   ];
   postList: any = [];
-  postData: any = {};
+  postData: any = {
+    profileId: '',
+    postdescription: '',
+    meta: {},
+    tags: [],
+  };
   @ViewChild('emojiMenu') emojiMenu: EventEmitter<NgbModalRef[]> | undefined;
   emojiMenuDialog: any;
   isSubmitted = false;
@@ -73,6 +77,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private toaster: ToastService
   ) {
     this.profileId = sessionStorage.getItem('profileId');
+    this.postData.profileId = this.profileId;
   }
 
   ngOnInit(): void {
@@ -85,7 +90,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.socketService.socket.connect();
     }
     this.socketService.socket.emit('join', { room: this.profileId });
-    this.socketService.socket.on('notification', (data) => {
+    this.socketService.socket.on('notification', (data: any) => {
       console.log('notification data ==>', data);
       this.sharedService.isNotify = true;
     });
@@ -111,7 +116,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.socketService.createPost(this.postService.postData, (data) => {
             return data;
           });
-          this.socketService.socket.on('create-new-post', (data) => {
+          this.socketService.socket.on('create-new-post', (data: any) => {
             this.postList.push(data);
             this.getPostList();
           });
@@ -140,7 +145,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  reactLikeOnPost(post) {
+  reactLikeOnPost(post: { likescount: number; totalReactCount: number; react: string; id: any; profileid: any; }) {
     post.likescount = post.likescount + 1;
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'L';
@@ -153,7 +158,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
     this.likeDisLikePost(data);
   }
-  reactLoveOnPost(post) {
+  reactLoveOnPost(post: { lovecount: number; totalReactCount: number; react: string; id: any; }) {
     post.lovecount = post.lovecount + 1;
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'LO';
@@ -165,7 +170,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
     this.likeDisLikePost(data);
   }
-  reactWowOnPost(post) {
+  reactWowOnPost(post: { wowcount: number; totalReactCount: number; react: string; id: any; }) {
     post.wowcount = post.wowcount + 1;
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'WO';
@@ -177,7 +182,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
     this.likeDisLikePost(data);
   }
-  reactHaliriousOnPost(post) {
+  reactHaliriousOnPost(post: { haliriouscount: number; totalReactCount: number; react: string; id: any; }) {
     post.haliriouscount = post.haliriouscount + 1;
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'HA';
@@ -189,7 +194,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
     this.likeDisLikePost(data);
   }
-  reactSadOnPost(post) {
+  reactSadOnPost(post: { sadcount: number; totalReactCount: number; react: string; id: any; }) {
     post.sadcount = post.sadcount + 1;
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'SA';
@@ -202,7 +207,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.likeDisLikePost(data);
   }
 
-  dislikeFeedPost(post) {
+  dislikeFeedPost(post: { react: string; likescount: number; lovecount: number; haliriouscount: number; wowcount: number; sadcount: number; totalReactCount: number; id: any; }) {
     if (post.react == 'L') {
       post.likescount = post.likescount - 1;
     } else if (post.react == 'LO') {
@@ -224,7 +229,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.likeDisLikePost(data);
   }
 
-  likeDisLikePost(data): void {
+  likeDisLikePost(data: { postId: any; profileId: string; toProfileId?: number; likeCount: any; actionType?: string; }): void {
     this.socketService.likeFeedPost(data, (res) => {
       console.log(res);
     });
@@ -241,7 +246,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // );
   }
 
-  openDropDown(id) {
+  openDropDown(id: string) {
     this.postId = id;
     // if (this.postId) {
     //   this.isExpand = true;
@@ -251,9 +256,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   addEmoji(event: { emoji: { native: any } }) {
-    const { message } = this;
-    const text = `${message}${event.emoji.native}`;
-    this.message = text;
+    // const { message } = this;
+    // const text = `${message}${event.emoji.native}`;
+    // this.message = text;
   }
 
   openMenuList() {
@@ -289,7 +294,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // );
     this.socketService.socket.on(
       'new-post',
-      (data) => {
+      (data: any) => {
         this.spinner.hide();
         this.postList = data;
         this.postList.map((ele: any) => {
@@ -302,29 +307,45 @@ export class HomeComponent implements OnInit, AfterViewInit {
           return ele;
         });
       },
-      (error) => {
+      (error: any) => {
         this.spinner.hide();
         console.log(error);
       }
     );
-    this.getSeeFirstIdByProfileId(this.profileId);
+    this.getSeeFirstIdByProfileId(+this.profileId);
   }
 
   createPost(): void {
-    if (this.postData) {
-      this.message = '';
+    const anchorTags = this.postMessageInput?.nativeElement?.children;
+
+    this.postData.tags = [];
+    for (const key in anchorTags) {
+      if (Object.prototype.hasOwnProperty.call(anchorTags, key)) {
+        const tag = anchorTags[key];
+
+        this.postData.tags.push({ id: tag?.getAttribute('data-id'), name: tag?.innerHTML });
+      }
+    }
+
+    console.log('this.postData : ', this.postData);
+
+    if (this.postData?.postdescription) {
       this.spinner.show();
       this.socketService.createPost(this.postData, (data) => {
         return data;
       });
+
+      this.clearUserSearchData();
+      this.renderer.setProperty(this.postMessageInput.nativeElement, 'innerHTML', '');
+
       this.socketService.socket.on(
         'create-new-post',
-        (res) => {
+        (res: any) => {
           this.postList.push(res);
           this.spinner.hide();
           this.getPostList();
         },
-        (error) => {
+        (error: any) => {
           this.spinner.hide();
           console.log(error);
         }
@@ -339,7 +360,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       (res: any) => {
         if (res) {
           this.spinner.hide();
-          res.data.forEach((element) => {
+          res.data.forEach((element: { totalReactCount: any; likescount: any; wowcount: any; haliriouscount: any; lovecount: any; sadcount: any; }) => {
             element.totalReactCount =
               element.likescount +
               element.wowcount +
@@ -392,61 +413,96 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.postId = null;
   }
 
-  getLinkData(des: any): void {
+  getLinkData(): void {
+    const postHtml = this.postMessageInput.nativeElement.innerHTML;
+    const matches = postHtml.match(/(((https?:\/\/)|(www\.))[^\s]+)/gi);
+    console.log('matches : ', matches);
+
+    if (matches?.length > 0) {
+      const url = matches[0];
+
+      if (!this.postData?.meta?.url?.includes(url)) {
+        this.spinner.show();
+        this.postService.getMetaData({ url }).subscribe({
+          next: (res: any) => {
+            if (res?.meta?.image) {
+              this.postData.meta = {
+                title: res?.meta?.title,
+                metadescription: res?.meta?.description,
+                metaimage: res.meta?.image?.url,
+                metalink: res?.meta?.url || url,
+                url: url
+              };
+            }
+
+            this.spinner.hide();
+          },
+          error: () => {
+            this.spinner.hide();
+          }
+        });
+      }
+    }
+
+
     // const defaultValue = des.split('http')[0];
     // console.log(defaultValue);
-    const value = des.split(' ');
-    console.log(value);
-    value.forEach((element) => {
-      if (
-        element.includes('http://') ||
-        element.includes('https://') ||
-        element.includes('www.')
-      ) {
-        this.spinner.show();
-        this.postService.getMetaData({ url: element }).subscribe(
-          (res: any) => {
-            if (res.meta.image) {
-              this.spinner.hide();
-              this.postData = {
-                metaimage: res.meta?.image?.url,
-                metalink: res?.meta?.url || element,
-                postdescription: des.split('http')[0],
-                metadescription: res?.meta?.description,
-                title: res?.meta?.title,
-                profileId: this.profileId,
-              };
-              return this.postData;
-            } else {
-              this.spinner.hide();
-              this.postData = {
-                profileId: this.profileId,
-                postdescription: des,
-              };
-              return this.postData;
-            }
-          },
-          (error) => {
-            this.spinner.hide();
-            this.postData = {
-              profileId: this.profileId,
-              postdescription: des,
-            };
-            return this.postData;
-          }
-        );
-      } else {
-        this.spinner.hide();
-        this.postData = {
-          profileId: this.profileId,
-          postdescription: des,
-        };
-        return this.postData;
-      }
-    });
+
+    // const value = des.split(' ');
+    // console.log('des : ', des);
+    // console.log(value);
+    // value.forEach((element) => {
+    //   if (
+    //     element.includes('http://') ||
+    //     element.includes('https://') ||
+    //     element.includes('www.')
+    //   ) {
+    //     this.spinner.show();
+    //     this.postService.getMetaData({ url: element }).subscribe(
+    //       (res: any) => {
+    //         if (res.meta.image) {
+    //           this.spinner.hide();
+    //           this.postData = {
+    //             metaimage: res.meta?.image?.url,
+    //             metalink: res?.meta?.url || element,
+    //             postdescription: des.split('http')[0],
+    //             metadescription: res?.meta?.description,
+    //             title: res?.meta?.title,
+    //             profileId: this.profileId,
+    //           };
+    //           return this.postData;
+    //         } else {
+    //           this.spinner.hide();
+    //           this.postData = {
+    //             profileId: this.profileId,
+    //             postdescription: des,
+    //           };
+    //           return this.postData;
+    //         }
+    //       },
+    //       (error) => {
+    //         this.spinner.hide();
+    //         this.postData = {
+    //           profileId: this.profileId,
+    //           postdescription: des,
+    //         };
+    //         return this.postData;
+    //       }
+    //     );
+    //   } else {
+    //     this.spinner.hide();
+    //     this.postData = {
+    //       profileId: this.profileId,
+    //       postdescription: des,
+    //     };
+    //     return this.postData;
+    //   }
+    // });
   }
 
   messageOnKeyEvent(): void {
+    this.getLinkData();
+
     const text = this.postMessageInput.nativeElement.innerHTML;
     const atSymbolIndex = text.lastIndexOf("@");
 
@@ -462,6 +518,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     } else {
       this.clearUserSearchData();
     }
+
+    this.postData.postdescription = text;
 
     // if (lastChar === '@' || this.userNameSearch) {
     //   this.userNameSearch += lastChar;
@@ -496,25 +554,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   selectTagUser(user: any): void {
-    // const span = this.renderer.createElement('span');
-    // this.renderer.addClass(span, 'fw-bold');
-    // this.renderer.addClass(span, 'text-primary');
-    // this.renderer.setProperty(span, 'innerHTML', user?.Username);
     const postHtml = this.postMessageInput.nativeElement.innerHTML;
+    const text = postHtml.replace(` @${this.userNameSearch}`, ` <a href="/settings/general/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a> `)
+    console.log('postHtml : ', postHtml);
 
-    this.renderer.setProperty(
-      this.postMessageInput.nativeElement,
-      'innerHTML',
-      postHtml.replace(`@${this.userNameSearch}`, `<a #username href="javascript:void(0)" class="fw-bold text-warning" (keyup)="removeTagUser(username)">@${user?.Username}</a>`)
-    );
-    console.log('user : ', user);
+    this.renderer.setProperty(this.postMessageInput.nativeElement, 'innerHTML', text);
+
+    this.postData.postdescription = text;
   }
 
   removeTagUser(nameRef: any): void {
     console.log('NameRef : ', nameRef);
   }
 
-  deletePost(post): void {
+  deletePost(post: { id: any; }): void {
     this.postId = null;
     console.log(post.id);
     const modalRef = this.modalService.open(DeletePostComponent, {
@@ -567,11 +620,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.postId = null;
   }
 
-  getSeeFirstIdByProfileId(id): void {
+  getSeeFirstIdByProfileId(id: number): void {
     this.seeFirstUserService.getSeeFirstIdByProfileId(id).subscribe(
       (res: any) => {
         if (res) {
-          res.forEach((element) => {
+          res.forEach((element: { SeeFirstProfileId: any; }) => {
             this.seeFirstList.push(element.SeeFirstProfileId);
           });
           console.log(this.seeFirstList);
