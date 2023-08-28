@@ -82,8 +82,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (!this.socketService.socket.connected) {
       this.socketService.socket.connect();
     }
-    console.log(this.socketService.socket);
-
     this.socketService.socket.emit('join', { room: this.profileId });
     this.socketService.socket.on('notification', (data) => {
       console.log('notification data ==>', data);
