@@ -626,6 +626,15 @@ li {
   z-index: 0;
   border-radius: 10px;
   transition: 0.3s;
+
+  &:disabled {
+    background-color: var(--box-1st-color);
+
+    &:hover {
+      background-color: var(--box-1st-color);
+    }
+  }
+
   i,
   span {
     color: var(--bs-white);
