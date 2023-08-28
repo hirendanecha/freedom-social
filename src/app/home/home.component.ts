@@ -19,6 +19,7 @@ import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.c
 import { UnsubscribeProfileService } from '../services/unsubscribe-profile.service';
 import { SeeFirstUserService } from '../services/see-first-user.service';
 import { CustomerService } from '../services/customer.service';
+import { ToastService } from '../services/toaster.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -62,7 +63,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private socketService: SocketService,
     private unsubscribeProfileService: UnsubscribeProfileService,
     private seeFirstUserService: SeeFirstUserService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private toaster: ToastService
   ) {
     this.profileId = sessionStorage.getItem('profileId');
   }
@@ -507,6 +509,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.postService.deletePost(post.id).subscribe(
           (res: any) => {
             if (res) {
+              this.toaster.success(res.message);
               this.spinner.hide();
               this.getPostList();
             }

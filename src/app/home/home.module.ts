@@ -5,7 +5,6 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { ToastsContainer } from '../services/toast-container.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { PostComponent } from './poast-modal/post.component';
 import { SharedModule } from '../@shared/shared.module';
@@ -20,6 +19,6 @@ import { SharedModule } from '../@shared/shared.module';
     PostComponent,
   ],
   exports: [LoginComponent, SignUpComponent, ResetPasswordComponent],
-  imports: [HomeRoutingModule, PickerModule, ToastsContainer, SharedModule],
+  imports: [HomeRoutingModule, PickerModule, SharedModule],
 })
 export class HomeModule {}

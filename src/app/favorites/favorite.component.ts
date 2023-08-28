@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
 import { slideUp } from '../animations/slideUp';
 import { SeeFirstUserService } from '../services/see-first-user.service';
+import { ToastService } from '../services/toaster.service';
 
 @Component({
   selector: 'app-favorite',
@@ -56,8 +57,7 @@ export class FavoriteComponent implements OnInit, AfterViewInit {
     private communityPostService: CommunityPostService,
     private postService: PostService,
     private router: Router,
-    private seeFirstUserService: SeeFirstUserService,
-    private unsubscribeProfileService: SeeFirstUserService
+    private toaster: ToastService
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.communityId = sessionStorage.getItem('communityId');
@@ -321,6 +321,7 @@ export class FavoriteComponent implements OnInit, AfterViewInit {
           (res: any) => {
             if (res) {
               this.spinner.hide();
+              this.toaster.success(res.message);
               this.getPostList();
             }
           },

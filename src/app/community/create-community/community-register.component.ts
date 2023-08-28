@@ -19,6 +19,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 import { ToastService } from 'src/app/services/toaster.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UploadFilesService } from 'src/app/services/upload-files.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-community-register',
   templateUrl: './community-register.component.html',
@@ -40,6 +41,7 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
   selectedFile: File;
   logoImg = '';
   coverImg = '';
+  originurl = environment.webUrl + 'community/c/';
 
   @ViewChild('zipCode') zipCode: ElementRef;
   constructor(
@@ -51,7 +53,8 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
     private router: Router,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private toaster: ToastService
   ) {
     this.getCustomer();
   }
@@ -88,7 +91,6 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     this.spinner.show();
-    // this.getProfilePic();
     if (this.logoImg && this.coverImg) {
       this.communityDetails.profileId = this.profileId;
       this.communityDetails.logoImg = this.logoImg;
@@ -103,11 +105,11 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
               sessionStorage.setItem('communityId', res.data);
               this.createCommunityAdmin(res.data);
               this.router.navigateByUrl('/home');
+              this.toaster.success(res.message);
             }
           },
           (err) => {
-            this.registrationMessage = err.error.message;
-            this.type = 'danger';
+            this.toaster.danger(err.error.message);
             this.spinner.hide();
           }
         );

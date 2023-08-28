@@ -49,9 +49,9 @@ export class MyListComponent implements OnInit {
 
   createCommunity() {
     if (this.user.AccountType === 'user') {
-      this.router.navigateByUrl('community');
+      this.router.navigateByUrl('community/community-registration');
     } else {
-      this.router.navigateByUrl('community/community-post');
+      this.router.navigateByUrl('community');
     }
   }
 }

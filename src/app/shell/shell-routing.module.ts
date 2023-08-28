@@ -21,8 +21,7 @@ const routes: Routes = [
       import('../community/community.module').then((m) => m.CommunityModule),
   },
   {
-
-    path: 'favorite',
+    path: 'communities-post',
     loadChildren: () =>
       import('../favorites/favorite.module').then((m) => m.FavoriteModule),
   },
@@ -37,21 +36,36 @@ const routes: Routes = [
       },
       {
         path: 'general',
-        loadChildren: () => import('../setting/setting.module').then((m) => m.SettingModule),
+        loadChildren: () =>
+          import('../setting/setting.module').then((m) => m.SettingModule),
       },
       {
         path: 'see-first-users',
-        loadChildren: () => import('../see-first-user/see-first-user.module').then((m) => m.SeeFirstUserModule),
+        loadChildren: () =>
+          import('../see-first-user/see-first-user.module').then(
+            (m) => m.SeeFirstUserModule
+          ),
       },
       {
         path: 'unsubscribed-users',
-        loadChildren: () => import('../unsubscribed-users/unsubscribed-users.module').then((m) => m.UnsubscribedUsersModule),
+        loadChildren: () =>
+          import('../unsubscribed-users/unsubscribed-users.module').then(
+            (m) => m.UnsubscribedUsersModule
+          ),
       },
       {
         path: 'delete-profile',
-        loadChildren: () => import('../setting/setting.module').then((m) => m.SettingModule),
-      }
-    ]
+        loadChildren: () =>
+          import('../setting/setting.module').then((m) => m.SettingModule),
+      },
+    ],
+  },
+  {
+    path: 'notifications',
+    loadChildren: () =>
+      import('../notifications/notification.module').then(
+        (m) => m.NotificationsModule
+      ),
   },
 ];
 

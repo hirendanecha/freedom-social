@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject, debounceTime, fromEvent } from 'rxjs';
+import { Subject, debounceTime, fromEvent, map } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
 import { CommunityPostService } from 'src/app/services/community-post.service';
 import { CommunityService } from 'src/app/services/community.service';
@@ -34,7 +34,6 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
   communityId = '';
   profilePic: any = {};
   coverPic: any = {};
-  profileId = '';
   activeTab = 1;
   communityDetails: any = {};
   memberList = [];
@@ -51,7 +50,8 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
     private communityService: CommunityService,
     private communityPostService: CommunityPostService
   ) {
-    this.communityId = this.route.snapshot.paramMap.get('id');
+    // this.communityId = this.route.snapshot.paramMap.get('title');
+    this.communityId = history?.state?.data?.id;
     this.userProfileId = sessionStorage.getItem('profileId');
   }
   ngOnInit(): void {
