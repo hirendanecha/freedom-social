@@ -99,7 +99,7 @@
     <!-- @slideUp -->
     <div
       class="post-single-box p-3 p-sm-5 d-flex gap-3"
-      *ngIf="!post?.hide && post?.postdescription"
+      *ngIf="!post?.hide && (post?.postdescription || post?.metadescription)"
     >
       <div class="profile-box">
         <img
