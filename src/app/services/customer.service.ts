@@ -67,4 +67,16 @@ export class CustomerService {
   getNotificationList(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/get-notification/${id}`);
   }
+
+  deleteNotification(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/notification/${id}`, {
+      responseType: 'text',
+    });
+  }
+
+  readUnreadNotification(id: number, isRead: ''): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/edit-notification/${id}?isRead=${isRead}`
+    );
+  }
 }

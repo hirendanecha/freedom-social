@@ -40,6 +40,10 @@
     .login-button {
       padding: 0.8rem 2.6rem;
     }
+
+    .input-group-text {
+      background-color: var(--box-1st-color) !important;
+    }
   }
 }
 ::ng-deep {

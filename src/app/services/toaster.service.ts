@@ -2,10 +2,18 @@ import { Injectable, TemplateRef } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-  toasts: any[] = [];
+  toasts: any = [];
 
-  show(textOrTpl: string | TemplateRef<any>, options: any = {}) {
-    this.toasts.push({ textOrTpl, ...options });
+  // show(textOrTpl: string | TemplateRef<any>, options: any = {}) {
+  //   this.toasts.push({ textOrTpl, ...options });
+  // }
+
+  success(msg: string) {
+    this.toasts.push({ textOrTpl: msg, classname: 'bg-success text-light' });
+  }
+
+  danger(msg: string) {
+    this.toasts.push({ textOrTpl: msg, classname: 'bg-danger text-light' });
   }
 
   remove(toast) {

@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { UnsubscribeProfileService } from '../services/unsubscribe-profile.service';
+import { ToastService } from '../services/toaster.service';
 
 @Component({
   selector: 'app-unsubscribed-users',
   templateUrl: './unsubscribed-users.component.html',
-  styleUrls: ['./unsubscribed-users.component.scss']
+  styleUrls: ['./unsubscribed-users.component.scss'],
 })
-export class UnsubscribedUsersComponent implements OnInit  {
-
+export class UnsubscribedUsersComponent implements OnInit {
   profiles: any[] = [];
 
   constructor(
-    private unsubscribeProfileService: UnsubscribeProfileService
+    private unsubscribeProfileService: UnsubscribeProfileService,
+    private toaster: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -25,16 +26,17 @@ export class UnsubscribedUsersComponent implements OnInit  {
       this.unsubscribeProfileService.getByProfileId(profileId).subscribe({
         next: (res: any) => {
           this.profiles = res?.length > 0 ? res : [];
-        }
+        },
       });
     }
   }
 
   removeUnsubscribeProfile(id: number): void {
     this.unsubscribeProfileService.remove(id).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         this.getUnsubscribeProfiles();
-      }
+        this.toaster.success(res.message);
+      },
     });
   }
 }

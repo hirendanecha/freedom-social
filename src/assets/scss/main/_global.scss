@@ -725,6 +725,11 @@ li {
       }
     }
   }
+  .dropdown-toggle {
+    &::after {
+      display: none;
+    }
+  }
 }
 
 // Custom File Upload
