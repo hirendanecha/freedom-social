@@ -88,65 +88,6 @@
               </div>
             </div>
           </div>
-          <!-- <div class="btn-group cus-dropdown">
-            <button
-              type="button"
-              class="dropdown-btn"
-              (click)="openDropDown(post.id)"
-            >
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-            </button>
-            <ul
-              class="dropdown-menu p-4 pt-2 mt-6"
-              [ngClass]="postId === post.id ? 'show' : ''"
-              (mouseleave)="postId = null"
-            >
-              <ng-container *ngIf="profileId === userProfileId">
-                <li>
-                  <a
-                    class="droplist d-flex align-items-center gap-2"
-                    (click)="postId = null"
-                  >
-                    <i class="material-symbols-outlined mat-icon"> edit </i>
-                    <span>Edit</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="droplist d-flex align-items-center gap-2"
-                    (click)="deletePost(post.id)"
-                  >
-                    <i class="material-symbols-outlined mat-icon"> delete </i>
-                    <span>Delete</span>
-                  </a>
-                </li>
-              </ng-container>
-              <ng-container *ngIf="profileId != userProfileId">
-                <li>
-                  <a
-                    class="droplist d-flex align-items-center gap-2"
-                    (click)="postId = null"
-                  >
-                    <i class="material-symbols-outlined mat-icon">
-                      visibility
-                    </i>
-                    <span>See First</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="droplist d-flex align-items-center gap-2"
-                    (click)="postId = null"
-                  >
-                    <i class="material-symbols-outlined mat-icon">
-                      person_remove
-                    </i>
-                    <span>Unsubscribe</span>
-                  </a>
-                </li>
-              </ng-container>
-            </ul>
-          </div> -->
         </div>
         <div class="py-4">
           <p class="post-description" [innerHTML]="post.postdescription"></p>
@@ -171,7 +112,6 @@
             post.react == 'L' ? dislikeFeedPost(post) : reactLikeOnPost(post)
           "
         >
-          <!-- <i class="material-symbols-outlined mat-icon"> favorite </i> -->
           <i
             class="material-symbols-outlined mat-icon"
             [ngClass]="post.react == 'L' ? 'active' : ''"
@@ -235,5 +175,8 @@
         </div>
       </form> -->
     </div>
+  </ng-container>
+  <ng-container *ngIf="!postList.length">
+    <h3>No post available</h3>
   </ng-container>
 </div>

@@ -11,6 +11,7 @@ import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from '@angular/router';
 import { ForgotPasswordComponent } from '../home/forgot-password/forgot-password.component';
 import { CustomerService } from '../services/customer.service';
+import { ToastService } from '../services/toaster.service';
 
 @Component({
   selector: 'app-header',
@@ -47,7 +48,8 @@ export class HeaderComponent {
     private spinner: NgxSpinnerService,
     private router: Router,
     private tokenStorageService: TokenStorageService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private toaster: ToastService
   ) {
     this.sharedService.getUserDetails();
   }
@@ -107,6 +109,7 @@ export class HeaderComponent {
     this.spinner.show();
     // this.isCollapsed = true;
     this.tokenStorageService.signOut();
+    // this.toaster.success('Logout successfully');
     this.router.navigate(['/login']);
     // this.sellService.cartData$.next(null);
     // this.isDomain = false;

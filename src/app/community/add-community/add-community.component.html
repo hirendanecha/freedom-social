@@ -31,20 +31,34 @@
         ngNativeValidate
         autocomplete="off"
       >
-        <div class="alert alert-{{ type }}" role="alert" *ngIf="msg">
-          {{ msg }}
-        </div>
         <div class="row">
           <div class="col-12 mb-3">
-            <label class="form-label d-flex">Community Name</label>
-            <input
-              type="text"
-              class="input-area"
-              name="cname"
-              placeholder="Enter your community name"
-              [(ngModel)]="communityDetails.CommunityName"
-              required
-            />
+            <label class="form-label d-flex">Community Url</label>
+            <!-- <div class="d-flex align-items-center">
+              <span>{{ originurl }}</span>
+              <input
+                type="text"
+                class="input-area"
+                name="cname"
+                placeholder="Enter your community name"
+                [(ngModel)]="communityDetails.CommunityName"
+              />
+            </div> -->
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span
+                  class="input-group-text h-100 border-0"
+                  id="basic-addon3"
+                  >{{ originurl }}</span
+                >
+              </div>
+              <input
+                type="text"
+                class="form-control input-area"
+                name="cname"
+                [(ngModel)]="communityDetails.CommunityName"
+              />
+            </div>
           </div>
         </div>
         <div class="row">

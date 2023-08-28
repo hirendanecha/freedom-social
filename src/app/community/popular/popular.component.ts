@@ -1,3 +1,4 @@
+import { query } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -66,7 +67,7 @@ export class PopularComponent implements OnInit {
     this.communityService.createCommunityAdmin(data).subscribe(
       (res: any) => {
         if (res) {
-          this.router.navigate(['/favorite']);
+          this.router.navigate(['communities-post']);
         }
       },
       (error) => {
@@ -75,8 +76,20 @@ export class PopularComponent implements OnInit {
     );
   }
 
-  goToCommunityDetails(id): void {
-    this.router.navigate([`community/${id}`]);
+  goToCommunityDetails(community): void {
+    const communityName = community.CommunityName.replaceAll(
+      ' ',
+      '-'
+    ).toLowerCase();
+    console.log(communityName);
+    this.router.navigate([`community/c/${communityName}`], {
+      state: {
+        data: { id: community.Id },
+      },
+    });
+    // this.router.navigateByUrl(`community/c/${communityName}`, {
+    //   query: community.Id,
+    // });
   }
 
   openDropDown(id) {

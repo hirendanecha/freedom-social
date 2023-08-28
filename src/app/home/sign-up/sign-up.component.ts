@@ -43,7 +43,8 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     private router: Router,
     private toastService: ToastService,
     private cd: ChangeDetectorRef,
-    private uploadService: UploadFilesService
+    private uploadService: UploadFilesService,
+    private toaster: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -130,9 +131,12 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     if (!this.customer.Password.match(pattern)) {
       this.msg =
         'Password must be a minimum of 8 characters and include one uppercase letter, one lowercase letter and one special character';
+      this.toaster.danger(this.msg);
     }
     if (this.customer.Password !== this.confirm_password) {
       this.msg = 'Passwords is incorrect';
+      this.toaster.danger(this.msg);
+
       return false;
     }
 

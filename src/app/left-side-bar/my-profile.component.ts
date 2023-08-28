@@ -49,7 +49,7 @@ export class MyProfileComponent implements OnInit {
         this.isFriendRequest = event.url.includes('/friend-request') || false;
         this.isEvents = event.url.includes('/events') || false;
         this.isCommunity = event.url.includes('/community') || false;
-        this.isPageResearch = event.url.includes('/favorite') || false;
+        this.isPageResearch = event.url.includes('/communities-post') || false;
         this.isSetting = event.url.includes('/settings') || false;
       }
     });
@@ -105,9 +105,9 @@ export class MyProfileComponent implements OnInit {
 
   openLoacalCommunity() {
     if (this.user.AccountType === 'user') {
-      this.router.navigateByUrl('community');
+      this.router.navigateByUrl('community/community-registration');
     } else {
-      this.router.navigateByUrl('community/community-post');
+      this.router.navigateByUrl('community');
     }
   }
 }

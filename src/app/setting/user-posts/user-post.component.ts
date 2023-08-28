@@ -13,6 +13,8 @@ import { PostComponent } from 'src/app/home/poast-modal/post.component';
 import { PostService } from 'src/app/services/post.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { ToastService } from 'src/app/services/toaster.service';
+import { DeletePostComponent } from 'src/app/@shared/delete-post-dialog/delete-post.component';
 
 @Component({
   selector: 'app-user-post',
@@ -45,7 +47,8 @@ export class UserPostComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private postService: PostService,
     private sharedService: SharedService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private toaster: ToastService
   ) {
     this.userProfileId = sessionStorage.getItem('profileId');
   }
@@ -72,20 +75,35 @@ export class UserPostComponent implements OnInit {
     );
   }
 
-  deletePost(id): void {
-    this.spinner.show();
+  deletePost(post): void {
     this.postId = null;
-    this.postService.deletePost(id).subscribe(
-      (res: any) => {
-        if (res) {
-          this.spinner.hide();
-          this.getPostList();
-        }
-      },
-      (error) => {
-        this.spinner.hide();
+    console.log(post.id);
+    const modalRef = this.modalService.open(DeletePostComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = 'Delete Post';
+    modalRef.componentInstance.confirmButtonLabel = 'Delete';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.message =
+      'Are you sure want to delete this post?';
+    modalRef.result.then((res) => {
+      console.log(res);
+      if (res === 'success') {
+        // post['hide'] = true;
+        this.postService.deletePost(post.id).subscribe(
+          (res: any) => {
+            if (res) {
+              this.toaster.success(res.message);
+              this.spinner.hide();
+              this.getPostList();
+            }
+          },
+          (error) => {
+            this.spinner.hide();
+          }
+        );
       }
-    );
+    });
   }
 
   reactLikeOnPost(post) {

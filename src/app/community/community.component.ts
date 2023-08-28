@@ -28,6 +28,6 @@ export class CommunityComponent {
   }
 
   goToFindCommunity() {
-    this.router.navigate(['/favorite']);
+    this.router.navigate(['/communities-post']);
   }
 }

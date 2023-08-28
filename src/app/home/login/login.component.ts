@@ -7,6 +7,8 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/services/auth.service';
 import Utils from 'src/app/constant/utils';
+import { ToastrService } from 'ngx-toastr';
+import { ToastService } from 'src/app/services/toaster.service';
 
 @Component({
   selector: 'app-login',
@@ -31,13 +33,15 @@ export class LoginComponent {
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toaster: ToastService
   ) {
     const isVerify = this.route.snapshot.queryParams.isVerify;
     if (isVerify === 'false') {
       this.msg =
         'Please check your email and click the activation link to activate your account.';
       this.type = 'success';
+      this.toaster.success(this.msg);
     }
   }
 
@@ -77,6 +81,7 @@ export class LoginComponent {
           window.sessionStorage.user_zip = data.user.ZipCode;
           this.isLoginFailed = false;
           this.isLoggedIn = true;
+          this.toaster.success('Logged in successfully');
           this.router.navigate([`/home`]);
         } else {
           this.loginMessage = data.mesaage;
@@ -84,12 +89,14 @@ export class LoginComponent {
           this.errorMessage =
             'Invalid Email and Password. Kindly try again !!!!';
           this.isLoginFailed = true;
+          this.toaster.danger(this.errorMessage);
         }
       },
       (err) => {
         this.spinner.hide();
         console.log(err.error);
         this.errorMessage = err.error.message; //err.error.message;
+        this.toaster.danger(this.errorMessage);
         this.isLoginFailed = true;
         this.errorCode = err.error.errorCode;
       }
@@ -102,10 +109,12 @@ export class LoginComponent {
       .subscribe(
         (result: any) => {
           this.msg = result.message;
+          // this.toaster.success(this.msg);
           this.type = 'success';
         },
         (error) => {
           this.msg = error.message;
+          // this.toaster.danger(this.msg);
           this.type = 'danger';
         }
       );

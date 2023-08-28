@@ -7,14 +7,14 @@ import { ViewCommunityComponent } from './view-community/view-community.componen
 const routes: Routes = [
   {
     path: '',
-    component: CommunityRegisterComponent,
-  },
-  {
-    path: 'community-post',
     component: CommunityComponent,
   },
   {
-    path: ':id',
+    path: 'community-registration',
+    component: CommunityRegisterComponent,
+  },
+  {
+    path: 'c/:id',
     component: ViewCommunityComponent,
   },
 ];

@@ -11,6 +11,7 @@ import { CommunityRegisterComponent } from './create-community/community-registe
 import { FormsModule } from '@angular/forms';
 import { ViewCommunityComponent } from './view-community/view-community.component';
 import { UserPostComponent } from '../setting/user-posts/user-post.component';
+import { SharedModule } from '../@shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { UserPostComponent } from '../setting/user-posts/user-post.component';
     CommunityRegisterComponent,
     ViewCommunityComponent,
   ],
-  imports: [CommunityRoutingModule, CommonModule, FormsModule],
+  imports: [CommunityRoutingModule, SharedModule],
   exports: [PopularComponent, MembersComponent, GroupComponent],
 })
 export class CommunityModule {}

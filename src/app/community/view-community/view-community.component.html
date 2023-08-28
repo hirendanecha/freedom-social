@@ -192,13 +192,22 @@
                 <div
                   class="like-comment-share py-5 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
                 >
-                  <button
-                    class="d-center gap-1 gap-sm-2 mdtxt"
-                    (click)="clickOnLike()"
-                    [ngClass]="isLike ? 'actvie' : ''"
-                  >
-                    <i class="material-symbols-outlined mat-icon"> favorite </i>
-                    Score Post
+                  <!-- (click)="
+                  post.react == 'L'
+                    ? dislikeFeedPost(post)
+                    : reactLikeOnPost(post)
+                " -->
+                  <button class="d-center gap-1 smtxt like-button">
+                    <!-- <i class="material-symbols-outlined mat-icon"> favorite </i> -->
+                    <i
+                      class="material-symbols-outlined mat-icon"
+                      [ngClass]="post.react == 'L' ? 'active' : ''"
+                    >
+                      thumb_up
+                    </i>
+                    <span class="mdtxt d-center">{{
+                      post?.likescount > 0 ? post?.likescount : 0
+                    }}</span>
                   </button>
                   <button
                     class="d-center gap-1 gap-sm-2 mdtxt position-relative reply-button"
@@ -280,7 +289,9 @@
           <div class="row">
             <div class="col-md-6" *ngFor="let member of memberList">
               <div class="single-box member-single p-3">
-                <div class="profile-area d-center justify-content-between">
+                <div
+                  class="profile-area d-flex w-100 justify-content-between align-items-center"
+                >
                   <div class="avatar-item d-flex gap-3 align-items-center">
                     <div class="avatar-item">
                       <img
@@ -297,9 +308,53 @@
                       <h6 class="m-0">
                         {{ member.FirstName }} {{ member.LastName }}
                       </h6>
-                      <p class="mdtxt status">
+                      <p class="mdtxt status mb-0">
                         {{ member.isAdmin ? "Admin" : "Member" }}
                       </p>
+                    </div>
+                  </div>
+                  <div class="btn-group cus-dropdown d-flex gap-3">
+                    <div ngbDropdown class="d-inline-block">
+                      <button class="dropdown-btn" ngbDropdownToggle>
+                        <i class="material-symbols-outlined fs-xxl m-0">
+                          more_horiz
+                        </i>
+                      </button>
+                      <div ngbDropdownMenu class="dropdown-menu">
+                        <button
+                          ngbDropdownItem
+                          *ngif="communityDetails.profileId !== userProfileId"
+                        >
+                          <a class="droplist d-flex align-items-center gap-2">
+                            <!-- (click)="removeNotification(notification.id)" -->
+                            <i class="material-symbols-outlined mat-icon">
+                              verified_user
+                            </i>
+                            <span>Make Community Admin</span>
+                          </a>
+                        </button>
+                        <button
+                          ngbDropdownItem
+                          *ngif="communityDetails.profileId !== userProfileId"
+                        >
+                          <a class="droplist d-flex align-items-center gap-2">
+                            <!-- (click)="removeNotification(notification.id)" -->
+                            <i class="material-symbols-outlined mat-icon">
+                              remove
+                            </i>
+                            <span>Remove</span>
+                          </a>
+                        </button>
+                        <button ngbDropdownItem>
+                          <a class="droplist d-flex align-items-center gap-2">
+                            <!-- (click)="removeNotification(notification.id)" -->
+                            <i class="material-symbols-outlined mat-icon">
+                              person
+                            </i>
+                            <span>View Profile</span>
+                          </a>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

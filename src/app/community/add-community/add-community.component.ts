@@ -3,7 +3,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Community } from 'src/app/constant/customer';
 import { CommunityService } from 'src/app/services/community.service';
+import { ToastService } from 'src/app/services/toaster.service';
 import { UploadFilesService } from 'src/app/services/upload-files.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-community-modal',
@@ -25,12 +27,13 @@ export class AddCommunityComponent {
   coverImg: any;
   userId = '';
   profileId = '';
+  originurl = environment.webUrl + 'community/c/';
   constructor(
     public activeModal: NgbActiveModal,
     private uploadService: UploadFilesService,
     private spinner: NgxSpinnerService,
     private communityService: CommunityService,
-    private cd: ChangeDetectorRef
+    private toaster: ToastService
   ) {
     this.userId = window.sessionStorage.user_id;
     this.profileId = sessionStorage.getItem('profileId');
@@ -81,11 +84,12 @@ export class AddCommunityComponent {
               this.spinner.hide();
               this.createCommunityAdmin(res.data);
               this.activeModal.close('success');
+              this.toaster.success(res.message);
               // this.router.navigateByUrl('/home');
             }
           },
           (err) => {
-            this.msg = err.error.message;
+            this.toaster.danger(err.error.message);
             this.type = 'danger';
             this.spinner.hide();
           }
