@@ -332,6 +332,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (this.postData?.postdescription) {
       this.spinner.show();
       this.socketService.createPost(this.postData, (data) => {
+        this.spinner.hide();
+        this.toaster.success('Post created successfully.');
         return data;
       });
 
