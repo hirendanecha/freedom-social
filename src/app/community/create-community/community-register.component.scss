@@ -40,21 +40,5 @@
     .login-button {
       padding: 0.8rem 2.6rem;
     }
-
-    .input-group-text {
-      background-color: var(--box-1st-color) !important;
-    }
-  }
-}
-::ng-deep {
-  .form-control {
-    padding: 0.81rem 0.96rem;
-    height: inherit;
-    border: none;
-    background-color: var(--box-1st-color) !important;
-    color: var(--heading-1st-color);
-    &::after {
-      background-color: var(--box-1st-color) !important;
-    }
   }
 }

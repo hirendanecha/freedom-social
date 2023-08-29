@@ -63,6 +63,19 @@
   }
 }
 
-.form-control:focus {
+.form-control:focus, .input-group-text {
   color: var(--heading-1st-color) !important;
+}
+
+.input-group {
+  flex-wrap: nowrap !important;
+
+  .input-group-prepend {
+    background-color: var(--box-1st-color) !important;
+    border-radius: 10px;
+
+    .input-group-text {
+      background-color: transparent;
+    }
+  }
 }
