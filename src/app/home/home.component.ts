@@ -557,7 +557,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   selectTagUser(user: any): void {
     const postHtml = this.postMessageInput.nativeElement.innerHTML;
-    const text = postHtml.replace(` @${this.userNameSearch}`, ` <a href="/settings/general/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a> `)
+    const text = postHtml.replace(`@${this.userNameSearch}`, `<a href="/settings/general/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a>`)
     console.log('postHtml : ', postHtml);
 
     this.renderer.setProperty(this.postMessageInput.nativeElement, 'innerHTML', text);
