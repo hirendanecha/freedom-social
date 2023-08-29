@@ -64,7 +64,7 @@ export class PopularComponent implements OnInit {
       communityId: id,
       IsActive: 'Y',
     };
-    this.communityService.createCommunityAdmin(data).subscribe(
+    this.communityService.joinCommunity(data).subscribe(
       (res: any) => {
         if (res) {
           this.router.navigate(['communities-post']);

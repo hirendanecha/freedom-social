@@ -206,7 +206,7 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
       isActive: 'Y',
       isAdmin: 'Y',
     };
-    this.communityService.createCommunityAdmin(data).subscribe(
+    this.communityService.joinCommunity(data).subscribe(
       (res: any) => {
         if (res) {
           return res;

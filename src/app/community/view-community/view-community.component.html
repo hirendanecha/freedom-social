@@ -46,25 +46,25 @@
                   >Community Post</a
                 >
               </li>
-              <li class="nav-item" role="presentation" (click)="activeTab = 2">
+              <!-- <li class="nav-item" role="presentation" (click)="activeTab = 2">
                 <a
                   class="nav-link d-center"
                   [ngClass]="activeTab === 2 ? 'active' : ''"
                   >About Community</a
                 >
-              </li>
-              <li class="nav-item" role="presentation" (click)="activeTab = 3">
+              </li> -->
+              <!-- <li class="nav-item" role="presentation" (click)="activeTab = 3">
                 <a
                   class="nav-link d-center"
                   [ngClass]="activeTab === 3 ? 'active' : ''"
                   >Community Photos</a
                 >
-              </li>
+              </li> -->
               <!-- <ng-container *ngIf=""></ng-container> -->
-              <li class="nav-item" role="presentation" (click)="activeTab = 4">
+              <li class="nav-item" role="presentation" (click)="activeTab = 2">
                 <a
                   class="nav-link d-center"
-                  [ngClass]="activeTab === 4 ? 'active' : ''"
+                  [ngClass]="activeTab === 2 ? 'active' : ''"
                   >Members</a
                 >
               </li>
@@ -278,13 +278,13 @@
             </div>
           </div>
         </ng-container>
-        <ng-container *ngIf="activeTab === 2">
+        <!-- <ng-container *ngIf="activeTab === 2">
           <h3>Hello About</h3>
-        </ng-container>
-        <ng-container *ngIf="activeTab === 3">
+        </ng-container> -->
+        <!-- <ng-container *ngIf="activeTab === 3">
           <h3>Hello Photos</h3>
-        </ng-container>
-        <ng-container *ngIf="activeTab === 4">
+        </ng-container> -->
+        <ng-container *ngIf="activeTab === 2">
           <h3>Community Memebers</h3>
           <div class="row">
             <div class="col-md-6" *ngFor="let member of memberList">
@@ -309,11 +309,14 @@
                         {{ member.FirstName }} {{ member.LastName }}
                       </h6>
                       <p class="mdtxt status mb-0">
-                        {{ member.isAdmin ? "Admin" : "Member" }}
+                        {{ member.isAdmin === "Y" ? "Admin" : "Member" }}
                       </p>
                     </div>
                   </div>
-                  <div class="btn-group cus-dropdown d-flex gap-3">
+                  <div
+                    class="btn-group cus-dropdown d-flex gap-3"
+                    *ngIf="communityDetails.profileId !== member.profileId"
+                  >
                     <div ngbDropdown class="d-inline-block">
                       <button class="dropdown-btn" ngbDropdownToggle>
                         <i class="material-symbols-outlined fs-xxl m-0">
@@ -321,33 +324,49 @@
                         </i>
                       </button>
                       <div ngbDropdownMenu class="dropdown-menu">
-                        <button
-                          ngbDropdownItem
-                          *ngif="communityDetails.profileId !== userProfileId"
-                        >
-                          <a class="droplist d-flex align-items-center gap-2">
-                            <!-- (click)="removeNotification(notification.id)" -->
-                            <i class="material-symbols-outlined mat-icon">
-                              verified_user
-                            </i>
-                            <span>Make Community Admin</span>
-                          </a>
-                        </button>
-                        <button
-                          ngbDropdownItem
-                          *ngif="communityDetails.profileId !== userProfileId"
-                        >
-                          <a class="droplist d-flex align-items-center gap-2">
-                            <!-- (click)="removeNotification(notification.id)" -->
-                            <i class="material-symbols-outlined mat-icon">
-                              remove
-                            </i>
-                            <span>Remove</span>
-                          </a>
-                        </button>
+                        <ng-container *ngIf="adminList.includes(userProfileId)">
+                          <button
+                            ngbDropdownItem
+                            *ngIf="member.isAdmin === 'N'"
+                          >
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
+                              (click)="createCommunityAdmin(member)"
+                            >
+                              <i class="material-symbols-outlined mat-icon">
+                                verified_user
+                              </i>
+                              <span>Make Community Admin</span>
+                            </a>
+                          </button>
+                          <button
+                            ngbDropdownItem
+                            *ngIf="member.isAdmin === 'Y'"
+                          >
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
+                              (click)="createCommunityAdmin(member)"
+                            >
+                              <i class="material-symbols-outlined mat-icon">
+                                verified_user
+                              </i>
+                              <span>Make Community Member</span>
+                            </a>
+                          </button>
+                          <!-- <button ngbDropdownItem>
+                            <a class="droplist d-flex align-items-center gap-2">
+                              <i class="material-symbols-outlined mat-icon">
+                                remove
+                              </i>
+                              <span>Remove</span>
+                            </a>
+                          </button> -->
+                        </ng-container>
                         <button ngbDropdownItem>
-                          <a class="droplist d-flex align-items-center gap-2">
-                            <!-- (click)="removeNotification(notification.id)" -->
+                          <a
+                            class="droplist d-flex align-items-center gap-2"
+                            (click)="goToViewProfile(member.proflieId)"
+                          >
                             <i class="material-symbols-outlined mat-icon">
                               person
                             </i>
@@ -381,8 +400,8 @@
           </table> -->
         </ng-container>
       </div>
+      <!-- <app-my-list></app-my-list> -->
       <div class="col-lg-3 d-none d-md-block justify-content-center">
-        <!-- <app-my-list></app-my-list> -->
         <div class="cus-overflow cus-scrollbar sidebar-head d-lg-block d-none">
           <div class="cus-scrollbar side-wrapper">
             <div class="sidebar-wrapper d-flex flex-column gap-6">
@@ -398,7 +417,6 @@
                   </span>
                 </div>
                 <ul class="list-unstyled fs-11">
-                  <!-- <li class="d-block m-0">All Time</li> -->
                   <li>
                     <span>Posts</span><br /><span class="posts_likes">3</span>
                   </li>
@@ -422,7 +440,6 @@
                   </li>
                 </ul>
                 <ul class="bg-gray-div list-unstyled fs-11">
-                  <!-- <li class="d-block m-0">Monthly</li> -->
                   <li>
                     <span>Posts</span><br /><span class="posts_likes">0</span>
                   </li>

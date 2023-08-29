@@ -22,7 +22,8 @@
               class="preview-image w-100"
               loading="lazy"
               data-src="{{
-                customer?.ProfilePicName || '/assets/images/avtar/placeholder-user.png'
+                customer?.ProfilePicName ||
+                  '/assets/images/avtar/placeholder-user.png'
               }}"
               onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
               alt="Preview Image"
@@ -49,7 +50,7 @@
                   >Post</a
                 >
               </li>
-              <li class="nav-item" role="presentation" (click)="activeTab = 2">
+              <!-- <li class="nav-item" role="presentation" (click)="activeTab = 2">
                 <a
                   class="nav-link d-center"
                   [ngClass]="activeTab === 2 ? 'active' : ''"
@@ -62,15 +63,15 @@
                   [ngClass]="activeTab === 3 ? 'active' : ''"
                   >Photos</a
                 >
-              </li>
+              </li> -->
               <li
                 class="nav-item"
                 role="presentation"
-                (click)="activeTab = 4; getCommunities()"
+                (click)="activeTab = 2; getCommunities()"
               >
                 <a
                   class="nav-link d-center"
-                  [ngClass]="activeTab === 4 ? 'active' : ''"
+                  [ngClass]="activeTab === 2 ? 'active' : ''"
                   >Community</a
                 >
               </li>
@@ -84,13 +85,13 @@
         <ng-container *ngIf="activeTab === 1">
           <app-user-post [profileId]="profileId"></app-user-post>
         </ng-container>
-        <ng-container *ngIf="activeTab === 2">
+        <!-- <ng-container *ngIf="activeTab === 2">
           <h3>Hello About</h3>
         </ng-container>
         <ng-container *ngIf="activeTab === 3">
           <h3>Hello Photos</h3>
-        </ng-container>
-        <ng-container *ngIf="activeTab === 4">
+        </ng-container> -->
+        <ng-container *ngIf="activeTab === 2">
           <ng-container *ngIf="communityList.length; else noData">
             <h3>My Communities</h3>
             <div
