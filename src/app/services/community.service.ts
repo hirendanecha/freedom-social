@@ -40,8 +40,11 @@ export class CommunityService {
     return this.http.post<Community>(`${this.baseUrl}/create`, communityData);
   }
 
-  createCommunityAdmin(data: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/create-community-admin`, data);
+  joinCommunity(data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/join-community`, data);
+  }
+  createCommunityAdmin(data): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/create-community-admin`, data);
   }
 
   getLogoImg(id): Observable<any> {

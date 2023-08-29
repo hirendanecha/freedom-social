@@ -15,6 +15,7 @@ import { CommunityPostService } from 'src/app/services/community-post.service';
 import { CommunityService } from 'src/app/services/community.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { ToastService } from 'src/app/services/toaster.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UploadFilesService } from 'src/app/services/upload-files.service';
 
@@ -40,19 +41,21 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
   postId = '';
   isExpand = false;
   isLike = false;
-  userProfileId = '';
+  userProfileId: number;
   communityPostList = [];
+  adminList = [];
 
   constructor(
-    private route: ActivatedRoute,
+    private router: Router,
     private spinner: NgxSpinnerService,
     public sharedService: SharedService,
     private communityService: CommunityService,
-    private communityPostService: CommunityPostService
+    private communityPostService: CommunityPostService,
+    private toaster: ToastService
   ) {
     // this.communityId = this.route.snapshot.paramMap.get('title');
     this.communityId = history?.state?.data?.id;
-    this.userProfileId = sessionStorage.getItem('profileId');
+    this.userProfileId = Number(sessionStorage.getItem('profileId'));
   }
   ngOnInit(): void {
     this.getCommunityDetails();
@@ -72,8 +75,14 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
             if (element.Id) {
               this.communityDetails = element;
               this.memberList = element.memberList;
+              this.memberList.forEach((ele) => {
+                if (ele.isAdmin === 'Y') {
+                  this.adminList.push(ele.profileId);
+                }
+              });
             }
           });
+          console.log(this.adminList);
         }
       },
       (error) => {
@@ -125,5 +134,35 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
         this.spinner.hide();
       }
     );
+  }
+
+  createCommunityAdmin(member): void {
+    let data = {};
+    if (member.isAdmin === 'Y') {
+      data = {
+        id: member?.Id,
+        isAdmin: 'N',
+      };
+    } else {
+      data = {
+        id: member?.Id,
+        isAdmin: 'Y',
+      };
+    }
+    this.communityService.createCommunityAdmin(data).subscribe(
+      (res: any) => {
+        if (res) {
+          this.toaster.success(res.message);
+          this.getCommunityDetails();
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  goToViewProfile(id: any): void {
+    this.router.navigate([`settings/general/view-profile/${id}`]);
   }
 }
