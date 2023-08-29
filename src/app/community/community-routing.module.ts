@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommunityComponent } from './community.component';
 import { CommunityRegisterComponent } from './create-community/community-register.component';
 import { ViewCommunityComponent } from './view-community/view-community.component';
+import { HomeComponent } from '../home/home.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: ViewCommunityComponent,
+    component: HomeComponent,
   },
 ];
 

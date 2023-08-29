@@ -34,12 +34,19 @@
           <div class="friends-list d-center mt-3 gap-1 text-center">
             <span class="smtxt m-0">{{ community.members }} Member</span>
           </div>
-          <div class="d-center btn-border pt-5 gap-2 mt-4">
+          <div class="d-flex justify-content-between pt-5 gap-2">
             <button
-              class="btn btn-primary alt third"
+              class="btn btn-outline-danger alt third w-80-px"
               (click)="removeFromCommunity(community.Id)"
             >
               leave
+            </button>
+
+            <button
+              class="btn btn-outline-primary alt third w-80-px"
+              (click)="goToCommunityDetails(community)"
+            >
+              view
             </button>
             <!-- <button
               class="btn btn-danger alt third"
