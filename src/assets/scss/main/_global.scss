@@ -300,6 +300,10 @@ h6 > a {
   margin-top: -4px;
 }
 
+h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+  color: var(--para-2nd-color) !important;
+}
+
 table thead tr th {
   font-size: 18px;
   line-height: 30px;
