@@ -103,3 +103,34 @@
     }
   }
 }
+
+
+.share-post {
+  .post-message-input {
+    font-size: 16px;
+    min-height: 56px;
+
+    &[placeholder]:empty {
+      &:before {
+        content: attr(placeholder);
+        color: #697495;
+      }
+      &:focus {
+        &:before {
+          content: "";
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .share-post {
+    .post-message-input {
+      a {
+        font-size: 16px;
+        line-height: 16px;
+      }
+    }
+  }
+}

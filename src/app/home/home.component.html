@@ -9,30 +9,20 @@
     /></a>
   </div>
   <form class="w-100 position-relative">
-    <input
+    <!-- <input placeholder="Write something to post.." name="message" [(ngModel)]="message" autocomplete="off" (change)="getLinkData(message)" (keyup)="messageOnKeyEvent($event)" /> -->
+    <div
+      #postMessageInput
+      contenteditable
       placeholder="Write something to post.."
-      name="message"
-      [(ngModel)]="message"
-      autocomplete="off"
-      (change)="getLinkData(message)"
-      (keyup)="messageOnKeyEvent($event)"
-    />
+      class="post-message-input input-area"
+      (keyup)="messageOnKeyEvent()">
+    </div>
 
     <div #userSearchDropdownRef ngbDropdown>
       <div ngbDropdownMenu class="h-300-px w-100 overflow-auto">
         <ng-container *ngFor="let user of userList">
-          <div
-            ngbDropdownItem
-            class="d-flex gap-3 pe-auto"
-            role="button"
-            (click)="selectTagUser(user)"
-          >
-            <img
-              class="w-32-px h-32-px rounded"
-              [src]="user.ProfilePicName"
-              [alt]="user.Username"
-              onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
-            />
+          <div ngbDropdownItem class="d-flex gap-3 pe-auto overflow-hidden" role="button" (click)="selectTagUser(user)" >
+            <img class="w-32-px h-32-px rounded" [src]="user.ProfilePicName" [alt]="user.Username" onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';" />
             <div>{{ user.Username }}</div>
           </div>
         </ng-container>
@@ -85,7 +75,7 @@
       <div class="btn-area d-flex d-lg-block d-md-block">
         <button
           class="cmn-btn p-2 px-2 px-sm-5 px-lg-6"
-          [disabled]="!message"
+          [disabled]="!postData?.postdescription"
           (click)="createPost()"
         >
           Post
