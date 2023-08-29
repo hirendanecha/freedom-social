@@ -14,7 +14,7 @@ const routes: Routes = [
     component: CommunityRegisterComponent,
   },
   {
-    path: 'c/:id',
+    path: ':id',
     component: ViewCommunityComponent,
   },
 ];

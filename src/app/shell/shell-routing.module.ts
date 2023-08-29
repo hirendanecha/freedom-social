@@ -15,7 +15,7 @@ const routes: Routes = [
     loadChildren: () => import('../home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'community',
+    path: 'local-community',
     // canActivate: [AuthenticationGuard],
     loadChildren: () =>
       import('../community/community.module').then((m) => m.CommunityModule),

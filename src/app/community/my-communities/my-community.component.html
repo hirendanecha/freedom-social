@@ -1,0 +1,58 @@
+<div class="tab-content">
+  <div
+    class="tab-pane fade show active"
+    id="popular-tab-pane"
+    role="tabpanel"
+    aria-labelledby="popular-tab"
+    tabindex="0"
+  >
+    <div class="row cus-mar friend-request">
+      <div class="col-md-4 col-sm-6" *ngFor="let community of communityList">
+        <div class="single-box p-5">
+          <div class="avatar-box position-relative">
+            <img
+              class="avatar-img cover-img w-100 h-160-px"
+              [src]="community?.coverImg"
+              onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-room.png';"
+              alt="avatar"
+            />
+          </div>
+          <div
+            class="abs-avatar-item"
+            (click)="goToCommunityDetails(community)"
+          >
+            <img
+              class="w-80-px h-80-px rounded-3"
+              [src]="community?.logoImg"
+              alt="avatar"
+            />
+          </div>
+          <a
+            ><h6 class="m-0 mb-2 mt-3">{{ community.CommunityName }}</h6></a
+          >
+          <p class="smtxt public-group">{{ community.CommunityDescription }}</p>
+          <div class="friends-list d-center mt-3 gap-1 text-center">
+            <span class="smtxt m-0">{{ community.members }} Member</span>
+          </div>
+          <div class="d-center btn-border pt-5 gap-2 mt-4">
+            <!-- <button
+              class="cmn-btn fourth p-3"
+              (click)="joinCommunity(community.Id)"
+            >
+              Joined
+            </button> -->
+            <button
+              class="btn btn-danger alt third"
+              (click)="deleteCommunity(community.Id)"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="!communityList.length">
+        <span>No community found</span>
+      </ng-container>
+    </div>
+  </div>
+</div>

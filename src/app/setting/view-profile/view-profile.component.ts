@@ -111,7 +111,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       '-'
     ).toLowerCase();
     console.log(communityName);
-    this.router.navigate([`community/c/${communityName}`], {
+    this.router.navigate([`local-community/${communityName}`], {
       state: {
         data: { id: community.Id },
       },

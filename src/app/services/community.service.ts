@@ -61,11 +61,24 @@ export class CommunityService {
       `${this.baseUrl}/change-user-type/${id}/?type=${type}`
     );
   }
+
   getCommunityByUserId(id): Observable<any> {
     return this.http.get(`${this.baseUrl}/user/${id}`);
+  }
+  getJoinedCommunityByProfileId(id): Observable<any> {
+    return this.http.get(`${this.baseUrl}/joined-community/${id}`);
   }
 
   getCommunityById(id): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
+  }
+
+  deleteCommunity(id): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+  removeFromCommunity(id, profileId): Observable<any> {
+    return this.http.delete(
+      `${this.baseUrl}/leave?communityId=${id}&profileId=${profileId}`
+    );
   }
 }

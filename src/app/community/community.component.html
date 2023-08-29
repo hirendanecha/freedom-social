@@ -1,6 +1,6 @@
-<div class="head-area mb-4 mb-lg-5 mt-5 mt-lg-0"></div>
+<div class="head-area mt-5 mt-lg-0"></div>
 <div class="top-area mb-5 d-center gap-3 justify-content-between">
-  <!-- <ul class="nav flex-wrap gap-2 tab-area" role="tablist">
+  <ul class="nav flex-wrap gap-2 tab-area" role="tablist">
     <li class="nav-item" role="presentation">
       <button
         class="nav-link d-center"
@@ -8,7 +8,7 @@
         (click)="activeTab = 1"
         [ngClass]="activeTab === 1 ? 'active' : ''"
       >
-        popular
+        My communities
       </button>
     </li>
     <li class="nav-item" role="presentation">
@@ -18,7 +18,7 @@
         (click)="activeTab = 2"
         [ngClass]="activeTab === 2 ? 'active' : ''"
       >
-        most-member
+        Joined communities
       </button>
     </li>
     <li class="nav-item" role="presentation">
@@ -28,16 +28,16 @@
         (click)="activeTab = 3"
         [ngClass]="activeTab === 3 ? 'active' : ''"
       >
-        suggested-group
+        Local communities
       </button>
     </li>
-  </ul> -->
-  <div class="btn-item">
+  </ul>
+  <!-- <div class="btn-item">
     <button class="cmn-btn p-2 gap-3 gap-lg-1" (click)="goToFindCommunity()">
       <i class="material-symbols-outlined mat-icon"> workspaces </i>
       Find Community Post
     </button>
-  </div>
+  </div> -->
   <div class="btn-item">
     <button class="cmn-btn gap-3 p-2 gap-lg-1" (click)="createCommunity()">
       <i class="material-symbols-outlined mat-icon"> add </i>
@@ -47,12 +47,12 @@
 </div>
 <div class="tab-content">
   <ng-container *ngIf="activeTab === 1">
-    <app-popular></app-popular>
+    <app-my-community></app-my-community>
   </ng-container>
   <ng-container *ngIf="activeTab === 2">
-    <app-members></app-members>
+    <app-joined-community></app-joined-community>
   </ng-container>
   <ng-container *ngIf="activeTab === 3">
-    <app-group></app-group>
+    <app-local-community></app-local-community>
   </ng-container>
 </div>

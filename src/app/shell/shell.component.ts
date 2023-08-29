@@ -25,13 +25,12 @@ export class ShellComponent {
           this.isShow =
             event.url.includes('/people') ||
             event.url.includes('/events') ||
-            event.url.includes('/community') ||
+            event.url.includes('/local-community') ||
             event.url.includes('/settings') ||
             event.url.includes('/login') ||
             event.url.includes('/reset-password') ||
             event.url.includes('/register') ||
             event.url.includes('/notifications') ||
-            // event.url.includes('/favorite') ||
             false;
           this.isLoginPgae = event.url.includes('/login') || false;
           this.isShowMyProfile =
