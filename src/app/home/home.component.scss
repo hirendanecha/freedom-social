@@ -30,6 +30,7 @@
       }
     }
   }
+
   .post-item {
     .post-single-box {
       .top-area {
@@ -83,7 +84,17 @@
       }
     }
   }
+
+  .share-post {
+    .post-message-input {
+      a {
+        font-size: 16px;
+        line-height: 16px;
+      }
+    }
+  }
 }
+
 .post-item {
   .post-single-box {
     .top-area {
@@ -104,7 +115,6 @@
   }
 }
 
-
 .share-post {
   .post-message-input {
     font-size: 16px;
@@ -122,15 +132,8 @@
       }
     }
   }
-}
 
-::ng-deep {
-  .share-post {
-    .post-message-input {
-      a {
-        font-size: 16px;
-        line-height: 16px;
-      }
-    }
+  .user-dropdown-menu {
+    max-height: 300px;
   }
 }

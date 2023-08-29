@@ -51,3 +51,18 @@
 .fade {
   transition: opacity .15s linear;
 }
+
+.dropdown-menu {
+  background-color: var(--section-1st-color) !important;
+  box-shadow: 0px 17px 12px var(--box-shadow) !important;
+  border-radius: 10px !important;
+  border-color: var(--bs-primary) !important;
+
+  .dropdown-item:hover, .dropdown-item:focus {
+    background-color: #ababab57 !important;
+  }
+}
+
+.form-control:focus {
+  color: var(--heading-1st-color) !important;
+}
