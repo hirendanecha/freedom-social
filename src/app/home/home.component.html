@@ -19,7 +19,7 @@
     <div #userSearchDropdownRef ngbDropdown>
       <div ngbDropdownMenu class="user-dropdown-menu w-100 overflow-auto">
         <ng-container *ngFor="let user of userList">
-          <div ngbDropdownItem class="d-flex gap-3 rounded-4 pe-auto overflow-hidden" role="button" (click)="selectTagUser(user)" >
+          <div ngbDropdownItem class="d-flex gap-3 pe-auto overflow-hidden" role="button" (click)="selectTagUser(user)" >
             <img class="w-32-px h-32-px rounded" [src]="user.ProfilePicName" [alt]="user.Username" onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';" />
             <span>{{ user.Username }}</span>
           </div>

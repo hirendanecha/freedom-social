@@ -1,243 +1,241 @@
 <!-- Mobile View -->
-<ng-container>
-  <div class="d-flex d-lg-none justify-content-between mt-3">
-    <div class="d-block d-lg-none">
-      <button
-        class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
+<div class="d-flex d-lg-none justify-content-between mt-3">
+  <div class="d-block d-lg-none">
+    <button
+      class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
+    >
+      <i class="material-symbols-outlined mat-icon" (click)="openToggle()">
+        tune
+      </i>
+      <span>My profile</span>
+    </button>
+  </div>
+  <div class="d-block d-lg-none">
+    <button
+      class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
+    >
+      <i
+        class="material-symbols-outlined mat-icon"
+        (click)="openMyListToggle()"
       >
-        <i class="material-symbols-outlined mat-icon" (click)="openToggle()">
-          tune
-        </i>
-        <span>My profile</span>
-      </button>
+        tune
+      </i>
+      <span>My List</span>
+    </button>
+  </div>
+</div>
+<!-- My Profile -->
+<div
+  class="d-block d-lg-none profile-sidebar cus-scrollbar p-5"
+  *ngIf="isEXpand"
+>
+  <div class="profile-pic d-flex gap-2 align-items-center">
+    <div class="avatar position-relative" routerLink="home">
+      <img
+        class="avatar-img max-un"
+        [src]="sharedService?.profilePic"
+        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+        alt="avatar"
+      />
     </div>
-    <div class="d-block d-lg-none">
-      <button
-        class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
-      >
-        <i
-          class="material-symbols-outlined mat-icon"
-          (click)="openMyListToggle()"
-        >
-          tune
-        </i>
-        <span>My List</span>
+    <div class="text-area d-flex flex-column justify-content-center">
+      <h6 class="m-0 mb-1">
+        <span>{{ sharedService?.userData?.FirstName }}</span>
+      </h6>
+      <p class="mdtxt">@{{ sharedService.userData.Username }}</p>
+    </div>
+    <div class="d-block d-lg-none position-absolute end-0 top-0">
+      <button class="button profile-close" (click)="openToggle()">
+        <i class="material-symbols-outlined mat-icon fs-xl m-2"> close </i>
       </button>
     </div>
   </div>
-  <!-- My Profile -->
-  <div
-    class="d-block d-lg-none profile-sidebar cus-scrollbar p-5"
-    *ngIf="isEXpand"
-  >
-    <div class="profile-pic d-flex gap-2 align-items-center">
-      <div class="avatar position-relative" routerLink="home">
-        <img
-          class="avatar-img max-un"
-          [src]="sharedService?.profilePic"
-          onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
-          alt="avatar"
-        />
+  <ul class="profile-link mt-7 mb-7 pb-7 ps-0">
+    <li>
+      <a
+        routerLink="community"
+        [ngClass]="isCommunity ? 'active' : ''"
+        class="d-flex gap-4"
+        (click)="openLoacalCommunity(); openToggle()"
+      >
+        <i class="material-symbols-outlined fs-xxl mat-icon"> workspaces </i>
+        <span>Local Communities</span>
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://1776token.com/"
+        target="_blank"
+        class="d-flex gap-4"
+        (click)="openToggle()"
+      >
+        <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+        <span>1776 Token</span>
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://localfoods.market/"
+        target="_blank"
+        class="d-flex gap-4"
+        (click)="openToggle()"
+      >
+        <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+        <span>Local Foods</span>
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://lamarslist.com/"
+        target="_blank"
+        class="d-flex gap-4"
+        (click)="openToggle()"
+      >
+        <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+        <span>Lamars List</span>
+      </a>
+    </li>
+    <li>
+      <a class="d-flex gap-4" (click)="openWalletPopUp(); openToggle()">
+        <i class="material-symbols-outlined fs-xxl mat-icon"> Download </i>
+        <span>Download 1776 Wallet</span>
+      </a>
+    </li>
+    <li>
+      <a class="d-flex gap-4" (click)="openClaimTokenPopUp(); openToggle()">
+        <i class="material-symbols-outlined fs-xxl mat-icon"> Token </i>
+        <span>Claim 50 free 1776</span>
+      </a>
+    </li>
+    <!-- <li>
+      <a
+        routerLink="settings"
+        class="d-flex gap-4"
+        [ngClass]="isSetting ? 'active' : ''"
+        (click)="openToggle()"
+      >
+        <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
+        <span>Settings</span>
+      </a>
+    </li> -->
+    <li>
+      <a
+        class="d-flex gap-4"
+        [ngClass]="isSetting ? 'active' : ''"
+        (click)="collapse.toggle()"
+      >
+        <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
+        <span>Settings</span>
+      </a>
+
+      <div #collapse="ngbCollapse" [ngbCollapse]="!isSetting">
+        <ul class="ps-3">
+          <li (click)="openToggle()">
+            <a routerLink="settings/general" class="d-flex gap-4">
+              <i class="material-symbols-outlined fs-xxl mat-icon">
+                person
+              </i>
+              <span>General</span>
+            </a>
+          </li>
+
+          <li (click)="openToggle()">
+            <a routerLink="settings/see-first-users" class="d-flex gap-4">
+              <i class="material-symbols-outlined fs-xxl mat-icon">
+                group_add
+              </i>
+              <span>See First Users</span>
+            </a>
+          </li>
+
+          <li (click)="openToggle()">
+            <a routerLink="settings/unsubscribed-users" class="d-flex gap-4">
+              <i class="material-symbols-outlined fs-xxl mat-icon">
+                group_remove
+              </i>
+              <span>Unsubscribed Users</span>
+            </a>
+          </li>
+
+          <li (click)="openToggle()">
+            <a routerLink="settings/delete-profile" class="d-flex gap-4">
+              <i class="material-symbols-outlined fs-xxl mat-icon">
+                person_remove
+              </i>
+              <span>Delete Account</span>
+            </a>
+          </li>
+        </ul>
       </div>
-      <div class="text-area d-flex flex-column justify-content-center">
-        <h6 class="m-0 mb-1">
-          <span>{{ sharedService?.userData?.FirstName }}</span>
-        </h6>
-        <p class="mdtxt">@{{ sharedService.userData.Username }}</p>
+    </li>
+  </ul>
+</div>
+<!-- MY list -->
+<div
+  class="side-wrapper d-block d-lg-none mb-3"
+  *ngIf="isShowMyList"
+>
+  <div class="cus-scrollbar side-wrapper">
+    <div class="sidebar-wrapper d-flex flex-column gap-6">
+      <div class="sidebar-area p-5">
+        <div class="dashboard-img">
+          <img class="w-100" src="/assets/images/freedom-dashboard.png" />
+          <span class="mt-3">
+            Get paid to Post, Reactions, Share and View and Refer family and
+            friends to Freedom!
+          </span>
+        </div>
+        <ul class="list-unstyled fs-11 d-flex text-center">
+          <!-- <li class="d-block m-0">All Time</li> -->
+          <li><span>Posts</span><br /><span class="posts_likes">3</span></li>
+          <li>
+            <span>Reactions</span><br /><span class="posts_likes">2</span>
+          </li>
+          <li><span>Views</span><br /><span class="posts_likes"> 0</span></li>
+          <li>
+            <span>Comments</span><br /><span class="posts_likes">0</span>
+          </li>
+          <li>
+            <span>Refferals</span><br /><span class="posts_likes">0</span>
+          </li>
+        </ul>
+        <ul class="bg-gray-div list-unstyled fs-11 d-flex text-center">
+          <!-- <li class="d-block m-0">Monthly</li> -->
+          <li><span>Posts</span><br /><span class="posts_likes">0</span></li>
+          <li>
+            <span>Reactions</span><br /><span class="posts_likes">0</span>
+          </li>
+          <li><span>Views</span><br /><span class="posts_likes">0</span></li>
+          <li>
+            <span>Comments</span><br /><span class="posts_likes">0</span>
+          </li>
+          <li>
+            <span>Refferals</span><br /><span class="posts_likes">0</span>
+          </li>
+        </ul>
+        <div class="amount-dashboard d-flex justify-content-around">
+          <span><img src="/assets/images/logo1776.png" /></span
+          ><span class="ml-2">0.8750 </span><span class="ml-4">3.50</span
+          ><span class="ml-2">(1776)</span>
+        </div>
+        <div class="dashboard-txt mt-2 mb-3 border p-2">
+          <span>
+            Dashboard only reflects 1776 earned by posting, liking, etc. and
+            does not reflect the 1776 Tokens in your offline wallet.
+          </span>
+        </div>
       </div>
-      <div class="d-block d-lg-none position-absolute end-0 top-0">
-        <button class="button profile-close" (click)="openToggle()">
-          <i class="material-symbols-outlined mat-icon fs-xl m-2"> close </i>
+      <div class="sidebar-area p-5">
+        <div class="mb-4">
+          <h6 class="d-inline-flex">Local Communities</h6>
+        </div>
+        <button class="cmn-btn" (click)="openLoacalCommunity()">
+          Create Local Community
         </button>
       </div>
     </div>
-    <ul class="profile-link mt-7 mb-7 pb-7 ps-0">
-      <li>
-        <a
-          routerLink="community"
-          [ngClass]="isCommunity ? 'active' : ''"
-          class="d-flex gap-4"
-          (click)="openLoacalCommunity(); openToggle()"
-        >
-          <i class="material-symbols-outlined fs-xxl mat-icon"> workspaces </i>
-          <span>Local Communities</span>
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://1776token.com/"
-          target="_blank"
-          class="d-flex gap-4"
-          (click)="openToggle()"
-        >
-          <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
-          <span>1776 Token</span>
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://localfoods.market/"
-          target="_blank"
-          class="d-flex gap-4"
-          (click)="openToggle()"
-        >
-          <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
-          <span>Local Foods</span>
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://lamarslist.com/"
-          target="_blank"
-          class="d-flex gap-4"
-          (click)="openToggle()"
-        >
-          <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
-          <span>Lamars List</span>
-        </a>
-      </li>
-      <li>
-        <a class="d-flex gap-4" (click)="openWalletPopUp(); openToggle()">
-          <i class="material-symbols-outlined fs-xxl mat-icon"> Download </i>
-          <span>Download 1776 Wallet</span>
-        </a>
-      </li>
-      <li>
-        <a class="d-flex gap-4" (click)="openClaimTokenPopUp(); openToggle()">
-          <i class="material-symbols-outlined fs-xxl mat-icon"> Token </i>
-          <span>Claim 50 free 1776</span>
-        </a>
-      </li>
-      <!-- <li>
-        <a
-          routerLink="settings"
-          class="d-flex gap-4"
-          [ngClass]="isSetting ? 'active' : ''"
-          (click)="openToggle()"
-        >
-          <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
-          <span>Settings</span>
-        </a>
-      </li> -->
-      <li>
-        <a
-          class="d-flex gap-4"
-          [ngClass]="isSetting ? 'active' : ''"
-          (click)="collapse.toggle()"
-        >
-          <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
-          <span>Settings</span>
-        </a>
-
-        <div #collapse="ngbCollapse" [ngbCollapse]="!isSetting">
-          <ul class="ps-3">
-            <li (click)="openToggle()">
-              <a routerLink="settings/general" class="d-flex gap-4">
-                <i class="material-symbols-outlined fs-xxl mat-icon">
-                  person
-                </i>
-                <span>General</span>
-              </a>
-            </li>
-
-            <li (click)="openToggle()">
-              <a routerLink="settings/see-first-users" class="d-flex gap-4">
-                <i class="material-symbols-outlined fs-xxl mat-icon">
-                  group_add
-                </i>
-                <span>See First Users</span>
-              </a>
-            </li>
-
-            <li (click)="openToggle()">
-              <a routerLink="settings/unsubscribed-users" class="d-flex gap-4">
-                <i class="material-symbols-outlined fs-xxl mat-icon">
-                  group_remove
-                </i>
-                <span>Unsubscribed Users</span>
-              </a>
-            </li>
-
-            <li (click)="openToggle()">
-              <a routerLink="settings/delete-profile" class="d-flex gap-4">
-                <i class="material-symbols-outlined fs-xxl mat-icon">
-                  person_remove
-                </i>
-                <span>Delete Account</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-    </ul>
   </div>
-  <!-- MY list -->
-  <div
-    class="cus-scrollbar side-wrapper d-block d-lg-none mb-3"
-    *ngIf="isShowMyList"
-  >
-    <div class="cus-scrollbar side-wrapper">
-      <div class="sidebar-wrapper d-flex flex-column gap-6">
-        <div class="sidebar-area p-5">
-          <div class="dashboard-img">
-            <img class="w-100" src="/assets/images/freedom-dashboard.png" />
-            <span class="mt-3">
-              Get paid to Post, Reactions, Share and View and Refer family and
-              friends to Freedom!
-            </span>
-          </div>
-          <ul class="list-unstyled fs-11 d-flex text-center">
-            <!-- <li class="d-block m-0">All Time</li> -->
-            <li><span>Posts</span><br /><span class="posts_likes">3</span></li>
-            <li>
-              <span>Reactions</span><br /><span class="posts_likes">2</span>
-            </li>
-            <li><span>Views</span><br /><span class="posts_likes"> 0</span></li>
-            <li>
-              <span>Comments</span><br /><span class="posts_likes">0</span>
-            </li>
-            <li>
-              <span>Refferals</span><br /><span class="posts_likes">0</span>
-            </li>
-          </ul>
-          <ul class="bg-gray-div list-unstyled fs-11 d-flex text-center">
-            <!-- <li class="d-block m-0">Monthly</li> -->
-            <li><span>Posts</span><br /><span class="posts_likes">0</span></li>
-            <li>
-              <span>Reactions</span><br /><span class="posts_likes">0</span>
-            </li>
-            <li><span>Views</span><br /><span class="posts_likes">0</span></li>
-            <li>
-              <span>Comments</span><br /><span class="posts_likes">0</span>
-            </li>
-            <li>
-              <span>Refferals</span><br /><span class="posts_likes">0</span>
-            </li>
-          </ul>
-          <div class="amount-dashboard d-flex justify-content-around">
-            <span><img src="/assets/images/logo1776.png" /></span
-            ><span class="ml-2">0.8750 </span><span class="ml-4">3.50</span
-            ><span class="ml-2">(1776)</span>
-          </div>
-          <div class="dashboard-txt mt-2 mb-3 border p-2">
-            <span>
-              Dashboard only reflects 1776 earned by posting, liking, etc. and
-              does not reflect the 1776 Tokens in your offline wallet.
-            </span>
-          </div>
-        </div>
-        <div class="sidebar-area p-5">
-          <div class="mb-4">
-            <h6 class="d-inline-flex">Local Communities</h6>
-          </div>
-          <button class="cmn-btn" (click)="openLoacalCommunity()">
-            Create Local Community
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-container>
+</div>
 
 <!-- Web View -->
 <div class="profile-content">
