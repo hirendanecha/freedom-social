@@ -6,8 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/services/auth.service';
-import Utils from 'src/app/constant/utils';
-import { ToastrService } from 'ngx-toastr';
 import { ToastService } from 'src/app/services/toaster.service';
 
 @Component({
@@ -41,7 +39,7 @@ export class LoginComponent {
       this.msg =
         'Please check your email and click the activation link to activate your account.';
       this.type = 'success';
-      this.toaster.success(this.msg);
+      // this.toaster.success(this.msg);
     }
   }
 
@@ -67,8 +65,8 @@ export class LoginComponent {
 
   onSubmit(): void {
     this.spinner.show();
-    this.authService.customerlogin(this.loginForm.value).subscribe(
-      (data: any) => {
+    this.authService.customerlogin(this.loginForm.value).subscribe({
+      next: (data: any) => {
         if (!data.error) {
           this.spinner.hide();
           this.tokenStorage.saveToken(data?.accessToken);
@@ -89,18 +87,18 @@ export class LoginComponent {
           this.errorMessage =
             'Invalid Email and Password. Kindly try again !!!!';
           this.isLoginFailed = true;
-          this.toaster.danger(this.errorMessage);
+          // this.toaster.danger(this.errorMessage);
         }
       },
-      (err) => {
+      error: (err) => {
         this.spinner.hide();
         console.log(err.error);
         this.errorMessage = err.error.message; //err.error.message;
-        this.toaster.danger(this.errorMessage);
+        // this.toaster.danger(this.errorMessage);
         this.isLoginFailed = true;
         this.errorCode = err.error.errorCode;
       }
-    );
+    });
   }
 
   resend() {

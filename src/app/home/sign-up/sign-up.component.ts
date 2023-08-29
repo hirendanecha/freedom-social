@@ -1,19 +1,16 @@
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { debounceTime, fromEvent } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
 import { CustomerService } from 'src/app/services/customer.service';
-import { ToastService } from 'src/app/services/toaster.service';
 import { UploadFilesService } from 'src/app/services/upload-files.service';
 @Component({
   selector: 'app-sign-up',
@@ -41,10 +38,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private customerService: CustomerService,
     private router: Router,
-    private toastService: ToastService,
-    private cd: ChangeDetectorRef,
-    private uploadService: UploadFilesService,
-    private toaster: ToastService
+    private uploadService: UploadFilesService
   ) {}
 
   ngOnInit(): void {
@@ -99,7 +93,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   save() {
     this.spinner.show();
-    console.log(this.registerForm.value);
+    // console.log(this.registerForm.value);
     this.customerService.createCustomer(this.customer).subscribe(
       (data: any) => {
         if (!data.error) {
@@ -131,11 +125,9 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     if (!this.customer.Password.match(pattern)) {
       this.msg =
         'Password must be a minimum of 8 characters and include one uppercase letter, one lowercase letter and one special character';
-      this.toaster.danger(this.msg);
     }
     if (this.customer.Password !== this.confirm_password) {
       this.msg = 'Passwords is incorrect';
-      this.toaster.danger(this.msg);
 
       return false;
     }
