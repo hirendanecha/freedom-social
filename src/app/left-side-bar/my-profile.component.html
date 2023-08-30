@@ -3,8 +3,9 @@
   <div class="d-block d-lg-none">
     <button
       class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
+      (click)="openToggle()"
     >
-      <i class="material-symbols-outlined mat-icon" (click)="openToggle()">
+      <i class="material-symbols-outlined mat-icon">
         tune
       </i>
       <span>My profile</span>
@@ -13,10 +14,10 @@
   <div class="d-block d-lg-none">
     <button
       class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
+      (click)="openMyListToggle()"
     >
       <i
         class="material-symbols-outlined mat-icon"
-        (click)="openMyListToggle()"
       >
         tune
       </i>
@@ -26,7 +27,7 @@
 </div>
 <!-- My Profile -->
 <div
-  class="d-block d-lg-none profile-sidebar cus-scrollbar p-5"
+  class="d-block d-lg-none profile-sidebar p-5"
   *ngIf="isEXpand"
 >
   <div class="profile-pic d-flex gap-2 align-items-center">

@@ -27,7 +27,7 @@ export class AddCommunityComponent {
   coverImg: any;
   userId = '';
   profileId = '';
-  originurl = environment.webUrl + 'community/c/';
+  originurl = environment.webUrl + 'community/';
   constructor(
     public activeModal: NgbActiveModal,
     private uploadService: UploadFilesService,

@@ -86,16 +86,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ) {
     this.communityId = +history?.state?.data?.id;
     this.profileId = sessionStorage.getItem('profileId');
+
     this.postData.profileId = this.profileId;
+    this.postData.communityId = this.communityId;
   }
 
   ngOnInit(): void {
     if (this.communityId) {
       this.getCommunityDetails();
-      this.getCommunityPost();
-    } else {
-      this.getPostList();
     }
+
+    this.getPostList();
   }
 
   ngAfterViewInit(): void {
@@ -291,23 +292,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       (res: any) => {
         if (res) {
           this.spinner.hide();
-          console.log('res : ', res);
           if (res?.[0]?.Id) {
-            this.communityDetails = res?.[0];
+            const details = res?.[0];
+            if (details?.memberList?.length > 0) {
+              details['memberIds'] = details?.memberList?.map((member: any) => member?.profileId);
+            }
+            this.communityDetails = details;
             console.log('communityDetails : ', this.communityDetails);
           }
-
-          // res.forEach((element) => {
-          //   if (element.Id) {
-          //     this.communityDetails = element;
-          //     this.memberList = element.memberList;
-          //     this.memberList.forEach((ele) => {
-          //       if (ele.isAdmin === 'Y') {
-          //         this.adminList.push(ele.profileId);
-          //       }
-          //     });
-          //   }
-          // });
         }
       },
       (error) => {
@@ -343,26 +335,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     );
   }
 
-  getCommunityPost(): void {
-    this.spinner.show();
-    this.communityPostService.getPostsByProfileId(this.communityId).subscribe(
-      (res: any) => {
-        if (res) {
-          this.postList = res;
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
-  }
-
   getPostList(): void {
     const page = this.activePage;
     this.spinner.show();
     this.socketService.getPost(
-      { profileId: this.profileId, page: page, size: 15 },
+      { profileId: this.profileId, communityId: this.communityId, page: page, size: 15 },
       (post) => {
         // this.spinner.hide();
       }

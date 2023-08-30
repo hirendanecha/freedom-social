@@ -1,7 +1,7 @@
 <ng-container *ngIf="communityId && communityDetails?.Id">
   <div class="single-box community-details p-5">
     <ng-container *ngIf="communityDetails?.coverImg">
-      <img [src]="communityDetails.coverImg" class="w-100 h-272-px rounded-3 mb-5"
+      <img [src]="communityDetails?.coverImg" class="w-100 h-272-px rounded-3 mb-5"
         onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';" [alt]="'Preview Image'" />
     </ng-container>
 
@@ -18,9 +18,9 @@
     <span class="w-100 d-flex pt-2 description">{{communityDetails?.CommunityDescription}}</span>
 
     <div class="page-details pt-3">
-      <ul class="nav pt-3 flex-wrap gap-2 tab-area">
+      <ul class="nav pt-3 flex-wrap tab-area">
         <li class="nav-item" role="presentation" (click)="activeCommunityTab = 1">
-          <a class="nav-link d-center" [ngClass]="activeCommunityTab === 1 ? 'active' : ''">Community Post</a>
+          <a class="nav-link d-center" [ngClass]="activeCommunityTab === 1 ? 'active' : ''">Posts</a>
         </li>
         <li class="nav-item" role="presentation" (click)="activeCommunityTab = 2">
           <a class="nav-link d-center" [ngClass]="activeCommunityTab === 2 ? 'active' : ''">Members</a>
@@ -31,71 +31,71 @@
 </ng-container>
 
 <ng-container *ngIf="activeCommunityTab === 1">
-  <div class="share-post d-flex gap-3 gap-sm-5 p-3 p-sm-5">
-    <img [src]="sharedService.profilePic"
-      onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
-      class="w-56-px h-56-px rounded-4" alt="icon" />
+  <ng-container *ngIf="!communityId || communityDetails?.memberIds?.includes(+profileId)">
+    <div class="share-post d-flex gap-3 gap-sm-5 p-3 p-sm-5">
+      <img [src]="sharedService.profilePic"
+        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+        class="w-56-px h-56-px rounded-4" alt="icon" />
 
-    <div class="w-100 position-relative">
-      <!-- <input placeholder="Write something to post.." name="message" [(ngModel)]="message" autocomplete="off" (change)="getLinkData(message)" (keyup)="messageOnKeyEvent($event)" /> -->
-      <div #postMessageInput contenteditable placeholder="Write something to post.."
-        class="post-message-input input-area" (keyup)="messageOnKeyEvent()"></div>
+      <div class="w-100 position-relative">
+        <div #postMessageInput contenteditable placeholder="Write something to post.." class="post-message-input input-area" (keyup)="messageOnKeyEvent()"></div>
 
-      <div #userSearchDropdownRef ngbDropdown>
-        <div ngbDropdownMenu class="user-dropdown-menu w-100 overflow-auto">
-          <ng-container *ngFor="let user of userList">
-            <div ngbDropdownItem class="d-flex gap-3 pe-auto overflow-hidden" role="button"
-              (click)="selectTagUser(user)">
-              <img class="w-32-px h-32-px rounded" [src]="user.ProfilePicName" [alt]="user.Username"
-                onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';" />
-              <span>{{ user.Username }}</span>
-            </div>
-          </ng-container>
+        <div #userSearchDropdownRef ngbDropdown>
+          <div ngbDropdownMenu class="user-dropdown-menu w-100 overflow-auto">
+            <ng-container *ngFor="let user of userList">
+              <div ngbDropdownItem class="d-flex gap-3 pe-auto overflow-hidden" role="button"
+                (click)="selectTagUser(user)">
+                <img class="w-32-px h-32-px rounded" [src]="user.ProfilePicName" [alt]="user.Username"
+                  onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';" />
+                <span>{{ user.Username }}</span>
+              </div>
+            </ng-container>
+          </div>
         </div>
+
+        <!-- <div class="abs-area position-absolute d-none d-sm-block">
+          <i
+            class="material-symbols-outlined mat-icon xxltxt"
+            (click)="openEmojiMenu()"
+          >
+            sentiment_satisfied
+          </i>
+        </div> -->
+        <ul
+          class="d-flex justify-content-between justify-content-lg-between flex-wrap ps-0 mb-0 gap-3 gap-sm-5 pt-3 pt-sm-5">
+          <li class="d-flex gap-2 align-items-center" data-toggle="tooltip" data-placement="bottom" title="Comming Soon!">
+            <!-- (click)="goLive()" -->
+            <!-- <img
+              src="assets/images/icon/live-video.png"
+              class="max-un"
+              alt="icon"
+            /> -->
+            <i class="material-symbols-outlined mat-icon">stream</i>
+            <span>Live</span>
+          </li>
+          <li class="d-flex align-items-center gap-2 pointer-events" cursor (click)="addPost()">
+            <!-- <img src="assets/images/icon/vgallery.png" class="max-un" alt="icon" /> -->
+            <i class="material-symbols-outlined mat-icon">add_a_photo</i>
+            <span>Photo</span>
+          </li>
+          <!-- <li class="d-flex align-items-center gap-2" (click)="createPost()">
+            <img
+              src="assets/images/icon/emoji-laughing.png"
+              class="max-un"
+              alt="icon"
+            />
+            <span>Fallings/Activity</span>
+          </li> -->
+          <div class="btn-area d-flex d-lg-block d-md-block">
+            <button class="cmn-btn p-2 px-2 px-sm-5 px-lg-6" [disabled]="!postData?.postdescription"
+              (click)="createPost()">
+              Post
+            </button>
+          </div>
+        </ul>
       </div>
-
-      <!-- <div class="abs-area position-absolute d-none d-sm-block">
-        <i
-          class="material-symbols-outlined mat-icon xxltxt"
-          (click)="openEmojiMenu()"
-        >
-          sentiment_satisfied
-        </i>
-      </div> -->
-      <ul
-        class="d-flex justify-content-between justify-content-lg-between flex-wrap ps-0 mb-0 gap-3 gap-sm-5 pt-3 pt-sm-5">
-        <li class="d-flex gap-2 align-items-center" data-toggle="tooltip" data-placement="bottom" title="Comming Soon!">
-          <!-- (click)="goLive()" -->
-          <!-- <img
-            src="assets/images/icon/live-video.png"
-            class="max-un"
-            alt="icon"
-          /> -->
-          <i class="material-symbols-outlined mat-icon">stream</i>
-          <span>Live</span>
-        </li>
-        <li class="d-flex align-items-center gap-2 pointer-events" cursor (click)="addPost()">
-          <!-- <img src="assets/images/icon/vgallery.png" class="max-un" alt="icon" /> -->
-          <i class="material-symbols-outlined mat-icon">add_a_photo</i>
-          <span>Photo</span>
-        </li>
-        <!-- <li class="d-flex align-items-center gap-2" (click)="createPost()">
-          <img
-            src="assets/images/icon/emoji-laughing.png"
-            class="max-un"
-            alt="icon"
-          />
-          <span>Fallings/Activity</span>
-        </li> -->
-        <div class="btn-area d-flex d-lg-block d-md-block">
-          <button class="cmn-btn p-2 px-2 px-sm-5 px-lg-6" [disabled]="!postData?.postdescription"
-            (click)="createPost()">
-            Post
-          </button>
-        </div>
-      </ul>
     </div>
-  </div>
+  </ng-container>
 
   <div class="post-item d-flex flex-column gap-3 mt-3">
     <ng-container *ngIf="postList?.length > 0; else elseNoPostFound">
@@ -374,11 +374,13 @@
         </div>
       </ng-container>
 
-      <div class="col-12 my-5 text-center">
-        <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
-          Load More
-        </button>
-      </div>
+      <ng-container *ngIf="!communityId">
+        <div class="col-12 my-5 text-center">
+          <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
+            Load More
+          </button>
+        </div>
+      </ng-container>
     </ng-container>
   </div>
 </ng-container>
@@ -387,20 +389,20 @@
   <div class="row community-members">
     <div class="col-md-6" *ngFor="let member of communityDetails?.memberList">
       <div class="single-box d-flex align-items-center gap-2 px-3 py-2">
-        <img class="w-48-px h-48-px rounded-4" [src]=" member.ProfilePicName || '/assets/images/avtar/placeholder-user.png'" onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png'" alt="avatar" />
+        <img class="w-48-px h-48-px rounded-4" [src]=" member?.ProfilePicName || '/assets/images/avtar/placeholder-user.png'" onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png'" alt="avatar" />
 
-        <div class="d-flex flex-column justify-content-center align-items-start">
-          <p class="mb-1">{{ member.FirstName }} {{ member.LastName }}</p>
-          <span class="font-12-px description">{{ member.isAdmin === "Y" ? "Admin" : "Member" }}</span>
+        <div class="d-flex flex-column justify-content-center align-items-start w-100">
+          <p class="mb-1">{{ member?.FirstName }} {{ member?.LastName }}</p>
+          <span class="font-12-px description">{{ member?.isAdmin === "Y" ? "Admin" : "Member" }}</span>
         </div>
 
-        <div class="btn-group cus-dropdown d-flex gap-3" *ngIf="communityDetails.profileId !== member.profileId">
-          <div ngbDropdown class="d-inline-block">
-            <button class="dropdown-btn" ngbDropdownToggle>
+        <div class="btn-group cus-dropdown d-flex gap-3" *ngIf="profileId.toString() === communityDetails?.profileId.toString() && communityDetails?.profileId !== member?.profileId">
+          <div ngbDropdown>
+            <button class="dropdown-btn d-flex" ngbDropdownToggle>
               <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
             </button>
             <div ngbDropdownMenu class="dropdown-menu">
-              <button ngbDropdownItem *ngIf="member.isAdmin === 'Y'">
+              <button ngbDropdownItem *ngIf="member?.isAdmin === 'N'">
                 <a class="droplist d-flex align-items-center gap-2" (click)="createCommunityAdmin(member)">
                   <i class="material-symbols-outlined mat-icon">
                     verified_user
@@ -410,7 +412,7 @@
               </button>
 
               <button ngbDropdownItem>
-                <a class="droplist d-flex align-items-center gap-2" (click)="goToViewProfile(member.proflieId)">
+                <a class="droplist d-flex align-items-center gap-2" (click)="goToViewProfile(member?.profileId)">
                   <i class="material-symbols-outlined mat-icon"> person </i>
                   <span>View Profile</span>
                 </a>

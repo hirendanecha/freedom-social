@@ -41,7 +41,7 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
   selectedFile: File;
   logoImg = '';
   coverImg = '';
-  originurl = environment.webUrl + 'community/c/';
+  originurl = environment.webUrl + 'community/';
 
   @ViewChild('zipCode') zipCode: ElementRef;
   constructor(
