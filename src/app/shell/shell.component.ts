@@ -39,7 +39,6 @@ export class ShellComponent {
             event.url.includes('/login') ||
             event.url.includes('/register') ||
             event.url.includes('/reset-password') ||
-            event.url.includes('/community') ||
             event.url.includes('/notifications') ||
             false;
         }

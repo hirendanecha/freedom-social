@@ -31,7 +31,7 @@ export class JoinedCommunityComponent implements OnInit {
       '-'
     ).toLowerCase();
     console.log(communityName);
-    this.router.navigate([`local-community/${communityName}`], {
+    this.router.navigate([`community/${communityName}`], {
       state: {
         data: { id: community.Id },
       },

@@ -22,6 +22,8 @@ import { UnsubscribeProfileService } from '../services/unsubscribe-profile.servi
 import { SeeFirstUserService } from '../services/see-first-user.service';
 import { CustomerService } from '../services/customer.service';
 import { ToastService } from '../services/toaster.service';
+import { CommunityService } from '../services/community.service';
+import { CommunityPostService } from '../services/community-post.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -58,6 +60,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   userList = [];
   userNameSearch = '';
 
+  communityId: number;
+  communityDetails: any;
+  activeCommunityTab: number = 1;
+
   @ViewChild('userSearchDropdownRef', { static:false, read: NgbDropdown }) userSearchNgbDropdown: NgbDropdown;
   @ViewChild('postMessageInput', { static: false }) postMessageInput: ElementRef;
 
@@ -74,14 +80,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private seeFirstUserService: SeeFirstUserService,
     private customerService: CustomerService,
     private renderer: Renderer2,
-    private toaster: ToastService
+    private toaster: ToastService,
+    private communityService: CommunityService,
+    private communityPostService: CommunityPostService
   ) {
+    this.communityId = +history?.state?.data?.id;
     this.profileId = sessionStorage.getItem('profileId');
     this.postData.profileId = this.profileId;
   }
 
   ngOnInit(): void {
-    this.getPostList();
+    if (this.communityId) {
+      this.getCommunityDetails();
+      this.getCommunityPost();
+    } else {
+      this.getPostList();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -271,6 +285,79 @@ export class HomeComponent implements OnInit, AfterViewInit {
     modalRef.componentInstance.closeIcon = true;
   }
 
+  getCommunityDetails(): void {
+    this.spinner.show();
+    this.communityService.getCommunityById(this.communityId).subscribe(
+      (res: any) => {
+        if (res) {
+          this.spinner.hide();
+          console.log('res : ', res);
+          if (res?.[0]?.Id) {
+            this.communityDetails = res?.[0];
+            console.log('communityDetails : ', this.communityDetails);
+          }
+
+          // res.forEach((element) => {
+          //   if (element.Id) {
+          //     this.communityDetails = element;
+          //     this.memberList = element.memberList;
+          //     this.memberList.forEach((ele) => {
+          //       if (ele.isAdmin === 'Y') {
+          //         this.adminList.push(ele.profileId);
+          //       }
+          //     });
+          //   }
+          // });
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
+  }
+
+  createCommunityAdmin(member: any): void {
+    let data = {};
+    if (member.isAdmin === 'Y') {
+      data = {
+        id: member?.Id,
+        isAdmin: 'N',
+      };
+    } else {
+      data = {
+        id: member?.Id,
+        isAdmin: 'Y',
+      };
+    }
+    this.communityService.createCommunityAdmin(data).subscribe(
+      (res: any) => {
+        if (res) {
+          this.toaster.success(res.message);
+          this.getCommunityDetails();
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getCommunityPost(): void {
+    this.spinner.show();
+    this.communityPostService.getPostsByProfileId(this.communityId).subscribe(
+      (res: any) => {
+        if (res) {
+          this.postList = res;
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
+  }
+
   getPostList(): void {
     const page = this.activePage;
     this.spinner.show();
@@ -295,7 +382,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.socketService.socket.on(
       'new-post',
       (data: any) => {
-        this.spinner.hide();
         this.postList = data;
         this.postList.map((ele: any) => {
           ele.totalReactCount =
@@ -306,6 +392,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             ele.sadcount;
           return ele;
         });
+        this.spinner.hide();
       },
       (error: any) => {
         this.spinner.hide();

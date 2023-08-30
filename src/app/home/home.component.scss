@@ -136,3 +136,9 @@
     max-height: 300px;
   }
 }
+
+.community-details, .community-members {
+  .description {
+    color: var(--para-1st-color);
+  }
+}
