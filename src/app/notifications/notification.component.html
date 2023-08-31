@@ -15,14 +15,18 @@
               alt="avatar"
             />
           </div>
-          <div class="text-area text-start">
+          <div class="single-item notification-area text-area text-start">
             <h6 class="m-0 mb-1">
               <a
                 class="cursor"
                 (click)="viewUserProfile(notification?.notificationByProfileId)"
                 >{{ notification?.FirstName }}</a
               >
-              <span class="ms-1">{{ notification?.notificationDesc }}</span>
+              <span class="ms-1">{{ notification?.notificationDesc }} </span>
+              <span
+                *ngIf="notification.isRead === 'N'"
+                class="unread-notification smtxt"
+              ></span>
             </h6>
             <span class="mdtxt time-schedule">Just now</span>
           </div>
