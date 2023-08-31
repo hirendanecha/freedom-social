@@ -93,6 +93,13 @@
   max-height: 420px;
   overflow-y: scroll;
 
+  .unread-notification {
+    width: 13px;
+    height: 13px;
+    background: var(--primary-color);
+    border-radius: 50%;
+  }
+
   .abs-item {
     bottom: -5px;
     right: -5px;
@@ -136,7 +143,6 @@
   display: flex;
   bottom: unset !important;
 }
-
 
 @media (max-width: 1024px) {
   ::ng-deep .user-menu-panale {

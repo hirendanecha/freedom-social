@@ -168,4 +168,13 @@ export class HeaderComponent {
     this.router.navigate([`settings/general/view-profile/${profileId}`]);
     this.userMenusOverlayDialog.close();
   }
+
+  readUnreadNotification(id, isRead): void {
+    this.customerService.readUnreadNotification(id, isRead).subscribe({
+      next: (res) => {
+        this.sharedService.getNotificationList();
+        // this.toaster.success(res.message);
+      },
+    });
+  }
 }

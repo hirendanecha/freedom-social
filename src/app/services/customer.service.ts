@@ -74,7 +74,7 @@ export class CustomerService {
     });
   }
 
-  readUnreadNotification(id: number, isRead: ''): Observable<any> {
+  readUnreadNotification(id: number, isRead: string): Observable<any> {
     return this.http.get(
       `${this.baseUrl}/edit-notification/${id}?isRead=${isRead}`
     );

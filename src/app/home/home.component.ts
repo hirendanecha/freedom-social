@@ -64,8 +64,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   communityDetails: any;
   activeCommunityTab: number = 1;
 
-  @ViewChild('userSearchDropdownRef', { static:false, read: NgbDropdown }) userSearchNgbDropdown: NgbDropdown;
-  @ViewChild('postMessageInput', { static: false }) postMessageInput: ElementRef;
+  @ViewChild('userSearchDropdownRef', { static: false, read: NgbDropdown })
+  userSearchNgbDropdown: NgbDropdown;
+  @ViewChild('postMessageInput', { static: false })
+  postMessageInput: ElementRef;
 
   seeFirstList: any = [];
 
@@ -160,7 +162,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  reactLikeOnPost(post: { likescount: number; totalReactCount: number; react: string; id: any; profileid: any; }) {
+  reactLikeOnPost(post: {
+    likescount: number;
+    totalReactCount: number;
+    react: string;
+    id: any;
+    profileid: any;
+  }) {
     post.likescount = post.likescount + 1;
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'L';
@@ -173,7 +181,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
     this.likeDisLikePost(data);
   }
-  reactLoveOnPost(post: { lovecount: number; totalReactCount: number; react: string; id: any; }) {
+  reactLoveOnPost(post: {
+    lovecount: number;
+    totalReactCount: number;
+    react: string;
+    id: any;
+  }) {
     post.lovecount = post.lovecount + 1;
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'LO';
@@ -185,7 +198,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
     this.likeDisLikePost(data);
   }
-  reactWowOnPost(post: { wowcount: number; totalReactCount: number; react: string; id: any; }) {
+  reactWowOnPost(post: {
+    wowcount: number;
+    totalReactCount: number;
+    react: string;
+    id: any;
+  }) {
     post.wowcount = post.wowcount + 1;
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'WO';
@@ -197,7 +215,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
     this.likeDisLikePost(data);
   }
-  reactHaliriousOnPost(post: { haliriouscount: number; totalReactCount: number; react: string; id: any; }) {
+  reactHaliriousOnPost(post: {
+    haliriouscount: number;
+    totalReactCount: number;
+    react: string;
+    id: any;
+  }) {
     post.haliriouscount = post.haliriouscount + 1;
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'HA';
@@ -209,7 +232,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
     this.likeDisLikePost(data);
   }
-  reactSadOnPost(post: { sadcount: number; totalReactCount: number; react: string; id: any; }) {
+  reactSadOnPost(post: {
+    sadcount: number;
+    totalReactCount: number;
+    react: string;
+    id: any;
+  }) {
     post.sadcount = post.sadcount + 1;
     post.totalReactCount = post.totalReactCount + 1;
     post.react = 'SA';
@@ -222,7 +250,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.likeDisLikePost(data);
   }
 
-  dislikeFeedPost(post: { react: string; likescount: number; lovecount: number; haliriouscount: number; wowcount: number; sadcount: number; totalReactCount: number; id: any; }) {
+  dislikeFeedPost(post: {
+    react: string;
+    likescount: number;
+    lovecount: number;
+    haliriouscount: number;
+    wowcount: number;
+    sadcount: number;
+    totalReactCount: number;
+    id: any;
+  }) {
     if (post.react == 'L') {
       post.likescount = post.likescount - 1;
     } else if (post.react == 'LO') {
@@ -244,7 +281,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.likeDisLikePost(data);
   }
 
-  likeDisLikePost(data: { postId: any; profileId: string; toProfileId?: number; likeCount: any; actionType?: string; }): void {
+  likeDisLikePost(data: {
+    postId: any;
+    profileId: string;
+    toProfileId?: number;
+    likeCount: any;
+    actionType?: string;
+  }): void {
     this.socketService.likeFeedPost(data, (res) => {
       console.log(res);
     });
@@ -295,7 +338,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
           if (res?.[0]?.Id) {
             const details = res?.[0];
             if (details?.memberList?.length > 0) {
-              details['memberIds'] = details?.memberList?.map((member: any) => member?.profileId);
+              details['memberIds'] = details?.memberList?.map(
+                (member: any) => member?.profileId
+              );
             }
             this.communityDetails = details;
             console.log('communityDetails : ', this.communityDetails);
@@ -339,7 +384,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     const page = this.activePage;
     this.spinner.show();
     this.socketService.getPost(
-      { profileId: this.profileId, communityId: this.communityId, page: page, size: 15 },
+      {
+        profileId: this.profileId,
+        communityId: this.communityId,
+        page: page,
+        size: 15,
+      },
       (post) => {
         // this.spinner.hide();
       }
@@ -387,7 +437,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       if (Object.prototype.hasOwnProperty.call(anchorTags, key)) {
         const tag = anchorTags[key];
 
-        this.postData.tags.push({ id: tag?.getAttribute('data-id'), name: tag?.innerHTML });
+        this.postData.tags.push({
+          id: tag?.getAttribute('data-id'),
+          name: tag?.innerHTML,
+        });
       }
     }
 
@@ -402,7 +455,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
       });
 
       this.clearUserSearchData();
-      this.renderer.setProperty(this.postMessageInput.nativeElement, 'innerHTML', '');
+      this.renderer.setProperty(
+        this.postMessageInput.nativeElement,
+        'innerHTML',
+        ''
+      );
 
       this.socketService.socket.on(
         'create-new-post',
@@ -426,15 +483,24 @@ export class HomeComponent implements OnInit, AfterViewInit {
       (res: any) => {
         if (res) {
           this.spinner.hide();
-          res.data.forEach((element: { totalReactCount: any; likescount: any; wowcount: any; haliriouscount: any; lovecount: any; sadcount: any; }) => {
-            element.totalReactCount =
-              element.likescount +
-              element.wowcount +
-              element.haliriouscount +
-              element.lovecount +
-              element.sadcount;
-            this.postList.push(element);
-          });
+          res.data.forEach(
+            (element: {
+              totalReactCount: any;
+              likescount: any;
+              wowcount: any;
+              haliriouscount: any;
+              lovecount: any;
+              sadcount: any;
+            }) => {
+              element.totalReactCount =
+                element.likescount +
+                element.wowcount +
+                element.haliriouscount +
+                element.lovecount +
+                element.sadcount;
+              this.postList.push(element);
+            }
+          );
         }
       },
       (error) => {
@@ -497,7 +563,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 metadescription: res?.meta?.description,
                 metaimage: res.meta?.image?.url,
                 metalink: res?.meta?.url || url,
-                url: url
+                url: url,
               };
             }
 
@@ -505,11 +571,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
           },
           error: () => {
             this.spinner.hide();
-          }
+          },
         });
       }
     }
-
 
     // const defaultValue = des.split('http')[0];
     // console.log(defaultValue);
@@ -570,7 +635,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.getLinkData();
 
     const text = this.postMessageInput.nativeElement.innerHTML;
-    const atSymbolIndex = text.lastIndexOf("@");
+    const atSymbolIndex = text.lastIndexOf('@');
 
     if (atSymbolIndex !== -1) {
       this.userNameSearch = text.substring(atSymbolIndex + 1);
@@ -609,7 +674,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       error: () => {
         this.clearUserSearchData();
-      }
+      },
     });
   }
 
@@ -621,10 +686,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   selectTagUser(user: any): void {
     const postHtml = this.postMessageInput.nativeElement.innerHTML;
-    const text = postHtml.replace(`@${this.userNameSearch}`, `<a href="/settings/general/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a>`)
+    const text = postHtml.replace(
+      `@${this.userNameSearch}`,
+      `<a href="/settings/general/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a>`
+    );
     console.log('postHtml : ', postHtml);
 
-    this.renderer.setProperty(this.postMessageInput.nativeElement, 'innerHTML', text);
+    this.renderer.setProperty(
+      this.postMessageInput.nativeElement,
+      'innerHTML',
+      text
+    );
 
     this.postData.postdescription = text;
   }
@@ -633,7 +705,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     console.log('NameRef : ', nameRef);
   }
 
-  deletePost(post: { id: any; }): void {
+  deletePost(post: { id: any }): void {
     this.postId = null;
     console.log(post.id);
     const modalRef = this.modalService.open(DeletePostComponent, {
@@ -648,18 +720,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
       console.log(res);
       if (res === 'success') {
         // post['hide'] = true;
-        this.postService.deletePost(post.id).subscribe(
-          (res: any) => {
+        this.postService.deletePost(post.id).subscribe({
+          next: (res: any) => {
             if (res) {
               this.toaster.success(res.message);
               this.spinner.hide();
               this.getPostList();
             }
           },
-          (error) => {
+          error: (error) => {
             this.spinner.hide();
-          }
-        );
+          },
+        });
       }
     });
   }
@@ -687,18 +759,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getSeeFirstIdByProfileId(id: number): void {
-    this.seeFirstUserService.getSeeFirstIdByProfileId(id).subscribe(
-      (res: any) => {
+    this.seeFirstUserService.getSeeFirstIdByProfileId(id).subscribe({
+      next: (res: any) => {
         if (res) {
-          res.forEach((element: { SeeFirstProfileId: any; }) => {
+          res.forEach((element: { SeeFirstProfileId: any }) => {
             this.seeFirstList.push(element.SeeFirstProfileId);
           });
           console.log(this.seeFirstList);
         }
       },
-      (error) => {
+      error: (error) => {
         console.log(error);
-      }
-    );
+      },
+    });
   }
 }
