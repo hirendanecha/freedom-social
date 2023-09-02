@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
-import { LoginComponent } from '../home/login/login.component';
-import { AuthenticationGuard } from '../services/authentication.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -24,6 +22,12 @@ const routes: Routes = [
     path: 'communities-post',
     loadChildren: () =>
       import('../favorites/favorite.module').then((m) => m.FavoriteModule),
+  },
+  {
+    path: 'research',
+    // canActivate: [AuthenticationGuard],
+    loadChildren: () =>
+      import('../research/research.module').then((m) => m.ResearchModule),
   },
   {
     path: 'settings',
