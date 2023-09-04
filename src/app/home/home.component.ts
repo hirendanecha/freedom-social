@@ -62,6 +62,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   communityId: number;
   communityDetails: any;
   activeCommunityTab: number = 1;
+  postComment: string = '';
 
   @ViewChild('userSearchDropdownRef', { static: false, read: NgbDropdown })
   userSearchNgbDropdown: NgbDropdown;
@@ -798,7 +799,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.clearUserSearchData();
     }
     console.log(text);
-    // this.postData.postdescription = text;
+    this.postComment = text;
 
     // if (lastChar === '@' || this.userNameSearch) {
     //   this.userNameSearch += lastChar;
@@ -811,20 +812,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   commentOnPost(id): void {
-    const commentData = {
-      postId: id,
-      comment: this.postData.postdescription,
-      profileId: this.profileId,
-    };
-    console.log(commentData);
-    this.socketService.commentOnPost(commentData, (data) => {
-      this.toaster.success('comment added on post');
-    });
-    this.socketService.socket.on('comments-on-post', (data: any) => {
-      console.log(data);
-      this.commentList.push(data[0]);
-      this.getPostList();
-    });
+    if (this.postComment) {
+      const commentData = {
+        postId: id,
+        comment: this.postComment,
+        profileId: this.profileId,
+      };
+      console.log(commentData);
+      this.socketService.commentOnPost(commentData, (data) => {
+        this.toaster.success('comment added on post');
+        this.postComment = '';
+      });
+      this.socketService.socket.on('comments-on-post', (data: any) => {
+        console.log(data);
+        this.commentList.push(data[0]);
+        this.getPostList();
+      });
+    } else {
+      this.toaster.danger('Please enter comment');
+    }
   }
 
   viewComments(id): void {
@@ -878,27 +884,32 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   replyOnComment(id, commentId): void {
-    const commentData = {
-      postId: id,
-      comment: this.postData.postdescription,
-      profileId: this.profileId,
-      parentCommentId: commentId,
-    };
-    this.socketService.commentOnPost(commentData, (data) => {
-      this.toaster.success('replied on comment');
-    });
-    this.socketService.socket.on('comments-on-post', (data: any) => {
-      console.log(data);
-      this.commentList.map((ele: any) => ({
-        ...ele,
-        replyCommnetsList: data.filter((ele1) => {
-          return ele.id === ele1.parentCommentId;
-        }),
-      }));
-      this.isReply = false;
-      this.commentId = null;
-      this.getPostList();
-    });
+    if (this.postComment) {
+      const commentData = {
+        postId: id,
+        comment: this.postComment,
+        profileId: this.profileId,
+        parentCommentId: commentId,
+      };
+      this.socketService.commentOnPost(commentData, (data) => {
+        this.toaster.success('replied on comment');
+        this.postComment = '';
+      });
+      this.socketService.socket.on('comments-on-post', (data: any) => {
+        console.log(data);
+        this.commentList.map((ele: any) => ({
+          ...ele,
+          replyCommnetsList: data.filter((ele1) => {
+            return ele.id === ele1.parentCommentId;
+          }),
+        }));
+        this.isReply = false;
+        this.commentId = null;
+        this.getPostList();
+      });
+    } else {
+      this.toaster.danger('Please enter comment');
+    }
   }
 
   likeComments(comment): void {
