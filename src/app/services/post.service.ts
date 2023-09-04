@@ -74,4 +74,12 @@ export class PostService {
   deletePost(id): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+
+  getComments(id): Observable<any> {
+    return this.http.get(`${this.baseUrl}/comments/${id}`);
+  }
+
+  deleteComments(id): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/comments/${id}`);
+  }
 }

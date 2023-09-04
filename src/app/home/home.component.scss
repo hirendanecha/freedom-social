@@ -81,6 +81,13 @@
           }
         }
       }
+      .comments-area {
+        .like-button {
+          .active {
+            color: var(--primary-color) !important;
+          }
+        }
+      }
     }
   }
 

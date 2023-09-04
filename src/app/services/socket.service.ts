@@ -41,7 +41,15 @@ export class SocketService {
     this.socket.emit('likeOrDislike', params, callback);
   }
 
+  likeFeedComments(params, callback: (post: any) => void) {
+    this.socket.emit('likeOrDislikeComments', params, callback);
+  }
+
   disLikeFeedPost(params, callback: (post: any) => void) {
     this.socket.emit('likeOrDislike', params, callback);
+  }
+
+  commentOnPost(params, callback: (data: any) => void) {
+    this.socket.emit('comments-on-post', params, callback);
   }
 }

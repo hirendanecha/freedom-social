@@ -59,7 +59,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isOpen = false;
   userList = [];
   userNameSearch = '';
-
   communityId: number;
   communityDetails: any;
   activeCommunityTab: number = 1;
@@ -68,8 +67,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   userSearchNgbDropdown: NgbDropdown;
   @ViewChild('postMessageInput', { static: false })
   postMessageInput: ElementRef;
-
+  @ViewChild('commentMessageInput', { static: false })
+  commentMessageInput: ElementRef;
   seeFirstList: any = [];
+  commentDes = '';
+  commentList: any = [];
+  replyCommentList: any = [];
+  isReply = false;
+  commentId = null;
 
   constructor(
     private modalService: NgbModal,
@@ -382,7 +387,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getPostList(): void {
     const page = this.activePage;
-    this.spinner.show();
     this.socketService.getPost(
       {
         profileId: this.profileId,
@@ -406,20 +410,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
     //     console.log(error);
     //   }
     // );
+    this.spinner.show();
     this.socketService.socket.on(
       'new-post',
       (data: any) => {
-        this.postList = data;
-        this.postList.map((ele: any) => {
-          ele.totalReactCount =
-            ele.likescount +
-            ele.wowcount +
-            ele.haliriouscount +
-            ele.lovecount +
-            ele.sadcount;
-          return ele;
-        });
-        this.spinner.hide();
+        if (data.length > 0) {
+          this.postList = data;
+          // this.postList.map((ele: any) => {
+          //   ele.totalReactCount =
+          //     ele.likescount +
+          //     ele.wowcount +
+          //     ele.haliriouscount +
+          //     ele.lovecount +
+          //     ele.sadcount;
+          //   return ele;
+          // });
+          this.spinner.hide();
+        }
       },
       (error: any) => {
         this.spinner.hide();
@@ -649,7 +656,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     } else {
       this.clearUserSearchData();
     }
-
+    console.log(text);
     this.postData.postdescription = text;
 
     // if (lastChar === '@' || this.userNameSearch) {
@@ -771,6 +778,158 @@ export class HomeComponent implements OnInit, AfterViewInit {
       error: (error) => {
         console.log(error);
       },
+    });
+  }
+
+  commentOnKeyEvent(event): void {
+    const text = event.target.value;
+    const atSymbolIndex = text.lastIndexOf('@');
+
+    if (atSymbolIndex !== -1) {
+      this.userNameSearch = text.substring(atSymbolIndex + 1);
+      console.log('userNameSearch : ', this.userNameSearch);
+
+      // if (this.userNameSearch?.length > 2) {
+      //   this.getUserList(this.userNameSearch);
+      // } else {
+      //   this.clearUserSearchData();
+      // }
+    } else {
+      this.clearUserSearchData();
+    }
+    console.log(text);
+    this.postData.postdescription = text;
+
+    // if (lastChar === '@' || this.userNameSearch) {
+    //   this.userNameSearch += lastChar;
+    //   console.log('userNameSearch : ', this.userNameSearch);
+    //   // value.startsWith('@')
+
+    //   // this.getUserList(value.slice(1));
+    //   // console.log('this.userList : ', this.userList);
+    // }
+  }
+
+  commentOnPost(id): void {
+    const commentData = {
+      postId: id,
+      comment: this.postData.postdescription,
+      profileId: this.profileId,
+    };
+    console.log(commentData);
+    this.socketService.commentOnPost(commentData, (data) => {
+      this.toaster.success('comment added on post');
+    });
+    this.socketService.socket.on('comments-on-post', (data: any) => {
+      console.log(data);
+      this.commentList.push(data[0]);
+      this.getPostList();
+    });
+  }
+
+  viewComments(id): void {
+    this.postService.getComments(id).subscribe({
+      next: (res) => {
+        if (res) {
+          console.log(res.data);
+          // this.commentList = res.data.commmentsList.filter((ele: any) => {
+          //   res.data.replyCommnetsList.some((element: any) => {
+          //     if (ele?.id === element?.parentCommentId) {
+          //       ele?.replyCommnetsList.push(element);
+          //       return ele;
+          //     }
+          //   });
+          //   console.log(this.commentList);
+          // });
+          this.commentList = res.data.commmentsList.map((ele: any) => ({
+            ...ele,
+            replyCommnetsList: res.data.replyCommnetsList.filter((ele1) => {
+              return ele.id === ele1.parentCommentId;
+            }),
+          }));
+          console.log(this.commentList);
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  deleteComments(id): void {
+    this.postService.deleteComments(id).subscribe({
+      next: (res: any) => {
+        this.toaster.success(res.message);
+        this.viewComments(id);
+      },
+      error: (error) => {
+        console.log(error);
+        this.toaster.danger(error.message);
+      },
+    });
+  }
+
+  showReplySection(id) {
+    this.isReply = this.commentId == id ? false : true;
+    this.commentId = id;
+    if (!this.isReply) {
+      this.commentId = null;
+    }
+  }
+
+  replyOnComment(id, commentId): void {
+    const commentData = {
+      postId: id,
+      comment: this.postData.postdescription,
+      profileId: this.profileId,
+      parentCommentId: commentId,
+    };
+    this.socketService.commentOnPost(commentData, (data) => {
+      this.toaster.success('replied on comment');
+    });
+    this.socketService.socket.on('comments-on-post', (data: any) => {
+      console.log(data);
+      this.commentList.map((ele: any) => ({
+        ...ele,
+        replyCommnetsList: data.filter((ele1) => {
+          return ele.id === ele1.parentCommentId;
+        }),
+      }));
+      this.isReply = false;
+      this.commentId = null;
+      this.getPostList();
+    });
+  }
+
+  likeComments(comment): void {
+    comment.likeCount = comment.likeCount + 1;
+    comment.react = 'L';
+    const data = {
+      postId: comment.postId,
+      commentId: comment.id,
+      profileId: Number(this.profileId),
+      toProfileId: Number(comment.profileId),
+      likeCount: comment.likeCount,
+      actionType: 'L',
+    };
+    console.log(data);
+    this.socketService.likeFeedComments(data, (res) => {
+      console.log(res);
+    });
+  }
+  disLikeComments(comment): void {
+    comment.likeCount = comment.likeCount - 1;
+    comment.react = null;
+    const data = {
+      postId: comment.postId,
+      commentId: comment.id,
+      profileId: Number(this.profileId),
+      toProfileId: Number(comment.profileId),
+      likeCount: comment.likeCount,
+    };
+    console.log(data);
+    this.socketService.likeFeedComments(data, (res) => {
+      console.log(res);
     });
   }
 }
