@@ -798,7 +798,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.clearUserSearchData();
     }
     console.log(text);
-    this.postData.postdescription = text;
+    // this.postData.postdescription = text;
 
     // if (lastChar === '@' || this.userNameSearch) {
     //   this.userNameSearch += lastChar;

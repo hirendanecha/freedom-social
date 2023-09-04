@@ -462,13 +462,10 @@
                   alt="icon"
                 />
 
-                <div class="h-40-px d-flex gap-1 align-items-center w-100">
-                  <input
-                    placeholder="Write something to comment.."
-                    class="post-message-input input-area w-100"
-                    (keyup)="commentOnKeyEvent($event)"
-                  />
-                  <div class="file-input d-flex gap-1 gap-md-2 float-end">
+                <div class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100">
+                  <input placeholder="Write something to comment.." (keyup)="commentOnKeyEvent($event)"/>
+
+                  <div class="file-input d-flex gap-1 gap-md-2">
                     <!-- <div class="file-upload">
                     <label class="file">
                       <input type="file" />
@@ -657,7 +654,7 @@
                           </span>
                         </label>
                       </div>
-    
+
                       <div class="file-upload">
                         <label class="file">
                           <input type="file" />
