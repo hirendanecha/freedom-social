@@ -1,0 +1,92 @@
+<div class="research d-flex flex-column">
+  <div class="single-box community-details p-5">
+    <img [src]="'/assets/images/profile-cover.png'" class="w-100 h-272-px rounded-3 mb-5"
+      onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';" [alt]="'Preview Image'" />
+
+    <div class="text-start d-flex align-items-center gap-3">
+      <img class="w-56-px h-56-px rounded-3" loading="lazy" src="'/assets/images/avtar/avtar.png'"
+        onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';" [alt]="'Logo Image'" />
+
+      <div class="d-flex flex-column me-auto">
+        <h5 class="mb-1">1776 Token Forum 1</h5>
+        <span class="description">Members: 711352</span>
+      </div>
+
+      <button type="button" class="btn btn-sm btn-primary align-self-start">Join Group</button>
+    </div>
+
+    <div class="page-details pt-5">
+      <ul class="nav pt-3 flex-wrap tab-area">
+        <li class="nav-item" role="presentation" (click)="activeCommunityTab = 1">
+          <a class="nav-link d-center" [ngClass]="{'active': activeCommunityTab === 1}">Posts</a>
+        </li>
+        <li class="nav-item" role="presentation" (click)="activeCommunityTab = 2">
+          <a class="nav-link d-center" [ngClass]="{'active': activeCommunityTab === 2}">About</a>
+        </li>
+        <li class="nav-item" role="presentation" (click)="activeCommunityTab = 3">
+          <a class="nav-link d-center" [ngClass]="{'active': activeCommunityTab === 3}">Resource</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="d-flex gap-6">
+    <div class="sidebar">
+      <app-research-sidebar [researches]="researches" />
+    </div>
+
+    <div class="content w-100">
+      <div class="single-box d-flex flex-column gap-3 p-5">
+        <h6 class="text-start mb-2">1776 Token Forum 1</h6>
+
+        <div class="row gap-3 px-3">
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+        </div>
+
+        <div class="row gap-3 px-3">
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+        </div>
+
+        <div class="row gap-3 px-3">
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+        </div>
+
+        <div class="row gap-3 px-3">
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+        </div>
+
+        <div class="row gap-3 px-3">
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+        </div>
+
+        <div class="row gap-3 px-3">
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+        </div>
+
+        <div class="row gap-3 px-3">
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+        </div>
+
+        <div class="row gap-3 px-3">
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+          <app-research-card class="col p-0" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

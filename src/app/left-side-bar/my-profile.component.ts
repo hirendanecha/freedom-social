@@ -29,6 +29,7 @@ export class MyProfileComponent implements OnInit {
   isCommunity = false;
   isPageResearch = false;
   isSetting = false;
+  isSettingMenuCollapse = true;
   isShowMyList = false;
   user: any = {};
   constructor(

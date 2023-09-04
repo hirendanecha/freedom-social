@@ -1,0 +1,81 @@
+<div class="research d-flex gap-6">
+  <div class="sidebar">
+    <app-research-sidebar [researches]="researches" />
+  </div>
+
+  <div class="content w-100">
+    <div class="single-box d-flex flex-column p-5 mb-3">
+      <h6 class="text-start mb-5">Freedom Messaging</h6>
+
+      <div class="d-flex flex-column border-top pt-5 gap-3">
+        <span class="font-12-px text-start">RESEARCH OF TRUTH IS HOW WE UNITE</span>
+        <span class="font-12-px text-start">UNINFORMED PROGRAMMED FOLKS MUST BE BROUGHT UP TO SPEED</span>
+        <span class="font-12-px text-start">PLEASE SHARE INFO IN FACEBOOK AND TWITTER, ETC</span>
+      </div>
+    </div>
+
+    <div class="single-box d-flex flex-column p-5 mb-3">
+      <h6 class="text-start mb-5">Customize Your Feed</h6>
+
+      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnGroupFeedType" [formControl]="btnGroupFeedTypeCtrl" value="All" id="btnRadioAll" autocomplete="off">
+        <label class="btn btn-outline-primary border-0 rounded" for="btnRadioAll">All</label>
+
+        <input type="radio" class="btn-check" name="btnGroupFeedType" [formControl]="btnGroupFeedTypeCtrl" value="Articles" id="btnRadioArticles" autocomplete="off">
+        <label class="btn btn-outline-primary border-0 rounded" for="btnRadioArticles">Articles</label>
+
+        <input type="radio" class="btn-check" name="btnGroupFeedType" [formControl]="btnGroupFeedTypeCtrl" value="Videos" id="btnRadioVideos" autocomplete="off">
+        <label class="btn btn-outline-primary border-0 rounded" for="btnRadioVideos">Videos</label>
+
+        <input type="radio" class="btn-check" name="btnGroupFeedType" [formControl]="btnGroupFeedTypeCtrl" value="Groups" id="btnRadioGroups" autocomplete="off">
+        <label class="btn btn-outline-primary border-0 rounded" for="btnRadioGroups">Groups</label>
+      </div>
+
+      <ng-container *ngIf="btnGroupFeedTypeCtrl?.value === 'Groups'">
+        <select name="research" class="form-control mt-5">
+          <option *ngFor="let research of researches" [value]="research.name">
+            {{ research.name }}
+          </option>
+        </select>
+      </ng-container>
+
+      <div class="d-flex gap-5 pt-5 mt-5 border-top">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input p-2" name="btnGroupViewType" type="radio" [formControl]="btnGroupViewTypeCtrl" id="btnRadioTopStories" value="TopStories">
+          <label class="form-check-label" for="btnRadioTopStories">Top Stories View</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input p-2" name="btnGroupViewType" type="radio" [formControl]="btnGroupViewTypeCtrl" id="btnRadioMostRecent" value="MostRecent">
+          <label class="form-check-label" for="btnRadioMostRecent">Most Recent View</label>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="researches">
+      <ng-container *ngFor="let research of researches">
+        <div class="single-box d-flex flex-column p-5 mb-3">
+          <h6 class="text-start mb-5">{{research?.name}}</h6>
+
+          <ngb-carousel [showNavigationIndicators]="false">
+            <ng-template ngbSlide>
+              <div class="row gap-3 px-3">
+                <app-research-card class="col p-0" />
+                <app-research-card class="col p-0" />
+                <app-research-card class="col p-0" />
+              </div>
+            </ng-template>
+
+            <ng-template ngbSlide>
+              <div class="row gap-3 px-3">
+                <app-research-card class="col p-0" />
+                <app-research-card class="col p-0" />
+                <app-research-card class="col p-0" />
+              </div>
+            </ng-template>
+          </ngb-carousel>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

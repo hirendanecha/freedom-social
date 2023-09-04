@@ -122,14 +122,15 @@
     <li>
       <a
         class="d-flex gap-4"
-        [ngClass]="isSetting ? 'active' : ''"
+        [ngClass]="{'active': isSetting}"
         (click)="collapse.toggle()"
       >
         <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
-        <span>Settings</span>
+        <span class="me-auto">Settings</span>
+        <span class="material-symbols-outlined">{{ isSettingMenuCollapse ? 'expand_more' : 'expand_less'}}</span>
       </a>
 
-      <div #collapse="ngbCollapse" [ngbCollapse]="!isSetting">
+      <div #collapse="ngbCollapse" [(ngbCollapse)]="isSettingMenuCollapse">
         <ul class="ps-3">
           <li (click)="openToggle()">
             <a routerLink="settings/general" class="d-flex gap-4">
@@ -306,14 +307,15 @@
       <li>
         <a
           class="d-flex gap-4"
-          [ngClass]="isSetting ? 'active' : ''"
+          [ngClass]="{'active': isSetting}"
           (click)="collapse.toggle()"
         >
           <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
-          <span>Settings</span>
+          <span class="me-auto">Settings</span>
+          <span class="material-symbols-outlined">{{ isSettingMenuCollapse ? 'expand_more' : 'expand_less'}}</span>
         </a>
 
-        <div #collapse="ngbCollapse" [ngbCollapse]="!isSetting">
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isSettingMenuCollapse">
           <ul class="ps-3">
             <li>
               <a routerLink="settings/general" class="d-flex gap-4">

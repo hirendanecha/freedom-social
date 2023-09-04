@@ -1,0 +1,12 @@
+:host {
+  .research {
+    .sidebar {
+      width: 450px;
+      max-width: 450px;
+    }
+
+    .border-top, .border-bottom {
+      border-color: var(--border-color) !important;
+    }
+  }
+}

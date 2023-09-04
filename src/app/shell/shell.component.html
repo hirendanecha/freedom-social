@@ -10,11 +10,9 @@
 
       <div
         [ngClass]="
-          isShow && isShowMyProfile
+          (isShow && isShowMyProfile)
             ? ''
-            : isShow
-            ? 'col-xl-9 col-lg-8 flex-column gap-4 cus-z mb-15 mb-lg-0'
-            : 'col-xxl-6 col-xl-6 col-lg-5 mt-0 flex-column gap-4 cus-z mb-15 mb-lg-0'
+            : 'col flex-column gap-4 cus-z mb-15 mb-lg-0'
         "
       >
         <router-outlet></router-outlet>
