@@ -454,8 +454,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   uploadPostFileAndCreatePost(): void {
+    console.log('this.postData : ', this.postData);
+
     if (this.postData?.postdescription) {
-      if (this.postData?.file) {
+      if (this.postData?.file?.name) {
         this.spinner.show();
         this.postService.upload(this.postData?.file, this.profileId).subscribe({
           next:
