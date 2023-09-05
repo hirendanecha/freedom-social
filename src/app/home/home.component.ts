@@ -463,6 +463,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             if (res?.body?.url) {
               this.postData['file'] = null;
               this.postData['imageUrl'] = res?.body?.url;
+              this.createNewPost();
             }
 
             this.spinner.hide();
