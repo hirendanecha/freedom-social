@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,13 +6,19 @@ import { Router } from '@angular/router';
   templateUrl: './research-card.component.html',
   styleUrls: ['./research-card.component.scss']
 })
-export class ResearchCardComponent {
+export class ResearchCardComponent implements AfterViewInit {
+
+  @Input('post') post: any;
 
   constructor(
     private router: Router
   ) {}
 
+  ngAfterViewInit(): void {
+    console.log('post :', this.post);
+  }
+
   openResearchPost(): void {
-    this.router.navigate(['/', 'research', 'post', 123]);
+    this.router.navigate(['/', 'research', 'post', this.post?.postToProfileID]);
   }
 }

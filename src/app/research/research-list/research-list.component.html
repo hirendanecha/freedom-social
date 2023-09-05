@@ -1,6 +1,6 @@
-<div class="research d-flex gap-6">
+<div class="research d-flex gap-5">
   <div class="sidebar">
-    <app-research-sidebar [researches]="researches" />
+    <app-research-sidebar />
   </div>
 
   <div class="content w-100">
@@ -33,8 +33,8 @@
 
       <ng-container *ngIf="btnGroupFeedTypeCtrl?.value === 'Groups'">
         <select name="research" class="form-control mt-5">
-          <option *ngFor="let research of researches" [value]="research.name">
-            {{ research.name }}
+          <option *ngFor="let research of researches" [value]="research?.FirstName">
+            {{ research?.FirstName }}
           </option>
         </select>
       </ng-container>
@@ -52,29 +52,39 @@
       </div>
     </div>
 
-    <ng-container *ngIf="researches">
-      <ng-container *ngFor="let research of researches">
-        <div class="single-box d-flex flex-column p-5 mb-3">
-          <h6 class="text-start mb-5">{{research?.name}}</h6>
+    <ng-container *ngIf="groupPosts?.length > 0">
+      <ng-container *ngFor="let group of groupPosts">
+        <ng-container *ngIf="group?.name && group?.posts?.length > 0">
+          <div class="single-box d-flex flex-column p-5 mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+              <h6 class="text-start mb-0">{{group?.name}}</h6>
 
-          <ngb-carousel [showNavigationIndicators]="false">
-            <ng-template ngbSlide>
-              <div class="row gap-3 px-3">
-                <app-research-card class="col p-0" />
-                <app-research-card class="col p-0" />
-                <app-research-card class="col p-0" />
-              </div>
-            </ng-template>
+              <a href="/research/detail/grpm/{{group?.groupUniqueLink}}" target="_blank" class="material-symbols-outlined c-pointer">chevron_right</a>
+            </div>
 
-            <ng-template ngbSlide>
-              <div class="row gap-3 px-3">
-                <app-research-card class="col p-0" />
-                <app-research-card class="col p-0" />
-                <app-research-card class="col p-0" />
-              </div>
-            </ng-template>
-          </ngb-carousel>
-        </div>
+            <ngb-carousel [showNavigationIndicators]="false">
+              <ng-container *ngIf="group?.posts?.length > 3" >
+                <ng-template ngbSlide>
+                  <div class="row px-2">
+                    <app-research-card [post]="group?.posts[0]" class="col-4 px-2" />
+                    <app-research-card [post]="group?.posts[1]" class="col-4 px-2" />
+                    <app-research-card [post]="group?.posts[2]" class="col-4 px-2" />
+                  </div>
+                </ng-template>
+              </ng-container>
+
+              <ng-container *ngIf="group?.posts?.length > 5" >
+                <ng-template ngbSlide>
+                  <div class="row px-2">
+                    <app-research-card [post]="group?.posts[3]" class="col-4 px-2" />
+                    <app-research-card [post]="group?.posts[4]" class="col-4 px-2" />
+                    <app-research-card [post]="group?.posts[5]" class="col-4 px-2" />
+                  </div>
+                </ng-template>
+              </ng-container>
+            </ngb-carousel>
+          </div>
+        </ng-container>
       </ng-container>
     </ng-container>
   </div>

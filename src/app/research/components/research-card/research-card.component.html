@@ -1,14 +1,15 @@
-<div class="card single-box border-secondary mb-0">
-  <img src="https://www.coindesk.com/resizer/LsWg4gnG1T3M3SrTZBQ-U17yl4w=/1200x628/center/middle/cloudfront-us-east-1.images.arcpublishing.com/coindesk/SX3EGRESSBA6ZHHV3IJ7K5M7ZE.jpeg" class="card-img-top c-pointer" alt="" (click)="openResearchPost()">
+<div class="card group-post-card single-box border-secondary mb-0">
+  <div class="card-img-top c-pointer" [ngStyle]="{'background-image': 'url('+ (post?.image || 'https://freedom.social/assets/newtemplate/images/mb-logo.png') + ')'}" (click)="openResearchPost()"></div>
 
-  <div class="card-body p-2">
-    <span class="card-text font-12-px text-start c-pointer" (click)="openResearchPost()">Some quick example text to build on the card title and make up the bulk of the card's content.</span>
+  <div class="card-body p-2 border-top">
+    <span class="card-text font-12-px text-start c-pointer text-wrap" (click)="openResearchPost()" [innerHTML]="post?.title || post?.textpostdesc || post?.postdescription || post?.metadescription" >
+    </span>
 
-    <div class="d-flex flex-wrap justify-content-start align-items-start mt-3">
+    <div class="d-flex flex-wrap justify-content-start align-items-start mt-2 pt-2 border-top">
       <a href="#" class="link-primary font-12-px w-50 text-start">copy link url</a>
-      <a href="/cs/swapnil01/post/1036910" target="_blank" class="link-primary font-12-px w-50 text-start">larger view</a>
+      <a href="/research/post/{{post?.postToProfileID}}" target="_blank" class="link-primary font-12-px w-50 text-start">larger view</a>
       <a href="#" class="link-primary font-12-px w-50 text-start">unsubscribe</a>
-      <a href="/grpm1776forum1/crowdsource/11220" target="_blank" class="link-primary font-12-px w-50 text-start">research</a>
+      <a href="/research/post/{{post?.postToProfileID}}" target="_blank" class="link-primary font-12-px w-50 text-start">research</a>
     </div>
   </div>
 </div>

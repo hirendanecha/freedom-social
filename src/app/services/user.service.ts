@@ -6,10 +6,10 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class UserService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getImageUrl(url: string): Observable<Blob> {
-    return this.httpClient.get(url, {
+    return this.http.get(url, {
       responseType: "blob",
     });
   }

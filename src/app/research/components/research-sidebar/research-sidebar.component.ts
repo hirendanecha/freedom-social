@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-research-sidebar',
@@ -7,7 +9,30 @@ import { Component, Input } from '@angular/core';
 })
 export class ResearchSidebarComponent {
 
-  @Input('researches') researches: any = [];
+  researches: any = [];
   isResearchTopicCollapse: boolean = false;
 
+  constructor(
+    private profileService: ProfileService,
+    private spinner: NgxSpinnerService
+  ) {
+    this.getGroups();
+  }
+
+  getGroups(): void {
+    this.spinner.show();
+
+    this.profileService.getGroups().subscribe({
+      next: (res: any) => {
+        if (res?.length > 0) {
+          this.researches = res;
+        }
+
+        this.spinner.hide();
+      },
+      error: () => {
+        this.spinner.hide();
+      }
+    });
+  }
 }
