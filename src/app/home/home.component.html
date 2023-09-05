@@ -292,13 +292,15 @@
                 >{{ post.metalink }}</a
               >
             </ng-container>
-            <div class="post-img rounded-3" *ngIf="post?.imageUrl">
+
+            <ng-container *ngIf="post?.imageUrl">
               <img
                 [src]="post?.imageUrl"
-                class="w-100 rounded-top-3"
+                class="w-100 rounded-3"
                 alt="image"
               />
-            </div>
+            </ng-container>
+
             <div class="border rounded-3" *ngIf="post?.metaimage">
               <a [href]="post.metalink" target="_blank" class="post-img">
                 <img
@@ -531,60 +533,60 @@
                         alt="avatar"
                       />
                     </div>
-                    <div class="info-item w-100">
+                    <div class="info-item w-100 pb-3">
                       <div
-                        class="top-area px-4 py-3 d-flex gap-3 align-items-start justify-content-between"
+                        class="top-area px-4 py-3 d-flex flex-column gap-2 align-items-start justify-content-start"
                       >
-                        <div class="title-area">
-                          <h6 class="m-0 mb-3">
-                            <a>{{ comment.Username }}</a>
-                          </h6>
-                          <p class="mdtxt mb-0" [innerHTML]="comment.comment"></p>
-                        </div>
-                        <ng-container
-                          *ngIf="
-                            profileId == comment.profileId ||
-                            post.profileid == profileId
-                          "
-                        >
-                          <div ngbDropdown>
-                            <i
-                              class="material-symbols-outlined fs-xxl m-0"
-                              role="button"
-                              ngbDropdownToggle
-                            >
-                              more_horiz
-                            </i>
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                          <h6 class="m-0">{{ comment.Username }}</h6>
 
-                            <div ngbDropdownMenu class="dropdown-menu">
-                              <!-- <button ngbDropdownItem>
-                                <a
-                                  class="droplist d-flex align-items-center gap-2"
-                                  (click)="postId = null"
-                                >
-                                  <i class="material-symbols-outlined mat-icon">
-                                    edit
-                                  </i>
-                                  <span>Edit</span>
-                                </a>
-                              </button> -->
-                              <button ngbDropdownItem>
-                                <a
-                                  class="droplist d-flex align-items-center gap-2"
-                                  (click)="deleteComments(comment.id)"
-                                >
-                                  <i class="material-symbols-outlined mat-icon">
-                                    delete
-                                  </i>
-                                  <span>Delete</span>
-                                </a>
-                              </button>
+                          <ng-container
+                            *ngIf="
+                              profileId == comment.profileId ||
+                              post.profileid == profileId
+                            "
+                          >
+                            <div ngbDropdown>
+                              <i
+                                class="material-symbols-outlined font-20-px m-0"
+                                role="button"
+                                ngbDropdownToggle
+                              >
+                                more_horiz
+                              </i>
+
+                              <div ngbDropdownMenu class="dropdown-menu">
+                                <!-- <button ngbDropdownItem>
+                                  <a
+                                    class="droplist d-flex align-items-center gap-2"
+                                    (click)="postId = null"
+                                  >
+                                    <i class="material-symbols-outlined mat-icon">
+                                      edit
+                                    </i>
+                                    <span>Edit</span>
+                                  </a>
+                                </button> -->
+                                <button ngbDropdownItem>
+                                  <a
+                                    class="droplist d-flex align-items-center gap-2"
+                                    (click)="deleteComments(comment.id)"
+                                  >
+                                    <i class="material-symbols-outlined mat-icon">
+                                      delete
+                                    </i>
+                                    <span>Delete</span>
+                                  </a>
+                                </button>
+                              </div>
                             </div>
-                          </div>
-                        </ng-container>
+                          </ng-container>
+                        </div>
+
+                        <p class="mdtxt mb-0" [innerHTML]="comment.comment"></p>
                       </div>
 
-                      <ul class="friends-list like-share d-flex gap-6 mt-2">
+                      <ul class="friends-list d-flex gap-6 py-2 px-4 m-0">
                         <li class="d-center">
                           <button
                             class="d-center gap-1 smtxt like-button"
@@ -611,7 +613,7 @@
                         </li>
                         <li class="d-center">
                           <i
-                            class="material-symbols-outlined mat-icon"
+                            class="material-symbols-outlined mat-icon c-pointer"
                             (click)="showReplySection(comment.id)"
                           >
                             chat
@@ -624,7 +626,7 @@
                       </ul>
 
                       <div
-                        class="d-flex w-100 mb-2 w-auto me-0"
+                        class="d-flex w-100 gap-2 mb-2 w-auto me-0"
                         *ngIf="
                           isReply &&
                           post.id === comment.postId &&
