@@ -101,6 +101,15 @@
           </div>
         </div>
 
+        <ng-container *ngIf="postData?.imageUrl">
+          <div class="position-relative w-100-px h-100-px mt-5">
+            <img [src]="postData?.imageUrl" class="w-100 h-100 rounded-4" alt="icon"/>
+            <span class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined" (click)="removePostSelectedFile()" >
+              close
+            </span>
+          </div>
+        </ng-container>
+
         <!-- <div class="abs-area position-absolute d-none d-sm-block">
           <i
             class="material-symbols-outlined mat-icon xxltxt"
@@ -112,27 +121,22 @@
         <ul
           class="d-flex justify-content-between justify-content-lg-between flex-wrap ps-0 mb-0 gap-3 gap-sm-5 pt-3 pt-sm-5"
         >
-          <li
+          <!-- <li
             class="d-flex gap-2 align-items-center"
             data-toggle="tooltip"
             data-placement="bottom"
             title="Comming Soon!"
           >
-            <!-- (click)="goLive()" -->
-            <!-- <img
-              src="assets/images/icon/live-video.png"
-              class="max-un"
-              alt="icon"
-            /> -->
             <i class="material-symbols-outlined mat-icon">stream</i>
             <span>Live</span>
-          </li>
+          </li> -->
           <li
             class="d-flex align-items-center gap-2 pointer-events"
             cursor
-            (click)="addPost()"
+            (click)="postImage.click()"
           >
             <!-- <img src="assets/images/icon/vgallery.png" class="max-un" alt="icon" /> -->
+            <input type="file" #postImage hidden class="d-none" (change)="onPostFileSelect($event)" />
             <i class="material-symbols-outlined mat-icon">add_a_photo</i>
             <span>Photo</span>
           </li>
@@ -148,7 +152,7 @@
             <button
               class="cmn-btn p-2 px-2 px-sm-5 px-lg-6"
               [disabled]="!postData?.postdescription"
-              (click)="createPost()"
+              (click)="uploadPostFileAndCreatePost()"
             >
               Post
             </button>
