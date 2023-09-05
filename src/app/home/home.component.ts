@@ -516,6 +516,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.postList.push(res);
           this.spinner.hide();
           this.getPostList();
+          this.postData = {};
         },
         (error: any) => {
           this.spinner.hide();

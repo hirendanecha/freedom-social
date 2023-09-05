@@ -135,8 +135,7 @@
             cursor
             (click)="postImage.click()"
           >
-            <!-- <img src="assets/images/icon/vgallery.png" class="max-un" alt="icon" /> -->
-            <input type="file" #postImage hidden class="d-none" (change)="onPostFileSelect($event)" />
+            <input type="file" #postImage hidden class="d-none" accept="image/*" (change)="onPostFileSelect($event)" />
             <i class="material-symbols-outlined mat-icon">add_a_photo</i>
             <span>Photo</span>
           </li>
