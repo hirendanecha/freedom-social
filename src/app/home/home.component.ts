@@ -78,6 +78,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   replyCommentList: any = [];
   isReply = false;
   commentId = null;
+  isOpenCommentsPostId = '';
 
   constructor(
     private modalService: NgbModal,
@@ -878,6 +879,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   viewComments(id): void {
+    this.isOpenCommentsPostId = id;
     this.postService.getComments(id).subscribe({
       next: (res) => {
         if (res) {
