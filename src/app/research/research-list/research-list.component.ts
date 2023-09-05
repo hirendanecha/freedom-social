@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -60,5 +61,23 @@ export class ResearchListComponent {
         this.spinner.hide();
       }
     });
+  }
+
+  getNextPageGroupPostsById(event: NgbSlideEvent, group: any): void {
+    if (event.source === 'arrowRight') {
+      if (!group?.page) {
+        group['page'] = 3;
+      } else {
+        group.page += 1;
+      }
+
+      this.profileService.getGroupPostById(group?.Id, group?.page, 3).subscribe({
+        next: (res: any) => {
+          if (res?.length > 0) {
+            group.posts = [...group.posts, ...res];
+          }
+        }
+      });
+    }
   }
 }

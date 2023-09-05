@@ -62,25 +62,17 @@
               <a href="/research/detail/grpm/{{group?.groupUniqueLink}}" target="_blank" class="material-symbols-outlined c-pointer">chevron_right</a>
             </div>
 
-            <ngb-carousel [showNavigationIndicators]="false">
-              <ng-container *ngIf="group?.posts?.length > 3" >
-                <ng-template ngbSlide>
-                  <div class="row px-2">
-                    <app-research-card [post]="group?.posts[0]" class="col-4 px-2" />
-                    <app-research-card [post]="group?.posts[1]" class="col-4 px-2" />
-                    <app-research-card [post]="group?.posts[2]" class="col-4 px-2" />
-                  </div>
-                </ng-template>
-              </ng-container>
-
-              <ng-container *ngIf="group?.posts?.length > 5" >
-                <ng-template ngbSlide>
-                  <div class="row px-2">
-                    <app-research-card [post]="group?.posts[3]" class="col-4 px-2" />
-                    <app-research-card [post]="group?.posts[4]" class="col-4 px-2" />
-                    <app-research-card [post]="group?.posts[5]" class="col-4 px-2" />
-                  </div>
-                </ng-template>
+            <ngb-carousel [showNavigationIndicators]="false" [interval]="0" (slide)="getNextPageGroupPostsById($event, group)" >
+              <ng-container *ngFor="let post of group?.posts; let i = index">
+                <ng-container *ngIf="i !== 0 && (i+1)%3 === 0">
+                  <ng-template ngbSlide>
+                    <div class="row px-2">
+                      <app-research-card [post]="group?.posts[i-2]" class="col-4 px-2" />
+                      <app-research-card [post]="group?.posts[i-1]" class="col-4 px-2" />
+                      <app-research-card [post]="group?.posts[i-0]" class="col-4 px-2" />
+                    </div>
+                  </ng-template>
+                </ng-container>
               </ng-container>
             </ngb-carousel>
           </div>

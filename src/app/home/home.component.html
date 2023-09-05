@@ -421,7 +421,10 @@
               class="friends-list like-comment-share p-3 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
             >
               <button
-                class="d-center gap-1 smtxt like-button"
+                class="d-center gap-1 gap-sm-2 mdtxt"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Post Likes"
                 (click)="
                   post.react == 'L'
                     ? dislikeFeedPost(post)
@@ -434,28 +437,18 @@
                 >
                   thumb_up
                 </i>
-                <span class="mdtxt d-center">{{
-                  post?.likescount > 0 ? post?.likescount : 0
-                }}</span>
+                {{ post?.likescount > 0 ? post?.likescount + ' Likes' : 0 + ' Like'}}
               </button>
-              <button
-                class="d-center gap-1 gap-sm-2 mdtxt position-relative reply-button"
-                data-toggle="tooltip"
-                data-placement="bottom"
-                title="Comming Soon!"
-                (click)="viewComments(post.id)"
-              >
-                <i class="material-symbols-outlined mat-icon"> chat </i>
-                View Comments
-              </button>
+
               <button
                 class="d-center gap-1 gap-sm-2 mdtxt"
                 data-toggle="tooltip"
                 data-placement="bottom"
-                title="Comming Soon!"
+                title="View Comments"
+                (click)="viewComments(post.id)"
               >
-                <i class="material-symbols-outlined mat-icon"> share </i>
-                Share
+                <i class="material-symbols-outlined mat-icon"> chat </i>
+                Comments
               </button>
             </div>
 
@@ -471,32 +464,6 @@
                   <input placeholder="Write something to comment.." (keyup)="commentOnKeyEvent($event)"/>
 
                   <div class="file-input d-flex gap-1 gap-md-2">
-                    <!-- <div class="file-upload">
-                    <label class="file">
-                      <input type="file" />
-                      <span class="file-custom border-0 d-grid text-center">
-                        <span
-                          class="material-symbols-outlined mat-icon m-0 xxltxt"
-                        >
-                          gif_box
-                        </span>
-                      </span>
-                    </label>
-                  </div>
-
-                  <div class="file-upload">
-                    <label class="file">
-                      <input type="file" />
-                      <span class="file-custom border-0 d-grid text-center">
-                        <span
-                          class="material-symbols-outlined mat-icon m-0 xxltxt"
-                        >
-                          perm_media
-                        </span>
-                      </span>
-                    </label>
-                  </div> -->
-
                     <i
                       class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                       role="button"
@@ -506,13 +473,6 @@
                     </i>
                   </div>
                 </div>
-                <!-- <div class="btn-area d-flex">
-                  <button class="cmn-btn px-2 px-sm-5 px-lg-6">
-                    <i class="material-symbols-outlined mat-icon m-0 fs-xxl">
-                      near_me
-                    </i>
-                  </button>
-                </div> -->
               </div>
             </form>
             <ng-container *ngIf="commentList.length">
@@ -588,41 +548,19 @@
 
                       <ul class="friends-list d-flex gap-6 py-2 px-4 m-0">
                         <li class="d-center">
-                          <button
-                            class="d-center gap-1 smtxt like-button"
-                            (click)="
-                              comment.react == 'L'
-                                ? disLikeComments(comment)
-                                : likeComments(comment)
-                            "
-                          >
-                            <i
-                              class="material-symbols-outlined mat-icon"
-                              [ngClass]="comment.react == 'L' ? 'active' : ''"
-                            >
-                              thumb_up
-                            </i>
-                            <span class="ms-1 text-center">{{
+                          <button class="d-center gap-1 gap-sm-2 font-12-px" (click)="comment.react == 'L' ? disLikeComments(comment) : likeComments(comment)">
+                            <i class="material-symbols-outlined font-20-px" [ngClass]="{'active': comment.react == 'L'}">thumb_up</i>
+                            {{
                               comment?.likeCount > 0 ? comment?.likeCount : 0
-                            }}</span>
+                            }} Likes
                           </button>
-                          <!-- <span class="ms-1 text-center">{{
-                            comment.likeCount
-                          }}</span> -->
-                          <!-- <button class="mdtxt">Like</button> -->
                         </li>
+
                         <li class="d-center">
-                          <i
-                            class="material-symbols-outlined mat-icon c-pointer"
-                            (click)="showReplySection(comment.id)"
-                          >
-                            chat
-                          </i>
-                          <!--  <button class="mdtxt reply-btn">Reply</button> -->
+                          <button class="d-center gap-1 gap-sm-2 font-12-px" (click)="showReplySection(comment.id)">
+                            <i class="material-symbols-outlined font-20-px">chat</i> Reply
+                          </button>
                         </li>
-                        <!-- <li class="d-center">
-                          <button class="mdtxt">Share</button>
-                        </li> -->
                       </ul>
 
                       <div

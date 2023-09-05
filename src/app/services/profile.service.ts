@@ -23,8 +23,8 @@ export class ProfileService {
     return this.http.get(`${this.baseUrl}/getGroupBasicDetails/${uniqueLink}`);
   }
 
-  getGroupPostById(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/getGroupPostById/${id}`);
+  getGroupPostById(id: string, page: number=0, limit: number=0): Observable<any> {
+    return this.http.get(`${this.baseUrl}/getGroupPostById/${id}?page=${page}&limit=${limit}`);
   }
 
   getGroupFileResourcesById(id: string): Observable<any> {

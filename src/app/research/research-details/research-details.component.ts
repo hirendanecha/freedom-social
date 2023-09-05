@@ -13,6 +13,11 @@ export class ResearchDetailsComponent {
   groupDetails: any = {};
   posts: any = [];
   resources: any = [];
+  isLoadMorePosts: boolean = true;
+  pagination: any = {
+    page: 1,
+    limit: 12,
+  }
 
   constructor(
     private profileService: ProfileService,
@@ -30,7 +35,7 @@ export class ResearchDetailsComponent {
       next: (res: any) => {
         if (res?.ID) {
           this.groupDetails = res;
-          this.GetGroupPostById(res?.ID);
+          this.GetGroupPostById();
         }
 
         this.spinner.hide();
@@ -41,13 +46,15 @@ export class ResearchDetailsComponent {
     });
   }
 
-  GetGroupPostById(id: string): void {
+  GetGroupPostById(): void {
     this.spinner.show();
 
-    this.profileService.getGroupPostById(id).subscribe({
+    this.profileService.getGroupPostById(this.groupDetails?.ID, this.pagination?.page, this.pagination?.limit).subscribe({
       next: (res: any) => {
         if (res?.length > 0) {
-          this.posts = res;
+          this.posts = [...this.posts, ...res];
+
+          this.isLoadMorePosts = res?.length === this.pagination?.limit;
         }
 
         this.spinner.hide();
@@ -73,5 +80,10 @@ export class ResearchDetailsComponent {
         this.spinner.hide();
       }
     });
+  }
+
+  loadMorePosts(): void {
+    this.pagination.page += 1;
+    this.GetGroupPostById();
   }
 }

@@ -27,6 +27,10 @@
                 <ng-container *ngFor="let post of posts">
                   <app-research-card [post]="post" class="col-4 px-2 pb-4" />
                 </ng-container>
+
+                <button class="btn btn-sm btn-primary w-auto m-auto" *ngIf="isLoadMorePosts" (click)="loadMorePosts()">
+                  Load More
+                </button>
               </ng-container>
             </div>
           </ng-template>
