@@ -45,7 +45,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ];
   postList: any = [];
   postData: any = {
-    profileId: '',
+    profileid: '',
+    communityId: '',
     postdescription: '',
     meta: {},
     tags: [],
@@ -98,7 +99,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.communityId = +history?.state?.data?.id;
     this.profileId = sessionStorage.getItem('profileId');
 
-    this.postData.profileId = this.profileId;
+    this.postData.profileid = +this.profileId;
     this.postData.communityId = this.communityId;
   }
 
@@ -405,6 +406,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getPostList(): void {
     const page = this.activePage;
+    this.postData.profileid = +this.profileId;
     this.socketService.getPost(
       {
         profileId: this.profileId,
@@ -465,7 +467,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             if (res?.body?.url) {
               this.postData['file'] = null;
               this.postData['imageUrl'] = res?.body?.url;
-              this.createNewPost();
+              this.submit();
             }
 
             this.spinner.hide();
@@ -475,8 +477,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
           },
         });
       } else {
-        this.createNewPost();
+        this.submit();
       }
+    }
+  }
+
+  submit(): void {
+    if (this.postData.id) {
+      this.editPost();
+    } else {
+      this.createNewPost();
     }
   }
 
@@ -517,8 +527,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
         (res: any) => {
           this.postList.push(res);
           this.spinner.hide();
+          const postData = this.postData;
           this.getPostList();
-          this.postData = {};
+          this.postData = {
+            profileid: postData.profileid,
+            communityId: postData.communityId,
+            postdescription: '',
+            meta: {},
+            tags: [],
+            file: {},
+            imageUrl: '',
+          };
         },
         (error: any) => {
           this.spinner.hide();
@@ -989,5 +1008,62 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.socketService.likeFeedComments(data, (res) => {
       console.log(res);
     });
+  }
+
+  getPostById(post): void {
+    this.postData = post;
+    post['hide'] = true;
+    this.renderer.setProperty(
+      this.postMessageInput.nativeElement,
+      'innerHTML',
+      this.postData?.postdescription
+    );
+  }
+
+  editPost(): void {
+    const anchorTags = this.postMessageInput?.nativeElement?.children;
+    this.postData.tags = [];
+    for (const key in anchorTags) {
+      if (Object.prototype.hasOwnProperty.call(anchorTags, key)) {
+        const tag = anchorTags[key];
+
+        this.postData.tags.push({
+          id: tag?.getAttribute('data-id'),
+          name: tag?.innerHTML,
+        });
+      }
+    }
+
+    console.log('this.postData : ', this.postData);
+
+    if (this.postData?.postdescription) {
+      this.spinner.show();
+      this.socketService.editPost(this.postData, (data) => {
+        this.spinner.hide();
+        this.toaster.success('Post edited successfully.');
+        return data;
+      });
+
+      this.clearUserSearchData();
+      this.renderer.setProperty(
+        this.postMessageInput.nativeElement,
+        'innerHTML',
+        ''
+      );
+
+      this.socketService.socket.on(
+        'create-new-post',
+        (res: any) => {
+          this.postList.push(res);
+          this.spinner.hide();
+          this.getPostList();
+          this.postData = {};
+        },
+        (error: any) => {
+          this.spinner.hide();
+          console.log(error);
+        }
+      );
+    }
   }
 }
