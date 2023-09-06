@@ -11,6 +11,7 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { UserPostComponent } from './user-posts/user-post.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommunityModule } from '../community/community.module';
+import { MyListComponent } from '../right-side-bar/my-list.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CommunityModule } from '../community/community.module';
     UploadFilesComponent,
     ViewProfileComponent,
     UserPostComponent,
+    MyListComponent
   ],
   imports: [
     SettingRoutingModule,
