@@ -15,10 +15,9 @@ import { SocketService } from '../services/socket.service';
 import { CommunityPostService } from '../services/community-post.service';
 import { CreatePostComponent } from './create-post-modal/create-post.component';
 import { Router } from '@angular/router';
-import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
 import { slideUp } from '../animations/slideUp';
-import { SeeFirstUserService } from '../services/see-first-user.service';
 import { ToastService } from '../services/toaster.service';
+import { ConfirmationModalComponent } from '../@shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-favorite',
@@ -305,7 +304,7 @@ export class FavoriteComponent implements OnInit, AfterViewInit {
 
   deletePost(post): void {
     this.postId = null;
-    const modalRef = this.modalService.open(DeletePostComponent, {
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = 'Delete Post';

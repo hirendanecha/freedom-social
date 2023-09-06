@@ -7,14 +7,11 @@ import {
 } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CreatePostComponent } from 'src/app/favorites/create-post-modal/create-post.component';
-import { LiveComponent } from 'src/app/live-modal/live.component';
-import { PostComponent } from 'src/app/home/poast-modal/post.component';
+import { ConfirmationModalComponent } from 'src/app/@shared/confirmation-modal/confirmation-modal.component';
 import { PostService } from 'src/app/services/post.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { ToastService } from 'src/app/services/toaster.service';
-import { DeletePostComponent } from 'src/app/@shared/delete-post-dialog/delete-post.component';
 
 @Component({
   selector: 'app-user-post',
@@ -78,7 +75,7 @@ export class UserPostComponent implements OnInit {
   deletePost(post): void {
     this.postId = null;
     console.log(post.id);
-    const modalRef = this.modalService.open(DeletePostComponent, {
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = 'Delete Post';

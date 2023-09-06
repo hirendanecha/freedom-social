@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DeletePostComponent } from './delete-post-dialog/delete-post.component';
 import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastsComponent } from './toaster/toaster.component';
 import { MyListComponent } from '../right-side-bar/my-list.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 
 const sharedComponents = [
-  DeletePostComponent,
+  ConfirmationModalComponent,
   MyListComponent
 ];
 

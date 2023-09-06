@@ -8,7 +8,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgbDropdown, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { PostComponent } from './poast-modal/post.component';
 import { LiveComponent } from '../live-modal/live.component';
 import { MyProfileComponent } from '../left-side-bar/my-profile.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -17,13 +16,13 @@ import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
 import { SocketService } from '../services/socket.service';
 import { slideUp } from '../animations/slideUp';
-import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
 import { UnsubscribeProfileService } from '../services/unsubscribe-profile.service';
 import { SeeFirstUserService } from '../services/see-first-user.service';
 import { CustomerService } from '../services/customer.service';
 import { ToastService } from '../services/toaster.service';
 import { CommunityService } from '../services/community.service';
 import { CommunityPostService } from '../services/community-post.service';
+import { ConfirmationModalComponent } from '../@shared/confirmation-modal/confirmation-modal.component';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -779,7 +778,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   deletePost(post: { id: any }): void {
     this.postId = null;
     console.log(post.id);
-    const modalRef = this.modalService.open(DeletePostComponent, {
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = 'Delete Post';
