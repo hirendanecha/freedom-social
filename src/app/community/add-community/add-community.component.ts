@@ -13,8 +13,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./add-community.component.scss'],
 })
 export class AddCommunityComponent {
-  @Input() cancelButtonLabel: string | undefined;
-  @Input() confirmButtonLabel: string | undefined;
   @Input() closeIcon: boolean | undefined;
 
   communityDetails = new Community();

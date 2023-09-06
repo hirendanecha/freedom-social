@@ -9,6 +9,7 @@
     </i>
   </button>
 </div>
+
 <div class="modal-body text-center">
   <div class="mid-area">
     <div class="mb-5 gap-3">
@@ -177,14 +178,15 @@
     </div> -->
   </div>
 </div>
-<div class="modal-footer justify-content-end border-0">
+
+<div class="modal-footer justify-content-end gap-3 border-0">
   <button
     id="common-filter-cancel"
     type="button"
     class="cmn-btn alt p-2"
-    (click)="activeModal.close(cancelButtonLabel)"
+    (click)="activeModal.close('Cancel')"
   >
-    {{ cancelButtonLabel }}
+    Cancel
   </button>
   <button
     id="common-filter-confirm"
@@ -194,6 +196,6 @@
     (click)="onSubmit()"
   >
     <!-- (click)="" -->
-    {{ confirmButtonLabel }}
+    Create
   </button>
 </div>
