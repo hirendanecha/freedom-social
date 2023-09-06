@@ -49,6 +49,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     postdescription: '',
     meta: {},
     tags: [],
+    file: {},
+    imageUrl: '',
   };
   @ViewChild('emojiMenu') emojiMenu: EventEmitter<NgbModalRef[]> | undefined;
   emojiMenuDialog: any;
@@ -76,6 +78,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   replyCommentList: any = [];
   isReply = false;
   commentId = null;
+  isOpenCommentsPostId = '';
 
   constructor(
     private modalService: NgbModal,
@@ -119,34 +122,48 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  addPost() {
-    const modalRef = this.modalService.open(PostComponent, {
-      centered: true,
-      backdrop: 'static',
-      keyboard: false,
-    });
-    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.componentInstance.confirmButtonLabel = 'Post';
-    modalRef.componentInstance.closeIcon = true;
-    modalRef.result.then((res) => {
-      if (res === 'success') {
-        this.postService.postData.profileid =
-          sessionStorage.getItem('profileId');
-        this.postService.postData.imageUrl = this.postService.selectedFile;
-        // this.spinner.show();
-        if (this.postService.postData) {
-          // this.spinner.hide();
-          this.socketService.createPost(this.postService.postData, (data) => {
-            return data;
-          });
-          this.socketService.socket.on('create-new-post', (data: any) => {
-            this.postList.push(data);
-            this.getPostList();
-          });
-        }
-      }
-      // return res = user_id
-    });
+  // addPost() {
+  //   const modalRef = this.modalService.open(PostComponent, {
+  //     centered: true,
+  //     backdrop: 'static',
+  //     keyboard: false,
+  //   });
+  //   modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+  //   modalRef.componentInstance.confirmButtonLabel = 'Post';
+  //   modalRef.componentInstance.closeIcon = true;
+  //   modalRef.result.then((res) => {
+  //     if (res === 'success') {
+  //       this.postService.postData.profileid =
+  //         sessionStorage.getItem('profileId');
+  //       this.postService.postData.imageUrl = this.postService.selectedFile;
+  //       // this.spinner.show();
+  //       if (this.postService.postData) {
+  //         // this.spinner.hide();
+  //         this.socketService.createPost(this.postService.postData, (data) => {
+  //           return data;
+  //         });
+  //         this.socketService.socket.on('create-new-post', (data: any) => {
+  //           this.postList.push(data);
+  //           this.getPostList();
+  //         });
+  //       }
+  //     }
+  //     // return res = user_id
+  //   });
+  // }
+
+  onPostFileSelect(event: any): void {
+    const file = event.target?.files?.[0] || {};
+    if (file) {
+      this.postData['file'] = file;
+      this.postData['imageUrl'] = URL.createObjectURL(file);
+    }
+    console.log('this.postData[files] : ', this.postData['file']);
+  }
+
+  removePostSelectedFile(): void {
+    this.postData['file'] = null;
+    this.postData['imageUrl'] = '';
   }
 
   goLive() {
@@ -437,7 +454,33 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.getSeeFirstIdByProfileId(+this.profileId);
   }
 
-  createPost(): void {
+  uploadPostFileAndCreatePost(): void {
+    console.log('this.postData : ', this.postData);
+
+    if (this.postData?.postdescription) {
+      if (this.postData?.file?.name) {
+        this.spinner.show();
+        this.postService.upload(this.postData?.file, this.profileId).subscribe({
+          next: (res: any) => {
+            if (res?.body?.url) {
+              this.postData['file'] = null;
+              this.postData['imageUrl'] = res?.body?.url;
+              this.createNewPost();
+            }
+
+            this.spinner.hide();
+          },
+          error: (err) => {
+            this.spinner.hide();
+          },
+        });
+      } else {
+        this.createNewPost();
+      }
+    }
+  }
+
+  createNewPost(): void {
     const anchorTags = this.postMessageInput?.nativeElement?.children;
 
     this.postData.tags = [];
@@ -475,6 +518,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.postList.push(res);
           this.spinner.hide();
           this.getPostList();
+          this.postData = {};
         },
         (error: any) => {
           this.spinner.hide();
@@ -500,12 +544,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
               lovecount: any;
               sadcount: any;
             }) => {
-              element.totalReactCount =
-                element.likescount +
-                element.wowcount +
-                element.haliriouscount +
-                element.lovecount +
-                element.sadcount;
+              // element.totalReactCount =
+              //   element.likescount +
+              //   element.wowcount +
+              //   element.haliriouscount +
+              //   element.lovecount +
+              //   element.sadcount;
               this.postList.push(element);
             }
           );
@@ -834,6 +878,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   viewComments(id): void {
+    this.isOpenCommentsPostId = id;
     this.postService.getComments(id).subscribe({
       next: (res) => {
         if (res) {

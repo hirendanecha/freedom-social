@@ -101,6 +101,22 @@
           </div>
         </div>
 
+        <ng-container *ngIf="postData?.imageUrl">
+          <div class="position-relative w-100-px h-100-px mt-5">
+            <img
+              [src]="postData?.imageUrl"
+              class="w-100 h-100 rounded-4"
+              alt="icon"
+            />
+            <span
+              class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
+              (click)="removePostSelectedFile()"
+            >
+              close
+            </span>
+          </div>
+        </ng-container>
+
         <!-- <div class="abs-area position-absolute d-none d-sm-block">
           <i
             class="material-symbols-outlined mat-icon xxltxt"
@@ -112,27 +128,28 @@
         <ul
           class="d-flex justify-content-between justify-content-lg-between flex-wrap ps-0 mb-0 gap-3 gap-sm-5 pt-3 pt-sm-5"
         >
-          <li
+          <!-- <li
             class="d-flex gap-2 align-items-center"
             data-toggle="tooltip"
             data-placement="bottom"
             title="Comming Soon!"
           >
-            <!-- (click)="goLive()" -->
-            <!-- <img
-              src="assets/images/icon/live-video.png"
-              class="max-un"
-              alt="icon"
-            /> -->
             <i class="material-symbols-outlined mat-icon">stream</i>
             <span>Live</span>
-          </li>
+          </li> -->
           <li
             class="d-flex align-items-center gap-2 pointer-events"
             cursor
-            (click)="addPost()"
+            (click)="postImage.click()"
           >
-            <!-- <img src="assets/images/icon/vgallery.png" class="max-un" alt="icon" /> -->
+            <input
+              type="file"
+              #postImage
+              hidden
+              class="d-none"
+              accept="image/*"
+              (change)="onPostFileSelect($event)"
+            />
             <i class="material-symbols-outlined mat-icon">add_a_photo</i>
             <span>Photo</span>
           </li>
@@ -148,7 +165,7 @@
             <button
               class="cmn-btn p-2 px-2 px-sm-5 px-lg-6"
               [disabled]="!postData?.postdescription"
-              (click)="createPost()"
+              (click)="uploadPostFileAndCreatePost()"
             >
               Post
             </button>
@@ -289,13 +306,11 @@
                 >{{ post.metalink }}</a
               >
             </ng-container>
-            <div class="post-img rounded-3" *ngIf="post?.imageUrl">
-              <img
-                [src]="post?.imageUrl"
-                class="w-100 rounded-top-3"
-                alt="image"
-              />
-            </div>
+
+            <ng-container *ngIf="post?.imageUrl">
+              <img [src]="post?.imageUrl" class="w-100 rounded-3" alt="image" />
+            </ng-container>
+
             <div class="border rounded-3" *ngIf="post?.metaimage">
               <a [href]="post.metalink" target="_blank" class="post-img">
                 <img
@@ -416,7 +431,10 @@
               class="friends-list like-comment-share p-3 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
             >
               <button
-                class="d-center gap-1 smtxt like-button"
+                class="d-center gap-1 gap-sm-2 mdtxt"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Post Likes"
                 (click)="
                   post.react == 'L'
                     ? dislikeFeedPost(post)
@@ -429,28 +447,22 @@
                 >
                   thumb_up
                 </i>
-                <span class="mdtxt d-center">{{
-                  post?.likescount > 0 ? post?.likescount : 0
-                }}</span>
+                {{
+                  post?.likescount > 0
+                    ? post?.likescount + " Likes"
+                    : 0 + " Like"
+                }}
               </button>
-              <button
-                class="d-center gap-1 gap-sm-2 mdtxt position-relative reply-button"
-                data-toggle="tooltip"
-                data-placement="bottom"
-                title="Comming Soon!"
-                (click)="viewComments(post.id)"
-              >
-                <i class="material-symbols-outlined mat-icon"> chat </i>
-                View Comments
-              </button>
+
               <button
                 class="d-center gap-1 gap-sm-2 mdtxt"
                 data-toggle="tooltip"
                 data-placement="bottom"
-                title="Comming Soon!"
+                title="View Comments"
+                (click)="viewComments(post?.id)"
               >
-                <i class="material-symbols-outlined mat-icon"> share </i>
-                Share
+                <i class="material-symbols-outlined mat-icon"> chat </i>
+                Comments
               </button>
             </div>
 
@@ -462,36 +474,15 @@
                   alt="icon"
                 />
 
-                <div class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100">
-                  <input placeholder="Write something to comment.." (keyup)="commentOnKeyEvent($event)"/>
+                <div
+                  class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
+                >
+                  <input
+                    placeholder="Write something to comment.."
+                    (keyup)="commentOnKeyEvent($event)"
+                  />
 
                   <div class="file-input d-flex gap-1 gap-md-2">
-                    <!-- <div class="file-upload">
-                    <label class="file">
-                      <input type="file" />
-                      <span class="file-custom border-0 d-grid text-center">
-                        <span
-                          class="material-symbols-outlined mat-icon m-0 xxltxt"
-                        >
-                          gif_box
-                        </span>
-                      </span>
-                    </label>
-                  </div>
-
-                  <div class="file-upload">
-                    <label class="file">
-                      <input type="file" />
-                      <span class="file-custom border-0 d-grid text-center">
-                        <span
-                          class="material-symbols-outlined mat-icon m-0 xxltxt"
-                        >
-                          perm_media
-                        </span>
-                      </span>
-                    </label>
-                  </div> -->
-
                     <i
                       class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                       role="button"
@@ -501,296 +492,313 @@
                     </i>
                   </div>
                 </div>
-                <!-- <div class="btn-area d-flex">
-                  <button class="cmn-btn px-2 px-sm-5 px-lg-6">
-                    <i class="material-symbols-outlined mat-icon m-0 fs-xxl">
-                      near_me
-                    </i>
-                  </button>
-                </div> -->
               </div>
             </form>
-            <ng-container *ngIf="commentList.length">
-              <div class="comments-area mt-5">
-                <div
-                  class="single-comment-area ms-xxl-15"
-                  *ngFor="let comment of commentList"
-                >
+
+            <ng-container *ngIf="post?.id === isOpenCommentsPostId">
+              <ng-container
+                *ngIf="commentList.length > 0; else elseNoCommentsFound"
+              >
+                <div class="comments-area mt-5">
                   <div
-                    class="parent-comment d-flex gap-2 gap-sm-4"
-                    *ngIf="comment.postId === post.id"
+                    class="single-comment-area ms-xxl-15"
+                    *ngFor="let comment of commentList"
                   >
-                    <div class="d-center align-items-baseline">
-                      <img
-                        class="w-40-px h-40-px rounded-3"
-                        [src]="comment?.ProfilePicName"
-                        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
-                        alt="avatar"
-                      />
-                    </div>
-                    <div class="info-item w-100">
-                      <div
-                        class="top-area px-4 py-3 d-flex gap-3 align-items-start justify-content-between"
-                      >
-                        <div class="title-area">
-                          <h6 class="m-0 mb-3">
-                            <a>{{ comment.Username }}</a>
-                          </h6>
-                          <p class="mdtxt mb-0" [innerHTML]="comment.comment"></p>
+                    <div
+                      class="parent-comment d-flex gap-2 gap-sm-4"
+                      *ngIf="comment.postId === post.id"
+                    >
+                      <div class="d-center align-items-baseline">
+                        <img
+                          class="w-40-px h-40-px rounded-3"
+                          [src]="comment?.ProfilePicName"
+                          onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+                          alt="avatar"
+                        />
+                      </div>
+                      <div class="info-item w-100 pb-3">
+                        <div
+                          class="top-area px-4 py-3 d-flex flex-column gap-2 align-items-start justify-content-start"
+                        >
+                          <div
+                            class="d-flex justify-content-between align-items-center w-100"
+                          >
+                            <h6 class="m-0">{{ comment.Username }}</h6>
+
+                            <ng-container
+                              *ngIf="
+                                profileId == comment.profileId ||
+                                post.profileid == profileId
+                              "
+                            >
+                              <div ngbDropdown>
+                                <i
+                                  class="material-symbols-outlined font-20-px m-0"
+                                  role="button"
+                                  ngbDropdownToggle
+                                >
+                                  more_horiz
+                                </i>
+
+                                <div ngbDropdownMenu class="dropdown-menu">
+                                  <!-- <button ngbDropdownItem>
+                                    <a
+                                      class="droplist d-flex align-items-center gap-2"
+                                      (click)="postId = null"
+                                    >
+                                      <i class="material-symbols-outlined mat-icon">
+                                        edit
+                                      </i>
+                                      <span>Edit</span>
+                                    </a>
+                                  </button> -->
+                                  <button ngbDropdownItem>
+                                    <a
+                                      class="droplist d-flex align-items-center gap-2"
+                                      (click)="deleteComments(comment.id)"
+                                    >
+                                      <i
+                                        class="material-symbols-outlined mat-icon"
+                                      >
+                                        delete
+                                      </i>
+                                      <span>Delete</span>
+                                    </a>
+                                  </button>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+
+                          <p
+                            class="mdtxt mb-0"
+                            [innerHTML]="comment.comment"
+                          ></p>
                         </div>
-                        <ng-container
+
+                        <ul class="friends-list d-flex gap-6 py-2 px-4 m-0">
+                          <li class="d-center">
+                            <button
+                              class="d-center gap-1 gap-sm-2 font-12-px"
+                              (click)="
+                                comment.react == 'L'
+                                  ? disLikeComments(comment)
+                                  : likeComments(comment)
+                              "
+                            >
+                              <i
+                                class="material-symbols-outlined font-20-px"
+                                [ngClass]="{ active: comment.react == 'L' }"
+                                >thumb_up</i
+                              >
+                              {{
+                                comment?.likeCount > 0 ? comment?.likeCount : 0
+                              }}
+                              Likes
+                            </button>
+                          </li>
+
+                          <li class="d-center">
+                            <button
+                              class="d-center gap-1 gap-sm-2 font-12-px"
+                              (click)="showReplySection(comment.id)"
+                            >
+                              <i class="material-symbols-outlined font-20-px"
+                                >chat</i
+                              >
+                              Reply
+                            </button>
+                          </li>
+                        </ul>
+
+                        <div
+                          class="d-flex w-100 gap-2 mb-2 w-auto me-0"
                           *ngIf="
-                            profileId == comment.profileId ||
-                            post.profileid == profileId
+                            isReply &&
+                            post.id === comment.postId &&
+                            commentId === comment.id
                           "
                         >
-                          <div ngbDropdown>
-                            <i
-                              class="material-symbols-outlined fs-xxl m-0"
-                              role="button"
-                              ngbDropdownToggle
-                            >
-                              more_horiz
-                            </i>
+                          <img
+                            [src]="sharedService.profilePic"
+                            class="w-40-px h-40-px rounded-3"
+                            alt="icon"
+                          />
+                          <div
+                            class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
+                          >
+                            <input
+                              placeholder="Write something to comment.."
+                              (keyup)="commentOnKeyEvent($event)"
+                            />
 
-                            <div ngbDropdownMenu class="dropdown-menu">
-                              <!-- <button ngbDropdownItem>
-                                <a
-                                  class="droplist d-flex align-items-center gap-2"
-                                  (click)="postId = null"
+                            <div class="file-input d-flex gap-1 gap-md-2">
+                              <!-- <div class="file-upload">
+                              <label class="file">
+                                <input type="file" />
+                                <span class="file-custom border-0 d-grid text-center">
+                                  <span
+                                    class="material-symbols-outlined mat-icon m-0 xxltxt"
+                                  >
+                                    gif_box
+                                  </span>
+                                </span>
+                              </label>
+                            </div>
+
+                            <div class="file-upload">
+                              <label class="file">
+                                <input type="file" />
+                                <span class="file-custom border-0 d-grid text-center">
+                                  <span
+                                    class="material-symbols-outlined mat-icon m-0 xxltxt"
+                                  >
+                                    perm_media
+                                  </span>
+                                </span>
+                              </label>
+                            </div> -->
+
+                              <i
+                                class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
+                                role="button"
+                                (click)="replyOnComment(post.id, comment.id)"
+                              >
+                                near_me
+                              </i>
+                            </div>
+                          </div>
+                        </div>
+
+                        <ng-container
+                          *ngIf="comment?.replyCommnetsList?.length"
+                        >
+                          <div
+                            *ngFor="let reply of comment?.replyCommnetsList"
+                            class="single-comment-area comment-item-nested"
+                          >
+                            <div
+                              *ngIf="
+                                reply.parentCommentId === comment.id &&
+                                reply.postId === post.id
+                              "
+                              class="d-flex gap-2 gap-sm-4 align-items-baseline"
+                            >
+                              <div class="">
+                                <img
+                                  class="avatar-img w-40-px h-40-px rounded-3"
+                                  [src]="reply.ProfilePicName"
+                                  alt="avatar"
+                                />
+                              </div>
+                              <div class="info-item w-100">
+                                <div
+                                  class="top-area px-4 py-3 d-flex gap-3 align-items-start justify-content-between"
                                 >
-                                  <i class="material-symbols-outlined mat-icon">
-                                    edit
-                                  </i>
-                                  <span>Edit</span>
-                                </a>
-                              </button> -->
-                              <button ngbDropdownItem>
-                                <a
-                                  class="droplist d-flex align-items-center gap-2"
-                                  (click)="deleteComments(comment.id)"
+                                  <div class="friends-list title-area">
+                                    <h6 class="m-0 mb-3">
+                                      <a>{{ reply?.Username }}</a>
+                                    </h6>
+                                    <p class="mdtxt mb-0">
+                                      {{ reply?.comment }}
+                                    </p>
+                                  </div>
+                                  <ng-container
+                                    *ngIf="
+                                      profileId == comment.profileId ||
+                                      post.profileid == profileId
+                                    "
+                                  >
+                                    <div ngbDropdown>
+                                      <i
+                                        class="material-symbols-outlined fs-xxl m-0"
+                                        role="button"
+                                        ngbDropdownToggle
+                                      >
+                                        more_horiz
+                                      </i>
+
+                                      <div
+                                        ngbDropdownMenu
+                                        class="dropdown-menu"
+                                      >
+                                        <!-- <button ngbDropdownItem>
+                                        <a
+                                          class="droplist d-flex align-items-center gap-2"
+                                          (click)="postId = null"
+                                        >
+                                          <i class="material-symbols-outlined mat-icon">
+                                            edit
+                                          </i>
+                                          <span>Edit</span>
+                                        </a>
+                                      </button> -->
+                                        <button ngbDropdownItem>
+                                          <a
+                                            class="droplist d-flex align-items-center gap-2"
+                                            (click)="deleteComments(reply.id)"
+                                          >
+                                            <i
+                                              class="material-symbols-outlined mat-icon"
+                                            >
+                                              delete
+                                            </i>
+                                            <span>Delete</span>
+                                          </a>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                </div>
+                                <ul
+                                  class="friends-list like-share d-flex gap-6 mt-2"
                                 >
-                                  <i class="material-symbols-outlined mat-icon">
-                                    delete
-                                  </i>
-                                  <span>Delete</span>
-                                </a>
-                              </button>
+                                  <li class="d-center">
+                                    <button
+                                      class="d-center gap-1 smtxt like-button"
+                                      (click)="
+                                        reply.react == 'L'
+                                          ? disLikeComments(reply)
+                                          : likeComments(reply)
+                                      "
+                                    >
+                                      <i
+                                        class="material-symbols-outlined mat-icon"
+                                        [ngClass]="
+                                          reply.react === 'L' ? 'active' : ''
+                                        "
+                                      >
+                                        thumb_up
+                                      </i>
+                                      <span class="ms-1 text-center">{{
+                                        reply?.likeCount > 0
+                                          ? reply?.likeCount
+                                          : 0
+                                      }}</span>
+                                    </button>
+                                  </li>
+                                </ul>
+                              </div>
                             </div>
                           </div>
                         </ng-container>
                       </div>
-
-                      <ul class="friends-list like-share d-flex gap-6 mt-2">
-                        <li class="d-center">
-                          <button
-                            class="d-center gap-1 smtxt like-button"
-                            (click)="
-                              comment.react == 'L'
-                                ? disLikeComments(comment)
-                                : likeComments(comment)
-                            "
-                          >
-                            <i
-                              class="material-symbols-outlined mat-icon"
-                              [ngClass]="comment.react == 'L' ? 'active' : ''"
-                            >
-                              thumb_up
-                            </i>
-                            <span class="ms-1 text-center">{{
-                              comment?.likeCount > 0 ? comment?.likeCount : 0
-                            }}</span>
-                          </button>
-                          <!-- <span class="ms-1 text-center">{{
-                            comment.likeCount
-                          }}</span> -->
-                          <!-- <button class="mdtxt">Like</button> -->
-                        </li>
-                        <li class="d-center">
-                          <i
-                            class="material-symbols-outlined mat-icon"
-                            (click)="showReplySection(comment.id)"
-                          >
-                            chat
-                          </i>
-                          <!--  <button class="mdtxt reply-btn">Reply</button> -->
-                        </li>
-                        <!-- <li class="d-center">
-                          <button class="mdtxt">Share</button>
-                        </li> -->
-                      </ul>
-
-                      <div
-                        class="d-flex w-100 mb-2 w-auto me-0"
-                        *ngIf="
-                          isReply &&
-                          post.id === comment.postId &&
-                          commentId === comment.id
-                        "
-                      >
-                        <img
-                          [src]="sharedService.profilePic"
-                          class="w-40-px h-40-px rounded-3"
-                          alt="icon"
-                        />
-                        <div class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100">
-                          <input placeholder="Write something to comment.." (keyup)="commentOnKeyEvent($event)"/>
-
-                          <div class="file-input d-flex gap-1 gap-md-2">
-                            <!-- <div class="file-upload">
-                            <label class="file">
-                              <input type="file" />
-                              <span class="file-custom border-0 d-grid text-center">
-                                <span
-                                  class="material-symbols-outlined mat-icon m-0 xxltxt"
-                                >
-                                  gif_box
-                                </span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="file-upload">
-                            <label class="file">
-                              <input type="file" />
-                              <span class="file-custom border-0 d-grid text-center">
-                                <span
-                                  class="material-symbols-outlined mat-icon m-0 xxltxt"
-                                >
-                                  perm_media
-                                </span>
-                              </span>
-                            </label>
-                          </div> -->
-
-                            <i
-                              class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
-                              role="button"
-                              (click)="replyOnComment(post.id, comment.id)"
-                            >
-                              near_me
-                            </i>
-                          </div>
-                        </div>
-                      </div>
-
-                      <ng-container *ngIf="comment?.replyCommnetsList?.length">
-                        <div
-                          *ngFor="let reply of comment?.replyCommnetsList"
-                          class="single-comment-area comment-item-nested"
-                        >
-                          <div
-                            *ngIf="
-                              reply.parentCommentId === comment.id &&
-                              reply.postId === post.id
-                            "
-                            class="d-flex gap-2 gap-sm-4 align-items-baseline"
-                          >
-                            <div class="">
-                              <img
-                                class="avatar-img w-40-px h-40-px rounded-3"
-                                [src]="reply.ProfilePicName"
-                                alt="avatar"
-                              />
-                            </div>
-                            <div class="info-item w-100">
-                              <div
-                                class="top-area px-4 py-3 d-flex gap-3 align-items-start justify-content-between"
-                              >
-                                <div class="friends-list title-area">
-                                  <h6 class="m-0 mb-3">
-                                    <a>{{ reply?.Username }}</a>
-                                  </h6>
-                                  <p class="mdtxt mb-0">{{ reply?.comment }}</p>
-                                </div>
-                                <ng-container
-                                  *ngIf="
-                                    profileId == comment.profileId ||
-                                    post.profileid == profileId
-                                  "
-                                >
-                                  <div ngbDropdown>
-                                    <i
-                                      class="material-symbols-outlined fs-xxl m-0"
-                                      role="button"
-                                      ngbDropdownToggle
-                                    >
-                                      more_horiz
-                                    </i>
-
-                                    <div ngbDropdownMenu class="dropdown-menu">
-                                      <!-- <button ngbDropdownItem>
-                                      <a
-                                        class="droplist d-flex align-items-center gap-2"
-                                        (click)="postId = null"
-                                      >
-                                        <i class="material-symbols-outlined mat-icon">
-                                          edit
-                                        </i>
-                                        <span>Edit</span>
-                                      </a>
-                                    </button> -->
-                                      <button ngbDropdownItem>
-                                        <a
-                                          class="droplist d-flex align-items-center gap-2"
-                                          (click)="deleteComments(reply.id)"
-                                        >
-                                          <i
-                                            class="material-symbols-outlined mat-icon"
-                                          >
-                                            delete
-                                          </i>
-                                          <span>Delete</span>
-                                        </a>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </ng-container>
-                              </div>
-                              <ul class="friends-list like-share d-flex gap-6 mt-2">
-                                <li class="d-center">
-                                  <button
-                                    class="d-center gap-1 smtxt like-button"
-                                    (click)="
-                                      reply.react == 'L'
-                                        ? disLikeComments(reply)
-                                        : likeComments(reply)
-                                    "
-                                  >
-                                    <i
-                                      class="material-symbols-outlined mat-icon"
-                                      [ngClass]="
-                                        reply.react === 'L' ? 'active' : ''
-                                      "
-                                    >
-                                      thumb_up
-                                    </i>
-                                    <span class="ms-1 text-center">{{
-                                      reply?.likeCount > 0 ? reply?.likeCount : 0
-                                    }}</span>
-                                  </button>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </ng-container>
                     </div>
                   </div>
                 </div>
-              </div>
+              </ng-container>
             </ng-container>
           </div>
         </div>
       </ng-container>
 
-      <ng-container *ngIf="!communityId">
-        <div class="col-12 my-5 text-center">
-          <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
-            Load More
-          </button>
-        </div>
-      </ng-container>
+      <!-- <ng-container *ngIf="!communityId"> -->
+      <div class="col-12 my-5 text-center">
+        <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
+          Load More
+        </button>
+      </div>
+      <!-- </ng-container> -->
     </ng-container>
   </div>
 </ng-container>
@@ -872,4 +880,10 @@
 
 <ng-template #elseNoPostFound>
   <h6 class="px-4 py-5 text-center">No Post Available</h6>
+</ng-template>
+
+<ng-template #elseNoCommentsFound>
+  <span class="pt-5 m-0 text-start text-secondary"
+    >Comment's not available</span
+  >
 </ng-template>

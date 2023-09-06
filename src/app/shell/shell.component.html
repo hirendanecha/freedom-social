@@ -1,27 +1,15 @@
 <div class="main-content d-flex justify-content-start align-items-start">
   <div class="container pt-5">
-    <div class="row">
-      <div
-        class="col-xxl-3 col-xl-3 col-lg-3 col-12 mt-xl-0 d-lg-block"
-        *ngIf="!isShowMyProfile"
-      >
+    <div class="d-lg-flex d-block w-100 gap-5 min-vh-100">
+      <div class="my-profile-sidebar d-lg-block" *ngIf="!isShowMyProfile">
         <app-my-profile></app-my-profile>
       </div>
 
-      <div
-        [ngClass]="
-          (isShow && isShowMyProfile)
-            ? ''
-            : 'col flex-column gap-4 cus-z mb-15 mb-lg-0 mobile-view'
-        "
-      >
+      <div class="d-flex mb-15 w-100">
         <router-outlet></router-outlet>
       </div>
 
-      <div
-        class="col-xxl-3 col-xl-3 col-lg-4 col-12 mt-xl-0 d-lg-block d-none mt-0 mt-lg-10"
-        *ngIf="!isShow"
-      >
+      <div class="my-list-sidebar d-lg-block d-none" *ngIf="!isShow">
         <app-my-list></app-my-list>
       </div>
     </div>

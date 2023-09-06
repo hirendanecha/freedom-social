@@ -1,70 +1,54 @@
 <!-- #Web View -->
-<div class="cus-overflow cus-scrollbar sidebar-head d-lg-block d-none profile-sidebar">
-  <div class="side-wrapper">
-    <div class="sidebar-wrapper d-flex flex-column gap-6">
-      <div class="sidebar-area p-5">
-        <div class="dashboard-img">
-          <img class="w-100" src="/assets/images/freedom-dashboard.png" />
-          <span class="mt-3">
-            Get paid to Post, Reactions, Share and View and Refer family and
-            friends to Freedom!
-          </span>
-        </div>
-        <ul class="list-unstyled fs-11 justify-content-around">
-          <!-- <li class="d-block m-0">All Time</li> -->
-          <li><span>Posts</span><br /><span class="posts_likes">3</span></li>
-          <li>
-            <span>Reactions</span><br /><span class="posts_likes">2</span>
-          </li>
-          <li><span>Views</span><br /><span class="posts_likes"> 0</span></li>
-          <li><span>Comments</span><br /><span class="posts_likes">0</span></li>
-          <!-- <li>
-            <span>Refferals</span><br /><span class="posts_likes">0</span>
-          </li> -->
-        </ul>
-        <ul class="bg-gray-div list-unstyled fs-11 justify-content-around">
-          <!-- <li class="d-block m-0">Monthly</li> -->
-          <li><span>Posts</span><br /><span class="posts_likes">0</span></li>
-          <li>
-            <span>Reactions</span><br /><span class="posts_likes">0</span>
-          </li>
-          <li><span>Views</span><br /><span class="posts_likes">0</span></li>
-          <li><span>Comments</span><br /><span class="posts_likes">0</span></li>
-          <!-- <li>
-            <span>Refferals</span><br /><span class="posts_likes">0</span>
-          </li> -->
-        </ul>
-        <div class="amount-dashboard d-flex justify-content-around">
-          <span><img src="/assets/images/logo1776.png" /></span
-          ><span class="ml-2">0.8750 </span><span class="ml-4">3.50</span
-          ><span class="ml-2">(1776)</span>
-        </div>
-        <div class="dashboard-txt mt-2 mb-3 border p-2">
-          <span>
-            Dashboard only reflects 1776 earned by posting, liking, etc. and
-            does not reflect the 1776 Tokens in your offline wallet.
-          </span>
-        </div>
-      </div>
-      <div class="sidebar-area p-5">
-        <div class="mb-4">
-          <h6 class="d-inline-flex">Local Communities</h6>
-        </div>
-        <button
-          class="cmn-btn p-3"
-          *ngIf="user?.AccountType === 'user'"
-          (click)="createCommunity()"
-        >
-          Create Local Community
-        </button>
-        <button
-          class="cmn-btn p-3"
-          *ngIf="user?.AccountType !== 'user'"
-          (click)="createCommunity()"
-        >
-          Find Local Community
-        </button>
-      </div>
-    </div>
+<div class="cus-overflow cus-scrollbar d-lg-flex d-none flex-column single-box p-5">
+  <div class="dashboard-img mb-5">
+    <img class="w-100 rounded-3" src="/assets/images/freedom-dashboard.png" />
+    <span class="mt-3 text-start font-14-px">
+      Get paid to Post, Reactions, Share and View and Refer family and
+      friends to Freedom!
+    </span>
   </div>
+
+  <ul class="list-unstyled fs-11 justify-content-around rounded-3">
+    <!-- <li class="d-block m-0">All Time</li> -->
+    <li><span>Posts</span><br /><span class="posts_likes">3</span></li>
+    <li>
+      <span>Reactions</span><br /><span class="posts_likes">2</span>
+    </li>
+    <li><span>Views</span><br /><span class="posts_likes"> 0</span></li>
+    <li><span>Comments</span><br /><span class="posts_likes">0</span></li>
+    <!-- <li>
+      <span>Refferals</span><br /><span class="posts_likes">0</span>
+    </li> -->
+  </ul>
+
+  <ul class="list-unstyled fs-11 justify-content-around rounded-3">
+    <!-- <li class="d-block m-0">Monthly</li> -->
+    <li><span>Posts</span><br /><span class="posts_likes">0</span></li>
+    <li>
+      <span>Reactions</span><br /><span class="posts_likes">0</span>
+    </li>
+    <li><span>Views</span><br /><span class="posts_likes">0</span></li>
+    <li><span>Comments</span><br /><span class="posts_likes">0</span></li>
+    <!-- <li>
+      <span>Refferals</span><br /><span class="posts_likes">0</span>
+    </li> -->
+  </ul>
+
+  <div class="amount-dashboard d-flex align-items-center gap-4 px-3 py-2">
+    <img src="/assets/images/logo1776.png" class="w-40-px" />
+    <span class="font-14-px">0.8750 </span>
+    <span class="font-14-px">3.50</span>
+    <span class="font-14-px">(1776)</span>
+  </div>
+
+  <span class="mt-3 mb-3 py-2 px-3 rounded-3 border text-start font-12-px">
+    Dashboard only reflects 1776 earned by posting, liking, etc. and
+    does not reflect the 1776 Tokens in your offline wallet.
+  </span>
+
+  <h6 class="d-inline-flex mb-3 pt-5">Local Communities</h6>
+
+  <button class="btn btn-sm btn-primary align-self-start" (click)="createCommunity()">
+    {{ user?.AccountType === 'user' ? 'Create' : 'Find'}} Local Community
+  </button>
 </div>

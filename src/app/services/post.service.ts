@@ -29,7 +29,7 @@ export class PostService {
   upload(
     files: File,
     id: any,
-    defaultType: string
+    defaultType: string = 'post'
   ): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('folder', defaultType);
