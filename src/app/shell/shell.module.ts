@@ -17,19 +17,18 @@ import {
   LazyLoadImageModule,
   ScrollHooks,
 } from 'ng-lazyload-image';
+import { SharedModule } from '../@shared/shared.module';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     MyProfileComponent,
-    MyListComponent,
     ShellComponent,
     FooterComponent,
   ],
   exports: [
     HeaderComponent,
     MyProfileComponent,
-    MyListComponent,
     ShellComponent,
     FooterComponent,
   ],
@@ -39,12 +38,10 @@ import {
   ],
   imports: [
     ShellRoutingModule,
-    CommonModule,
+    SharedModule,
     NgbModule,
     PickerModule,
-    FormsModule,
     NgxSpinnerModule,
-    ReactiveFormsModule,
     PipeModule,
     ToastsContainer,
     LazyLoadImageModule,

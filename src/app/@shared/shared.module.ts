@@ -2,15 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeletePostComponent } from './delete-post-dialog/delete-post.component';
-import { NgbDropdown, NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastsComponent } from './toaster/toaster.component';
+import { MyListComponent } from '../right-side-bar/my-list.component';
 
-const sharedComponents = [DeletePostComponent];
+const sharedComponents = [
+  DeletePostComponent,
+  MyListComponent
+];
 
 const sharedModules = [
+  CommonModule,
   FormsModule,
   ReactiveFormsModule,
-  CommonModule,
   NgbDropdownModule,
   NgbNavModule,
   ToastsComponent,
