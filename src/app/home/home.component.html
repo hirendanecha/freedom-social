@@ -103,8 +103,15 @@
 
         <ng-container *ngIf="postData?.imageUrl">
           <div class="position-relative w-100-px h-100-px mt-5">
-            <img [src]="postData?.imageUrl" class="w-100 h-100 rounded-4" alt="icon"/>
-            <span class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined" (click)="removePostSelectedFile()" >
+            <img
+              [src]="postData?.imageUrl"
+              class="w-100 h-100 rounded-4"
+              alt="icon"
+            />
+            <span
+              class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
+              (click)="removePostSelectedFile()"
+            >
               close
             </span>
           </div>
@@ -135,7 +142,14 @@
             cursor
             (click)="postImage.click()"
           >
-            <input type="file" #postImage hidden class="d-none" accept="image/*" (change)="onPostFileSelect($event)" />
+            <input
+              type="file"
+              #postImage
+              hidden
+              class="d-none"
+              accept="image/*"
+              (change)="onPostFileSelect($event)"
+            />
             <i class="material-symbols-outlined mat-icon">add_a_photo</i>
             <span>Photo</span>
           </li>
@@ -294,11 +308,7 @@
             </ng-container>
 
             <ng-container *ngIf="post?.imageUrl">
-              <img
-                [src]="post?.imageUrl"
-                class="w-100 rounded-3"
-                alt="image"
-              />
+              <img [src]="post?.imageUrl" class="w-100 rounded-3" alt="image" />
             </ng-container>
 
             <div class="border rounded-3" *ngIf="post?.metaimage">
@@ -437,7 +447,11 @@
                 >
                   thumb_up
                 </i>
-                {{ post?.likescount > 0 ? post?.likescount + ' Likes' : 0 + ' Like'}}
+                {{
+                  post?.likescount > 0
+                    ? post?.likescount + " Likes"
+                    : 0 + " Like"
+                }}
               </button>
 
               <button
@@ -460,8 +474,13 @@
                   alt="icon"
                 />
 
-                <div class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100">
-                  <input placeholder="Write something to comment.." (keyup)="commentOnKeyEvent($event)"/>
+                <div
+                  class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
+                >
+                  <input
+                    placeholder="Write something to comment.."
+                    (keyup)="commentOnKeyEvent($event)"
+                  />
 
                   <div class="file-input d-flex gap-1 gap-md-2">
                     <i
@@ -477,7 +496,9 @@
             </form>
 
             <ng-container *ngIf="post?.id === isOpenCommentsPostId">
-              <ng-container *ngIf="commentList.length > 0; else elseNoCommentsFound">
+              <ng-container
+                *ngIf="commentList.length > 0; else elseNoCommentsFound"
+              >
                 <div class="comments-area mt-5">
                   <div
                     class="single-comment-area ms-xxl-15"
@@ -499,7 +520,9 @@
                         <div
                           class="top-area px-4 py-3 d-flex flex-column gap-2 align-items-start justify-content-start"
                         >
-                          <div class="d-flex justify-content-between align-items-center w-100">
+                          <div
+                            class="d-flex justify-content-between align-items-center w-100"
+                          >
                             <h6 class="m-0">{{ comment.Username }}</h6>
 
                             <ng-container
@@ -534,7 +557,9 @@
                                       class="droplist d-flex align-items-center gap-2"
                                       (click)="deleteComments(comment.id)"
                                     >
-                                      <i class="material-symbols-outlined mat-icon">
+                                      <i
+                                        class="material-symbols-outlined mat-icon"
+                                      >
                                         delete
                                       </i>
                                       <span>Delete</span>
@@ -545,22 +570,43 @@
                             </ng-container>
                           </div>
 
-                          <p class="mdtxt mb-0" [innerHTML]="comment.comment"></p>
+                          <p
+                            class="mdtxt mb-0"
+                            [innerHTML]="comment.comment"
+                          ></p>
                         </div>
 
                         <ul class="friends-list d-flex gap-6 py-2 px-4 m-0">
                           <li class="d-center">
-                            <button class="d-center gap-1 gap-sm-2 font-12-px" (click)="comment.react == 'L' ? disLikeComments(comment) : likeComments(comment)">
-                              <i class="material-symbols-outlined font-20-px" [ngClass]="{'active': comment.react == 'L'}">thumb_up</i>
+                            <button
+                              class="d-center gap-1 gap-sm-2 font-12-px"
+                              (click)="
+                                comment.react == 'L'
+                                  ? disLikeComments(comment)
+                                  : likeComments(comment)
+                              "
+                            >
+                              <i
+                                class="material-symbols-outlined font-20-px"
+                                [ngClass]="{ active: comment.react == 'L' }"
+                                >thumb_up</i
+                              >
                               {{
                                 comment?.likeCount > 0 ? comment?.likeCount : 0
-                              }} Likes
+                              }}
+                              Likes
                             </button>
                           </li>
 
                           <li class="d-center">
-                            <button class="d-center gap-1 gap-sm-2 font-12-px" (click)="showReplySection(comment.id)">
-                              <i class="material-symbols-outlined font-20-px">chat</i> Reply
+                            <button
+                              class="d-center gap-1 gap-sm-2 font-12-px"
+                              (click)="showReplySection(comment.id)"
+                            >
+                              <i class="material-symbols-outlined font-20-px"
+                                >chat</i
+                              >
+                              Reply
                             </button>
                           </li>
                         </ul>
@@ -578,8 +624,13 @@
                             class="w-40-px h-40-px rounded-3"
                             alt="icon"
                           />
-                          <div class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100">
-                            <input placeholder="Write something to comment.." (keyup)="commentOnKeyEvent($event)"/>
+                          <div
+                            class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
+                          >
+                            <input
+                              placeholder="Write something to comment.."
+                              (keyup)="commentOnKeyEvent($event)"
+                            />
 
                             <div class="file-input d-flex gap-1 gap-md-2">
                               <!-- <div class="file-upload">
@@ -619,7 +670,9 @@
                           </div>
                         </div>
 
-                        <ng-container *ngIf="comment?.replyCommnetsList?.length">
+                        <ng-container
+                          *ngIf="comment?.replyCommnetsList?.length"
+                        >
                           <div
                             *ngFor="let reply of comment?.replyCommnetsList"
                             class="single-comment-area comment-item-nested"
@@ -646,7 +699,9 @@
                                     <h6 class="m-0 mb-3">
                                       <a>{{ reply?.Username }}</a>
                                     </h6>
-                                    <p class="mdtxt mb-0">{{ reply?.comment }}</p>
+                                    <p class="mdtxt mb-0">
+                                      {{ reply?.comment }}
+                                    </p>
                                   </div>
                                   <ng-container
                                     *ngIf="
@@ -663,7 +718,10 @@
                                         more_horiz
                                       </i>
 
-                                      <div ngbDropdownMenu class="dropdown-menu">
+                                      <div
+                                        ngbDropdownMenu
+                                        class="dropdown-menu"
+                                      >
                                         <!-- <button ngbDropdownItem>
                                         <a
                                           class="droplist d-flex align-items-center gap-2"
@@ -692,7 +750,9 @@
                                     </div>
                                   </ng-container>
                                 </div>
-                                <ul class="friends-list like-share d-flex gap-6 mt-2">
+                                <ul
+                                  class="friends-list like-share d-flex gap-6 mt-2"
+                                >
                                   <li class="d-center">
                                     <button
                                       class="d-center gap-1 smtxt like-button"
@@ -711,7 +771,9 @@
                                         thumb_up
                                       </i>
                                       <span class="ms-1 text-center">{{
-                                        reply?.likeCount > 0 ? reply?.likeCount : 0
+                                        reply?.likeCount > 0
+                                          ? reply?.likeCount
+                                          : 0
                                       }}</span>
                                     </button>
                                   </li>
@@ -730,13 +792,13 @@
         </div>
       </ng-container>
 
-      <ng-container *ngIf="!communityId">
-        <div class="col-12 my-5 text-center">
-          <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
-            Load More
-          </button>
-        </div>
-      </ng-container>
+      <!-- <ng-container *ngIf="!communityId"> -->
+      <div class="col-12 my-5 text-center">
+        <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
+          Load More
+        </button>
+      </div>
+      <!-- </ng-container> -->
     </ng-container>
   </div>
 </ng-container>
@@ -821,5 +883,7 @@
 </ng-template>
 
 <ng-template #elseNoCommentsFound>
-  <span class="pt-5 m-0 text-start text-secondary">Comment's not available</span>
+  <span class="pt-5 m-0 text-start text-secondary"
+    >Comment's not available</span
+  >
 </ng-template>

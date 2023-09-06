@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     meta: {},
     tags: [],
     file: {},
-    imageUrl: ''
+    imageUrl: '',
   };
   @ViewChild('emojiMenu') emojiMenu: EventEmitter<NgbModalRef[]> | undefined;
   emojiMenuDialog: any;
@@ -461,8 +461,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       if (this.postData?.file?.name) {
         this.spinner.show();
         this.postService.upload(this.postData?.file, this.profileId).subscribe({
-          next:
-          (res: any) => {
+          next: (res: any) => {
             if (res?.body?.url) {
               this.postData['file'] = null;
               this.postData['imageUrl'] = res?.body?.url;
@@ -473,7 +472,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           },
           error: (err) => {
             this.spinner.hide();
-          }
+          },
         });
       } else {
         this.createNewPost();
@@ -545,12 +544,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
               lovecount: any;
               sadcount: any;
             }) => {
-              element.totalReactCount =
-                element.likescount +
-                element.wowcount +
-                element.haliriouscount +
-                element.lovecount +
-                element.sadcount;
+              // element.totalReactCount =
+              //   element.likescount +
+              //   element.wowcount +
+              //   element.haliriouscount +
+              //   element.lovecount +
+              //   element.sadcount;
               this.postList.push(element);
             }
           );
