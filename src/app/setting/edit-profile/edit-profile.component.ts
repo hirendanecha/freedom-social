@@ -7,9 +7,10 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, debounceTime, forkJoin, fromEvent, of } from 'rxjs';
+import { ConfirmationModalComponent } from 'src/app/@shared/confirmation-modal/confirmation-modal.component';
 import { Customer } from 'src/app/constant/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PostService } from 'src/app/services/post.service';
@@ -46,7 +47,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   };
 
   constructor(
-    private modalService: NgbActiveModal,
+    private modalService: NgbModal,
     private route: ActivatedRoute,
     private router: Router,
     private customerService: CustomerService,
@@ -68,7 +69,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     if (!this.tokenStorage.getToken()) {
       this.router.navigate([`/login`]);
     }
-    this.modalService.close();
+    this.modalService.dismissAll();
   }
 
   ngAfterViewInit(): void {
@@ -171,44 +172,60 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     );
   }
 
-  uploadImgAndUpdateCustomer(): void {
+  confirmAndUpdateCustomer(): void {
     if (this.profileId) {
-      let uploadObs = {};
-      if (this.profileImg?.file?.name) {
-        uploadObs['profileImg'] = this.postService.upload(this.profileImg?.file, this.profileId, 'profile');
-      }
+      const modalRef = this.modalService.open(ConfirmationModalComponent, {
+        centered: true,
+      });
+      modalRef.componentInstance.title = 'Update Profile';
+      modalRef.componentInstance.confirmButtonLabel = 'Update';
+      modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+      modalRef.componentInstance.message = 'Are you sure want to update profile details?';
 
-      if (this.profileCoverImg?.file?.name) {
-        uploadObs['profileCoverImg'] = this.postService.upload(this.profileCoverImg?.file, this.profileId, 'profile-cover');
-      }
+      modalRef.result.then((res) => {
+        console.log(res);
+        if (res === 'success') {
+          this.uploadImgAndUpdateCustomer();
+        }
+      });
+    }
 
-      if (Object.keys(uploadObs)?.length > 0) {
-        this.spinner.show();
+  }
 
-        forkJoin(uploadObs).subscribe({
-          next: (res: any) => {
-            if (res?.profileImg?.body?.url) {
-              this.profileImg['file'] = null;
-              this.profileImg['url'] = res?.profileImg?.body?.url;
-              this.sharedService.profilePic = this.profileImg['url'];
-            }
+  uploadImgAndUpdateCustomer(): void {
+    let uploadObs = {};
+    if (this.profileImg?.file?.name) {
+      uploadObs['profileImg'] = this.postService.upload(this.profileImg?.file, this.profileId, 'profile');
+    }
 
-            if (res?.profileCoverImg?.body?.url) {
-              this.profileCoverImg['file'] = null;
-              this.profileCoverImg['url'] = res?.profileCoverImg?.body?.url;
-              this.sharedService.coverPic = this.profileCoverImg['url'];
-            }
+    if (this.profileCoverImg?.file?.name) {
+      uploadObs['profileCoverImg'] = this.postService.upload(this.profileCoverImg?.file, this.profileId, 'profile-cover');
+    }
 
-            this.updateCustomer();
-            this.spinner.hide();
-          },
-          error: (err) => {
-            this.spinner.hide();
-          },
-        });
-      } else {
-        this.updateCustomer();
-      }
+    if (Object.keys(uploadObs)?.length > 0) {
+      this.spinner.show();
+
+      forkJoin(uploadObs).subscribe({
+        next: (res: any) => {
+          if (res?.profileImg?.body?.url) {
+            this.profileImg['file'] = null;
+            this.profileImg['url'] = res?.profileImg?.body?.url;
+            this.sharedService.profilePic = this.profileImg['url'];
+          }
+
+          if (res?.profileCoverImg?.body?.url) {
+            this.profileCoverImg['file'] = null;
+            this.profileCoverImg['url'] = res?.profileCoverImg?.body?.url;
+            this.sharedService.coverPic = this.profileCoverImg['url'];
+          }
+
+          this.updateCustomer();
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+        },
+      });
     } else {
       this.updateCustomer();
     }
