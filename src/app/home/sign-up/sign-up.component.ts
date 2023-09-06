@@ -191,7 +191,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       LastName: data?.LastName,
       Address: data?.Address,
       Country: data?.Country,
-      City: data?.FirstName,
+      City: data?.City,
       State: data?.State,
       Zip: data?.Zip,
       MobileNo: data?.MobileNo,

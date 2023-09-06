@@ -206,6 +206,8 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
             this.spinner.hide();
           },
         });
+      } else {
+        this.updateCustomer();
       }
     } else {
       this.updateCustomer();
