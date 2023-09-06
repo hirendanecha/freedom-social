@@ -428,7 +428,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     //     console.log(error);
     //   }
     // );
-    this.spinner.show();
+    // this.spinner.show();
     this.socketService.socket.on(
       'new-post',
       (data: any) => {
@@ -443,11 +443,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
           //     ele.sadcount;
           //   return ele;
           // });
-          this.spinner.hide();
+          // this.spinner.hide();
         }
       },
       (error: any) => {
-        this.spinner.hide();
+        // this.spinner.hide();
         console.log(error);
       }
     );
@@ -817,7 +817,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
           res.forEach((element: { SeeFirstProfileId: any }) => {
             this.seeFirstList.push(element.SeeFirstProfileId);
           });
-          console.log(this.seeFirstList);
         }
       },
       error: (error) => {
@@ -911,7 +910,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.postService.deleteComments(id).subscribe({
       next: (res: any) => {
         this.toaster.success(res.message);
-        this.viewComments(id);
+        // this.viewComments(id);
       },
       error: (error) => {
         console.log(error);
@@ -942,12 +941,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         console.log(data);
-        this.commentList.map((ele: any) => ({
-          ...ele,
-          replyCommnetsList: data.filter((ele1) => {
-            return ele.id === ele1.parentCommentId;
-          }),
-        }));
+        this.commentList.map((ele: any) =>
+          data.filter((ele1) => {
+            if (ele.id === ele1.parentCommentId) {
+              ele?.['replyCommnetsList'].push(ele1);
+              return ele;
+            }
+          })
+        );
+        console.log(this.commentList);
         this.isReply = false;
         this.commentId = null;
         this.getPostList();

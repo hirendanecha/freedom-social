@@ -49,7 +49,7 @@ export class MyListComponent implements OnInit {
 
   createCommunity() {
     if (this.user.AccountType === 'user') {
-      this.router.navigateByUrl('community/community-registration');
+      this.router.navigateByUrl('local-community/community-registration');
     } else {
       this.router.navigateByUrl('local-community');
     }
