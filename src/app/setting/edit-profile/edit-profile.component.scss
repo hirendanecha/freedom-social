@@ -3,16 +3,21 @@
     min-width: 300px;
     max-width: 300px;
     height: max-content;
+
+    .profile-img {
+      min-height: 260px;
+    }
   }
 
-  .cover-img img {
-    min-height: 290px;
-    max-height: 290px;
+  .cover-image {
+    min-height: 300px;
+    max-height: 300px;
   }
 
   .edit-image {
     position: absolute;
     top: 0;
+    left: 0;
 
     .material-symbols-outlined {
       padding: 16px;
