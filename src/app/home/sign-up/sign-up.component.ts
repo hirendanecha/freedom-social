@@ -166,14 +166,17 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   onZipChange(event) {
+    this.spinner.show();
+
     this.customerService.getZipData(event, this.customer?.Country).subscribe(
       (data) => {
         let zip_data = data[0];
         this.customer.State = zip_data ? zip_data.state : '';
         this.customer.City = zip_data ? zip_data.city : '';
-        // this.customer.Place = zip_data ? zip_data.places : '';
+        this.spinner.hide();
       },
       (err) => {
+        this.spinner.hide();
         console.log(err);
       }
     );

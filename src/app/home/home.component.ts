@@ -466,8 +466,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
             if (res?.body?.url) {
               this.postData['file'] = null;
               this.postData['imageUrl'] = res?.body?.url;
+              this.submit();
             }
-            this.submit();
 
             this.spinner.hide();
           },
@@ -1051,7 +1051,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       );
 
       this.socketService.socket.on(
-        'create-new-post',
+        'new-post-added',
         (res: any) => {
           this.postList.push(res);
           this.spinner.hide();
