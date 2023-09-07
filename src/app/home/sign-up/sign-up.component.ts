@@ -39,7 +39,9 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     private customerService: CustomerService,
     private router: Router,
     private uploadService: UploadFilesService
-  ) {}
+  ) {
+    this.customer.termAndPolicy = false;
+  }
 
   ngOnInit(): void {
     this.getAllCountries();
@@ -135,7 +137,13 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     return true;
   }
 
-  onSubmit() {
+  onSubmit(isValid: boolean = false) {
+    this.msg = '';
+    if (!isValid && this.customer.termAndPolicy === false) {
+      this.msg = 'Please enter mandatory fields(*) data and please check terms and condition.';
+      return false;
+    }
+
     if (!this.validatepassword()) return;
 
     const id = this.route.snapshot.paramMap.get('id');

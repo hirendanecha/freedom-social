@@ -940,7 +940,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.postService.deleteComments(id).subscribe({
       next: (res: any) => {
         this.toaster.success(res.message);
-        this.viewComments(id);
+        this.viewComments(this.isOpenCommentsPostId);
       },
       error: (error) => {
         console.log(error);
