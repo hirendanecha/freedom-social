@@ -466,8 +466,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
             if (res?.body?.url) {
               this.postData['file'] = null;
               this.postData['imageUrl'] = res?.body?.url;
+              this.submit();
             }
-            this.submit();
 
             this.spinner.hide();
           },
@@ -511,6 +511,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.socketService.createPost(this.postData, (data) => {
         this.spinner.hide();
         this.toaster.success('Post created successfully.');
+        this.postData = {
+          profileid: postData.profileid,
+          communityId: postData.communityId,
+          postdescription: '',
+          meta: {},
+          tags: [],
+          file: {},
+          imageUrl: '',
+        };
+
         return data;
       });
 
