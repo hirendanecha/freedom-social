@@ -529,7 +529,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
           this.postList.push(res);
           this.spinner.hide();
-          // this.getPostList();
+          this.getPostList();
           this.postData = {
             profileid: postData.profileid,
             communityId: postData.communityId,
