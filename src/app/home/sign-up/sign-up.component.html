@@ -43,7 +43,7 @@
                     <input
                       type="text"
                       class="input-area"
-                      name="fname"
+                      name="FirstName"
                       placeholder="Enter Your Name"
                       [(ngModel)]="customer.FirstName"
                     />
@@ -53,7 +53,7 @@
                     <input
                       type="text"
                       class="input-area"
-                      name="lname"
+                      name="LastName"
                       placeholder="Enter Your Name"
                       [(ngModel)]="customer.LastName"
                     />
@@ -67,7 +67,7 @@
                     <input
                       type="text"
                       class="input-area"
-                      name="id"
+                      name="Username"
                       placeholder="Enter Your Username Name"
                       [(ngModel)]="customer.Username"
                       required
@@ -79,7 +79,7 @@
                     >
                     <input
                       type="email"
-                      name="id"
+                      name="Email"
                       class="input-area"
                       required
                       placeholder="Enter your email"
@@ -109,7 +109,7 @@
                       type="password"
                       class="input-area"
                       required
-                      name="confirmpassword"
+                      name="confirmPassword"
                       placeholder="Enter confirm password"
                       (focusout)="validatepassword()"
                       (input)="changetopassword($event)"
@@ -123,7 +123,7 @@
                     <label class="form-label text-light">Profile Picture<span>*</span></label>
                     <input
                       type="file"
-                      name="logo"
+                      name="profilePicture"
                       (change)="selectFiles($event)"
                       required
                     />
@@ -144,7 +144,7 @@
                     <input
                       type="text"
                       class="input-area"
-                      name="mobile"
+                      name="MobileNo"
                       placeholder="Enter your mobile number"
                       [(ngModel)]="customer.MobileNo"
                     />
@@ -152,9 +152,9 @@
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label text-light">Country<span class="text-danger">*</span></label>
                     <select
-                      id="country"
+                      id="Country"
                       required
-                      name="country"
+                      name="Country"
                       class="form-control"
                       [(ngModel)]="customer.Country"
                       (change)="changeCountry()"
@@ -175,7 +175,7 @@
                     <input
                       type="text"
                       class="input-area"
-                      name="address"
+                      name="Address"
                       placeholder="Enter your address"
                       [(ngModel)]="customer.Address"
                     />
@@ -189,7 +189,7 @@
                       placeholder="Enter your zip code"
                       [disabled]="!customer.Country"
                       [(ngModel)]="customer.Zip"
-                      name="zip"
+                      name="Zip"
                       #zipCode
                     />
                   </div>
@@ -203,7 +203,7 @@
                       required
                       placeholder="Enter your state"
                       disabled
-                      name="state"
+                      name="State"
                       [(ngModel)]="customer.State"
                     />
                   </div>
@@ -213,7 +213,7 @@
                       type="text"
                       class="input-area"
                       required
-                      name="city"
+                      name="City"
                       placeholder="Enter your city"
                       disabled
                       [(ngModel)]="customer.City"
