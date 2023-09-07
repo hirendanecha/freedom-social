@@ -849,37 +849,37 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  commentOnKeyEvent(event): void {
-    const text = event.target.value;
-    // const atSymbolIndex = text.lastIndexOf('@');
+  // commentOnKeyEvent(childPostCommentElement): void {
+  //   const text = childPostCommentElement.innerHTML;
+  //   // const atSymbolIndex = text.lastIndexOf('@');
 
-    // if (atSymbolIndex !== -1) {
-    //   this.userNameSearch = text.substring(atSymbolIndex + 1);
-    //   console.log('userNameSearch : ', this.userNameSearch);
+  //   // if (atSymbolIndex !== -1) {
+  //   //   this.userNameSearch = text.substring(atSymbolIndex + 1);
+  //   //   console.log('userNameSearch : ', this.userNameSearch);
 
-    //   // if (this.userNameSearch?.length > 2) {
-    //   //   this.getUserList(this.userNameSearch);
-    //   // } else {
-    //   //   this.clearUserSearchData();
-    //   // }
-    // } else {
-    //   this.clearUserSearchData();
-    // }
-    // console.log(text);
-    this.postComment = text;
+  //   //   // if (this.userNameSearch?.length > 2) {
+  //   //   //   this.getUserList(this.userNameSearch);
+  //   //   // } else {
+  //   //   //   this.clearUserSearchData();
+  //   //   // }
+  //   // } else {
+  //   //   this.clearUserSearchData();
+  //   // }
+  //   // console.log(text);
+  //   this.postComment = text;
 
-    // if (lastChar === '@' || this.userNameSearch) {
-    //   this.userNameSearch += lastChar;
-    //   console.log('userNameSearch : ', this.userNameSearch);
-    //   // value.startsWith('@')
+  //   // if (lastChar === '@' || this.userNameSearch) {
+  //   //   this.userNameSearch += lastChar;
+  //   //   console.log('userNameSearch : ', this.userNameSearch);
+  //   //   // value.startsWith('@')
 
-    //   // this.getUserList(value.slice(1));
-    //   // console.log('this.userList : ', this.userList);
-    // }
-  }
+  //   //   // this.getUserList(value.slice(1));
+  //   //   // console.log('this.userList : ', this.userList);
+  //   // }
+  // }
 
   commentOnPost(parentPostCommentElement, id): void {
-    this.postComment = parentPostCommentElement.value;
+    this.postComment = parentPostCommentElement.innerHTML;
 
     if (this.postComment) {
       const commentData = {
@@ -891,7 +891,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.socketService.commentOnPost(commentData, (data) => {
         this.toaster.success('comment added on post');
         this.postComment = '';
-        parentPostCommentElement.value = '';
+        parentPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         console.log(data);
@@ -899,7 +899,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.isExpand = true;
         this.viewComments(id);
         this.postComment = '';
-        parentPostCommentElement.value = '';
+        parentPostCommentElement.innerText = '';
       });
     } else {
       this.toaster.danger('Please enter comment');
@@ -962,7 +962,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  replyOnComment(id, commentId): void {
+  replyOnComment(childPostCommentElement, id, commentId): void {
+    this.postComment = childPostCommentElement.innerHTML;
+
     if (this.postComment) {
       const commentData = {
         postId: id,
@@ -973,6 +975,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.socketService.commentOnPost(commentData, (data) => {
         this.toaster.success('replied on comment');
         this.postComment = '';
+        childPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         console.log(data);
