@@ -511,15 +511,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.socketService.createPost(this.postData, (data) => {
         this.spinner.hide();
         this.toaster.success('Post created successfully.');
-        this.postData = {
-          profileid: postData.profileid,
-          communityId: postData.communityId,
-          postdescription: '',
-          meta: {},
-          tags: [],
-          file: {},
-          imageUrl: '',
-        };
+
+        this.postData['postdescription'] = '';
+        this.postData['meta'] = {};
+        this.postData['tags'] = [];
+        this.postData['file'] = {};
+        this.postData['imageUrl'] = '';
 
         return data;
       });
@@ -530,7 +527,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         'innerHTML',
         ''
       );
-      const postData = {...this.postData};
 
       this.socketService.socket.on(
         'new-post-added',
@@ -540,28 +536,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.postList.push(res);
           this.spinner.hide();
           this.getPostList();
-          this.postData = {
-            profileid: postData.profileid,
-            communityId: postData.communityId,
-            postdescription: '',
-            meta: {},
-            tags: [],
-            file: {},
-            imageUrl: '',
-          };
+
+          this.postData['postdescription'] = '';
+          this.postData['meta'] = {};
+          this.postData['tags'] = [];
+          this.postData['file'] = {};
+          this.postData['imageUrl'] = '';
         },
         (error: any) => {
           this.spinner.hide();
           console.log(error);
-          this.postData = {
-            profileid: postData.profileid,
-            communityId: postData.communityId,
-            postdescription: '',
-            meta: {},
-            tags: [],
-            file: {},
-            imageUrl: '',
-          };
         }
       );
     }

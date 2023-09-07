@@ -101,7 +101,7 @@
           </div>
         </div>
 
-        <ng-container *ngIf="postData?.imageUrl">
+        <ng-container *ngIf="postData?.file?.name && postData?.imageUrl">
           <div class="position-relative w-100-px h-100-px mt-5">
             <img
               [src]="postData?.imageUrl"
