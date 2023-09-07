@@ -25,10 +25,9 @@
               <form
                 id="loginForm"
                 class="form-dark"
-                ngNativeValidate
                 #signInForm="ngForm"
                 autocomplete="off"
-                (ngSubmit)="signInForm.form.valid && onSubmit()"
+                (ngSubmit)="onSubmit(signInForm.form.valid)"
               >
                 <div
                   class="alert alert-{{ type }}"
@@ -39,7 +38,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">First Name<span>*</span></label>
+                    <label class="form-label text-light">First Name</label>
                     <input
                       type="text"
                       class="input-area"
@@ -49,7 +48,7 @@
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Last Name<span>*</span></label>
+                    <label class="form-label text-light">Last Name</label>
                     <input
                       type="text"
                       class="input-area"
@@ -102,9 +101,7 @@
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light"
-                      >Confirm Password</label
-                    >
+                    <label class="form-label text-light">Confirm Password<span class="text-danger">*</span></label>
                     <input
                       type="password"
                       class="input-area"
@@ -120,7 +117,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 mb-3">
-                    <label class="form-label text-light">Profile Picture<span>*</span></label>
+                    <label class="form-label text-light">Profile Picture<span class="text-danger">*</span></label>
                     <input
                       type="file"
                       name="profilePicture"
@@ -140,7 +137,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Mobile<span>*</span></label>
+                    <label class="form-label text-light">Mobile</label>
                     <input
                       type="text"
                       class="input-area"
@@ -171,7 +168,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Address<span>*</span></label>
+                    <label class="form-label text-light">Address</label>
                     <input
                       type="text"
                       class="input-area"
@@ -196,7 +193,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">State<span>*</span></label>
+                    <label class="form-label text-light">State<span class="text-danger">*</span></label>
                     <input
                       type="text"
                       class="input-area"
@@ -208,7 +205,7 @@
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">City<span>*</span></label>
+                    <label class="form-label text-light">City<span class="text-danger">*</span></label>
                     <input
                       type="text"
                       class="input-area"
@@ -222,7 +219,7 @@
                 </div>
 
                 <div class="form-check ps-0 my-4 d-flex">
-                  <input class="p-0" type="checkbox" />
+                  <input class="p-0" type="checkbox" [(ngModel)]="customer.termAndPolicy" required />
                   <label class="form-check-label ms-2"
                     >I agree to the <a>Terms</a> and
                     <a>Privacy Policy</a>.</label
