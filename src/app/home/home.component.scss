@@ -97,11 +97,9 @@
 
 .post-item {
   .post-single-box {
-    .top-area {
-      .dropdown-toggle {
-        &::after {
-          display: none;
-        }
+    .dropdown-toggle {
+      &::after {
+        display: none;
       }
     }
     .post-description {
