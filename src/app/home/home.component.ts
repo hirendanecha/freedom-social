@@ -1017,6 +1017,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getPostById(post): void {
     this.postData = post;
     post['hide'] = true;
+    this.postData.imageUrl = post?.imageUrl;
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
     this.renderer.setProperty(
       this.postMessageInput.nativeElement,
       'innerHTML',
@@ -1047,6 +1053,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.toaster.success('Post edited successfully.');
         return data;
       });
+      this.postData['id'] = '';
+      this.postData['postdescription'] = '';
+      this.postData['meta'] = {};
+      this.postData['tags'] = [];
+      this.postData['file'] = {};
+      this.postData['imageUrl'] = '';
+      this.spinner.hide();
 
       this.clearUserSearchData();
       this.renderer.setProperty(
@@ -1054,6 +1067,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         'innerHTML',
         ''
       );
+      this.getPostList();
 
       // this.socketService.socket.on(
       //   'new-post-added',
@@ -1069,5 +1083,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       //   }
       // );
     }
+  }
+  resetPost() {
+    this.postData = {};
+    this.renderer.setProperty(
+      this.postMessageInput.nativeElement,
+      'innerHTML',
+      ''
+    );
+    this.getPostList();
   }
 }
