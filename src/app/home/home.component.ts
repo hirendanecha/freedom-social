@@ -466,8 +466,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
             if (res?.body?.url) {
               this.postData['file'] = null;
               this.postData['imageUrl'] = res?.body?.url;
-              this.submit();
             }
+            this.submit();
 
             this.spinner.hide();
           },
@@ -520,14 +520,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
         'innerHTML',
         ''
       );
+      const postData = {...this.postData};
 
       this.socketService.socket.on(
-        'create-new-post',
+        'new-post-added',
         (res: any) => {
+          console.log('res: ', res);
+
           this.postList.push(res);
           this.spinner.hide();
-          const postData = this.postData;
-          this.getPostList();
+          // this.getPostList();
           this.postData = {
             profileid: postData.profileid,
             communityId: postData.communityId,
@@ -541,6 +543,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
         (error: any) => {
           this.spinner.hide();
           console.log(error);
+          this.postData = {
+            profileid: postData.profileid,
+            communityId: postData.communityId,
+            postdescription: '',
+            meta: {},
+            tags: [],
+            file: {},
+            imageUrl: '',
+          };
         }
       );
     }
@@ -1050,19 +1061,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
         ''
       );
 
-      this.socketService.socket.on(
-        'new-post-added',
-        (res: any) => {
-          this.postList.push(res);
-          this.spinner.hide();
-          this.getPostList();
-          this.postData = {};
-        },
-        (error: any) => {
-          this.spinner.hide();
-          console.log(error);
-        }
-      );
+      // this.socketService.socket.on(
+      //   'new-post-added',
+      //   (res: any) => {
+      //     this.postList.push(res);
+      //     this.spinner.hide();
+      //     this.getPostList();
+      //     this.postData = {};
+      //   },
+      //   (error: any) => {
+      //     this.spinner.hide();
+      //     console.log(error);
+      //   }
+      // );
     }
   }
 }
