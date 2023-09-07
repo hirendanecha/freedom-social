@@ -161,20 +161,28 @@
             />
             <span>Fallings/Activity</span>
           </li> -->
-          <div class="btn-area d-flex d-lg-block d-md-block">
+          <div class="btn-area d-flex gap-3">
             <button
-              class="btn btn-sm btn-secondary p-2 px-2 px-sm-5 px-lg-6 me-2"
+              class="btn btn-sm btn-secondary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
               *ngIf="postData?.postdescription"
               (click)="resetPost()"
             >
               Cancel
+              <i class="material-symbols-outlined font-20-px">
+                close
+              </i>
             </button>
+
             <button
-              class="btn btn-sm btn-primary p-2 px-2 px-sm-5 px-lg-6"
+              class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
               [disabled]="!postData?.postdescription"
               (click)="uploadPostFileAndCreatePost()"
             >
               {{ postData.id ? "Update Post" : "Post" }}
+
+              <i class="material-symbols-outlined font-20-px">
+                near_me
+              </i>
             </button>
           </div>
         </ul>
@@ -485,16 +493,16 @@
                   class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
                 >
                   <input
-                    #parentPostCommentElement
+                    #childPostCommentElement
                     placeholder="Write something to comment.."
                   />
-                    <!-- (keyup)="commentOnKeyEvent($event)" -->
+                  <!-- (keyup)="commentOnKeyEvent($event)" -->
 
                   <div class="file-input d-flex gap-1 gap-md-2">
                     <i
                       class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                       role="button"
-                      (click)="commentOnPost(parentPostCommentElement, post?.id)"
+                      (click)="commentOnPost(childPostCommentElement, post.id)"
                     >
                       near_me
                     </i>
