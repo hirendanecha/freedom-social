@@ -121,7 +121,10 @@
     >
       <a
         class="d-flex justify-content-between align-items-center"
-        (click)="viewUserProfile(notification.notificationByProfileId)"
+        (click)="
+          readUnreadNotification(notification.id, 'Y');
+          viewUserPost(notification.postId)
+        "
       >
         <div class="left-item position-relative d-inline-flex gap-3">
           <div class="avatar position-relative d-inline-flex">

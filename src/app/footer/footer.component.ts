@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ForgotPasswordComponent } from '../home/forgot-password/forgot-password.component';
 import { TokenStorageService } from '../services/token-storage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
   selector: 'app-footer',
@@ -34,7 +35,8 @@ export class FooterComponent {
     public sharedService: SharedService,
     private router: Router,
     private tokenStorageService: TokenStorageService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private customerService: CustomerService
   ) {
     // this.sharedService.getProfilePic();
   }
@@ -124,8 +126,17 @@ export class FooterComponent {
     // });
   }
 
-  viewUserProfile(profileId) {
-    this.router.navigate([`settings/general/view-profile/${profileId}`]);
+  readUnreadNotification(id, isRead): void {
+    this.customerService.readUnreadNotification(id, isRead).subscribe({
+      next: (res) => {
+        this.sharedService.getNotificationList();
+        // this.toaster.success(res.message);
+      },
+    });
+  }
+
+  viewUserPost(id) {
+    this.router.navigate([`post/${id}`]);
     this.userMenusOverlayDialog.close();
   }
 }

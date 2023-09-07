@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { SettingComponent } from './setting.component';
 import { SettingRoutingModule } from './setting-routing.module';
@@ -17,14 +17,9 @@ import { SharedModule } from '../@shared/shared.module';
     EditProfileComponent,
     UploadFilesComponent,
     ViewProfileComponent,
-    UserPostComponent
+    UserPostComponent,
   ],
-  imports: [
-    SettingRoutingModule,
-    SharedModule,
-    PipeModule,
-    NgbModule
-  ],
+  imports: [SettingRoutingModule, SharedModule, PipeModule],
   exports: [UserPostComponent],
 })
 export class SettingModule {}

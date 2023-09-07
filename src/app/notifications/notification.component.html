@@ -17,11 +17,9 @@
           </div>
           <div class="single-item notification-area text-area text-start">
             <h6 class="m-0 mb-1">
-              <a
-                class="cursor"
-                (click)="viewUserProfile(notification?.notificationByProfileId)"
-                >{{ notification?.FirstName }}</a
-              >
+              <a class="cursor" (click)="viewUserPost(notification.postId)">{{
+                notification?.FirstName
+              }}</a>
               <span class="ms-1">{{ notification?.notificationDesc }} </span>
               <span
                 *ngIf="notification.isRead === 'N'"

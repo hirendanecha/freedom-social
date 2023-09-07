@@ -1,147 +1,4 @@
 <!-- <div class="filter-head d-center justify-content-between"></div> -->
-<!-- <div class="post-item d-flex flex-column gap-5">
-  <ng-container *ngFor="let post of postList">
-    <div class="post-single-box p-3 p-sm-5" *ngIf="post.postdescription">
-      <div class="top-area pb-5">
-        <div class="profile-area d-center justify-content-between">
-          <div class="avatar-item d-flex gap-3 align-items-center">
-            <div class="position-relative">
-              <img
-                class="post-profile avatar-img max-un"
-                [src]="post.ProfilePicName"
-                onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
-                alt="avatar"
-              />
-            </div>
-            <div class="info-area">
-              <h6 class="m-0">
-                <a ublic-p>{{ post.FirstName || post.Username }}</a>
-              </h6>
-            </div>
-          </div>
-
-          <div class="btn-group cus-dropdown">
-            <div ngbDropdown class="d-inline-block">
-              <button class="dropdown-btn" ngbDropdownToggle>
-                <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
-              </button>
-              <div ngbDropdownMenu class="dropdown-menu">
-                <ng-container *ngIf="profileId != userProfileId">
-                  <button ngbDropdownItem>
-                    *ngIf="seeFirstList.includes(post?.profileid)"
-                    <a class="droplist d-flex alig n-items-center gap-2">
-                      (click)="removeSeeFirstUser(post?.profileid)"
-                      <i class="material-symbols-outlined mat-icon">
-                        visibility
-                      </i>
-                      <span>Stop see First</span>
-                    </a>
-                  </button>
-                  <button ngbDropdownItem>
-                    *ngIf="!seeFirstList.includes(post.profileid)"
-                    <a class="droplist d-flex align-items-center gap-2">
-                      (click)="seeFirst(post?.profileid)"
-                      <i class="material-symbols-outlined mat-icon">
-                        visibility
-                      </i>
-                      <span>See First</span>
-                    </a>
-                  </button>
-                  <button ngbDropdownItem>
-                    <a class="droplist d-flex align-items-center gap-2">
-                      (click)="unsubscribe(post)"
-                      <i class="material-symbols-outlined mat-icon">
-                        person_remove
-                      </i>
-                      <span>Unsubscribe</span>
-                    </a>
-                  </button>
-                  <button ngbDropdownItem>
-                    (click)="goToViewProfile(post.profileid)"
-                    <a class="droplist d-flex align-items-center gap-2">
-                      <i class="material-symbols-outlined mat-icon"> person </i>
-                      <span>View Profile</span>
-                    </a>
-                  </button>
-                </ng-container>
-                <ng-container *ngIf="profileId === userProfileId">
-                  <button ngbDropdownItem>
-                    <a
-                      class="droplist d-flex align-items-center gap-2"
-                      (click)="postId = null"
-                    >
-                      <i class="material-symbols-outlined mat-icon"> edit </i>
-                      <span>Edit</span>
-                    </a>
-                  </button>
-                  <button ngbDropdownItem>
-                    <a
-                      class="droplist d-flex align-items-center gap-2"
-                      (click)="deletePost(post)"
-                    >
-                      <i class="material-symbols-outlined mat-icon"> delete </i>
-                      <span>Delete</span>
-                    </a>
-                  </button>
-                </ng-container>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="py-4">
-          <p class="post-description" [innerHTML]="post.postdescription"></p>
-        </div>
-        <div class="post-img" *ngIf="post.imageUrl">
-          <img [src]="post.imageUrl" class="w-100" alt="image" />
-        </div>
-      </div>
-      <div
-        class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between"
-      >
-        <div
-          class="friends-list d-flex gap-3 align-items-center text-center w-100"
-        ></div>
-      </div>
-      <div
-        class="like-comment-share py-5 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
-      >
-        <button
-          class="d-center gap-1 smtxt like-button"
-          (click)="
-            post.react == 'L' ? dislikeFeedPost(post) : reactLikeOnPost(post)
-          "
-        >
-          <i
-            class="material-symbols-outlined mat-icon"
-            [ngClass]="post.react == 'L' ? 'active' : ''"
-          >
-            thumb_up
-          </i>
-          <span class="mdtxt d-center">{{
-            post?.likescount > 0 ? post?.likescount : 0
-          }}</span>
-        </button>
-        <button
-          class="d-center gap-1 gap-sm-2 mdtxt position-relative reply-button"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="Comming Soon!"
-        >
-          <i class="material-symbols-outlined mat-icon"> chat </i>
-          Video Reply
-        </button>
-        <button class="d-center gap-1 gap-sm-2 mdtxt">
-          <i class="material-symbols-outlined mat-icon"> share </i>
-          Share
-        </button>
-      </div>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="!postList.length">
-    <h3>No post available</h3>
-  </ng-container>
-</div> -->
-
 <div class="post-item d-flex flex-column gap-4">
   <ng-container *ngIf="postList?.length > 0; else elseNoPostFound">
     <ng-container *ngFor="let post of postList">
@@ -180,7 +37,7 @@
               </i>
 
               <div ngbDropdownMenu class="dropdown-menu">
-                <ng-container *ngIf="userProfileId != post.profileid">
+                <ng-container *ngIf="profileId != post.profileid">
                   <button
                     ngbDropdownItem
                     *ngIf="seeFirstList.includes(post?.profileid)"
@@ -230,7 +87,7 @@
                     </a>
                   </button>
                 </ng-container>
-                <ng-container *ngIf="userProfileId == post.profileid">
+                <ng-container *ngIf="profileId == post.profileid">
                   <button ngbDropdownItem>
                     <a
                       class="droplist d-flex align-items-center gap-2"
@@ -742,14 +599,13 @@
         </div>
       </div>
     </ng-container>
-
-    <ng-container *ngIf="postList.length > 1">
+    <!-- <ng-container *ngIf="postList.length > 1">
       <div class="col-12 my-5 text-center">
         <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
           Load More
         </button>
       </div>
-    </ng-container>
+    </ng-container> -->
   </ng-container>
 </div>
 

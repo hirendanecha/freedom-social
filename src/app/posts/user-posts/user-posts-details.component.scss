@@ -1,0 +1,87 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+::ng-deep {
+  .emoji-menu-panale {
+    position: fixed;
+    right: 36%;
+    top: 160px;
+    display: flex;
+    bottom: unset !important;
+    max-width: 400px;
+    .modal-content {
+      .emoji-mart {
+        background-color: var(--body-color);
+        width: 314px !important;
+        height: 320px;
+        border-color: var(--body-color);
+        emoji-search {
+          display: none;
+        }
+        .emoji-mart-bar {
+          emoji-preview {
+            display: none;
+          }
+        }
+        .emoji-mart-scroll {
+          .emoji-mart-category {
+            .emoji-mart-category-label {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+  .post-item {
+    .post-single-box {
+      .post-description {
+        .postlink {
+          h3 {
+            font-size: 18px;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+.post-single-box {
+  .abs-area {
+    top: 20px;
+    right: 25px;
+  }
+}
+.post-item {
+  .post-single-box {
+    .top-area {
+      .dropdown-toggle {
+        &::after {
+          display: none;
+        }
+      }
+    }
+    .post-description {
+      line-break: anywhere;
+    }
+    .post-profile {
+      max-width: 48px;
+      height: 100%;
+      min-height: 48px;
+    }
+  }
+}
+.share-post {
+  .profile-box {
+    a {
+      img {
+        max-width: 50px;
+        height: auto;
+        min-height: 50px;
+      }
+    }
+  }
+}

@@ -81,8 +81,17 @@
       </div>
     </div>
 
-    <div class="d-flex w-100 gap-5 min-vh-100">
-      <div class="d-flex flex-column mb-15 w-100">
+    <div class="row justify-content-center h-auto gap-3 w-100">
+      <div
+        class="col-lg-3 d-lg-flex d-none w-auto profile-list"
+        *ngIf="activeTab === 1"
+      >
+        <app-my-profile></app-my-profile>
+      </div>
+      <div
+        class="flex-column mb-15"
+        [ngClass]="activeTab === 1 ? 'col-lg-6' : 'col-lg-9'"
+      >
         <ng-container *ngIf="activeTab === 1">
           <app-user-post [profileId]="profileId"></app-user-post>
         </ng-container>
@@ -122,7 +131,9 @@
                           </button>
                           <ul
                             class="dropdown-menu p-4 pt-2 mt-6"
-                            [ngClass]="communityId === community.id ? 'show' : ''"
+                            [ngClass]="
+                              communityId === community.id ? 'show' : ''
+                            "
                             (mouseleave)="communityId = null"
                           >
                             <li>
@@ -168,7 +179,9 @@
                     {{ community.CommunityDescription }}
                   </p>
                   <div class="friends-list d-center mt-3 gap-1 text-center">
-                    <span class="smtxt m-0">{{ community.members }} Member</span>
+                    <span class="smtxt m-0"
+                      >{{ community.members }} Member</span
+                    >
                   </div>
                   <div class="d-center btn-border pt-5 gap-2 mt-4">
                     <button
@@ -189,8 +202,7 @@
           </ng-template>
         </ng-container>
       </div>
-
-      <div class="my-list-sidebar d-lg-flex d-none">
+      <div class="col-lg-3 my-list-sidebar d-lg-flex d-none w-auto">
         <app-my-list></app-my-list>
       </div>
     </div>

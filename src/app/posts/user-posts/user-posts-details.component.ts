@@ -7,8 +7,8 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbDropdown, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationModalComponent } from 'src/app/@shared/confirmation-modal/confirmation-modal.component';
 import { PostService } from 'src/app/services/post.service';
@@ -19,40 +19,23 @@ import { ToastService } from 'src/app/services/toaster.service';
 import { UnsubscribeProfileService } from 'src/app/services/unsubscribe-profile.service';
 
 @Component({
-  selector: 'app-user-post',
-  templateUrl: './user-post.component.html',
-  styleUrls: ['./user-post.component.scss'],
+  selector: 'app-user-posts-details',
+  templateUrl: './user-posts-details.component.html',
+  styleUrls: ['./user-posts-details.component.scss'],
 })
-export class UserPostComponent implements OnInit {
-  @Input() profileId: any;
-  @Input() communityId: any;
-  message = '';
-  showEmojiPicker = false;
-  sets = [
-    'native',
-    'google',
-    'twitter',
-    'facebook',
-    'emojione',
-    'messenger',
-    'apple',
-  ];
+export class UserPostDetailsComponent implements OnInit {
+  profileId: any;
   postId = '';
   isExpand = false;
   @ViewChild('emojiMenu') emojiMenu: EventEmitter<NgbModalRef[]> | undefined;
   emojiMenuDialog: any;
   postList = [];
   isLike = false;
-  userProfileId = '';
   postComment: string = '';
-
-  @ViewChild('userSearchDropdownRef', { static: false, read: NgbDropdown })
-  userSearchNgbDropdown: NgbDropdown;
   @ViewChild('postMessageInput', { static: false })
   postMessageInput: ElementRef;
   @ViewChild('commentMessageInput', { static: false })
   commentMessageInput: ElementRef;
-  seeFirstList: any = [];
   commentDes = '';
   commentList: any = [];
   replyCommentList: any = [];
@@ -71,6 +54,7 @@ export class UserPostComponent implements OnInit {
   userList = [];
   userNameSearch = '';
   activePage = 1;
+  seeFirstList: any = [];
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -79,22 +63,22 @@ export class UserPostComponent implements OnInit {
     private socketService: SocketService,
     private toaster: ToastService,
     private renderer: Renderer2,
+    private route: ActivatedRoute,
     private router: Router,
     private unsubscribeProfileService: UnsubscribeProfileService,
     private seeFirstUserService: SeeFirstUserService
   ) {
-    this.userProfileId = sessionStorage.getItem('profileId');
+    this.postId = this.route.snapshot.paramMap.get('id');
   }
-
+  
   ngOnInit(): void {
     this.getPostList();
-    // this.sharedService.getProfilePic();
-    // this.sharedService.getUserDetails();
   }
 
   getPostList(): void {
     this.spinner.show();
-    this.postService.getPostsByProfileId(this.profileId).subscribe(
+    const id = 70418;
+    this.postService.getPostsByPostId(this.postId).subscribe(
       (res: any) => {
         if (res) {
           this.postList = res;
@@ -155,14 +139,6 @@ export class UserPostComponent implements OnInit {
   dislikeFeedPost(post) {
     if (post.react == 'L') {
       post.likescount = post.likescount - 1;
-    } else if (post.react == 'LO') {
-      post.lovecount = post.lovecount - 1;
-    } else if (post.react == 'HA') {
-      post.haliriouscount = post.haliriouscount - 1;
-    } else if (post.react == 'WO') {
-      post.wowcount = post.wowcount - 1;
-    } else if (post.react == 'SA') {
-      post.sadcount = post.sadcount - 1;
     }
     post.totalReactCount = post.totalReactCount - 1;
     post.react = null;
@@ -190,16 +166,6 @@ export class UserPostComponent implements OnInit {
       }
     );
   }
-
-  openDropDown(id) {
-    this.postId = id;
-    if (this.postId) {
-      this.isExpand = true;
-    } else {
-      this.isExpand = false;
-    }
-  }
-
   commentOnPost(id): void {
     if (this.postComment) {
       const commentData = {
@@ -352,76 +318,6 @@ export class UserPostComponent implements OnInit {
       this.postData?.postdescription
     );
   }
-
-  editPost(): void {
-    const anchorTags = this.postMessageInput?.nativeElement?.children;
-    this.postData.tags = [];
-    for (const key in anchorTags) {
-      if (Object.prototype.hasOwnProperty.call(anchorTags, key)) {
-        const tag = anchorTags[key];
-
-        this.postData.tags.push({
-          id: tag?.getAttribute('data-id'),
-          name: tag?.innerHTML,
-        });
-      }
-    }
-
-    console.log('this.postData : ', this.postData);
-
-    if (this.postData?.postdescription) {
-      this.spinner.show();
-      this.socketService.editPost(this.postData, (data) => {
-        this.spinner.hide();
-        this.toaster.success('Post edited successfully.');
-        return data;
-      });
-      this.postData['id'] = '';
-      this.postData['postdescription'] = '';
-      this.postData['meta'] = {};
-      this.postData['tags'] = [];
-      this.postData['file'] = {};
-      this.postData['imageUrl'] = '';
-      this.spinner.hide();
-
-      this.clearUserSearchData();
-      this.renderer.setProperty(
-        this.postMessageInput.nativeElement,
-        'innerHTML',
-        ''
-      );
-      this.getPostList();
-
-      // this.socketService.socket.on(
-      //   'new-post-added',
-      //   (res: any) => {
-      //     this.postList.push(res);
-      //     this.spinner.hide();
-      //     this.getPostList();
-      //     this.postData = {};
-      //   },
-      //   (error: any) => {
-      //     this.spinner.hide();
-      //     console.log(error);
-      //   }
-      // );
-    }
-  }
-  resetPost() {
-    this.postData = {};
-    this.renderer.setProperty(
-      this.postMessageInput.nativeElement,
-      'innerHTML',
-      ''
-    );
-    this.getPostList();
-  }
-  clearUserSearchData(): void {
-    this.userNameSearch = '';
-    this.userList = [];
-    // this.userSearchNgbDropdown.close();
-  }
-
   commentOnKeyEvent(event): void {
     const text = event.target.value;
     const atSymbolIndex = text.lastIndexOf('@');
@@ -435,8 +331,6 @@ export class UserPostComponent implements OnInit {
       // } else {
       //   this.clearUserSearchData();
       // }
-    } else {
-      this.clearUserSearchData();
     }
     console.log(text);
     this.postComment = text;
@@ -449,40 +343,6 @@ export class UserPostComponent implements OnInit {
     //   // this.getUserList(value.slice(1));
     //   // console.log('this.userList : ', this.userList);
     // }
-  }
-
-  loadMore(): void {
-    this.spinner.show();
-    this.activePage = this.activePage + 1;
-    this.postService.getPosts(this.activePage).subscribe(
-      (res: any) => {
-        if (res) {
-          this.spinner.hide();
-          res.data.forEach(
-            (element: {
-              totalReactCount: any;
-              likescount: any;
-              wowcount: any;
-              haliriouscount: any;
-              lovecount: any;
-              sadcount: any;
-            }) => {
-              // element.totalReactCount =
-              //   element.likescount +
-              //   element.wowcount +
-              //   element.haliriouscount +
-              //   element.lovecount +
-              //   element.sadcount;
-              this.postList.push(element);
-            }
-          );
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
   }
 
   goToViewProfile(id: any): void {

@@ -6,7 +6,11 @@ import { MyProfileComponent } from '../left-side-bar/my-profile.component';
 import { MyListComponent } from '../right-side-bar/my-list.component';
 import { ShellComponent } from './shell.component';
 import { FooterComponent } from '../footer/footer.component';
-import { NgbActiveModal, NgbCollapseModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbActiveModal,
+  NgbCollapseModule,
+  NgbModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -20,18 +24,8 @@ import {
 import { SharedModule } from '../@shared/shared.module';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    MyProfileComponent,
-    ShellComponent,
-    FooterComponent,
-  ],
-  exports: [
-    HeaderComponent,
-    MyProfileComponent,
-    ShellComponent,
-    FooterComponent,
-  ],
+  declarations: [HeaderComponent, ShellComponent, FooterComponent],
+  exports: [HeaderComponent, ShellComponent, FooterComponent],
   providers: [
     NgbActiveModal,
     { provide: LAZYLOAD_IMAGE_HOOKS, useClass: ScrollHooks },
@@ -39,13 +33,10 @@ import { SharedModule } from '../@shared/shared.module';
   imports: [
     ShellRoutingModule,
     SharedModule,
-    NgbModule,
     PickerModule,
-    NgxSpinnerModule,
     PipeModule,
     ToastsContainer,
     LazyLoadImageModule,
-    NgbCollapseModule
   ],
 })
 export class ShellModule {}

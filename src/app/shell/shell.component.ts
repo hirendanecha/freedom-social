@@ -23,8 +23,6 @@ export class ShellComponent {
           this.isResetPasswordPage = true;
         } else {
           this.isShow =
-            event.url.includes('/people') ||
-            event.url.includes('/events') ||
             event.url.includes('/local-community') ||
             event.url.includes('/settings') ||
             event.url.includes('/login') ||

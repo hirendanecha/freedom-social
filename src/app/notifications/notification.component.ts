@@ -39,8 +39,8 @@ export class NotificationsComponent {
     );
   }
 
-  viewUserProfile(profileId) {
-    this.router.navigate([`settings/general/view-profile/${profileId}`]);
+  viewUserPost(id) {
+    this.router.navigate([`post/${id}`]);
   }
 
   removeNotification(id: number): void {

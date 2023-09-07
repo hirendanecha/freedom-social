@@ -30,6 +30,12 @@ const routes: Routes = [
       import('../research/research.module').then((m) => m.ResearchModule),
   },
   {
+    path: 'post',
+    // canActivate: [AuthenticationGuard],
+    loadChildren: () =>
+      import('../posts/post.module.').then((m) => m.PostModule),
+  },
+  {
     path: 'settings',
     // canActivate: [AuthenticationGuard],
     children: [
