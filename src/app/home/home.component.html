@@ -502,7 +502,7 @@
               </div>
             </form>
 
-            <ng-container *ngIf="post?.id === isOpenCommentsPostId">
+            <ng-container *ngIf="isExpand">
               <ng-container
                 *ngIf="commentList.length > 0; else elseNoCommentsFound"
               >
@@ -800,7 +800,7 @@
       </ng-container>
 
       <!-- <ng-container *ngIf="!communityId"> -->
-      <div class="col-12 my-5 text-center">
+      <div class="col-12 my-5 text-center" *ngIf="postList.length > 9">
         <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
           Load More
         </button>

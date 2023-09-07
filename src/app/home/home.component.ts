@@ -535,6 +535,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
           this.postList.push(res);
           this.spinner.hide();
+          this.activePage = 1;
           this.getPostList();
 
           this.postData['postdescription'] = '';
@@ -892,6 +893,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.socketService.socket.on('comments-on-post', (data: any) => {
         console.log(data);
         this.commentList.push(data[0]);
+        this.isExpand = true;
         this.getPostList();
       });
     } else {
@@ -900,6 +902,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   viewComments(id): void {
+    this.isExpand = this.isOpenCommentsPostId == id ? false : true;
+    this.isOpenCommentsPostId = id;
+    if (!this.isExpand) {
+      this.isOpenCommentsPostId = null;
+    }
     this.isOpenCommentsPostId = id;
     this.postService.getComments(id).subscribe({
       next: (res) => {
@@ -933,7 +940,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.postService.deleteComments(id).subscribe({
       next: (res: any) => {
         this.toaster.success(res.message);
-        // this.viewComments(id);
+        this.viewComments(id);
       },
       error: (error) => {
         console.log(error);
@@ -1085,12 +1092,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
   resetPost() {
+    if (this.postData.id) {
+      this.getPostList();
+    }
     this.postData = {};
     this.renderer.setProperty(
       this.postMessageInput.nativeElement,
       'innerHTML',
       ''
     );
-    this.getPostList();
   }
 }
