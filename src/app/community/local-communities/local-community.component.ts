@@ -70,17 +70,17 @@ export class LocalCommunityComponent implements OnInit {
     // });
   }
 
-  joinCommunity(id): void {
+  joinCommunity(community): void {
     const profileId = sessionStorage.getItem('profileId');
     const data = {
       profileId: profileId,
-      communityId: id,
+      communityId: community.Id,
       IsActive: 'Y',
     };
     this.communityService.joinCommunity(data).subscribe(
       (res: any) => {
         if (res) {
-          this.router.navigate(['communities-post']);
+          this.goToCommunityDetails(community);
         }
       },
       (error) => {
