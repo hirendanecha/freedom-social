@@ -485,15 +485,16 @@
                   class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
                 >
                   <input
+                    #parentPostCommentElement
                     placeholder="Write something to comment.."
-                    (keyup)="commentOnKeyEvent($event)"
                   />
+                    <!-- (keyup)="commentOnKeyEvent($event)" -->
 
                   <div class="file-input d-flex gap-1 gap-md-2">
                     <i
                       class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                       role="button"
-                      (click)="commentOnPost(post.id)"
+                      (click)="commentOnPost(parentPostCommentElement, post?.id)"
                     >
                       near_me
                     </i>

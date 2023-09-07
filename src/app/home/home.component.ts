@@ -851,21 +851,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   commentOnKeyEvent(event): void {
     const text = event.target.value;
-    const atSymbolIndex = text.lastIndexOf('@');
+    // const atSymbolIndex = text.lastIndexOf('@');
 
-    if (atSymbolIndex !== -1) {
-      this.userNameSearch = text.substring(atSymbolIndex + 1);
-      console.log('userNameSearch : ', this.userNameSearch);
+    // if (atSymbolIndex !== -1) {
+    //   this.userNameSearch = text.substring(atSymbolIndex + 1);
+    //   console.log('userNameSearch : ', this.userNameSearch);
 
-      // if (this.userNameSearch?.length > 2) {
-      //   this.getUserList(this.userNameSearch);
-      // } else {
-      //   this.clearUserSearchData();
-      // }
-    } else {
-      this.clearUserSearchData();
-    }
-    console.log(text);
+    //   // if (this.userNameSearch?.length > 2) {
+    //   //   this.getUserList(this.userNameSearch);
+    //   // } else {
+    //   //   this.clearUserSearchData();
+    //   // }
+    // } else {
+    //   this.clearUserSearchData();
+    // }
+    // console.log(text);
     this.postComment = text;
 
     // if (lastChar === '@' || this.userNameSearch) {
@@ -878,7 +878,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // }
   }
 
-  commentOnPost(id): void {
+  commentOnPost(parentPostCommentElement, id): void {
+    this.postComment = parentPostCommentElement.value;
+
     if (this.postComment) {
       const commentData = {
         postId: id,
@@ -889,12 +891,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.socketService.commentOnPost(commentData, (data) => {
         this.toaster.success('comment added on post');
         this.postComment = '';
+        parentPostCommentElement.value = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         console.log(data);
         this.commentList.push(data[0]);
         this.isExpand = true;
-        this.getPostList();
+        this.viewComments(id);
+        this.postComment = '';
+        parentPostCommentElement.value = '';
       });
     } else {
       this.toaster.danger('Please enter comment');
