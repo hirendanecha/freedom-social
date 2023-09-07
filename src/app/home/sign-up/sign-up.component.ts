@@ -140,7 +140,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   onSubmit(isValid: boolean = false) {
     this.msg = '';
     if (!isValid && this.customer.termAndPolicy === false) {
-      this.msg = 'Please enter mandatory fields(*) data.';
+      this.msg = 'Please enter mandatory fields(*) data and please check terms and condition.';
       return false;
     }
 
