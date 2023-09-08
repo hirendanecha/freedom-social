@@ -284,7 +284,11 @@
             <div class="avatar position-relative d-inline-flex">
               <img
                 class="avatar-img w-52-px h-52-px rounded-5"
-                [src]="notification?.ProfilePicName"
+                loading="lazy"
+                data-src="{{
+                  notification?.ProfilePicName || '/assets/images/avtar/placeholder-user.png'
+                }}"
+                onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                 alt="avatar"
               />
               <!-- <img
@@ -295,7 +299,7 @@
             </div>
             <div class="text-area">
               <h6 class="m-0 mb-1">
-                {{ notification?.FirstName }}
+                {{ notification?.Username }}
                 <span
                   *ngIf="notification.isRead === 'N'"
                   class="unread-notification smtxt"
