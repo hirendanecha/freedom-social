@@ -1,7 +1,8 @@
 .single-box {
-  .cover-img {
-    img {
-      max-height: 290px;
+  .delete-account:hover {
+    .material-symbols-outlined {
+      transition: 0.3s ease-in-out;
+      color: white !important;
     }
   }
 }
