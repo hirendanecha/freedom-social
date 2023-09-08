@@ -54,9 +54,10 @@
   <ul class="profile-link mt-7 mb-7 pb-7 ps-0">
     <li>
       <a
-        [ngClass]="isCommunity ? 'active' : ''"
         class="d-flex gap-4"
-        (click)="openLoacalCommunity(); openToggle()"
+        routerLink="/local-communities"
+        routerLinkActive="active"
+        (click)="openToggle()"
       >
         <i class="material-symbols-outlined fs-xxl mat-icon"> workspaces </i>
         <span>Local Communities</span>
@@ -118,10 +119,9 @@
         <span>Settings</span>
       </a>
     </li> -->
-    <li>
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
       <a
         class="d-flex gap-4"
-        [ngClass]="{'active': isSetting}"
         (click)="collapse.toggle()"
       >
         <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
@@ -132,16 +132,7 @@
       <div #collapse="ngbCollapse" [(ngbCollapse)]="isSettingMenuCollapse">
         <ul class="ps-3">
           <li (click)="openToggle()">
-            <a routerLink="settings/general" class="d-flex gap-4">
-              <i class="material-symbols-outlined fs-xxl mat-icon">
-                person
-              </i>
-              <span>General</span>
-            </a>
-          </li>
-
-          <li (click)="openToggle()">
-            <a routerLink="settings/see-first-users" class="d-flex gap-4">
+            <a routerLink="/settings/see-first-users" routerLinkActive="active" class="d-flex gap-4">
               <i class="material-symbols-outlined fs-xxl mat-icon">
                 group_add
               </i>
@@ -150,7 +141,7 @@
           </li>
 
           <li (click)="openToggle()">
-            <a routerLink="settings/unsubscribed-users" class="d-flex gap-4">
+            <a routerLink="/settings/unsubscribed-users" routerLinkActive="active" class="d-flex gap-4">
               <i class="material-symbols-outlined fs-xxl mat-icon">
                 group_remove
               </i>
@@ -159,7 +150,7 @@
           </li>
 
           <li (click)="openToggle()">
-            <a routerLink="settings/general/delete-profile" class="d-flex gap-4">
+            <a routerLink="/settings/delete-profile" routerLinkActive="active" class="d-flex gap-4">
               <i class="material-symbols-outlined fs-xxl mat-icon">
                 person_remove
               </i>
@@ -241,7 +232,7 @@
 <!-- Web View -->
 <div class="profile-content">
   <div class="profile-sidebar cus-scrollbar p-5 d-lg-block d-none">
-    <div class="profile-pic d-flex gap-2" routerLink="home">
+    <div class="profile-pic d-flex gap-2" routerLink="/home">
       <div class="position-relative">
         <img
           class="avatar-img max-un" loading="lazy"
@@ -261,8 +252,8 @@
       <li>
         <a
           class="d-flex gap-4"
-          (click)="openLoacalCommunity()"
-          [ngClass]="isCommunity ? 'active' : ''"
+          routerLink="/local-communities"
+          routerLinkActive="active"
         >
           <i class="material-symbols-outlined fs-xxl mat-icon"> workspaces </i>
           <span>Local Communities</span>
@@ -303,30 +294,20 @@
         </a>
       </li>
 
-      <li>
-        <a
-          class="d-flex gap-4"
-          [ngClass]="{'active': isSetting}"
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <div
+          class="d-flex gap-4 toggle-dropdown"
           (click)="collapse.toggle()"
         >
           <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
           <span class="me-auto">Settings</span>
           <span class="material-symbols-outlined">{{ isSettingMenuCollapse ? 'expand_more' : 'expand_less'}}</span>
-        </a>
+        </div>
 
         <div #collapse="ngbCollapse" [(ngbCollapse)]="isSettingMenuCollapse">
           <ul class="ps-3">
             <li>
-              <a routerLink="settings/general" class="d-flex gap-4">
-                <i class="material-symbols-outlined fs-xxl mat-icon">
-                  person
-                </i>
-                <span>General</span>
-              </a>
-            </li>
-
-            <li>
-              <a routerLink="settings/see-first-users" class="d-flex gap-4">
+              <a routerLink="/settings/see-first-users" routerLinkActive="active" class="d-flex gap-4">
                 <i class="material-symbols-outlined fs-xxl mat-icon">
                   group_add
                 </i>
@@ -335,7 +316,7 @@
             </li>
 
             <li>
-              <a routerLink="settings/unsubscribed-users" class="d-flex gap-4">
+              <a routerLink="/settings/unsubscribed-users" routerLinkActive="active" class="d-flex gap-4">
                 <i class="material-symbols-outlined fs-xxl mat-icon">
                   group_remove
                 </i>
@@ -344,7 +325,7 @@
             </li>
 
             <li>
-              <a routerLink="settings/general/delete-profile" class="d-flex gap-4">
+              <a routerLink="/settings/delete-profile" routerLinkActive="active" class="d-flex gap-4">
                 <i class="material-symbols-outlined fs-xxl mat-icon">
                   person_remove
                 </i>

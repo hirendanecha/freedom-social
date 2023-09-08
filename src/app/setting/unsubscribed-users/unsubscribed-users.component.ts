@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UnsubscribeProfileService } from '../services/unsubscribe-profile.service';
-import { ToastService } from '../services/toaster.service';
+import { UnsubscribeProfileService } from '../../services/unsubscribe-profile.service';
+import { ToastService } from '../../services/toaster.service';
 
 @Component({
   selector: 'app-unsubscribed-users',

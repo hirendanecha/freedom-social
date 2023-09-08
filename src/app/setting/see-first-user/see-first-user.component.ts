@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SeeFirstUserService } from '../services/see-first-user.service';
-import { ToastService } from '../services/toaster.service';
+import { SeeFirstUserService } from '../../services/see-first-user.service';
+import { ToastService } from '../../services/toaster.service';
 
 @Component({
   selector: 'app-see-first-user',

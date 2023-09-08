@@ -106,4 +106,8 @@ export class MyProfileComponent implements OnInit {
   openLoacalCommunity() {
     this.router.navigateByUrl('local-communities');
   }
+
+  isActive(url: string): boolean {
+    return this.router.isActive(url, true);
+  }
 }

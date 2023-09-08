@@ -6,7 +6,7 @@
           <div class="profile-picture position-relative text-start">
             <!-- src="/assets/images/profile-cover.png" -->
             <img
-            loading="lazy"
+              loading="lazy"
               data-src="
                {{ customer?.CoverPicName || '/assets/images/profile-cover.png'}}
               "
@@ -20,7 +20,7 @@
           <div class="col-md-4 profile text-start d-flex align-items-center">
             <!-- src="/assets/images/avtar/avtar.png" -->
             <img
-              class="preview-image w-48-px h-48-px"
+              class="preview-image w-120-px h-120-px"
               loading="lazy"
               data-src="{{
                 customer?.ProfilePicName ||
@@ -29,15 +29,13 @@
               onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
               alt="Preview Image"
             />
-            <div class="user-details ms-2">
+            <div class="user-details ms-3">
               <h3>
-                {{ customer?.FirstName || customer?.Username }}
-                {{ customer?.LastName }}
+                {{ customer?.FirstName }} {{ customer?.LastName }}
               </h3>
-              <!-- <h5 class="d-flex">
-                <i class="material-symbols-outlined md m-0"> location_on </i>
-                {{ customer.State }}
-              </h5> -->
+              <h5 class="d-flex">
+                {{ customer?.Username }}
+              </h5>
             </div>
           </div>
           <div class="col-md">
@@ -49,7 +47,7 @@
             </button>
           </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-8">
           <div class="page-details">
             <ul class="nav pt-3 flex-wrap tab-area">
               <li class="nav-item" role="presentation" (click)="activeTab = 1">

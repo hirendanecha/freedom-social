@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SettingComponent } from './setting.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
+import { SeeFirstUserComponent } from './see-first-user/see-first-user.component';
+import { UnsubscribedUsersComponent } from './unsubscribed-users/unsubscribed-users.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: SettingComponent,
-  },
   {
     path: 'edit-profile/:id',
     component: EditProfileComponent,
@@ -21,6 +18,14 @@ const routes: Routes = [
   {
     path: 'delete-profile',
     component: DeleteAccountComponent,
+  },
+  {
+    path: 'see-first-users',
+    component: SeeFirstUserComponent,
+  },
+  {
+    path: 'unsubscribed-users',
+    component: UnsubscribedUsersComponent,
   },
 ];
 
