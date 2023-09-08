@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren: () => import('../home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'local-community',
+    path: 'local-communities',
     // canActivate: [AuthenticationGuard],
     loadChildren: () =>
       import('../community/community.module').then((m) => m.CommunityModule),
@@ -63,11 +63,11 @@ const routes: Routes = [
             (m) => m.UnsubscribedUsersModule
           ),
       },
-      {
-        path: 'delete-profile',
-        loadChildren: () =>
-          import('../setting/setting.module').then((m) => m.SettingModule),
-      },
+      // {
+      //   path: 'delete-profile',
+      //   loadChildren: () =>
+      //     import('../setting/setting.module').then((m) => m.SettingModule),
+      // },
     ],
   },
   {

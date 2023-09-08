@@ -48,6 +48,6 @@ export class MyListComponent implements OnInit {
   }
 
   createCommunity() {
-    this.router.navigateByUrl('local-community');
+    this.router.navigateByUrl('local-communities');
   }
 }

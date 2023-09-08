@@ -104,6 +104,6 @@ export class MyProfileComponent implements OnInit {
     }
   }
   openLoacalCommunity() {
-    this.router.navigateByUrl('local-community');
+    this.router.navigateByUrl('local-communities');
   }
 }

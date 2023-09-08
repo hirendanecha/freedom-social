@@ -10,6 +10,7 @@ import { UserPostComponent } from './user-posts/user-post.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommunityModule } from '../community/community.module';
 import { SharedModule } from '../@shared/shared.module';
+import { DeleteAccountComponent } from './delete-account/delete-account.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { SharedModule } from '../@shared/shared.module';
     UploadFilesComponent,
     ViewProfileComponent,
     UserPostComponent,
+    DeleteAccountComponent,
   ],
   imports: [SettingRoutingModule, SharedModule, PipeModule],
   exports: [UserPostComponent],
