@@ -726,10 +726,7 @@
                                     ></p>
                                   </div>
                                   <ng-container
-                                    *ngIf="
-                                      profileId == comment.profileId ||
-                                      post.profileid == profileId
-                                    "
+                                    *ngIf="profileId == reply.profileId"
                                   >
                                     <div ngbDropdown>
                                       <i

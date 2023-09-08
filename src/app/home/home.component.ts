@@ -1006,7 +1006,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(this.commentList);
         this.isReply = false;
         this.commentId = null;
-        this.getPostList();
+        // this.getPostList();
       });
     } else {
       this.toaster.danger('Please enter comment');
