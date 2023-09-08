@@ -18,11 +18,27 @@
         [alt]="'Logo Image'"
       />
 
-      <div class="d-flex flex-column">
-        <h5 class="mb-1">{{ communityDetails?.CommunityName }}</h5>
-        <span class="description"
-          >Public Group-{{ communityDetails?.members }} Member</span
-        >
+      <div class="d-flex justify-content-between align-items-start w-100">
+        <div class="d-flex flex-column">
+          <h5 class="mb-1">{{ communityDetails?.CommunityName }}</h5>
+          <span class="description"
+            >Public Group-{{ communityDetails?.members }} Member</span
+          >
+        </div>
+
+        <ng-container *ngIf="communityDetails?.memberIds?.includes(+profileId); else elseJoinCommunity">
+          <ng-container *ngIf="communityDetails?.profileId === +profileId; else elseLeaveCommunity">
+            <button class="btn btn-sm btn-danger" (click)="removeFromCommunity()">Delete Community</button>
+          </ng-container>
+
+          <ng-template #elseLeaveCommunity>
+            <button class="btn btn-sm btn-danger" (click)="removeFromCommunity()">Leave Community</button>
+          </ng-template>
+        </ng-container>
+
+        <ng-template #elseJoinCommunity>
+          <button class="btn btn-sm btn-success" (click)="joinCommunity()">Join Community</button>
+        </ng-template>
       </div>
     </div>
 

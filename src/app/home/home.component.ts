@@ -1126,4 +1126,80 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       ''
     );
   }
+
+  joinCommunity(): void {
+    const profileId = sessionStorage.getItem('profileId');
+    const data = {
+      profileId: profileId,
+      communityId: this.communityDetails?.Id,
+      IsActive: 'Y',
+    };
+    this.communityService.joinCommunity(data).subscribe(
+      (res: any) => {
+        if (res) {
+          this.getCommunityDetails();
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  removeFromCommunity(): void {
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = 'Leave Community';
+    modalRef.componentInstance.confirmButtonLabel = 'Leave';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.message =
+      'Are you sure want to Leave from this community?';
+    modalRef.result.then((res) => {
+      console.log(res);
+      if (res === 'success') {
+        const profileId = Number(sessionStorage.getItem('profileId'));
+        this.communityService.removeFromCommunity(this.communityDetails?.Id, profileId).subscribe({
+          next: (res: any) => {
+            if (res) {
+              this.toaster.success(res.message);
+              this.getCommunityDetails();
+            }
+          },
+          error: (error) => {
+            console.log(error);
+            this.toaster.danger(error.message);
+          },
+        });
+      }
+    });
+  }
+
+  deleteCommunity(): void {
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = 'Delete Community';
+    modalRef.componentInstance.confirmButtonLabel = 'Delete';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.message =
+      'Are you sure want to delete this community?';
+    modalRef.result.then((res) => {
+      console.log(res);
+      if (res === 'success') {
+        this.communityService.deleteCommunity(this.communityDetails?.Id).subscribe({
+          next: (res: any) => {
+            if (res) {
+              this.toaster.success(res.message);
+              this.getCommunityDetails();
+            }
+          },
+          error: (error) => {
+            console.log(error);
+            this.toaster.success(error.message);
+          },
+        });
+      }
+    });
+  }
 }
