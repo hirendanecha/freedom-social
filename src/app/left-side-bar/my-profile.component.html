@@ -34,7 +34,7 @@
     <div class="avatar position-relative" routerLink="home">
       <img
         class="avatar-img max-un" loading="lazy"
-        data-src="{{sharedService?.profilePic}}"
+        data-src="{{sharedService?.userData?.ProfilePicName}}"
         onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
         alt="avatar"
       />
@@ -245,7 +245,7 @@
       <div class="position-relative">
         <img
           class="avatar-img max-un" loading="lazy"
-          data-src="{{sharedService?.profilePic}}"
+          data-src="{{sharedService?.userData?.ProfilePicName}}"
           onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
           alt="avatar"
         />

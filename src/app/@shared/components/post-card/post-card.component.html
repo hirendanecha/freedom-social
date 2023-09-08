@@ -6,8 +6,9 @@
   "
 >
   <img
-    class="w-48-px h-48-px rounded-4"
-    [src]="post.ProfilePicName"
+    class="w-48-px h-48-px rounded-4 bg-dark"
+    loading="lazy"
+    data-src="{{post.ProfilePicName || '/assets/images/avtar/placeholder-user.png'}}"
     onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
     alt="avatar"
   />
@@ -91,7 +92,7 @@
             <button ngbDropdownItem>
               <a
                 class="droplist d-flex align-items-center gap-2"
-                (click)="getPostById(post)"
+                (click)="editPost(post)"
               >
                 <i class="material-symbols-outlined mat-icon"> edit </i>
                 <span>Edit</span>
@@ -128,16 +129,23 @@
     </ng-container>
 
     <ng-container *ngIf="post?.imageUrl">
-      <img [src]="post?.imageUrl" class="w-100 rounded-3" alt="image" />
+      <img
+        loading="lazy"
+        data-src="{{post.imageUrl}}"
+        class="w-100 rounded-3"
+        alt="image"
+      />
     </ng-container>
 
     <div class="border rounded-3" *ngIf="post?.metaimage">
       <a [href]="post.metalink" target="_blank" class="post-img">
         <img
-          [src]="post?.metaimage"
-          class="w-100 rounded-top-3"
+          loading="lazy"
+          data-src="{{post.metaimage}}"
+          class="w-100 rounded-3"
           alt="image"
         />
+
         <p class="post-description mdtxt m-2">{{ post?.title }}</p>
         <p class="post-description mdtxt m-2">
           {{ post?.metadescription }}
@@ -289,7 +297,7 @@
     <form>
       <div class="d-flex mt-5 gap-3">
         <img
-          [src]="sharedService.profilePic"
+          [src]="sharedService?.userData?.ProfilePicName"
           class="w-40-px h-40-px rounded-3"
           alt="icon"
         />
@@ -442,7 +450,7 @@
                   "
                 >
                   <img
-                    [src]="sharedService.profilePic"
+                    [src]="sharedService?.userData?.ProfilePicName"
                     class="w-40-px h-40-px rounded-3"
                     alt="icon"
                   />

@@ -92,7 +92,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
           //   (res) => {
           //     if (res.length) {
           //       this.spinner.hide();
-          //       this.sharedService.profilePic = res[0];
+          //       this.sharedService['userData']['ProfilePicName'] = res[0];
           //     }
           //   },
           //   (error) => {
@@ -210,13 +210,13 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
           if (res?.profileImg?.body?.url) {
             this.profileImg['file'] = null;
             this.profileImg['url'] = res?.profileImg?.body?.url;
-            this.sharedService.profilePic = this.profileImg['url'];
+            this.sharedService['userData']['ProfilePicName'] = this.profileImg['url'];
           }
 
           if (res?.profileCoverImg?.body?.url) {
             this.profileCoverImg['file'] = null;
             this.profileCoverImg['url'] = res?.profileCoverImg?.body?.url;
-            this.sharedService.coverPic = this.profileCoverImg['url'];
+            this.sharedService['userData']['CoverPicName'] = this.profileCoverImg['url'];
           }
 
           this.updateCustomer();

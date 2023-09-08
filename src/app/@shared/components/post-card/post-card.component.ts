@@ -16,11 +16,10 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class PostCardComponent {
   @Input('post') post: any={};
-  @Output('fireGetList') fireGetList: EventEmitter<void>;
-  @Output('editPost') editPost: EventEmitter<any>;
+  @Output('getPostList') getPostList: EventEmitter<void> = new EventEmitter<void>();
+  @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
 
   profileId = '';
-  postId = '';
   seeFirstList: any = [];
   isOpenCommentsPostId = '';
   isExpand = false;
@@ -62,61 +61,45 @@ export class PostCardComponent {
   removeSeeFirstUser(id: number): void {
     this.seeFirstUserService.remove(Number(this.profileId), id).subscribe({
       next: (res) => {
-        if (this.fireGetList) {
-          this.fireGetList.emit();
+        if (this.getPostList) {
+          this.getPostList.emit();
         }
       },
     });
-
-    this.postId = null;
   }
 
   seeFirst(postProfileId: number): void {
-    this.seeFirstUserService
-      .create({ profileId: this.profileId, seeFirstProfileId: postProfileId })
-      .subscribe({
-        next: (res) => {
-          console.log('Res : ', res);
-          if (this.fireGetList) {
-            this.fireGetList.emit();
-          }
-        },
-      });
-
-    this.postId = null;
+    this.seeFirstUserService.create({ profileId: this.profileId, seeFirstProfileId: postProfileId }).subscribe({
+      next: (res) => {
+        console.log('Res : ', res);
+        if (this.getPostList) {
+          this.getPostList.emit();
+        }
+      },
+    });
   }
 
   unsubscribe(post: any): void {
     post['hide'] = true;
 
-    this.unsubscribeProfileService
-      .create({
-        profileId: this.profileId,
-        unsubscribeProfileId: post?.profileid,
-      })
-      .subscribe({
-        next: (res) => {
-          console.log('Res : ', res);
-        },
-      });
-
-    this.postId = null;
+    this.unsubscribeProfileService.create({ profileId: this.profileId, unsubscribeProfileId: post?.profileid }).subscribe({
+      next: (res) => {
+        console.log('Res : ', res);
+      },
+    });
   }
 
   goToViewProfile(id: any): void {
     this.router.navigate([`settings/general/view-profile/${id}`]);
-    this.postId = null;
   }
 
-  getPostById(post): void {
-    if (this.editPost) {
-      this.editPost.emit(post);
+  editPost(post): void {
+    if (this.onEditPost) {
+      this.onEditPost.emit(post);
     }
   }
 
   deletePost(post): void {
-    this.postId = null;
-    console.log(post.id);
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
@@ -133,8 +116,8 @@ export class PostCardComponent {
           (res: any) => {
             if (res) {
               this.toaster.success(res.message);
-              if (this.fireGetList) {
-                this.fireGetList.emit();
+              if (this.getPostList) {
+                this.getPostList.emit();
               }
             }
           },

@@ -11,8 +11,6 @@ import { CustomerService } from './customer.service';
 })
 export class SharedService {
   isDark = true;
-  profilePic = '';
-  coverPic = '';
   userData: any = {};
   notificationList: any = [];
   isNotify = false;
@@ -53,54 +51,31 @@ export class SharedService {
     }
   }
 
-  // getProfilePic() {
-  //   let id = window.sessionStorage.user_id;
-  //   if (id) {
-  //     this.uploadService.getProfilePic(id).subscribe(
-  //       (res) => {
-  //         if (res.length) {
-  //           this.spinner.hide();
-  //           this.profilePic = res[0];
-  //         }
-  //       },
-  //       (error) => {
-  //         this.spinner.hide();
-  //         console.log(error);
-  //       }
-  //     );
-  //     this.uploadService.getCoverPic(id).subscribe(
-  //       (res) => {
-  //         if (res.length) {
-  //           this.coverPic = res[0];
-  //         }
-  //       },
-  //       (error) => {
-  //         this.spinner.hide();
-  //         console.log(error);
-  //       }
-  //     );
-  //   }
-  // }
-
   getUserDetails() {
+    const localUserData = JSON.parse(localStorage.getItem('userData'));
+    if (localUserData?.ID) {
+      this.userData = localUserData;
+    }
+
     this.spinner.show();
-    const pid = sessionStorage.getItem('profileId');
-    if (pid) {
-      this.customerService.getProfile(pid).subscribe(
-        (res: any) => {
-          if (res.data) {
-            this.spinner.hide();
-            this.userData = res?.data[0];
-            this.profilePic = res?.data[0]?.ProfilePicName;
-            this.coverPic = res?.data[0]?.CoverPicName;
-            return this.userData;
+
+    const profileId = sessionStorage.getItem('profileId');
+    if (profileId) {
+      this.customerService.getProfile(profileId).subscribe({
+        next: (res: any) => {
+          this.spinner.hide();
+          const data = res?.data?.[0];
+
+          if (data) {
+            this.userData = data;
+            localStorage.setItem('userData', JSON.stringify(this.userData));
           }
         },
-        (error) => {
+        error: (error) => {
           this.spinner.hide();
           console.log(error);
         }
-      );
+      });
     }
   }
 

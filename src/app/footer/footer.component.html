@@ -37,7 +37,7 @@
         <span class="avatar cmn-head active-status">
           <img loading="lazy"
             class="avatar-img max-un"
-            data-src="{{sharedService.profilePic}}"
+            data-src="{{sharedService?.userData?.ProfilePicName}}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
             alt="avatar"
             (click)="openUserMenu()"
@@ -55,7 +55,7 @@
         <div class="avatar-item">
           <img loading="lazy"
             class="avatar-img max-un"
-            data-src="{{sharedService.profilePic}}"
+            data-src="{{sharedService?.userData?.ProfilePicName}}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
             alt="avatar"
           />

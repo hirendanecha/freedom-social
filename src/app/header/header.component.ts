@@ -11,7 +11,6 @@ import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from '@angular/router';
 import { ForgotPasswordComponent } from '../home/forgot-password/forgot-password.component';
 import { CustomerService } from '../services/customer.service';
-import { ToastService } from '../services/toaster.service';
 
 @Component({
   selector: 'app-header',
@@ -48,8 +47,7 @@ export class HeaderComponent {
     private spinner: NgxSpinnerService,
     private router: Router,
     private tokenStorageService: TokenStorageService,
-    private customerService: CustomerService,
-    private toaster: ToastService
+    private customerService: CustomerService
   ) {
     this.sharedService.getUserDetails();
   }

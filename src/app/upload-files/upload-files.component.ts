@@ -104,7 +104,7 @@ export class UploadFilesComponent implements OnInit {
         // }
         if (res.body) {
           this.spinner.hide();
-          this.sharedService.profilePic = res?.body?.url;
+          this.sharedService['userData']['ProfilePicName'] = res?.body?.url;
         }
       },
       (err) => {

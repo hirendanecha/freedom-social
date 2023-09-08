@@ -12,7 +12,7 @@
             class="preview-image w-100"
             loading="lazy"
             data-src="{{
-              customer?.ProfilePicName || sharedService?.profilePic
+              customer?.ProfilePicName || sharedService?.userData?.ProfilePicName
             }}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
             alt="Preview Image"
@@ -29,7 +29,7 @@
           <img
             class="preview-image w-100"
             loading="lazy"
-            data-src="{{ customer?.CoverPicName || sharedService?.coverPic }}"
+            data-src="{{ customer?.CoverPicName || sharedService?.userData?.CoverPicName }}"
             onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
             alt="Preview Image"
           />

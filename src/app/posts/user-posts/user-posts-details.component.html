@@ -285,7 +285,7 @@
           <form>
             <div class="d-flex mt-5 gap-3">
               <img loading="lazy"
-                data-src="{{sharedService.profilePic}}"
+                data-src="{{sharedService?.userData?.ProfilePicName}}"
                 class="w-40-px h-40-px rounded-3"
                 alt="icon"
               />
@@ -429,7 +429,7 @@
                       >
                         <img
                         loading="lazy"
-                          data-src="{{sharedService.profilePic}}"
+                          data-src="{{sharedService?.userData?.ProfilePicName}}"
                           class="w-40-px h-40-px rounded-3"
                           alt="icon"
                         />

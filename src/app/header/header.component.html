@@ -176,7 +176,7 @@
               <span class="avatar cmn-head active-status">
                 <img loading="lazy"
                   class="avatar-img max-un"
-                  data-src="{{sharedService.profilePic}}"
+                  data-src="{{sharedService?.userData?.ProfilePicName}}"
                   onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                   alt="avatar"
                   id="userMenuList"
@@ -198,7 +198,7 @@
         <div class="avatar-item">
           <img
             class="avatar-img max-un" loading="lazy"
-            data-src="{{sharedService.profilePic}}"
+            data-src="{{sharedService?.userData?.ProfilePicName}}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
             alt="avatar"
           />
