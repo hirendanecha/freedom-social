@@ -81,13 +81,14 @@
       </div>
     </div>
 
-    <div class="row justify-content-center h-auto gap-3 w-100">
+    <div class="d-lg-flex d-block w-100 gap-5 min-vh-100">
       <div
-        class="col-lg-3 d-lg-flex d-none w-auto profile-list"
+        class="my-profile-sidebar"
         *ngIf="activeTab === 1"
       >
         <app-my-profile></app-my-profile>
       </div>
+
       <div
         class="flex-column mb-15"
         [ngClass]="activeTab === 1 ? 'col-lg-6' : 'col-lg-9'"
@@ -202,7 +203,8 @@
           </ng-template>
         </ng-container>
       </div>
-      <div class="col-lg-3 my-list-sidebar d-lg-flex d-none w-auto">
+
+      <div class="my-list-sidebar">
         <app-my-list></app-my-list>
       </div>
     </div>
