@@ -8,7 +8,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgbDropdown, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { PostComponent } from './poast-modal/post.component';
 import { LiveComponent } from '../live-modal/live.component';
 import { MyProfileComponent } from '../left-side-bar/my-profile.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -17,13 +16,13 @@ import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
 import { SocketService } from '../services/socket.service';
 import { slideUp } from '../animations/slideUp';
-import { DeletePostComponent } from '../@shared/delete-post-dialog/delete-post.component';
 import { UnsubscribeProfileService } from '../services/unsubscribe-profile.service';
 import { SeeFirstUserService } from '../services/see-first-user.service';
 import { CustomerService } from '../services/customer.service';
 import { ToastService } from '../services/toaster.service';
 import { CommunityService } from '../services/community.service';
 import { CommunityPostService } from '../services/community-post.service';
+import { ConfirmationModalComponent } from '../@shared/confirmation-modal/confirmation-modal.component';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -45,7 +44,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ];
   postList: any = [];
   postData: any = {
-    profileId: '',
+    profileid: '',
+    communityId: '',
     postdescription: '',
     meta: {},
     tags: [],
@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.communityId = +history?.state?.data?.id;
     this.profileId = sessionStorage.getItem('profileId');
 
-    this.postData.profileId = this.profileId;
+    this.postData.profileid = +this.profileId;
     this.postData.communityId = this.communityId;
   }
 
@@ -405,6 +405,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getPostList(): void {
     const page = this.activePage;
+    this.postData.profileid = +this.profileId;
     this.socketService.getPost(
       {
         profileId: this.profileId,
@@ -465,7 +466,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             if (res?.body?.url) {
               this.postData['file'] = null;
               this.postData['imageUrl'] = res?.body?.url;
-              this.createNewPost();
+              this.submit();
             }
 
             this.spinner.hide();
@@ -475,8 +476,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
           },
         });
       } else {
-        this.createNewPost();
+        this.submit();
       }
+    }
+  }
+
+  submit(): void {
+    if (this.postData.id) {
+      this.editPost();
+    } else {
+      this.createNewPost();
     }
   }
 
@@ -502,6 +511,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.socketService.createPost(this.postData, (data) => {
         this.spinner.hide();
         this.toaster.success('Post created successfully.');
+
+        this.postData['postdescription'] = '';
+        this.postData['meta'] = {};
+        this.postData['tags'] = [];
+        this.postData['file'] = {};
+        this.postData['imageUrl'] = '';
+
         return data;
       });
 
@@ -513,12 +529,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
       );
 
       this.socketService.socket.on(
-        'create-new-post',
+        'new-post-added',
         (res: any) => {
+          console.log('res: ', res);
+
           this.postList.push(res);
           this.spinner.hide();
+          this.activePage = 1;
           this.getPostList();
-          this.postData = {};
+
+          this.postData['postdescription'] = '';
+          this.postData['meta'] = {};
+          this.postData['tags'] = [];
+          this.postData['file'] = {};
+          this.postData['imageUrl'] = '';
         },
         (error: any) => {
           this.spinner.hide();
@@ -760,7 +784,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   deletePost(post: { id: any }): void {
     this.postId = null;
     console.log(post.id);
-    const modalRef = this.modalService.open(DeletePostComponent, {
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = 'Delete Post';
@@ -825,36 +849,38 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  commentOnKeyEvent(event): void {
-    const text = event.target.value;
-    const atSymbolIndex = text.lastIndexOf('@');
+  // commentOnKeyEvent(childPostCommentElement): void {
+  //   const text = childPostCommentElement.innerHTML;
+  //   // const atSymbolIndex = text.lastIndexOf('@');
 
-    if (atSymbolIndex !== -1) {
-      this.userNameSearch = text.substring(atSymbolIndex + 1);
-      console.log('userNameSearch : ', this.userNameSearch);
+  //   // if (atSymbolIndex !== -1) {
+  //   //   this.userNameSearch = text.substring(atSymbolIndex + 1);
+  //   //   console.log('userNameSearch : ', this.userNameSearch);
 
-      // if (this.userNameSearch?.length > 2) {
-      //   this.getUserList(this.userNameSearch);
-      // } else {
-      //   this.clearUserSearchData();
-      // }
-    } else {
-      this.clearUserSearchData();
-    }
-    console.log(text);
-    this.postComment = text;
+  //   //   // if (this.userNameSearch?.length > 2) {
+  //   //   //   this.getUserList(this.userNameSearch);
+  //   //   // } else {
+  //   //   //   this.clearUserSearchData();
+  //   //   // }
+  //   // } else {
+  //   //   this.clearUserSearchData();
+  //   // }
+  //   // console.log(text);
+  //   this.postComment = text;
 
-    // if (lastChar === '@' || this.userNameSearch) {
-    //   this.userNameSearch += lastChar;
-    //   console.log('userNameSearch : ', this.userNameSearch);
-    //   // value.startsWith('@')
+  //   // if (lastChar === '@' || this.userNameSearch) {
+  //   //   this.userNameSearch += lastChar;
+  //   //   console.log('userNameSearch : ', this.userNameSearch);
+  //   //   // value.startsWith('@')
 
-    //   // this.getUserList(value.slice(1));
-    //   // console.log('this.userList : ', this.userList);
-    // }
-  }
+  //   //   // this.getUserList(value.slice(1));
+  //   //   // console.log('this.userList : ', this.userList);
+  //   // }
+  // }
 
-  commentOnPost(id): void {
+  commentOnPost(parentPostCommentElement, id): void {
+    this.postComment = parentPostCommentElement.innerHTML;
+
     if (this.postComment) {
       const commentData = {
         postId: id,
@@ -865,11 +891,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.socketService.commentOnPost(commentData, (data) => {
         this.toaster.success('comment added on post');
         this.postComment = '';
+        parentPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         console.log(data);
         this.commentList.push(data[0]);
-        this.getPostList();
+        this.isExpand = true;
+        this.viewComments(id);
+        this.postComment = '';
+        parentPostCommentElement.innerText = '';
       });
     } else {
       this.toaster.danger('Please enter comment');
@@ -877,6 +907,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   viewComments(id): void {
+    this.isExpand = this.isOpenCommentsPostId == id ? false : true;
+    this.isOpenCommentsPostId = id;
+    if (!this.isExpand) {
+      this.isOpenCommentsPostId = null;
+    }
     this.isOpenCommentsPostId = id;
     this.postService.getComments(id).subscribe({
       next: (res) => {
@@ -910,7 +945,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.postService.deleteComments(id).subscribe({
       next: (res: any) => {
         this.toaster.success(res.message);
-        // this.viewComments(id);
+        this.viewComments(this.isOpenCommentsPostId);
       },
       error: (error) => {
         console.log(error);
@@ -927,7 +962,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  replyOnComment(id, commentId): void {
+  replyOnComment(childPostCommentElement, id, commentId): void {
+    this.postComment = childPostCommentElement.innerHTML;
+
     if (this.postComment) {
       const commentData = {
         postId: id,
@@ -938,6 +975,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.socketService.commentOnPost(commentData, (data) => {
         this.toaster.success('replied on comment');
         this.postComment = '';
+        childPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         console.log(data);
@@ -989,5 +1027,87 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.socketService.likeFeedComments(data, (res) => {
       console.log(res);
     });
+  }
+
+  getPostById(post): void {
+    this.postData = post;
+    post['hide'] = true;
+    this.postData.imageUrl = post?.imageUrl;
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    this.renderer.setProperty(
+      this.postMessageInput.nativeElement,
+      'innerHTML',
+      this.postData?.postdescription
+    );
+  }
+
+  editPost(): void {
+    const anchorTags = this.postMessageInput?.nativeElement?.children;
+    this.postData.tags = [];
+    for (const key in anchorTags) {
+      if (Object.prototype.hasOwnProperty.call(anchorTags, key)) {
+        const tag = anchorTags[key];
+
+        this.postData.tags.push({
+          id: tag?.getAttribute('data-id'),
+          name: tag?.innerHTML,
+        });
+      }
+    }
+
+    console.log('this.postData : ', this.postData);
+
+    if (this.postData?.postdescription) {
+      this.spinner.show();
+      this.socketService.editPost(this.postData, (data) => {
+        this.spinner.hide();
+        this.toaster.success('Post edited successfully.');
+        return data;
+      });
+      this.postData['id'] = '';
+      this.postData['postdescription'] = '';
+      this.postData['meta'] = {};
+      this.postData['tags'] = [];
+      this.postData['file'] = {};
+      this.postData['imageUrl'] = '';
+      this.spinner.hide();
+
+      this.clearUserSearchData();
+      this.renderer.setProperty(
+        this.postMessageInput.nativeElement,
+        'innerHTML',
+        ''
+      );
+      this.getPostList();
+
+      // this.socketService.socket.on(
+      //   'new-post-added',
+      //   (res: any) => {
+      //     this.postList.push(res);
+      //     this.spinner.hide();
+      //     this.getPostList();
+      //     this.postData = {};
+      //   },
+      //   (error: any) => {
+      //     this.spinner.hide();
+      //     console.log(error);
+      //   }
+      // );
+    }
+  }
+  resetPost() {
+    if (this.postData.id) {
+      this.getPostList();
+    }
+    this.postData = {};
+    this.renderer.setProperty(
+      this.postMessageInput.nativeElement,
+      'innerHTML',
+      ''
+    );
   }
 }

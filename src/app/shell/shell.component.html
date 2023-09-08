@@ -1,7 +1,7 @@
 <div class="main-content d-flex justify-content-start align-items-start">
   <div class="container pt-5">
     <div class="d-lg-flex d-block w-100 gap-5 min-vh-100">
-      <div class="my-profile-sidebar d-lg-block" *ngIf="!isShowMyProfile">
+      <div class="my-profile-sidebar" *ngIf="!isShowMyProfile">
         <app-my-profile></app-my-profile>
       </div>
 
@@ -9,22 +9,12 @@
         <router-outlet></router-outlet>
       </div>
 
-      <div class="my-list-sidebar d-lg-block d-none" *ngIf="!isShow">
+      <div class="my-list-sidebar d-lg-flex d-none" *ngIf="!isShow">
         <app-my-list></app-my-list>
       </div>
     </div>
   </div>
 </div>
-<ngx-spinner
-  [fullScreen]="false"
-  bdColor="rgba(0, 0, 0, 0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-spin-clockwise"
-  [fullScreen]="true"
->
-  <p style="color: white">Loading...</p>
-</ngx-spinner>
 
 <ng-container *ngIf="showButton">
   <button

@@ -164,8 +164,8 @@ export class HeaderComponent {
     }
   }
 
-  viewUserProfile(profileId) {
-    this.router.navigate([`settings/general/view-profile/${profileId}`]);
+  viewUserPost(id) {
+    this.router.navigate([`post/${id}`]);
     this.userMenusOverlayDialog.close();
   }
 

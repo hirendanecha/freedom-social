@@ -17,9 +17,10 @@
     .profile-pic {
       .avatar-img {
         border-radius: 15px;
+        min-width: 48px;
         max-width: 48px;
-        height: auto;
         min-height: 48px;
+        max-height: 48px;
       }
     }
   }

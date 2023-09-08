@@ -161,13 +161,28 @@
             />
             <span>Fallings/Activity</span>
           </li> -->
-          <div class="btn-area d-flex d-lg-block d-md-block">
+          <div class="btn-area d-flex gap-3">
             <button
-              class="cmn-btn p-2 px-2 px-sm-5 px-lg-6"
+              class="btn btn-sm btn-secondary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
+              *ngIf="postData?.postdescription"
+              (click)="resetPost()"
+            >
+              Cancel
+              <i class="material-symbols-outlined font-20-px">
+                close
+              </i>
+            </button>
+
+            <button
+              class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
               [disabled]="!postData?.postdescription"
               (click)="uploadPostFileAndCreatePost()"
             >
-              Post
+              {{ postData.id ? "Update Post" : "Post" }}
+
+              <i class="material-symbols-outlined font-20-px">
+                near_me
+              </i>
             </button>
           </div>
         </ul>
@@ -192,7 +207,7 @@
             alt="avatar"
           />
 
-          <div class="top-area w-100">
+          <div class="d-flex flex-column w-100">
             <div
               class="profile-area d-center justify-content-between align-items-start h-24-px"
             >
@@ -271,7 +286,7 @@
                     <button ngbDropdownItem>
                       <a
                         class="droplist d-flex align-items-center gap-2"
-                        (click)="postId = null"
+                        (click)="getPostById(post)"
                       >
                         <i class="material-symbols-outlined mat-icon"> edit </i>
                         <span>Edit</span>
@@ -428,7 +443,7 @@
               </div>
             </div> -->
             <div
-              class="friends-list like-comment-share p-3 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
+              class="mt-1 friends-list like-comment-share p-3 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
             >
               <button
                 class="d-center gap-1 gap-sm-2 mdtxt"
@@ -475,18 +490,20 @@
                 />
 
                 <div
-                  class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
+                  class="input-area py-2 px-3 d-flex gap-2 align-items-center w-100"
                 >
-                  <input
+                  <div
+                    #parentPostCommentElement
+                    contenteditable
                     placeholder="Write something to comment.."
-                    (keyup)="commentOnKeyEvent($event)"
-                  />
+                    class="outline-0 w-100 comment-input"
+                  ></div>
 
                   <div class="file-input d-flex gap-1 gap-md-2">
                     <i
                       class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                       role="button"
-                      (click)="commentOnPost(post.id)"
+                      (click)="commentOnPost(parentPostCommentElement, post.id)"
                     >
                       near_me
                     </i>
@@ -495,7 +512,7 @@
               </div>
             </form>
 
-            <ng-container *ngIf="post?.id === isOpenCommentsPostId">
+            <ng-container *ngIf="isExpand">
               <ng-container
                 *ngIf="commentList.length > 0; else elseNoCommentsFound"
               >
@@ -625,12 +642,14 @@
                             alt="icon"
                           />
                           <div
-                            class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
+                            class="input-area py-2 px-3 d-flex gap-2 align-items-center w-100"
                           >
-                            <input
+                            <div
+                              #childPostCommentElement
+                              contenteditable
                               placeholder="Write something to comment.."
-                              (keyup)="commentOnKeyEvent($event)"
-                            />
+                              class="outline-0 w-100 comment-input"
+                            ></div>
 
                             <div class="file-input d-flex gap-1 gap-md-2">
                               <!-- <div class="file-upload">
@@ -662,7 +681,7 @@
                               <i
                                 class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                                 role="button"
-                                (click)="replyOnComment(post.id, comment.id)"
+                                (click)="replyOnComment(childPostCommentElement, post.id, comment.id)"
                               >
                                 near_me
                               </i>
@@ -699,8 +718,7 @@
                                     <h6 class="m-0 mb-3">
                                       <a>{{ reply?.Username }}</a>
                                     </h6>
-                                    <p class="mdtxt mb-0">
-                                      {{ reply?.comment }}
+                                    <p class="mdtxt mb-0" [innerHTML]="reply?.comment" >
                                     </p>
                                   </div>
                                   <ng-container
@@ -793,7 +811,7 @@
       </ng-container>
 
       <!-- <ng-container *ngIf="!communityId"> -->
-      <div class="col-12 my-5 text-center">
+      <div class="col-12 my-5 text-center" *ngIf="postList.length > 9">
         <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
           Load More
         </button>

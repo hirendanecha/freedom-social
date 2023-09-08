@@ -25,10 +25,9 @@
               <form
                 id="loginForm"
                 class="form-dark"
-                ngNativeValidate
                 #signInForm="ngForm"
                 autocomplete="off"
-                (ngSubmit)="signInForm.form.valid && onSubmit()"
+                (ngSubmit)="onSubmit(signInForm.form.valid)"
               >
                 <div
                   class="alert alert-{{ type }}"
@@ -39,24 +38,62 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">First Name<span>*</span></label>
-                    <input
-                      type="text"
-                      class="input-area"
-                      name="fname"
-                      placeholder="Enter Your Name"
-                      [(ngModel)]="customer.FirstName"
-                    />
+                    <div class="col-12 mb-3">
+                      <label class="form-label text-light">First Name</label>
+                      <input
+                        type="text"
+                        class="input-area"
+                        name="FirstName"
+                        placeholder="Enter Your Name"
+                        [(ngModel)]="customer.FirstName"
+                      />
+                    </div>
+
+                    <div class="col-12 mb-3">
+                      <label class="form-label text-light">Last Name</label>
+                      <input
+                        type="text"
+                        class="input-area"
+                        name="LastName"
+                        placeholder="Enter Your Name"
+                        [(ngModel)]="customer.LastName"
+                      />
+                    </div>
                   </div>
-                  <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Last Name<span>*</span></label>
-                    <input
-                      type="text"
-                      class="input-area"
-                      name="lname"
-                      placeholder="Enter Your Name"
-                      [(ngModel)]="customer.LastName"
-                    />
+
+                  <div class="col-12 col-md-6 mb-3 d-flex flex-column">
+                    <label class="form-label text-light">Profile Picture<span class="text-danger">*</span></label>
+
+                    <div class="profile-img single-box p-5 mb-0 d-flex flex-column position-relative w-100 h-100">
+                      <img
+                        class="w-100 h-100 rounded-3"
+                        loading="lazy"
+                        data-src="{{
+                          profileImg?.url || '/assets/images/avtar/placeholder-user.png'
+                        }}"
+                        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+                        alt="Profile Image"
+                      />
+
+                      <div class="edit-image d-flex justify-content-center align-items-center w-100 h-100 c-pointer" (click)="profileImgFileTag.click()" >
+                        <ng-container *ngIf="!profileImg?.url">
+                          <span class="material-symbols-outlined">
+                            add_a_photo
+                          </span>
+                        </ng-container>
+
+                        <ng-container *ngIf="profileImg?.url">
+                          <span
+                            class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
+                            (click)="clearProfileImg($event)"
+                          >
+                            close
+                          </span>
+                        </ng-container>
+
+                        <input type="file" name="profileImg" #profileImgFileTag hidden required class="d-none" accept="image/*" (change)="selectFiles($event)"/>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -67,7 +104,7 @@
                     <input
                       type="text"
                       class="input-area"
-                      name="id"
+                      name="Username"
                       placeholder="Enter Your Username Name"
                       [(ngModel)]="customer.Username"
                       required
@@ -79,7 +116,7 @@
                     >
                     <input
                       type="email"
-                      name="id"
+                      name="Email"
                       class="input-area"
                       required
                       placeholder="Enter your email"
@@ -102,14 +139,12 @@
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light"
-                      >Confirm Password</label
-                    >
+                    <label class="form-label text-light">Confirm Password<span class="text-danger">*</span></label>
                     <input
                       type="password"
                       class="input-area"
                       required
-                      name="confirmpassword"
+                      name="confirmPassword"
                       placeholder="Enter confirm password"
                       (focusout)="validatepassword()"
                       (input)="changetopassword($event)"
@@ -118,33 +153,24 @@
                     />
                   </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-12 mb-3">
-                    <label class="form-label text-light">Profile Picture<span>*</span></label>
+                    <label class="form-label text-light">Profile Picture<span class="text-danger">*</span></label>
                     <input
                       type="file"
-                      name="logo"
+                      name="profilePicture"
                       (change)="selectFiles($event)"
                       required
                     />
                   </div>
-                  <!-- <div class="col-12 mb-3">
-                    <label class="form-label text-light">Cover Picture</label>
-                    <input
-                      name="cover"
-                      type="file"
-                      placeholder="Enter your description"
-                      (change)="selectFiles($event)"
-                    />
-                  </div> -->
-                </div>
+                </div> -->
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Mobile<span>*</span></label>
+                    <label class="form-label text-light">Mobile</label>
                     <input
                       type="text"
                       class="input-area"
-                      name="mobile"
+                      name="MobileNo"
                       placeholder="Enter your mobile number"
                       [(ngModel)]="customer.MobileNo"
                     />
@@ -152,9 +178,9 @@
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label text-light">Country<span class="text-danger">*</span></label>
                     <select
-                      id="country"
+                      id="Country"
                       required
-                      name="country"
+                      name="Country"
                       class="form-control"
                       [(ngModel)]="customer.Country"
                       (change)="changeCountry()"
@@ -171,11 +197,11 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Address<span>*</span></label>
+                    <label class="form-label text-light">Address</label>
                     <input
                       type="text"
                       class="input-area"
-                      name="address"
+                      name="Address"
                       placeholder="Enter your address"
                       [(ngModel)]="customer.Address"
                     />
@@ -189,31 +215,31 @@
                       placeholder="Enter your zip code"
                       [disabled]="!customer.Country"
                       [(ngModel)]="customer.Zip"
-                      name="zip"
+                      name="Zip"
                       #zipCode
                     />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">State<span>*</span></label>
+                    <label class="form-label text-light">State<span class="text-danger">*</span></label>
                     <input
                       type="text"
                       class="input-area"
                       required
                       placeholder="Enter your state"
                       disabled
-                      name="state"
+                      name="State"
                       [(ngModel)]="customer.State"
                     />
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">City<span>*</span></label>
+                    <label class="form-label text-light">City<span class="text-danger">*</span></label>
                     <input
                       type="text"
                       class="input-area"
                       required
-                      name="city"
+                      name="City"
                       placeholder="Enter your city"
                       disabled
                       [(ngModel)]="customer.City"
@@ -222,11 +248,12 @@
                 </div>
 
                 <div class="form-check ps-0 my-4 d-flex">
-                  <input class="p-0" type="checkbox" />
+                  <input class="p-0" type="checkbox" name="TermAndPolicy" [(ngModel)]="customer.termAndPolicy" required />
                   <label class="form-check-label ms-2"
                     >I agree to the <a>Terms</a> and
-                    <a>Privacy Policy</a>.</label
-                  >
+                    <a>Privacy Policy</a>.
+                    <span class="text-danger">*</span>
+                  </label>
                 </div>
                 <button
                   class="btn btn-primary my-2 login-button"

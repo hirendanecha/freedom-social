@@ -22,6 +22,7 @@ export class Customer {
   Gender: string;
   profileId: string;
   AccountType: string;
+  termAndPolicy: boolean;
 }
 
 export class Community {

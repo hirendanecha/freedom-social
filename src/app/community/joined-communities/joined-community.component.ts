@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DeletePostComponent } from 'src/app/@shared/delete-post-dialog/delete-post.component';
+import { ConfirmationModalComponent } from 'src/app/@shared/confirmation-modal/confirmation-modal.component';
 import { CommunityService } from 'src/app/services/community.service';
 import { ToastService } from 'src/app/services/toaster.service';
 
@@ -59,7 +59,7 @@ export class JoinedCommunityComponent implements OnInit {
   }
 
   removeFromCommunity(id): void {
-    const modalRef = this.modalService.open(DeletePostComponent, {
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = 'Leave Community';

@@ -49,3 +49,19 @@
     }
   }
 }
+.profile-picture-area {
+  .profile-list {
+    // overflow-x: auto;
+    position: sticky;
+    max-height: 90vh;
+    top: 100px;
+  }
+  .my-list-sidebar {
+    min-width: 300px;
+    max-width: 300px;
+    // overflow-x: auto;
+    position: sticky;
+    max-height: 90vh;
+    top: 100px;
+  }
+}

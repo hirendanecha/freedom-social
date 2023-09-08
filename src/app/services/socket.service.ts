@@ -20,6 +20,10 @@ export class SocketService {
     this.socket.emit('create-new-post', params, callback);
   }
 
+  editPost(params, callback: (post: any) => void) {
+    this.socket.emit('create-new-post', params, callback);
+  }
+
   // socket for community //
   getCommunityPost(params, callback: (post: any) => void) {
     this.socket.emit('get-community-post', params, callback);

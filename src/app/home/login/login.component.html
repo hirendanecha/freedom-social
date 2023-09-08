@@ -8,7 +8,7 @@
             <div class="col-11 col-md-8 col-lg-7 col-xl-6 mx-auto">
               <p class="text-2 mb-5">
                 Not a member?
-                <a class="fw-500" (click)="goToRegestration()">Register</a>
+                <a class="fw-500" routerLink="/register">Register</a>
               </p>
               <h3 class="mb-4">Log In to Your Account</h3>
               <form
@@ -52,9 +52,7 @@
                 <div class="mb-3">
                   <div class="d-flex justify-content-between">
                     <label class="form-label text-light">Password</label>
-                    <label class="text-2" (click)="forgotPasswordOpen()"
-                      >Forgot Password ?</label
-                    >
+                    <a class="fw-500 c-pointer" (click)="forgotPasswordOpen()">Forgot Password ?</a>
                   </div>
                   <input
                     type="password"

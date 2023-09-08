@@ -39,24 +39,12 @@
 
   .post-item {
     .post-single-box {
-      .top-area {
-        .info-area {
-          .username {
-            color: var(--para-1st-color);
-          }
-        }
-        a {
-          font-size: 16px;
-        }
-        br {
-          display: none;
-        }
-        hr {
-          // border-top: 1px solid var(--para-1st-color);
-          // margin-top: 0;
-          display: none;
+      .info-area {
+        .username {
+          color: var(--para-1st-color);
         }
       }
+
       .post-description {
         .postlink {
           img {
@@ -109,11 +97,9 @@
 
 .post-item {
   .post-single-box {
-    .top-area {
-      .dropdown-toggle {
-        &::after {
-          display: none;
-        }
+    .dropdown-toggle {
+      &::after {
+        display: none;
       }
     }
     .post-description {
@@ -127,20 +113,18 @@
   }
 }
 
-.share-post {
-  .post-message-input {
-    font-size: 16px;
-    min-height: 56px;
+.post-message-input, .comment-input {
+  font-size: 16px;
+  min-height: 56px;
 
-    &[placeholder]:empty {
+  &[placeholder]:empty {
+    &:before {
+      content: attr(placeholder);
+      color: #697495;
+    }
+    &:focus {
       &:before {
-        content: attr(placeholder);
-        color: #697495;
-      }
-      &:focus {
-        &:before {
-          content: "";
-        }
+        content: "";
       }
     }
   }
@@ -148,6 +132,10 @@
   .user-dropdown-menu {
     max-height: 300px;
   }
+}
+
+.comment-input {
+  min-height: 24px !important;
 }
 
 .community-details, .community-members {

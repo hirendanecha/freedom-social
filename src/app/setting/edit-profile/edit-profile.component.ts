@@ -9,12 +9,13 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject, debounceTime, fromEvent } from 'rxjs';
+import { Subject, debounceTime, forkJoin, fromEvent, of } from 'rxjs';
+import { ConfirmationModalComponent } from 'src/app/@shared/confirmation-modal/confirmation-modal.component';
 import { Customer } from 'src/app/constant/customer';
 import { CustomerService } from 'src/app/services/customer.service';
+import { PostService } from 'src/app/services/post.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UploadFilesService } from 'src/app/services/upload-files.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -36,14 +37,23 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   profileData: any = {};
   @ViewChild('zipCode') zipCode: ElementRef;
   uploadListSubject: Subject<void> = new Subject<void>();
+  profileImg: any = {
+    file: null,
+    url: ''
+  };
+  profileCoverImg: any = {
+    file: null,
+    url: ''
+  };
+
   constructor(
-    private modalService: NgbActiveModal,
+    private modalService: NgbModal,
     private route: ActivatedRoute,
     private router: Router,
     private customerService: CustomerService,
     private spinner: NgxSpinnerService,
     private tokenStorage: TokenStorageService,
-    private uploadService: UploadFilesService,
+    private postService: PostService,
     public sharedService: SharedService
   ) {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -54,11 +64,12 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
       this.getUserDetails(this.userId);
     }
   }
+
   ngOnInit(): void {
     if (!this.tokenStorage.getToken()) {
       this.router.navigate([`/login`]);
     }
-    this.modalService.close();
+    this.modalService.dismissAll();
   }
 
   ngAfterViewInit(): void {
@@ -161,25 +172,81 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     );
   }
 
+  confirmAndUpdateCustomer(): void {
+    if (this.profileId) {
+      const modalRef = this.modalService.open(ConfirmationModalComponent, {
+        centered: true,
+      });
+      modalRef.componentInstance.title = 'Update Profile';
+      modalRef.componentInstance.confirmButtonLabel = 'Update';
+      modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+      modalRef.componentInstance.message = 'Are you sure want to update profile details?';
+
+      modalRef.result.then((res) => {
+        console.log(res);
+        if (res === 'success') {
+          this.uploadImgAndUpdateCustomer();
+        }
+      });
+    }
+
+  }
+
+  uploadImgAndUpdateCustomer(): void {
+    let uploadObs = {};
+    if (this.profileImg?.file?.name) {
+      uploadObs['profileImg'] = this.postService.upload(this.profileImg?.file, this.profileId, 'profile');
+    }
+
+    if (this.profileCoverImg?.file?.name) {
+      uploadObs['profileCoverImg'] = this.postService.upload(this.profileCoverImg?.file, this.profileId, 'profile-cover');
+    }
+
+    if (Object.keys(uploadObs)?.length > 0) {
+      this.spinner.show();
+
+      forkJoin(uploadObs).subscribe({
+        next: (res: any) => {
+          if (res?.profileImg?.body?.url) {
+            this.profileImg['file'] = null;
+            this.profileImg['url'] = res?.profileImg?.body?.url;
+            this.sharedService.profilePic = this.profileImg['url'];
+          }
+
+          if (res?.profileCoverImg?.body?.url) {
+            this.profileCoverImg['file'] = null;
+            this.profileCoverImg['url'] = res?.profileCoverImg?.body?.url;
+            this.sharedService.coverPic = this.profileCoverImg['url'];
+          }
+
+          this.updateCustomer();
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+        },
+      });
+    } else {
+      this.updateCustomer();
+    }
+  }
+
   updateCustomer(): void {
     if (this.profileId) {
       this.spinner.show();
-      this.customer.ProfilePicName = this.sharedService.profilePic;
-      this.customer.CoverPicName = this.sharedService.coverPic;
+      this.customer.ProfilePicName = this.profileImg?.url || this.customer.ProfilePicName;
+      this.customer.CoverPicName = this.profileCoverImg?.url || this.customer.CoverPicName;
       this.customer.IsActive = 'Y';
-      this.customerService
-        .updateProfile(this.profileId, this.customer)
-        .subscribe(
-          (res: any) => {
-            if (res) {
-              this.spinner.hide();
-            }
-          },
-          (error) => {
-            this.spinner.hide();
-            console.log(error);
-          }
-        );
+
+      this.customerService.updateProfile(this.profileId, this.customer).subscribe({
+        next: (res: any) => {
+          this.spinner.hide();
+        },
+        error: (error) => {
+          this.spinner.hide();
+          console.log(error);
+        }
+      });
     }
   }
 
@@ -198,5 +265,21 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
         console.log(error);
       }
     );
+  }
+
+  onProfileImgChange(event: any): void {
+    const file = event.target?.files?.[0] || {};
+    if (file) {
+      this.profileImg['file'] = file;
+      this.profileImg['url'] = URL.createObjectURL(file);
+    }
+  }
+
+  onProfileCoverImgChange(event: any): void {
+    const file = event.target?.files?.[0] || {};
+    if (file) {
+      this.profileCoverImg['file'] = file;
+      this.profileCoverImg['url'] = URL.createObjectURL(file);
+    }
   }
 }
