@@ -59,7 +59,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       .pipe(debounceTime(300))
       .subscribe((event) => {
         const val = event['target'].value;
-        if (val.length > 5) {
+        if (val.length > 3) {
           this.onZipChange(val);
         }
       });
