@@ -80,7 +80,7 @@ export class AddCommunityComponent {
               this.spinner.hide();
               this.createCommunityAdmin(res.data);
               this.activeModal.close('success');
-              this.toaster.success(res.message);
+              this.toaster.success('Your Local Community will be approved withing 24 hours!');
               // this.router.navigateByUrl('/home');
             }
           },
