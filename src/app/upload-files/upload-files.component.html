@@ -38,7 +38,7 @@
   <!-- <div class="uploaded-img-div">
     <a *ngFor="let file of fileInfos | async">
       <img
-        [src]="file.url | getImageUrl | async | safe : 'resourceUrl'"
+        data-src="file.url | getImageUrl | async | safe : 'resourceUrl'"
         alt=""
       />
     </a>
@@ -49,7 +49,7 @@
   <!-- <a href="{{ file.url }}">{{ file.name }}</a> -->
   <!-- <td *ngFor="let file of fileInfos | async">
         <img
-          [src]="file.url | getImageUrl | async | safe: 'resourceUrl'"
+          data-src="file.url | getImageUrl | async | safe: 'resourceUrl'"
           alt=""
           style="height: 90px; width: 100px"
         />
@@ -78,7 +78,7 @@
           "
         >
           <img
-            [src]="passDefaultImg | getImageUrl | async | safe : 'resourceUrl'"
+            data-src="passDefaultImg | getImageUrl | async | safe : 'resourceUrl'"
             #defaultImage
             [ngClass]="isSelected ? 'image-border' : ''"
           />

@@ -6,7 +6,7 @@
     <div class="profile-box">
       <a
         ><img
-          [src]="sharedService.profilePic"
+          data-src="sharedService.profilePic"
           onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
           class="max-un rounded-3"
           alt="icon"
@@ -70,7 +70,7 @@
       <div class="profile-box">
         <img
           class="post-profile avatar-img max-un rounded-5"
-          [src]="post.ProfilePicName"
+          data-src="post.ProfilePicName"
           onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
           alt="avatar"
         />
@@ -184,12 +184,12 @@
           <hr />
         </ng-container>
         <div class="post-img rounded-3" *ngIf="post?.imageUrl">
-          <img [src]="post?.imageUrl" class="w-100 rounded-top-3" alt="image" />
+          <img data-src="post?.imageUrl" class="w-100 rounded-top-3" alt="image" />
         </div>
         <div class="border rounded-3" *ngIf="post?.metaimage">
           <a [href]="post.metalink" target="_blank" class="post-img">
             <img
-              [src]="post?.metaimage"
+              data-src="post?.metaimage"
               class="w-100 rounded-top-3"
               alt="image"
             />
@@ -295,7 +295,7 @@
             <div class="profile-box d-none d-xxl-block">
               <a
                 ><img
-                  [src]="sharedService.profilePic"
+                  data-src="sharedService.profilePic"
                   class="max-un"
                   alt="icon"
               /></a>

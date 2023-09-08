@@ -34,7 +34,9 @@
       >
         <div class="row">
           <div class="col-12 mb-3">
-            <label class="form-label d-flex">Community Url<span class="text-danger">*</span></label>
+            <label class="form-label d-flex"
+              >Community Url<span class="text-danger">*</span></label
+            >
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span
@@ -67,7 +69,9 @@
         </div>
         <div class="row">
           <div class="col-12 mb-3 d-grid">
-            <label class="form-label d-flex">Logo Image<span class="text-danger">*</span></label>
+            <label class="form-label d-flex"
+              >Logo Image<span class="text-danger">*</span></label
+            >
             <!-- <input
               type="file"
               name="logo"
@@ -81,10 +85,18 @@
                 required
               />
             </ng-container>
-            <img class="w-25" *ngIf="logoImg" [src]="logoImg" alt="" />
+            <img
+              class="w-25"
+              *ngIf="logoImg"
+              loading="lazy"
+              data-src="{{ logoImg }}"
+              alt=""
+            />
           </div>
           <div class="col-12 mb-3 d-grid">
-            <label class="form-label d-flex">Cover Image<span class="text-danger">*</span></label>
+            <label class="form-label d-flex"
+              >Cover Image<span class="text-danger">*</span></label
+            >
             <!-- <input
               name="cover"
               type="file"
@@ -100,7 +112,13 @@
                 required
               />
             </ng-container>
-            <img class="w-50" *ngIf="coverImg" [src]="coverImg" alt="" />
+            <img
+              class="w-50"
+              *ngIf="coverImg"
+              loading="lazy"
+              data-src="{{ coverImg }}"
+              alt=""
+            />
           </div>
         </div>
 

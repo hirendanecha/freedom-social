@@ -10,7 +10,10 @@
         <div class="profile-picture text-start">
           <img
             class="preview-image w-100"
-            [src]="customer?.ProfilePicName || sharedService?.profilePic"
+            loading="lazy"
+            data-src="{{
+              customer?.ProfilePicName || sharedService?.profilePic
+            }}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
             alt="Preview Image"
           />
@@ -25,7 +28,8 @@
         <div class="profile-picture text-start">
           <img
             class="preview-image w-100"
-            [src]="customer?.CoverPicName || sharedService?.coverPic"
+            loading="lazy"
+            data-src="{{ customer?.CoverPicName || sharedService?.coverPic }}"
             onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
             alt="Preview Image"
           />

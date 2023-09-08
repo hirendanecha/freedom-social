@@ -1,12 +1,7 @@
 <div class="single-box d-flex flex-column p-5 mb-3">
   <h5 class="mb-4 text-start">Create Local Community</h5>
 
-  <form
-    class="row"
-    ngNativeValidate
-    autocomplete="off"
-    (ngSubmit)="onSubmit()"
-  >
+  <form class="row" ngNativeValidate autocomplete="off" (ngSubmit)="onSubmit()">
     <!-- <div
         class="alert alert-{{ type }}"
         role="alert"
@@ -18,11 +13,9 @@
       <label class="form-label d-flex">Community Url</label>
       <div class="input-group">
         <div class="input-group-prepend">
-          <span
-            class="input-group-text h-100 border-0"
-            id="basic-addon3"
-            >{{ originurl }}</span
-          >
+          <span class="input-group-text h-100 border-0" id="basic-addon3">{{
+            originurl
+          }}</span>
         </div>
         <input
           type="text"
@@ -42,7 +35,13 @@
           (change)="selectFiles($event, 'community-logo')"
         />
       </ng-container>
-      <img class="w-25" *ngIf="logoImg" [src]="logoImg" alt="" />
+      <img
+        class="w-25"
+        loading="lazy"
+        *ngIf="logoImg"
+        data-src="{{ logoImg }}"
+        alt=""
+      />
     </div>
 
     <div class="col-6 mb-5 d-grid">
@@ -55,11 +54,19 @@
           (change)="selectFiles($event, 'community-cover')"
         />
       </ng-container>
-      <img class="w-50" *ngIf="coverImg" [src]="coverImg" alt="" />
+      <img
+        class="w-50"
+        loading="lazy"
+        *ngIf="coverImg"
+        data-src="{{ coverImg }}"
+        alt=""
+      />
     </div>
 
     <div class="col-12 mb-5 d-grid">
-      <label class="form-label text-light text-start">Community Description</label>
+      <label class="form-label text-light text-start"
+        >Community Description</label
+      >
 
       <textarea
         name="dec"

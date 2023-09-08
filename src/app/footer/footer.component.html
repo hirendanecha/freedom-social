@@ -35,9 +35,9 @@
     <div class="single-item position-relative">
       <div class="profile-pic d-flex align-items-center">
         <span class="avatar cmn-head active-status">
-          <img
+          <img loading="lazy"
             class="avatar-img max-un"
-            [src]="sharedService.profilePic"
+            data-src="{{sharedService.profilePic}}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
             alt="avatar"
             (click)="openUserMenu()"
@@ -53,9 +53,9 @@
     <div class="head-area">
       <div class="d-flex gap-3 align-items-center">
         <div class="avatar-item">
-          <img
+          <img loading="lazy"
             class="avatar-img max-un"
-            [src]="sharedService.profilePic"
+            data-src="{{sharedService.profilePic}}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
             alt="avatar"
           />
@@ -128,9 +128,9 @@
       >
         <div class="left-item position-relative d-inline-flex gap-3">
           <div class="avatar position-relative d-inline-flex">
-            <img
+            <img loading="lazy"
               class="avatar-img w-52-px h-52-px rounded-5"
-              [src]="notification?.ProfilePicName"
+              data-src="{{notification?.ProfilePicName}}"
               alt="avatar"
             />
           </div>

@@ -7,8 +7,8 @@
         <div class="upload-single cover-img">
           <div class="profile-picture position-relative text-start">
             <!-- src="/assets/images/profile-cover.png" -->
-            <img
-              [src]="communityDetails.coverImg"
+            <img loading="lazy"
+              data-src="{{communityDetails.coverImg}}"
               class="preview-image w-100"
               onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
               [alt]="'Preview Image'"
@@ -92,9 +92,9 @@
                   <div class="profile-area d-center justify-content-between">
                     <div class="avatar-item d-flex gap-3 align-items-center">
                       <div class="position-relative">
-                        <img
+                        <img loading="lazy"
                           class="post-profile avatar-img max-un"
-                          [src]="post.ProfilePicName"
+                          data-src="{{post.ProfilePicName}}"
                           onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
                           alt="avatar"
                         />
@@ -179,7 +179,7 @@
                     ></p>
                   </div>
                   <div class="post-img" *ngIf="post.imageUrl">
-                    <img [src]="post.imageUrl" class="w-100" alt="image" />
+                    <img loading="lazy" data-src="{{post.imageUrl}}" class="w-100" alt="image" />
                   </div>
                 </div>
                 <div
@@ -294,11 +294,11 @@
                 >
                   <div class="avatar-item d-flex gap-3 align-items-center">
                     <div class="avatar-item">
-                      <img
+                      <img loading="lazy"
                         class="member-profile avatar-img max-un"
-                        [src]="
-                          member.ProfilePicName ||
-                          '/assets/images/avtar/placeholder-user.png'
+                        data-src="
+                          {{member.ProfilePicName ||
+                          '/assets/images/avtar/placeholder-user.png'}}
                         "
                         onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png'"
                         alt="avatar"

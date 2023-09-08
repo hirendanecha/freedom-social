@@ -12,8 +12,8 @@
     <div class="d-flex mb-5 gap-3">
       <div class="profile-box">
         <a
-          ><img
-            [src]="sharedService?.profilePic"
+          ><img loading="lazy"
+            data-src="{{sharedService?.profilePic}}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
             class="max-un"
             alt="icon"

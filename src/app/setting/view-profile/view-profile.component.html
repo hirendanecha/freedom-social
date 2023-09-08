@@ -6,8 +6,9 @@
           <div class="profile-picture position-relative text-start">
             <!-- src="/assets/images/profile-cover.png" -->
             <img
-              [src]="
-                customer?.CoverPicName || '/assets/images/profile-cover.png'
+            loading="lazy"
+              data-src="
+               {{ customer?.CoverPicName || '/assets/images/profile-cover.png'}}
               "
               class="preview-image w-100"
               onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
@@ -38,6 +39,14 @@
                 {{ customer.State }}
               </h5> -->
             </div>
+          </div>
+          <div class="col-md">
+            <button
+              class="btn btn-sm btn-primary float-end"
+              (click)="openEditProfile()"
+            >
+              Edit Profile
+            </button>
           </div>
         </div>
         <div class="row mt-3">
@@ -82,10 +91,7 @@
     </div>
 
     <div class="d-lg-flex d-block w-100 gap-5 min-vh-100">
-      <div
-        class="my-profile-sidebar"
-        *ngIf="activeTab === 1"
-      >
+      <div class="my-profile-sidebar" *ngIf="activeTab === 1">
         <app-my-profile></app-my-profile>
       </div>
 
@@ -113,7 +119,8 @@
                   <div class="avatar-box position-relative">
                     <img
                       class="w-100 h-180-px rounded-3"
-                      [src]="community.coverImg"
+                      loading="lazy"
+                      data-src="{{community.coverImg}}"
                       alt="avatar"
                     />
                     <div
@@ -167,7 +174,8 @@
                   <div class="abs-avatar-item">
                     <img
                       class="w-48-px h-48-px m-3 rounded-3"
-                      [src]="community.logoImg"
+                      loading="lazy"
+                      data-src="{{community.logoImg}}"
                       alt="avatar"
                     />
                   </div>

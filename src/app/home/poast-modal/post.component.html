@@ -13,7 +13,8 @@
       <div class="profile-box">
         <a
           ><img
-            [src]="sharedService.profilePic"
+            loading="lazy"
+            data-src="{{ sharedService.profilePic }}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
             class=""
             alt="icon"
@@ -40,7 +41,7 @@
         </span>
       </label>
       <div class="selected-img">
-        <img [src]="selectedFile" alt="" />
+        <img loading="lazy" data-src="{{ selectedFile }}" alt="" />
       </div>
     </div>
   </div>

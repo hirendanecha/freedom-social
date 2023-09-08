@@ -5,7 +5,7 @@
   >
     <div class="single-box p-5">
       <div class="avatar">
-        <img class="avatar-img w-100" [src]="request.profilePic" alt="avatar" />
+        <img class="avatar-img w-100" data-src="{{request.profilePic}}" alt="avatar" />
       </div>
       <a ublic-p
         ><h6 class="m-0 mb-2 mt-3">{{ request.name }}</h6></a
@@ -13,7 +13,7 @@
       <div class="friends-list d-center gap-1 text-center">
         <ul class="d-center">
           <li *ngFor="let mutual of request.mutualFriends">
-            <img [src]="mutual.profilePic" alt="image" />
+            <img loading="lazy" data-src="{{mutual.profilePic}}" alt="image" />
           </li>
           <!-- <li>
             <img src="assets/images/avatar-3.png" alt="image" />

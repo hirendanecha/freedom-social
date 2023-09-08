@@ -35,7 +35,7 @@
                   <div class="me-5" *ngIf="user">
                     <img
                       class="profile-pic"
-                      [src]="user.ProfilePicName"
+                      data-src="user.ProfilePicName"
                       alt=""
                       onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                     />
@@ -57,9 +57,9 @@
                     role="button"
                     (click)="openProfile(user.Id)"
                   >
-                    <img
+                    <img loading="lazy"
                       class="w-32-px h-32-px rounded"
-                      [src]="user.ProfilePicName"
+                      data-src="{{user.ProfilePicName}}"
                       [alt]="user.Username"
                       onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                     />
@@ -174,9 +174,9 @@
             <!-- profile-area -->
             <div class="profile-pic d-flex align-items-center">
               <span class="avatar cmn-head active-status">
-                <img
+                <img loading="lazy"
                   class="avatar-img max-un"
-                  [src]="sharedService.profilePic"
+                  data-src="{{sharedService.profilePic}}"
                   onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                   alt="avatar"
                   id="userMenuList"
@@ -197,8 +197,8 @@
       <div class="d-flex gap-3">
         <div class="avatar-item">
           <img
-            class="avatar-img max-un"
-            [src]="sharedService.profilePic"
+            class="avatar-img max-un" loading="lazy"
+            data-src="{{sharedService.profilePic}}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
             alt="avatar"
           />

@@ -64,7 +64,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalService.close();
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   getProfile(id): void {
     this.spinner.show();
@@ -125,6 +125,9 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.isExpand = false;
     }
+  }
+  openEditProfile(): void {
+    this.router.navigate([`settings/general/edit-profile/${this.profileId}`])
   }
 
   ngOnDestroy(): void {

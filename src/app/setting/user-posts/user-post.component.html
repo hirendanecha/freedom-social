@@ -145,20 +145,20 @@
 <div class="post-item d-flex flex-column gap-4">
   <ng-container *ngIf="postList?.length > 0; else elseNoPostFound">
     <ng-container *ngFor="let post of postList">
+      <!-- @slideUp -->
       <div
-        @slideUp
-        class="post-single-box d-flex gap-3 gap-sm-5 p-3 p-sm-5"
+        class="post-single-box d-flex gap-4 gap-sm-5 p-3 p-sm-5"
         *ngIf="!post?.hide && (post?.postdescription || post?.metadescription)"
       >
         <img
           class="w-48-px h-48-px rounded-4"
           loading="lazy"
-          data-src="{{ post.ProfilePicName }}"
+          data-src="{{post.ProfilePicName}}"
           onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
           alt="avatar"
         />
 
-        <div class="d-flex flex-column w-100">
+        <div class="top-area w-100">
           <div
             class="profile-area d-center justify-content-between align-items-start h-24-px"
           >
@@ -167,7 +167,7 @@
             >
               <div class="h6 m-0">{{ post.FirstName }}</div>
               <div class="ms-3 username" *ngIf="post.Username">
-                @{{ post.Username | lowercase }}
+                <span> @{{ post.Username | lowercase }}</span>
               </div>
             </div>
 
@@ -181,7 +181,7 @@
               </i>
 
               <div ngbDropdownMenu class="dropdown-menu">
-                <ng-container *ngIf="profileId != post.profileid">
+                <ng-container *ngIf="userProfileId != post.profileid">
                   <button
                     ngbDropdownItem
                     *ngIf="seeFirstList.includes(post?.profileid)"
@@ -231,7 +231,7 @@
                     </a>
                   </button>
                 </ng-container>
-                <ng-container *ngIf="profileId == post.profileid">
+                <ng-container *ngIf="userProfileId == post.profileid">
                   <button ngbDropdownItem>
                     <a
                       class="droplist d-flex align-items-center gap-2"
@@ -270,19 +270,14 @@
           </ng-container>
 
           <ng-container *ngIf="post?.imageUrl">
-            <img
-              loading="lazy"
-              data-src="{{ post?.imageUrl }}"
-              class="w-100 rounded-3"
-              alt="image"
-            />
+            <img loading="lazy" data-src="{{post?.imageUr}}l" class="w-100 rounded-3" alt="image" />
           </ng-container>
 
           <div class="border rounded-3" *ngIf="post?.metaimage">
             <a [href]="post.metalink" target="_blank" class="post-img">
               <img
+                data-src="{{post?.metaimage}}"
                 loading="lazy"
-                data-src="{{ post?.metaimage }}"
                 class="w-100 rounded-top-3"
                 alt="image"
               />
@@ -435,27 +430,25 @@
           <form>
             <div class="d-flex mt-5 gap-3">
               <img
+                data-src="{{sharedService.profilePic}}"
                 loading="lazy"
-                data-src="{{ sharedService.profilePic }}"
                 class="w-40-px h-40-px rounded-3"
                 alt="icon"
               />
 
               <div
-                class="input-area py-2 px-3 d-flex gap-2 align-items-center w-100"
+                class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
               >
-                <div
-                  #parentPostCommentElement
-                  contenteditable
+                <input
                   placeholder="Write something to comment.."
-                  class="outline-0 w-100 comment-input"
-                ></div>
+                  (keyup)="commentOnKeyEvent($event)"
+                />
 
                 <div class="file-input d-flex gap-1 gap-md-2">
                   <i
                     class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                     role="button"
-                    (click)="commentOnPost(parentPostCommentElement, post.id)"
+                    (click)="commentOnPost(post.id)"
                   >
                     near_me
                   </i>
@@ -464,7 +457,7 @@
             </div>
           </form>
 
-          <ng-container *ngIf="isExpand && isOpenCommentsPostId === post.id">
+          <ng-container *ngIf="isExpand && post?.id == isOpenCommentsPostId">
             <ng-container
               *ngIf="commentList.length > 0; else elseNoCommentsFound"
             >
@@ -478,9 +471,10 @@
                     *ngIf="comment.postId === post.id"
                   >
                     <div class="d-center align-items-baseline">
-                      <img loading="lazy"
+                      <img
                         class="w-40-px h-40-px rounded-3"
-                        data-src="{{ comment?.ProfilePicName }}"
+                        data-src="{{comment?.ProfilePicName}}"
+                        loading="lazy"
                         onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                         alt="avatar"
                       />
@@ -494,12 +488,7 @@
                         >
                           <h6 class="m-0">{{ comment.Username }}</h6>
 
-                          <ng-container
-                            *ngIf="
-                              profileId == comment.profileId ||
-                              post.profileid == profileId
-                            "
-                          >
+                          <ng-container *ngIf="profileId == comment.profileId">
                             <div ngbDropdown>
                               <i
                                 class="material-symbols-outlined font-20-px m-0"
@@ -586,20 +575,18 @@
                         "
                       >
                         <img
+                          data-src="{{sharedService.profilePic}}"
                           loading="lazy"
-                          data-src="{{ sharedService.profilePic }}"
                           class="w-40-px h-40-px rounded-3"
                           alt="icon"
                         />
                         <div
-                          class="input-area py-2 px-3 d-flex gap-2 align-items-center w-100"
+                          class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
                         >
-                          <div
-                            #childPostCommentElement
-                            contenteditable
+                          <input
                             placeholder="Write something to comment.."
-                            class="outline-0 w-100 comment-input"
-                          ></div>
+                            (keyup)="commentOnKeyEvent($event)"
+                          />
 
                           <div class="file-input d-flex gap-1 gap-md-2">
                             <!-- <div class="file-upload">
@@ -631,13 +618,7 @@
                             <i
                               class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                               role="button"
-                              (click)="
-                                replyOnComment(
-                                  childPostCommentElement,
-                                  post.id,
-                                  comment.id
-                                )
-                              "
+                              (click)="replyOnComment(post.id, comment.id)"
                             >
                               near_me
                             </i>
@@ -661,7 +642,7 @@
                               <img
                                 class="avatar-img w-40-px h-40-px rounded-3"
                                 loading="lazy"
-                                data-src="{{ reply.ProfilePicName }}"
+                                data-src="{{reply.ProfilePicName}}"
                                 alt="avatar"
                               />
                             </div>
@@ -673,10 +654,9 @@
                                   <h6 class="m-0 mb-3">
                                     <a>{{ reply?.Username }}</a>
                                   </h6>
-                                  <p
-                                    class="mdtxt mb-0"
-                                    [innerHTML]="reply?.comment"
-                                  ></p>
+                                  <p class="mdtxt mb-0">
+                                    {{ reply?.comment }}
+                                  </p>
                                 </div>
                                 <ng-container
                                   *ngIf="profileId == reply.profileId"
@@ -761,16 +741,13 @@
       </div>
     </ng-container>
 
-    <!-- <ng-container *ngIf="!communityId"> -->
-    <div
-      class="col-12 my-5 text-center"
-      *ngIf="parentComponent === 'HomeComponent' && postList.length > 9"
-    >
-      <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
-        Load More
-      </button>
-    </div>
-    <!-- </ng-container> -->
+    <ng-container *ngIf="postList.length > 1">
+      <div class="col-12 my-5 text-center">
+        <button class="cmn-btn alt third fw-600 p-3" (click)="loadMore()">
+          Load More
+        </button>
+      </div>
+    </ng-container>
   </ng-container>
 </div>
 
