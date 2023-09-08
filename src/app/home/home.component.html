@@ -168,9 +168,7 @@
               (click)="resetPost()"
             >
               Cancel
-              <i class="material-symbols-outlined font-20-px">
-                close
-              </i>
+              <i class="material-symbols-outlined font-20-px"> close </i>
             </button>
 
             <button
@@ -180,9 +178,7 @@
             >
               {{ postData.id ? "Update Post" : "Post" }}
 
-              <i class="material-symbols-outlined font-20-px">
-                near_me
-              </i>
+              <i class="material-symbols-outlined font-20-px"> near_me </i>
             </button>
           </div>
         </ul>
@@ -512,7 +508,7 @@
               </div>
             </form>
 
-            <ng-container *ngIf="isExpand">
+            <ng-container *ngIf="isExpand && isOpenCommentsPostId === post.id">
               <ng-container
                 *ngIf="commentList.length > 0; else elseNoCommentsFound"
               >
@@ -681,7 +677,13 @@
                               <i
                                 class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                                 role="button"
-                                (click)="replyOnComment(childPostCommentElement, post.id, comment.id)"
+                                (click)="
+                                  replyOnComment(
+                                    childPostCommentElement,
+                                    post.id,
+                                    comment.id
+                                  )
+                                "
                               >
                                 near_me
                               </i>
@@ -718,8 +720,10 @@
                                     <h6 class="m-0 mb-3">
                                       <a>{{ reply?.Username }}</a>
                                     </h6>
-                                    <p class="mdtxt mb-0" [innerHTML]="reply?.comment" >
-                                    </p>
+                                    <p
+                                      class="mdtxt mb-0"
+                                      [innerHTML]="reply?.comment"
+                                    ></p>
                                   </div>
                                   <ng-container
                                     *ngIf="
@@ -901,7 +905,5 @@
 </ng-template>
 
 <ng-template #elseNoCommentsFound>
-  <span class="pt-5 m-0 text-start text-secondary"
-    >No comments yet!</span
-  >
+  <span class="pt-5 m-0 text-start text-secondary">No comments yet!</span>
 </ng-template>

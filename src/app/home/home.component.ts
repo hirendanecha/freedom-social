@@ -642,24 +642,27 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.spinner.show();
         this.ngUnsubscribe.next();
 
-        this.postService.getMetaData({ url }).pipe(takeUntil(this.ngUnsubscribe)).subscribe({
-          next: (res: any) => {
-            if (res?.meta?.image) {
-              this.postData.meta = {
-                title: res?.meta?.title,
-                metadescription: res?.meta?.description,
-                metaimage: res.meta?.image?.url,
-                metalink: res?.meta?.url || url,
-                url: url,
-              };
-            }
+        this.postService
+          .getMetaData({ url })
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe({
+            next: (res: any) => {
+              if (res?.meta?.image) {
+                this.postData.meta = {
+                  title: res?.meta?.title,
+                  metadescription: res?.meta?.description,
+                  metaimage: res.meta?.image?.url,
+                  metalink: res?.meta?.url || url,
+                  url: url,
+                };
+              }
 
-            this.spinner.hide();
-          },
-          error: () => {
-            this.spinner.hide();
-          },
-        });
+              this.spinner.hide();
+            },
+            error: () => {
+              this.spinner.hide();
+            },
+          });
       }
     }
 
@@ -922,8 +925,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isOpenCommentsPostId = id;
     if (!this.isExpand) {
       this.isOpenCommentsPostId = null;
+    } else {
+      this.isOpenCommentsPostId = id;
     }
-    this.isOpenCommentsPostId = id;
+    // this.isOpenCommentsPostId = id;
     this.postService.getComments(id).subscribe({
       next: (res) => {
         if (res) {
