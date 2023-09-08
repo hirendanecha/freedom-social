@@ -1,0 +1,624 @@
+<div
+  @slideUp
+  class="post-single-box d-flex gap-3 gap-sm-5 p-3 p-sm-5"
+  *ngIf="
+    !post?.hide && (post?.postdescription || post?.metadescription)
+  "
+>
+  <img
+    class="w-48-px h-48-px rounded-4"
+    [src]="post.ProfilePicName"
+    onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+    alt="avatar"
+  />
+
+  <div class="d-flex flex-column w-100">
+    <div
+      class="profile-area d-center justify-content-between align-items-start h-24-px"
+    >
+      <div
+        class="info-area d-flex justify-content-center align-items-center"
+      >
+        <div class="h6 m-0">{{ post.FirstName }}</div>
+        <div class="ms-3 username" *ngIf="post.Username">
+          @{{ post.Username | lowercase }}
+        </div>
+      </div>
+
+      <div ngbDropdown>
+        <i
+          class="material-symbols-outlined fs-xxl m-0"
+          role="button"
+          ngbDropdownToggle
+        >
+          more_horiz
+        </i>
+
+        <div ngbDropdownMenu class="dropdown-menu">
+          <ng-container *ngIf="profileId != post.profileid">
+            <button
+              ngbDropdownItem
+              *ngIf="seeFirstList.includes(post?.profileid)"
+            >
+              <a
+                class="droplist d-flex alig n-items-center gap-2"
+                (click)="removeSeeFirstUser(post?.profileid)"
+              >
+                <i class="material-symbols-outlined mat-icon">
+                  visibility
+                </i>
+                <span>Stop see First</span>
+              </a>
+            </button>
+            <button
+              ngbDropdownItem
+              *ngIf="!seeFirstList.includes(post.profileid)"
+            >
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="seeFirst(post?.profileid)"
+              >
+                <i class="material-symbols-outlined mat-icon">
+                  visibility
+                </i>
+                <span>See First</span>
+              </a>
+            </button>
+            <button ngbDropdownItem>
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="unsubscribe(post)"
+              >
+                <i class="material-symbols-outlined mat-icon">
+                  person_remove
+                </i>
+                <span>Unsubscribe</span>
+              </a>
+            </button>
+            <button
+              ngbDropdownItem
+              (click)="goToViewProfile(post.profileid)"
+            >
+              <a class="droplist d-flex align-items-center gap-2">
+                <i class="material-symbols-outlined mat-icon">
+                  person
+                </i>
+                <span>View Profile</span>
+              </a>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="profileId == post.profileid">
+            <button ngbDropdownItem>
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="getPostById(post)"
+              >
+                <i class="material-symbols-outlined mat-icon"> edit </i>
+                <span>Edit</span>
+              </a>
+            </button>
+            <button ngbDropdownItem>
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                (click)="deletePost(post)"
+              >
+                <i class="material-symbols-outlined mat-icon">
+                  delete
+                </i>
+                <span>Delete</span>
+              </a>
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <p
+      class="post-description mdtxt m-0 pt-2 pb-3"
+      [innerHTML]="post.postdescription"
+    ></p>
+
+    <ng-container *ngIf="post.metalink">
+      <a
+        class="post-description mdtxt pt-0 pb-1"
+        [href]="post.metalink"
+        target="_blank"
+        >{{ post.metalink }}</a
+      >
+    </ng-container>
+
+    <ng-container *ngIf="post?.imageUrl">
+      <img [src]="post?.imageUrl" class="w-100 rounded-3" alt="image" />
+    </ng-container>
+
+    <div class="border rounded-3" *ngIf="post?.metaimage">
+      <a [href]="post.metalink" target="_blank" class="post-img">
+        <img
+          [src]="post?.metaimage"
+          class="w-100 rounded-top-3"
+          alt="image"
+        />
+        <p class="post-description mdtxt m-2">{{ post?.title }}</p>
+        <p class="post-description mdtxt m-2">
+          {{ post?.metadescription }}
+        </p>
+      </a>
+    </div>
+    <!-- like -->
+    <!-- <div
+      class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between pt-4"
+    >
+      <div
+        class="like-count-section friends-list d-flex gap-3 align-items-center text-center w-100"
+      >
+        <ul
+          class="d-flex align-items-center justify-content-around mb-0 w-100 ps-0"
+        >
+          <li
+            class="d-flex gap-1"
+            (click)="
+              post.react == 'L'
+                ? dislikeFeedPost(post)
+                : reactLikeOnPost(post)
+            "
+          >
+            <i
+              class="material-symbols-outlined mat-icon"
+              [ngClass]="post.react == 'L' ? 'active' : ''"
+            >
+              thumb_up
+            </i>
+            <span class="mdtxt d-center">{{
+              post?.likescount > 0 ? post?.likescount : 0
+            }}</span>
+          </li>
+          <li
+            class="d-flex gap-1"
+            (click)="
+              post.react == 'LO'
+                ? dislikeFeedPost(post)
+                : reactLoveOnPost(post)
+            "
+          >
+            <i
+              class="material-symbols-outlined mat-icon"
+              [ngClass]="post.react == 'LO' ? 'active' : ''"
+            >
+              favorite
+            </i>
+            <span class="mdtxt d-center">{{
+              post?.lovecount > 0 ? post?.lovecount : 0
+            }}</span>
+          </li>
+          <li
+            class="d-flex gap-1"
+            (click)="
+              post.react == 'HA'
+                ? dislikeFeedPost(post)
+                : reactHaliriousOnPost(post)
+            "
+          >
+            <i
+              class="material-symbols-outlined mat-icon"
+              [ngClass]="post.react == 'HA' ? 'active' : ''"
+            >
+              mood
+            </i>
+            <span class="mdtxt d-center">{{
+              post?.haliriouscount > 0 ? post?.haliriouscount : 0
+            }}</span>
+          </li>
+          <li
+            class="d-flex gap-1"
+            (click)="
+              post.react == 'WO'
+                ? dislikeFeedPost(post)
+                : reactWowOnPost(post)
+            "
+          >
+            <i
+              class="material-symbols-outlined mat-icon"
+              [ngClass]="post.react == 'WO' ? 'active' : ''"
+            >
+              stars
+            </i>
+            <span class="mdtxt d-center">{{
+              post?.wowcount > 0 ? post?.wowcount : 0
+            }}</span>
+          </li>
+          <li
+            class="d-flex gap-1"
+            (click)="
+              post.react == 'SA'
+                ? dislikeFeedPost(post)
+                : reactSadOnPost(post)
+            "
+          >
+            <i
+              class="material-symbols-outlined mat-icon"
+              [ngClass]="post.react == 'SA' ? 'active' : ''"
+            >
+              sentiment_dissatisfied
+            </i>
+            <span class="mdtxt d-center">{{
+              post?.sadcount > 0 ? post?.sadcount : 0
+            }}</span>
+          </li>
+        </ul>
+      </div>
+    </div> -->
+    <div
+      class="mt-1 friends-list like-comment-share p-3 d-center flex-wrap gap-3 gap-md-0 justify-content-between"
+    >
+      <button
+        class="d-center gap-1 gap-sm-2 mdtxt"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title="Post Likes"
+        (click)="
+          post.react == 'L'
+            ? dislikeFeedPost(post)
+            : reactLikeOnPost(post)
+        "
+      >
+        <i
+          class="material-symbols-outlined mat-icon"
+          [ngClass]="post.react == 'L' ? 'active' : ''"
+        >
+          thumb_up
+        </i>
+        {{
+          post?.likescount > 0
+            ? post?.likescount + " Likes"
+            : 0 + " Like"
+        }}
+      </button>
+
+      <button
+        class="d-center gap-1 gap-sm-2 mdtxt"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title="View Comments"
+        (click)="viewComments(post?.id)"
+      >
+        <i class="material-symbols-outlined mat-icon"> chat </i>
+        Comments
+      </button>
+    </div>
+
+    <form>
+      <div class="d-flex mt-5 gap-3">
+        <img
+          [src]="sharedService.profilePic"
+          class="w-40-px h-40-px rounded-3"
+          alt="icon"
+        />
+
+        <div
+          class="input-area py-2 px-3 d-flex gap-2 align-items-center w-100"
+        >
+          <div
+            #parentPostCommentElement
+            contenteditable
+            placeholder="Write something to comment.."
+            class="outline-0 w-100 comment-input"
+          ></div>
+
+          <div class="file-input d-flex gap-1 gap-md-2">
+            <i
+              class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
+              role="button"
+              (click)="commentOnPost(parentPostCommentElement, post.id)"
+            >
+              near_me
+            </i>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <ng-container *ngIf="isExpand && isOpenCommentsPostId === post.id">
+      <ng-container
+        *ngIf="commentList.length > 0; else elseNoCommentsFound"
+      >
+        <div class="comments-area mt-5">
+          <div
+            class="single-comment-area ms-xxl-15"
+            *ngFor="let comment of commentList"
+          >
+            <div
+              class="parent-comment d-flex gap-2 gap-sm-4"
+              *ngIf="comment.postId === post.id"
+            >
+              <div class="d-center align-items-baseline">
+                <img
+                  class="w-40-px h-40-px rounded-3"
+                  [src]="comment?.ProfilePicName"
+                  onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+                  alt="avatar"
+                />
+              </div>
+              <div class="info-item w-100 pb-3">
+                <div
+                  class="top-area px-4 py-3 d-flex flex-column gap-2 align-items-start justify-content-start"
+                >
+                  <div
+                    class="d-flex justify-content-between align-items-center w-100"
+                  >
+                    <h6 class="m-0">{{ comment.Username }}</h6>
+
+                    <ng-container
+                      *ngIf="
+                        profileId == comment.profileId ||
+                        post.profileid == profileId
+                      "
+                    >
+                      <div ngbDropdown>
+                        <i
+                          class="material-symbols-outlined font-20-px m-0"
+                          role="button"
+                          ngbDropdownToggle
+                        >
+                          more_horiz
+                        </i>
+
+                        <div ngbDropdownMenu class="dropdown-menu">
+                          <!-- <button ngbDropdownItem>
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
+                              (click)="postId = null"
+                            >
+                              <i class="material-symbols-outlined mat-icon">
+                                edit
+                              </i>
+                              <span>Edit</span>
+                            </a>
+                          </button> -->
+                          <button ngbDropdownItem>
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
+                              (click)="deleteComments(comment.id)"
+                            >
+                              <i
+                                class="material-symbols-outlined mat-icon"
+                              >
+                                delete
+                              </i>
+                              <span>Delete</span>
+                            </a>
+                          </button>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <p
+                    class="mdtxt mb-0"
+                    [innerHTML]="comment.comment"
+                  ></p>
+                </div>
+
+                <ul class="friends-list d-flex gap-6 py-2 px-4 m-0">
+                  <li class="d-center">
+                    <button
+                      class="d-center gap-1 gap-sm-2 font-12-px"
+                      (click)="
+                        comment.react == 'L'
+                          ? disLikeComments(comment)
+                          : likeComments(comment)
+                      "
+                    >
+                      <i
+                        class="material-symbols-outlined font-20-px"
+                        [ngClass]="{ active: comment.react == 'L' }"
+                        >thumb_up</i
+                      >
+                      {{
+                        comment?.likeCount > 0 ? comment?.likeCount : 0
+                      }}
+                      Likes
+                    </button>
+                  </li>
+
+                  <li class="d-center">
+                    <button
+                      class="d-center gap-1 gap-sm-2 font-12-px"
+                      (click)="showReplySection(comment.id)"
+                    >
+                      <i class="material-symbols-outlined font-20-px"
+                        >chat</i
+                      >
+                      Reply
+                    </button>
+                  </li>
+                </ul>
+
+                <div
+                  class="d-flex w-100 gap-2 mb-2 w-auto me-0"
+                  *ngIf="
+                    isReply &&
+                    post.id === comment.postId &&
+                    commentId === comment.id
+                  "
+                >
+                  <img
+                    [src]="sharedService.profilePic"
+                    class="w-40-px h-40-px rounded-3"
+                    alt="icon"
+                  />
+                  <div
+                    class="input-area py-2 px-3 d-flex gap-2 align-items-center w-100"
+                  >
+                    <div
+                      #childPostCommentElement
+                      contenteditable
+                      placeholder="Write something to comment.."
+                      class="outline-0 w-100 comment-input"
+                    ></div>
+
+                    <div class="file-input d-flex gap-1 gap-md-2">
+                      <!-- <div class="file-upload">
+                      <label class="file">
+                        <input type="file" />
+                        <span class="file-custom border-0 d-grid text-center">
+                          <span
+                            class="material-symbols-outlined mat-icon m-0 xxltxt"
+                          >
+                            gif_box
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+
+                    <div class="file-upload">
+                      <label class="file">
+                        <input type="file" />
+                        <span class="file-custom border-0 d-grid text-center">
+                          <span
+                            class="material-symbols-outlined mat-icon m-0 xxltxt"
+                          >
+                            perm_media
+                          </span>
+                        </span>
+                      </label>
+                    </div> -->
+
+                      <i
+                        class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
+                        role="button"
+                        (click)="
+                          replyOnComment(
+                            childPostCommentElement,
+                            post.id,
+                            comment.id
+                          )
+                        "
+                      >
+                        near_me
+                      </i>
+                    </div>
+                  </div>
+                </div>
+
+                <ng-container
+                  *ngIf="comment?.replyCommnetsList?.length"
+                >
+                  <div
+                    *ngFor="let reply of comment?.replyCommnetsList"
+                    class="single-comment-area comment-item-nested"
+                  >
+                    <div
+                      *ngIf="
+                        reply.parentCommentId === comment.id &&
+                        reply.postId === post.id
+                      "
+                      class="d-flex gap-2 gap-sm-4 align-items-baseline"
+                    >
+                      <div class="">
+                        <img
+                          class="avatar-img w-40-px h-40-px rounded-3"
+                          [src]="reply.ProfilePicName"
+                          alt="avatar"
+                        />
+                      </div>
+                      <div class="info-item w-100">
+                        <div
+                          class="top-area px-4 py-3 d-flex gap-3 align-items-start justify-content-between"
+                        >
+                          <div class="friends-list title-area">
+                            <h6 class="m-0 mb-3">
+                              <a>{{ reply?.Username }}</a>
+                            </h6>
+                            <p
+                              class="mdtxt mb-0"
+                              [innerHTML]="reply?.comment"
+                            ></p>
+                          </div>
+                          <ng-container
+                            *ngIf="profileId == reply.profileId"
+                          >
+                            <div ngbDropdown>
+                              <i
+                                class="material-symbols-outlined fs-xxl m-0"
+                                role="button"
+                                ngbDropdownToggle
+                              >
+                                more_horiz
+                              </i>
+
+                              <div
+                                ngbDropdownMenu
+                                class="dropdown-menu"
+                              >
+                                <!-- <button ngbDropdownItem>
+                                <a
+                                  class="droplist d-flex align-items-center gap-2"
+                                  (click)="postId = null"
+                                >
+                                  <i class="material-symbols-outlined mat-icon">
+                                    edit
+                                  </i>
+                                  <span>Edit</span>
+                                </a>
+                              </button> -->
+                                <button ngbDropdownItem>
+                                  <a
+                                    class="droplist d-flex align-items-center gap-2"
+                                    (click)="deleteComments(reply.id)"
+                                  >
+                                    <i
+                                      class="material-symbols-outlined mat-icon"
+                                    >
+                                      delete
+                                    </i>
+                                    <span>Delete</span>
+                                  </a>
+                                </button>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </div>
+                        <ul
+                          class="friends-list like-share d-flex gap-6 mt-2"
+                        >
+                          <li class="d-center">
+                            <button
+                              class="d-center gap-1 smtxt like-button"
+                              (click)="
+                                reply.react == 'L'
+                                  ? disLikeComments(reply)
+                                  : likeComments(reply)
+                              "
+                            >
+                              <i
+                                class="material-symbols-outlined mat-icon"
+                                [ngClass]="
+                                  reply.react === 'L' ? 'active' : ''
+                                "
+                              >
+                                thumb_up
+                              </i>
+                              <span class="ms-1 text-center">{{
+                                reply?.likeCount > 0
+                                  ? reply?.likeCount
+                                  : 0
+                              }}</span>
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #elseNoCommentsFound>
+  <span class="pt-5 m-0 text-start text-secondary">No comments yet!</span>
+</ng-template>

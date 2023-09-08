@@ -14,12 +14,14 @@ import { MyProfileComponent } from '../left-side-bar/my-profile.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
 import { PostListComponent } from './components/post-list/post-list.component';
+import { PostCardComponent } from './components/post-card/post-card.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
   MyListComponent,
   MyProfileComponent,
-  PostListComponent
+  PostListComponent,
+  PostCardComponent
 ];
 
 const sharedModules = [
