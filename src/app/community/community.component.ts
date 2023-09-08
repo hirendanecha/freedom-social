@@ -23,10 +23,12 @@ export class CommunityComponent {
     modalRef.componentInstance.confirmButtonLabel = 'Create';
     modalRef.componentInstance.closeIcon = true;
     modalRef.result.then(res => {
-      this.activeTab = 0;
-      setTimeout(() => {
-        this.activeTab = 1;
-      }, 100);
+      if (res === 'success') {
+        this.activeTab = 0;
+        setTimeout(() => {
+          this.activeTab = 1;
+        }, 100);
+      }
     });
   }
 
