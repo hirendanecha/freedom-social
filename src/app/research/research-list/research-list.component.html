@@ -32,7 +32,7 @@
       </div>
 
       <ng-container *ngIf="btnGroupFeedTypeCtrl?.value === 'Groups'">
-        <select name="research" class="form-control mt-5">
+        <select name="research" class="input-area mt-5">
           <option *ngFor="let research of researches" [value]="research?.FirstName">
             {{ research?.FirstName }}
           </option>
