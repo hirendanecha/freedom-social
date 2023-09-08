@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationModalComponent } from 'src/app/@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { CommunityService } from 'src/app/services/community.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { ToastService } from 'src/app/services/toaster.service';

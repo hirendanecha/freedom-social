@@ -10,7 +10,8 @@ import {
 import { Router } from '@angular/router';
 import { NgbDropdown, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationModalComponent } from 'src/app/@shared/confirmation-modal/confirmation-modal.component';
+import { slideUp } from 'src/app/@shared/animations/slideUp';
+import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { PostService } from 'src/app/services/post.service';
 import { SeeFirstUserService } from 'src/app/services/see-first-user.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -19,13 +20,14 @@ import { ToastService } from 'src/app/services/toaster.service';
 import { UnsubscribeProfileService } from 'src/app/services/unsubscribe-profile.service';
 
 @Component({
-  selector: 'app-user-post',
-  templateUrl: './user-post.component.html',
-  styleUrls: ['./user-post.component.scss'],
+  selector: 'app-post-list',
+  templateUrl: './post-list.component.html',
+  styleUrls: ['./post-list.component.scss'],
+  animations: [slideUp],
 })
-export class UserPostComponent implements OnInit {
-  @Input() profileId: any;
-  @Input() communityId: any;
+export class PostListComponent implements OnInit {
+  @Input('parentComponent') parentComponent = '';
+
   message = '';
   showEmojiPicker = false;
   sets = [
@@ -43,7 +45,7 @@ export class UserPostComponent implements OnInit {
   emojiMenuDialog: any;
   postList = [];
   isLike = false;
-  userProfileId = '';
+  profileId = '';
   postComment: string = '';
 
   @ViewChild('userSearchDropdownRef', { static: false, read: NgbDropdown })
@@ -71,6 +73,8 @@ export class UserPostComponent implements OnInit {
   userList = [];
   userNameSearch = '';
   activePage = 1;
+  communityId: number;
+
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -83,7 +87,8 @@ export class UserPostComponent implements OnInit {
     private unsubscribeProfileService: UnsubscribeProfileService,
     private seeFirstUserService: SeeFirstUserService
   ) {
-    this.userProfileId = sessionStorage.getItem('profileId');
+    this.communityId = +history?.state?.data?.id;
+    this.profileId = sessionStorage.getItem('profileId');
   }
 
   ngOnInit(): void {
@@ -93,19 +98,72 @@ export class UserPostComponent implements OnInit {
   }
 
   getPostList(): void {
-    this.spinner.show();
-    this.postService.getPostsByProfileId(this.profileId).subscribe(
-      (res: any) => {
-        if (res) {
-          this.postList = res;
-          this.spinner.hide();
+    if (this.parentComponent === 'HomeComponent') {
+      const page = this.activePage;
+      this.postData.profileid = +this.profileId;
+      this.socketService.getPost(
+        {
+          profileId: this.profileId,
+          communityId: this.communityId,
+          page: page,
+          size: 15,
+        },
+        (post) => {
+          // this.spinner.hide();
         }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+      );
+      // this.postService.getPosts(page).subscribe(
+      //   (res: any) => {
+      //     if (res) {
+      //       this.postList = res;
+      //       this.spinner.hide();
+      //     }
+      //   },
+      //   (error) => {
+      //     this.spinner.hide();
+      //     console.log(error);
+      //   }
+      // );
+      // this.spinner.show();
+      this.socketService.socket.on(
+        'new-post',
+        (data: any) => {
+          if (data.length > 0) {
+            this.postList = data;
+            // this.postList.map((ele: any) => {
+            //   ele.totalReactCount =
+            //     ele.likescount +
+            //     ele.wowcount +
+            //     ele.haliriouscount +
+            //     ele.lovecount +
+            //     ele.sadcount;
+            //   return ele;
+            // });
+            // this.spinner.hide();
+          }
+        },
+        (error: any) => {
+          // this.spinner.hide();
+          console.log(error);
+        }
+      );
+      this.getSeeFirstIdByProfileId(+this.profileId);
+    } else {
+      this.spinner.show();
+
+      this.postService.getPostsByProfileId(this.profileId).subscribe(
+        (res: any) => {
+          if (res) {
+            this.postList = res;
+            this.spinner.hide();
+          }
+        },
+        (error) => {
+          this.spinner.hide();
+          console.log(error);
+        }
+      );
+    }
   }
 
   deletePost(post): void {
@@ -200,7 +258,9 @@ export class UserPostComponent implements OnInit {
     }
   }
 
-  commentOnPost(id): void {
+  commentOnPost(parentPostCommentElement, id): void {
+    this.postComment = parentPostCommentElement.innerHTML;
+
     if (this.postComment) {
       const commentData = {
         postId: id,
@@ -211,11 +271,15 @@ export class UserPostComponent implements OnInit {
       this.socketService.commentOnPost(commentData, (data) => {
         this.toaster.success('comment added on post');
         this.postComment = '';
+        parentPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         console.log(data);
         this.commentList.push(data[0]);
-        this.getPostList();
+        this.isExpand = true;
+        this.viewComments(id);
+        this.postComment = '';
+        parentPostCommentElement.innerText = '';
       });
     } else {
       this.toaster.danger('Please enter comment');
@@ -280,7 +344,9 @@ export class UserPostComponent implements OnInit {
     }
   }
 
-  replyOnComment(id, commentId): void {
+  replyOnComment(childPostCommentElement, id, commentId): void {
+    this.postComment = childPostCommentElement.innerHTML;
+
     if (this.postComment) {
       const commentData = {
         postId: id,
@@ -291,6 +357,7 @@ export class UserPostComponent implements OnInit {
       this.socketService.commentOnPost(commentData, (data) => {
         this.toaster.success('replied on comment');
         this.postComment = '';
+        childPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         console.log(data);
@@ -305,7 +372,7 @@ export class UserPostComponent implements OnInit {
         console.log(this.commentList);
         this.isReply = false;
         this.commentId = null;
-        this.getPostList();
+        // this.getPostList();
       });
     } else {
       this.toaster.danger('Please enter comment');

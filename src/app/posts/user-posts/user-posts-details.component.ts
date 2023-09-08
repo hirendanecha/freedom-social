@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationModalComponent } from 'src/app/@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { PostService } from 'src/app/services/post.service';
 import { SeeFirstUserService } from 'src/app/services/see-first-user.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -19,7 +19,7 @@ import { ToastService } from 'src/app/services/toaster.service';
 import { UnsubscribeProfileService } from 'src/app/services/unsubscribe-profile.service';
 
 @Component({
-  selector: 'app-user-posts-details',
+  selector: 'app-post-lists-details',
   templateUrl: './user-posts-details.component.html',
   styleUrls: ['./user-posts-details.component.scss'],
 })

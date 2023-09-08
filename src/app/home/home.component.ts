@@ -16,14 +16,14 @@ import { PostService } from '../services/post.service';
 import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
 import { SocketService } from '../services/socket.service';
-import { slideUp } from '../animations/slideUp';
+import { slideUp } from '../@shared/animations/slideUp';
 import { UnsubscribeProfileService } from '../services/unsubscribe-profile.service';
 import { SeeFirstUserService } from '../services/see-first-user.service';
 import { CustomerService } from '../services/customer.service';
 import { ToastService } from '../services/toaster.service';
 import { CommunityService } from '../services/community.service';
 import { CommunityPostService } from '../services/community-post.service';
-import { ConfirmationModalComponent } from '../@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../@shared/modals/confirmation-modal/confirmation-modal.component';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-home',
@@ -369,13 +369,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.spinner.hide();
           if (res?.[0]?.Id) {
             const details = res?.[0];
-            if (details?.memberList?.length > 0) {
-              details['memberIds'] = details?.memberList?.map(
-                (member: any) => member?.profileId
-              );
+
+            if (details?.members > 0) {
+              if (details?.memberList?.length > 0) {
+                details['memberIds'] = details?.memberList?.map(
+                  (member: any) => member?.profileId
+                );
+              }
+              this.communityDetails = details;
+              console.log('communityDetails : ', this.communityDetails);
+            } else {
+              this.router.navigate(['local-community']);
             }
-            this.communityDetails = details;
-            console.log('communityDetails : ', this.communityDetails);
           }
         }
       },

@@ -15,9 +15,9 @@ import { SocketService } from '../services/socket.service';
 import { CommunityPostService } from '../services/community-post.service';
 import { CreatePostComponent } from './create-post-modal/create-post.component';
 import { Router } from '@angular/router';
-import { slideUp } from '../animations/slideUp';
+import { slideUp } from '../@shared/animations/slideUp';
 import { ToastService } from '../services/toaster.service';
-import { ConfirmationModalComponent } from '../@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../@shared/modals/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-favorite',

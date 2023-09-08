@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
 import { CommunityRoutingModule } from './community-routing.module';
 import { CommunityComponent } from './community.component';
 import { MyCommunityComponent } from './my-communities/my-community.component';

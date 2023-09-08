@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { ResearchRoutingModule } from './research-routing.module';
 import { NgbCarouselModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';

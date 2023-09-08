@@ -9,15 +9,17 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { ToastsComponent } from './toaster/toaster.component';
 import { MyListComponent } from '../right-side-bar/my-list.component';
-import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
 import { MyProfileComponent } from '../left-side-bar/my-profile.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
+import { PostListComponent } from './components/post-list/post-list.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
   MyListComponent,
   MyProfileComponent,
+  PostListComponent
 ];
 
 const sharedModules = [

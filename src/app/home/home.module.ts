@@ -16,7 +16,7 @@ import { SharedModule } from '../@shared/shared.module';
     SignUpComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    PostComponent,
+    PostComponent
   ],
   exports: [LoginComponent, SignUpComponent, ResetPasswordComponent],
   imports: [HomeRoutingModule, PickerModule, SharedModule],

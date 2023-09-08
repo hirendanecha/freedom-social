@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationModalComponent } from 'src/app/@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { Customer } from 'src/app/constant/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { SharedService } from 'src/app/services/shared.service';

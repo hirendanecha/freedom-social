@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, debounceTime, forkJoin, fromEvent, of } from 'rxjs';
-import { ConfirmationModalComponent } from 'src/app/@shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { Customer } from 'src/app/constant/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PostService } from 'src/app/services/post.service';

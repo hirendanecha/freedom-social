@@ -93,7 +93,7 @@
         [ngClass]="activeTab === 1 ? 'col-lg-6' : 'col-lg-9'"
       >
         <ng-container *ngIf="activeTab === 1">
-          <app-user-post [profileId]="profileId"></app-user-post>
+          <app-post-list parentComponent="ViewProfileComponent" />
         </ng-container>
         <!-- <ng-container *ngIf="activeTab === 2">
           <h3>Hello About</h3>
