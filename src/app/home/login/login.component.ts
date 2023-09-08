@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { ToastService } from 'src/app/services/toaster.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, AfterViewInit {
   isLike = false;
   isExpand = false;
   loginForm!: FormGroup;
@@ -53,6 +53,10 @@ export class LoginComponent {
       Email: [null, [Validators.required]],
       Password: [null, [Validators.required]],
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.spinner.hide();
   }
 
   onSubmit(): void {
