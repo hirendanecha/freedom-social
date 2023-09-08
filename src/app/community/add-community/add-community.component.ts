@@ -18,8 +18,6 @@ export class AddCommunityComponent {
   communityDetails = new Community();
   submitted = false;
   registrationMessage = '';
-  type = '';
-  msg = '';
   selectedFile: File;
   logoImg: any;
   coverImg: any;
@@ -70,7 +68,7 @@ export class AddCommunityComponent {
 
   onSubmit() {
     this.spinner.show();
-    if (this.logoImg && this.coverImg) {
+    if (this.communityDetails.CommunityName && this.logoImg && this.coverImg) {
       this.communityDetails.profileId = this.profileId;
       this.communityDetails.logoImg = this.logoImg;
       this.communityDetails.coverImg = this.coverImg;
@@ -82,24 +80,19 @@ export class AddCommunityComponent {
               this.spinner.hide();
               this.createCommunityAdmin(res.data);
               this.activeModal.close('success');
-              this.toaster.success(res.message);
+              this.toaster.success('Your Local Community will be approved withing 24 hours!');
               // this.router.navigateByUrl('/home');
             }
           },
           (err) => {
-            this.toaster.danger(err.error.message);
-            this.type = 'danger';
+            this.toaster.danger('Please change community name. this community name already in use.');
             this.spinner.hide();
           }
         );
       }
     } else {
       this.spinner.hide();
-      this.msg = 'Please enter a valid details';
-      setTimeout(() => {
-        this.msg = '';
-      }, 2500);
-      this.type = 'danger';
+      this.toaster.danger('Please enter mandatory fields(*) data.');
     }
   }
 

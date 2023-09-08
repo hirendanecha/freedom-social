@@ -22,9 +22,14 @@ export class CommunityComponent {
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Create';
     modalRef.componentInstance.closeIcon = true;
-    // modelRef.result.then(res => {
-    //   return res = user_id
-    // });
+    modalRef.result.then(res => {
+      if (res === 'success') {
+        this.activeTab = 0;
+        setTimeout(() => {
+          this.activeTab = 1;
+        }, 100);
+      }
+    });
   }
 
   goToFindCommunity() {

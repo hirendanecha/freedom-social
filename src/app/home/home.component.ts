@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  OnDestroy,
   OnInit,
   Renderer2,
   ViewChild,
@@ -23,13 +24,14 @@ import { ToastService } from '../services/toaster.service';
 import { CommunityService } from '../services/community.service';
 import { CommunityPostService } from '../services/community-post.service';
 import { ConfirmationModalComponent } from '../@shared/confirmation-modal/confirmation-modal.component';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   animations: [slideUp],
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   isLike = false;
   isExpand = false;
   showEmojiPicker = false;
@@ -79,6 +81,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isReply = false;
   commentId = null;
   isOpenCommentsPostId = '';
+  ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private modalService: NgbModal,
@@ -111,6 +114,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.spinner.hide();
     console.log(this.socketService.socket);
     if (!this.socketService.socket.connected) {
       this.socketService.socket.connect();
@@ -120,6 +124,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
       console.log('notification data ==>', data);
       this.sharedService.isNotify = true;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   // addPost() {
@@ -631,7 +640,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
       if (!this.postData?.meta?.url?.includes(url)) {
         this.spinner.show();
-        this.postService.getMetaData({ url }).subscribe({
+        this.ngUnsubscribe.next();
+
+        this.postService.getMetaData({ url }).pipe(takeUntil(this.ngUnsubscribe)).subscribe({
           next: (res: any) => {
             if (res?.meta?.image) {
               this.postData.meta = {
