@@ -454,7 +454,7 @@
             </div>
           </form>
 
-          <ng-container *ngIf="post?.id === isOpenCommentsPostId">
+          <ng-container *ngIf="isExpand && post?.id == isOpenCommentsPostId">
             <ng-container
               *ngIf="commentList.length > 0; else elseNoCommentsFound"
             >
@@ -484,12 +484,7 @@
                         >
                           <h6 class="m-0">{{ comment.Username }}</h6>
 
-                          <ng-container
-                            *ngIf="
-                              profileId == comment.profileId ||
-                              post.profileid == profileId
-                            "
-                          >
+                          <ng-container *ngIf="profileId == comment.profileId">
                             <div ngbDropdown>
                               <i
                                 class="material-symbols-outlined font-20-px m-0"
@@ -658,10 +653,7 @@
                                   </p>
                                 </div>
                                 <ng-container
-                                  *ngIf="
-                                    profileId == comment.profileId ||
-                                    post.profileid == profileId
-                                  "
+                                  *ngIf="profileId == reply.profileId"
                                 >
                                   <div ngbDropdown>
                                     <i
@@ -758,7 +750,5 @@
 </ng-template>
 
 <ng-template #elseNoCommentsFound>
-  <span class="pt-5 m-0 text-start text-secondary"
-    >No comments yet!</span
-  >
+  <span class="pt-5 m-0 text-start text-secondary">No comments yet!</span>
 </ng-template>

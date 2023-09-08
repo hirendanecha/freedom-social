@@ -69,8 +69,9 @@ export class UserPostDetailsComponent implements OnInit {
     private seeFirstUserService: SeeFirstUserService
   ) {
     this.postId = this.route.snapshot.paramMap.get('id');
+    this.profileId = +sessionStorage.getItem('profileId');
   }
-  
+
   ngOnInit(): void {
     this.getPostList();
   }
@@ -189,7 +190,13 @@ export class UserPostDetailsComponent implements OnInit {
   }
 
   viewComments(id): void {
+    this.isExpand = this.isOpenCommentsPostId == id ? false : true;
     this.isOpenCommentsPostId = id;
+    if (!this.isExpand) {
+      this.isOpenCommentsPostId = null;
+    } else {
+      this.isOpenCommentsPostId = id;
+    }
     this.postService.getComments(id).subscribe({
       next: (res) => {
         if (res) {
@@ -222,6 +229,7 @@ export class UserPostDetailsComponent implements OnInit {
     this.postService.deleteComments(id).subscribe({
       next: (res: any) => {
         this.toaster.success(res.message);
+        this.isExpand = false;
         // this.viewComments(id);
       },
       error: (error) => {
