@@ -55,14 +55,6 @@ export class LoginComponent {
     });
   }
 
-  goToHomePage(): void {
-    this.router.navigate([`/home`]);
-  }
-
-  goToRegestration(): void {
-    this.router.navigate([`/register`]);
-  }
-
   onSubmit(): void {
     this.spinner.show();
     this.authService.customerlogin(this.loginForm.value).subscribe({

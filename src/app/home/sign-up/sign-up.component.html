@@ -38,24 +38,62 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">First Name</label>
-                    <input
-                      type="text"
-                      class="input-area"
-                      name="FirstName"
-                      placeholder="Enter Your Name"
-                      [(ngModel)]="customer.FirstName"
-                    />
+                    <div class="col-12 mb-3">
+                      <label class="form-label text-light">First Name</label>
+                      <input
+                        type="text"
+                        class="input-area"
+                        name="FirstName"
+                        placeholder="Enter Your Name"
+                        [(ngModel)]="customer.FirstName"
+                      />
+                    </div>
+
+                    <div class="col-12 mb-3">
+                      <label class="form-label text-light">Last Name</label>
+                      <input
+                        type="text"
+                        class="input-area"
+                        name="LastName"
+                        placeholder="Enter Your Name"
+                        [(ngModel)]="customer.LastName"
+                      />
+                    </div>
                   </div>
-                  <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label text-light">Last Name</label>
-                    <input
-                      type="text"
-                      class="input-area"
-                      name="LastName"
-                      placeholder="Enter Your Name"
-                      [(ngModel)]="customer.LastName"
-                    />
+
+                  <div class="col-12 col-md-6 mb-3 d-flex flex-column">
+                    <label class="form-label text-light">Profile Picture<span class="text-danger">*</span></label>
+
+                    <div class="profile-img single-box p-5 mb-0 d-flex flex-column position-relative w-100 h-100">
+                      <img
+                        class="w-100 h-100 rounded-3"
+                        loading="lazy"
+                        data-src="{{
+                          profileImg?.url || '/assets/images/avtar/placeholder-user.png'
+                        }}"
+                        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+                        alt="Profile Image"
+                      />
+
+                      <div class="edit-image d-flex justify-content-center align-items-center w-100 h-100 c-pointer" (click)="profileImgFileTag.click()" >
+                        <ng-container *ngIf="!profileImg?.url">
+                          <span class="material-symbols-outlined">
+                            add_a_photo
+                          </span>
+                        </ng-container>
+
+                        <ng-container *ngIf="profileImg?.url">
+                          <span
+                            class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
+                            (click)="clearProfileImg($event)"
+                          >
+                            close
+                          </span>
+                        </ng-container>
+
+                        <input type="file" name="profileImg" #profileImgFileTag hidden required class="d-none" accept="image/*" (change)="selectFiles($event)"/>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -115,7 +153,7 @@
                     />
                   </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-12 mb-3">
                     <label class="form-label text-light">Profile Picture<span class="text-danger">*</span></label>
                     <input
@@ -125,16 +163,7 @@
                       required
                     />
                   </div>
-                  <!-- <div class="col-12 mb-3">
-                    <label class="form-label text-light">Cover Picture</label>
-                    <input
-                      name="cover"
-                      type="file"
-                      placeholder="Enter your description"
-                      (change)="selectFiles($event)"
-                    />
-                  </div> -->
-                </div>
+                </div> -->
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label text-light">Mobile</label>
@@ -219,7 +248,7 @@
                 </div>
 
                 <div class="form-check ps-0 my-4 d-flex">
-                  <input class="p-0" type="checkbox" [(ngModel)]="customer.termAndPolicy" required />
+                  <input class="p-0" type="checkbox" name="TermAndPolicy" [(ngModel)]="customer.termAndPolicy" required />
                   <label class="form-check-label ms-2"
                     >I agree to the <a>Terms</a> and
                     <a>Privacy Policy</a>.

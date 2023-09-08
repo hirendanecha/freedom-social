@@ -11,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { debounceTime, fromEvent } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
 import { CustomerService } from 'src/app/services/customer.service';
+import { ToastService } from 'src/app/services/toaster.service';
 import { UploadFilesService } from 'src/app/services/upload-files.service';
 @Component({
   selector: 'app-sign-up',
@@ -29,8 +30,11 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   allCountryData: any;
   type = 'danger';
   defaultCountry = 'US';
-  selectedFile: any;
   profilePic = '';
+  profileImg: any = {
+    file: null,
+    url: ''
+  };
 
   @ViewChild('zipCode') zipCode: ElementRef;
   constructor(
@@ -38,7 +42,8 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private customerService: CustomerService,
     private router: Router,
-    private uploadService: UploadFilesService
+    private uploadService: UploadFilesService,
+    private toaster: ToastService
   ) {
     this.customer.termAndPolicy = false;
   }
@@ -49,9 +54,12 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     fromEvent(this.zipCode.nativeElement, 'input')
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(300))
       .subscribe((event) => {
-        this.onZipChange(event['target'].value);
+        const val = event['target'].value;
+        if (val.length > 5) {
+          this.onZipChange(val);
+        }
       });
   }
 
@@ -69,7 +77,11 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   selectFiles(event) {
-    this.selectedFile = event.target.files;
+    const file = event.target?.files?.[0] || {};
+    if (file) {
+      this.profileImg['file'] = file;
+      this.profileImg['url'] = URL.createObjectURL(file);
+    }
   }
 
   upload(file, id, defaultType) {
@@ -77,17 +89,21 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       return 'Image file size exceeds 5 MB!';
     }
     this.spinner.show();
-    this.uploadService.upload(file[0], id, defaultType).subscribe(
+    this.uploadService.upload(file, id, defaultType).subscribe(
       (res: any) => {
+        this.spinner.hide();
+
         if (res.body) {
-          this.spinner.hide();
           this.profilePic = res?.body?.url;
           this.creatProfile(this.customer);
         }
       },
       (err) => {
         this.spinner.hide();
-        this.selectedFile = undefined;
+        this.profileImg = {
+          file: null,
+          url: ''
+        };
         return 'Could not upload the file:' + file.name;
       }
     );
@@ -98,16 +114,18 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     // console.log(this.registerForm.value);
     this.customerService.createCustomer(this.customer).subscribe(
       (data: any) => {
+        this.spinner.hide();
+
         if (!data.error) {
           this.submitted = true;
-          this.spinner.hide();
           window.sessionStorage.user_id = data.data;
           this.registrationMessage =
             'Your account has registered successfully. Kindly login with your email and password !!!';
+          this.scrollTop();
           this.isragister = true;
           const id = data.data;
           if (id) {
-            this.upload(this.selectedFile, id, 'profile');
+            this.upload(this.profileImg?.file, id, 'profile');
             localStorage.setItem('register', String(this.isragister));
             this.router.navigateByUrl('/login?isVerify=false');
           }
@@ -117,6 +135,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         this.registrationMessage = err.error.message;
         this.type = 'danger';
         this.spinner.hide();
+        this.scrollTop();
       }
     );
   }
@@ -127,10 +146,11 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     if (!this.customer.Password.match(pattern)) {
       this.msg =
         'Password must be a minimum of 8 characters and include one uppercase letter, one lowercase letter and one special character';
+      this.scrollTop();
     }
     if (this.customer.Password !== this.confirm_password) {
       this.msg = 'Passwords is incorrect';
-
+      this.scrollTop();
       return false;
     }
 
@@ -138,9 +158,11 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(isValid: boolean = false) {
+
     this.msg = '';
-    if (!isValid && this.customer.termAndPolicy === false) {
+    if (!isValid || this.customer.termAndPolicy === false || !this.profileImg?.file?.name) {
       this.msg = 'Please enter mandatory fields(*) data and please check terms and condition.';
+      this.scrollTop();
       return false;
     }
 
@@ -163,11 +185,15 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   getAllCountries() {
+    this.spinner.show();
+
     this.customerService.getCountriesData().subscribe(
       (result) => {
+        this.spinner.hide();
         this.allCountryData = result;
       },
       (error) => {
+        this.spinner.hide();
         console.log(error);
       }
     );
@@ -178,9 +204,14 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
     this.customerService.getZipData(event, this.customer?.Country).subscribe(
       (data) => {
-        let zip_data = data[0];
-        this.customer.State = zip_data ? zip_data.state : '';
-        this.customer.City = zip_data ? zip_data.city : '';
+        const zip_data = data[0];
+        if (zip_data?.state) {
+          this.customer.State = zip_data ? zip_data.state : '';
+          this.customer.City = zip_data ? zip_data.city : '';
+        } else {
+          this.toaster.danger('Please check and enter valid country or zip code.');
+        }
+
         this.spinner.hide();
       },
       (err) => {
@@ -212,8 +243,9 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     };
     this.customerService.createProfile(profile).subscribe(
       (data: any) => {
+        this.spinner.hide();
+
         if (data) {
-          this.spinner.hide();
           const profileId = data.data;
           sessionStorage.setItem('profileId', profileId);
         }
@@ -222,5 +254,23 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         this.spinner.hide();
       }
     );
+  }
+
+  clearProfileImg(event: any): void {
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.profileImg = {
+      file: null,
+      url: ''
+    };
+  }
+
+  scrollTop(): void {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }
 }
