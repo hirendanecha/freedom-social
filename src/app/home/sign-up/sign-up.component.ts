@@ -56,7 +56,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     this.spinner.hide();
 
     fromEvent(this.zipCode.nativeElement, 'input')
-      .pipe(debounceTime(300))
+      .pipe(debounceTime(1000))
       .subscribe((event) => {
         const val = event['target'].value;
         if (val.length > 3) {
