@@ -1050,20 +1050,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  getPostById(post): void {
-    this.postData = post;
-    post['hide'] = true;
-    this.postData.imageUrl = post?.imageUrl;
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
+  onEditPost(post: any): void {
+    this.postData = {...post};
+
     this.renderer.setProperty(
       this.postMessageInput.nativeElement,
       'innerHTML',
       this.postData?.postdescription
     );
+
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }
 
   editPost(): void {

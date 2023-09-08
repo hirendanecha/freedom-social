@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   OnInit,
+  Output,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -27,6 +28,7 @@ import { UnsubscribeProfileService } from 'src/app/services/unsubscribe-profile.
 })
 export class PostListComponent implements OnInit {
   @Input('parentComponent') parentComponent = '';
+  @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
 
   message = '';
   showEmojiPicker = false;
@@ -412,19 +414,22 @@ export class PostListComponent implements OnInit {
   }
 
   getPostById(post): void {
-    this.postData = post;
-    post['hide'] = true;
-    this.postData.imageUrl = post?.imageUrl;
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-    this.renderer.setProperty(
-      this.postMessageInput.nativeElement,
-      'innerHTML',
-      this.postData?.postdescription
-    );
+    if (this.onEditPost) {
+      this.onEditPost.emit(post);
+    }
+    // this.postData = post;
+    // post['hide'] = true;
+    // this.postData.imageUrl = post?.imageUrl;
+    // window.scroll({
+    //   top: 0,
+    //   left: 0,
+    //   behavior: 'smooth',
+    // });
+    // this.renderer.setProperty(
+    //   this.postMessageInput.nativeElement,
+    //   'innerHTML',
+    //   this.postData?.postdescription
+    // );
   }
 
   editPost(): void {
