@@ -127,7 +127,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   openEditProfile(): void {
-    this.router.navigate([`settings/general/edit-profile/${this.profileId}`])
+    this.router.navigate([`settings/edit-profile/${this.profileId}`])
   }
 
   ngOnDestroy(): void {

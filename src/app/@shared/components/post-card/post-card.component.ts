@@ -90,7 +90,7 @@ export class PostCardComponent {
   }
 
   goToViewProfile(id: any): void {
-    this.router.navigate([`settings/general/view-profile/${id}`]);
+    this.router.navigate([`settings/view-profile/${id}`]);
   }
 
   editPost(post): void {

@@ -115,12 +115,12 @@ export class HeaderComponent {
 
   goToSetting() {
     const userId = sessionStorage.getItem('user_id');
-    this.router.navigate([`settings/general/edit-profile/${userId}`]);
+    this.router.navigate([`settings/edit-profile/${userId}`]);
   }
 
   goToViewProfile() {
     const profileId = sessionStorage.getItem('profileId');
-    this.router.navigate([`settings/general/view-profile/${profileId}`]);
+    this.router.navigate([`settings/view-profile/${profileId}`]);
   }
 
   forgotPasswordOpen() {
@@ -157,7 +157,7 @@ export class HeaderComponent {
 
   openProfile(id) {
     if (id) {
-      this.router.navigate([`settings/general/view-profile/${id}`]);
+      this.router.navigate([`settings/view-profile/${id}`]);
       this.searchText = '';
     }
   }

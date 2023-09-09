@@ -631,7 +631,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goToViewProfile(id: any): void {
-    this.router.navigate([`settings/general/view-profile/${id}`]);
+    this.router.navigate([`settings/view-profile/${id}`]);
     this.postId = null;
   }
 
@@ -783,7 +783,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const postHtml = this.postMessageInput.nativeElement.innerHTML;
     const text = postHtml.replace(
       `@${this.userNameSearch}`,
-      `<a href="/settings/general/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a>`
+      `<a href="/settings/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a>`
     );
     console.log('postHtml : ', postHtml);
 
