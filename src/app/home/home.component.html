@@ -2,7 +2,7 @@
   <div class="single-box community-details p-5">
     <ng-container *ngIf="communityDetails?.coverImg">
       <img
-        data-src="communityDetails?.coverImg"
+        data-src="{{ communityDetails?.coverImg || '/assets/images/profile-cover.png'}}"
         class="w-100 h-272-px rounded-3 mb-5"
         onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
         [alt]="'Preview Image'"
