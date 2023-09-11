@@ -613,7 +613,7 @@ export class PostListComponent implements OnInit {
 
 
   submit(): void {
-    if (this.commentData.parentCommentId) {
+    if (this.commentData?.parentCommentId) {
       this.socketService.commentOnPost(this.commentData, (data) => {
         this.toaster.success('replied on comment');
         this.postComment = '';
@@ -643,10 +643,9 @@ export class PostListComponent implements OnInit {
         // parentPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
-        console.log(data);
         this.commentList.push(data[0]);
         this.isExpand = true;
-        this.viewComments(data[0]?.id);
+        this.viewComments(data[0]?.postId);
         this.commentData.comment = '';
         this.commentData = {}
         // parentPostCommentElement.innerText = '';
