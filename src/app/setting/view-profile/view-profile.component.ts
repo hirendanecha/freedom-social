@@ -1,22 +1,18 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   OnDestroy,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject, debounceTime, fromEvent } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
 import { CommunityService } from 'src/app/services/community.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UploadFilesService } from 'src/app/services/upload-files.service';
 
 @Component({
   selector: 'app-view-profile',
@@ -46,7 +42,6 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     private customerService: CustomerService,
     private spinner: NgxSpinnerService,
     private tokenStorage: TokenStorageService,
-    private uploadService: UploadFilesService,
     public sharedService: SharedService,
     private communityService: CommunityService
   ) {
