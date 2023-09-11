@@ -72,10 +72,19 @@ export class PostListComponent implements OnInit {
     file: {},
     imageUrl: '',
   };
+  commentData: any = {
+    postId: '',
+    comment: '',
+    profileId: '',
+    file: {},
+    imageUrl: '',
+    parentCommentId: null
+  }
   userList = [];
   userNameSearch = '';
   activePage = 1;
   communityId: number;
+  isParent = false
 
   constructor(
     private modalService: NgbModal,
@@ -261,28 +270,12 @@ export class PostListComponent implements OnInit {
   }
 
   commentOnPost(parentPostCommentElement, id): void {
-    this.postComment = parentPostCommentElement.innerHTML;
-
-    if (this.postComment) {
-      const commentData = {
-        postId: id,
-        comment: this.postComment,
-        profileId: this.profileId,
-      };
-      console.log(commentData);
-      this.socketService.commentOnPost(commentData, (data) => {
-        this.toaster.success('comment added on post');
-        this.postComment = '';
-        parentPostCommentElement.innerText = '';
-      });
-      this.socketService.socket.on('comments-on-post', (data: any) => {
-        console.log(data);
-        this.commentList.push(data[0]);
-        this.isExpand = true;
-        this.viewComments(id);
-        this.postComment = '';
-        parentPostCommentElement.innerText = '';
-      });
+    this.commentData.comment = parentPostCommentElement.innerHTML;
+    if (this.commentData.comment) {
+      this.commentData.postId = id
+      this.commentData.profileId = this.profileId;
+      this.uploadPostFileAndCreatePost()
+      parentPostCommentElement.innerHTML = ''
     } else {
       this.toaster.danger('Please enter comment');
     }
@@ -347,35 +340,13 @@ export class PostListComponent implements OnInit {
   }
 
   replyOnComment(childPostCommentElement, id, commentId): void {
-    this.postComment = childPostCommentElement.innerHTML;
-
-    if (this.postComment) {
-      const commentData = {
-        postId: id,
-        comment: this.postComment,
-        profileId: this.profileId,
-        parentCommentId: commentId,
-      };
-      this.socketService.commentOnPost(commentData, (data) => {
-        this.toaster.success('replied on comment');
-        this.postComment = '';
-        childPostCommentElement.innerText = '';
-      });
-      this.socketService.socket.on('comments-on-post', (data: any) => {
-        console.log(data);
-        this.commentList.map((ele: any) =>
-          data.filter((ele1) => {
-            if (ele.id === ele1.parentCommentId) {
-              ele?.['replyCommnetsList'].push(ele1);
-              return ele;
-            }
-          })
-        );
-        console.log(this.commentList);
-        this.isReply = false;
-        this.commentId = null;
-        // this.getPostList();
-      });
+    this.commentData.comment = childPostCommentElement.innerHTML;
+    if (this.commentData.comment) {
+      this.commentData.profileId = this.profileId;
+      this.commentData.postId = id;
+      this.commentData.parentCommentId = commentId;
+      this.uploadPostFileAndCreatePost();
+      childPostCommentElement.innerHTML = ''
     } else {
       this.toaster.danger('Please enter comment');
     }
@@ -621,5 +592,95 @@ export class PostListComponent implements OnInit {
       });
 
     this.postId = null;
+  }
+
+  uploadPostFileAndCreatePost(): void {
+    if (this.commentData?.comment) {
+      if (this.commentData?.file?.name) {
+        this.spinner.show();
+        this.postService.upload(this.commentData?.file, this.profileId).subscribe({
+          next: (res: any) => {
+            console.log('res==>', res.body);
+            if (res?.body?.url) {
+              this.commentData['file'] = null;
+              this.commentData['imageUrl'] = res?.body?.url;
+              this.submit();
+              console.log('this.postData : ', this.commentData);
+            }
+            this.spinner.hide();
+          },
+          error: (err) => {
+            this.spinner.hide();
+          },
+        });
+      } else {
+        this.submit();
+      }
+    }
+  }
+
+
+  submit(): void {
+    if (this.commentData.parentCommentId) {
+      this.socketService.commentOnPost(this.commentData, (data) => {
+        this.toaster.success('replied on comment');
+        this.postComment = '';
+        this.commentData = {}
+        // childPostCommentElement.innerText = '';
+      });
+      this.socketService.socket.on('comments-on-post', (data: any) => {
+        console.log(data);
+        this.commentList.map((ele: any) =>
+          data.filter((ele1) => {
+            if (ele.id === ele1.parentCommentId) {
+              ele?.['replyCommnetsList'].push(ele1);
+              return ele;
+            }
+          })
+        );
+        console.log(this.commentList);
+        this.isReply = false;
+        this.commentId = null;
+        // this.getPostList();
+      });
+    } else {
+      this.socketService.commentOnPost(this.commentData, (data) => {
+        this.toaster.success('comment added on post');
+        this.commentData.comment = '';
+        this.commentData = {}
+        // parentPostCommentElement.innerText = '';
+      });
+      this.socketService.socket.on('comments-on-post', (data: any) => {
+        console.log(data);
+        this.commentList.push(data[0]);
+        this.isExpand = true;
+        this.viewComments(data[0]?.id);
+        this.commentData.comment = '';
+        this.commentData = {}
+        // parentPostCommentElement.innerText = '';
+      });
+    }
+  }
+
+  onPostFileSelect(event: any, type: string): void {
+    if (type === 'parent') {
+      this.isParent = true;
+    } else {
+      this.isParent = false;
+    }
+    const file = event.target?.files?.[0] || {};
+    console.log(file)
+    if (file.type.includes('image/')) {
+      this.commentData['file'] = file;
+      this.commentData['imageUrl'] = URL.createObjectURL(file);
+      console.log('commentImg: ', this.commentData['imageUrl']);
+    } else {
+      this.toaster.danger(`sorry ${file.type} are not allowed!`)
+    }
+  }
+
+  removePostSelectedFile(): void {
+    this.commentData['file'] = null;
+    this.commentData['imageUrl'] = '';
   }
 }
