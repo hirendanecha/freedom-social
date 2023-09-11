@@ -18,7 +18,7 @@ export class NotificationsComponent {
     private spinner: NgxSpinnerService,
     private router: Router,
     private toaster: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getNotificationList();
@@ -28,15 +28,17 @@ export class NotificationsComponent {
     this.spinner.show();
     const id = sessionStorage.getItem('profileId');
     this.customerService.getNotificationList(Number(id)).subscribe(
-      (res: any) => {
-        this.spinner.hide();
-        this.notificationList = res?.data;
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+      {
+        next: (res: any) => {
+          this.spinner.hide();
+          this.notificationList = res?.data;
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   viewUserPost(id) {

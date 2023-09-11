@@ -364,31 +364,33 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   getCommunityDetails(): void {
     this.spinner.show();
     this.communityService.getCommunityById(this.communityId).subscribe(
-      (res: any) => {
-        if (res) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          if (res?.[0]?.Id) {
-            const details = res?.[0];
+          if (res) {
+            if (res?.[0]?.Id) {
+              const details = res?.[0];
 
-            if (details?.members > 0) {
-              if (details?.memberList?.length > 0) {
-                details['memberIds'] = details?.memberList?.map(
-                  (member: any) => member?.profileId
-                );
+              if (details?.members > 0) {
+                if (details?.memberList?.length > 0) {
+                  details['memberIds'] = details?.memberList?.map(
+                    (member: any) => member?.profileId
+                  );
+                }
+                this.communityDetails = details;
+                console.log('communityDetails : ', this.communityDetails);
+              } else {
+                this.router.navigate(['local-community']);
               }
-              this.communityDetails = details;
-              console.log('communityDetails : ', this.communityDetails);
-            } else {
-              this.router.navigate(['local-community']);
             }
           }
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   createCommunityAdmin(member: any): void {
@@ -405,16 +407,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       };
     }
     this.communityService.createCommunityAdmin(data).subscribe(
-      (res: any) => {
-        if (res) {
-          this.toaster.success(res.message);
-          this.getCommunityDetails();
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      {
+        next: (res: any) => {
+          if (res) {
+            this.toaster.success(res.message);
+            this.getCommunityDetails();
+          }
+        },
+        error:
+          (error) => {
+            console.log(error);
+          }
+      });
   }
 
   getPostList(): void {
@@ -570,34 +574,36 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.spinner.show();
     this.activePage = this.activePage + 1;
     this.postService.getPosts(this.activePage).subscribe(
-      (res: any) => {
-        if (res) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          res.data.forEach(
-            (element: {
-              totalReactCount: any;
-              likescount: any;
-              wowcount: any;
-              haliriouscount: any;
-              lovecount: any;
-              sadcount: any;
-            }) => {
-              // element.totalReactCount =
-              //   element.likescount +
-              //   element.wowcount +
-              //   element.haliriouscount +
-              //   element.lovecount +
-              //   element.sadcount;
-              this.postList.push(element);
-            }
-          );
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+          if (res) {
+            res.data.forEach(
+              (element: {
+                totalReactCount: any;
+                likescount: any;
+                wowcount: any;
+                haliriouscount: any;
+                lovecount: any;
+                sadcount: any;
+              }) => {
+                // element.totalReactCount =
+                //   element.likescount +
+                //   element.wowcount +
+                //   element.haliriouscount +
+                //   element.lovecount +
+                //   element.sadcount;
+                this.postList.push(element);
+              }
+            );
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   seeFirst(postProfileId: number): void {
@@ -817,9 +823,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         // post['hide'] = true;
         this.postService.deletePost(post.id).subscribe({
           next: (res: any) => {
+            this.spinner.hide();
             if (res) {
               this.toaster.success(res.message);
-              this.spinner.hide();
               this.getPostList();
             }
           },
@@ -1051,7 +1057,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onEditPost(post: any): void {
-    this.postData = {...post};
+    this.postData = { ...post };
 
     this.renderer.setProperty(
       this.postMessageInput.nativeElement,

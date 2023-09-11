@@ -51,7 +51,7 @@ export class UploadFilesComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private sharedService: SharedService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.pid = window.sessionStorage.user_id;
@@ -93,26 +93,28 @@ export class UploadFilesComponent implements OnInit {
 
     this.spinner.show();
     this.uploadService.upload(file[0], this.pid, defaultType).subscribe(
-      (res: any) => {
-        // if (event.type === HttpEventType.UploadProgress) {
-        //   this.spinner.hide();
-        // } else if (event instanceof HttpResponse) {
-        //   this.spinner.hide();
-        //   this.selectedFiles = undefined;
-        //   this.cd.detectChanges();
-        //   // this.sharedService.getProfilePic();
-        // }
-        if (res.body) {
-          this.spinner.hide();
-          this.sharedService['userData']['ProfilePicName'] = res?.body?.url;
-        }
-      },
-      (err) => {
-        this.spinner.hide();
-        this.selectedFiles = undefined;
-        return 'Could not upload the file:' + file.name;
-      }
-    );
+      {
+        next: (res: any) => {
+          // if (event.type === HttpEventType.UploadProgress) {
+          //   this.spinner.hide();
+          // } else if (event instanceof HttpResponse) {
+          //   this.spinner.hide();
+          //   this.selectedFiles = undefined;
+          //   this.cd.detectChanges();
+          //   // this.sharedService.getProfilePic();
+          // }
+          if (res.body) {
+            this.spinner.hide();
+            this.sharedService['userData']['ProfilePicName'] = res?.body?.url;
+          }
+        },
+        error:
+          (err) => {
+            this.spinner.hide();
+            this.selectedFiles = undefined;
+            return 'Could not upload the file:' + file.name;
+          }
+      });
   }
 
   ngOnDestroy() {

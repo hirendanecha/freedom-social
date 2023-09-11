@@ -37,7 +37,6 @@ export class ResearchDetailsComponent {
           this.groupDetails = res;
           this.GetGroupPostById();
         }
-
         this.spinner.hide();
       },
       error: () => {
@@ -53,10 +52,8 @@ export class ResearchDetailsComponent {
       next: (res: any) => {
         if (res?.length > 0) {
           this.posts = [...this.posts, ...res];
-
           this.isLoadMorePosts = res?.length === this.pagination?.limit;
         }
-
         this.spinner.hide();
       },
       error: () => {
@@ -73,7 +70,6 @@ export class ResearchDetailsComponent {
         if (res?.length > 0) {
           this.resources = res;
         }
-
         this.spinner.hide();
       },
       error: () => {

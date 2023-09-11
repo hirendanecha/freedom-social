@@ -89,17 +89,19 @@ export class UserPostDetailsComponent implements OnInit {
     this.spinner.show();
     const id = 70418;
     this.postService.getPostsByPostId(this.postId).subscribe(
-      (res: any) => {
-        if (res) {
-          this.postList = res;
+      {
+        next: (res: any) => {
           this.spinner.hide();
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+          if (res) {
+            this.postList = res;
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   deletePost(post): void {
@@ -118,17 +120,19 @@ export class UserPostDetailsComponent implements OnInit {
       if (res === 'success') {
         // post['hide'] = true;
         this.postService.deletePost(post.id).subscribe(
-          (res: any) => {
-            if (res) {
-              this.toaster.success(res.message);
+          {
+            next: (res: any) => {
               this.spinner.hide();
-              this.getPostList();
-            }
-          },
-          (error) => {
-            this.spinner.hide();
-          }
-        );
+              if (res) {
+                this.toaster.success(res.message);
+                this.getPostList();
+              }
+            },
+            error:
+              (error) => {
+                this.spinner.hide();
+              }
+          });
       }
     });
   }

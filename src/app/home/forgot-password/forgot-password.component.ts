@@ -25,7 +25,7 @@ export class ForgotPasswordComponent {
     private authService: AuthService,
     private spinner: NgxSpinnerService,
     private tokenStorage: TokenStorageService
-  ) {}
+  ) { }
 
   verifyEmailSend(form: NgForm) {
     this.spinner.show();
@@ -43,28 +43,30 @@ export class ForgotPasswordComponent {
         .forgotPassword({
           email: email,
         })
-        .subscribe(
-          (result: any) => {
-            this.spinner.hide();
-            this.submitted = false;
-            if (!result.error) {
-              this.activeModal.close(this.cancelButtonLabel);
-              this.loading = false;
-              this.msg =
-                'Please check your email and click the link to set new password.';
-              this.type = 'success';
-            } else {
+        .subscribe({
+          next:
+            (result: any) => {
               this.spinner.hide();
-              this.msg = result.message;
-              this.type = 'danger';
+              this.submitted = false;
+              if (!result.error) {
+                this.activeModal.close(this.cancelButtonLabel);
+                this.loading = false;
+                this.msg =
+                  'Please check your email and click the link to set new password.';
+                this.type = 'success';
+              } else {
+                this.spinner.hide();
+                this.msg = result.message;
+                this.type = 'danger';
+                this.loading = false;
+              }
+            },
+          error:
+            (error) => {
+              this.spinner.hide();
               this.loading = false;
             }
-          },
-          (error) => {
-            this.spinner.hide();
-            this.loading = false;
-          }
-        );
+        });
     }
   }
 

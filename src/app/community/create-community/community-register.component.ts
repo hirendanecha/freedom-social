@@ -70,23 +70,25 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   getCustomer(): void {
     this.spinner.show();
     const id = window.sessionStorage.user_id;
     this.customerService.getCustomer(id).subscribe(
-      (data: any) => {
-        if (data[0]) {
+      {
+        next: (data: any) => {
           this.spinner.hide();
-          this.customer = data[0];
-        }
-      },
-      (err) => {
-        this.spinner.hide();
-        console.log(err);
-      }
-    );
+          if (data[0]) {
+            this.customer = data[0];
+          }
+        },
+        error:
+          (err) => {
+            this.spinner.hide();
+            console.log(err);
+          }
+      });
   }
 
   onSubmit() {
@@ -96,11 +98,11 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
       this.communityDetails.logoImg = this.logoImg;
       this.communityDetails.coverImg = this.coverImg;
       if (this.communityDetails) {
-        this.communityService.createCommunity(this.communityDetails).subscribe(
-          (res: any) => {
+        this.communityService.createCommunity(this.communityDetails).subscribe({
+          next: (res: any) => {
+            this.spinner.hide();
             if (!res.error) {
               this.submitted = true;
-              this.spinner.hide();
               this.changeUserType();
               sessionStorage.setItem('communityId', res.data);
               this.createCommunityAdmin(res.data);
@@ -108,24 +110,27 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
               this.toaster.success(res.message);
             }
           },
-          (err) => {
-            this.toaster.danger(err.error.message);
-            this.spinner.hide();
-          }
-        );
+          error:
+            (err) => {
+              this.toaster.danger(err.error.message);
+              this.spinner.hide();
+            }
+        });
       }
     }
   }
 
   getAllCountries() {
     this.customerService.getCountriesData().subscribe(
-      (result) => {
-        this.allCountryData = result;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      {
+        next: (result) => {
+          this.allCountryData = result;
+        },
+        error:
+          (error) => {
+            console.log(error);
+          }
+      });
   }
 
   selectFiles(event, type) {
@@ -139,64 +144,41 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
     }
     this.spinner.show();
     this.uploadService.upload(file[0], this.profileId, defaultType).subscribe(
-      (res: any) => {
-        if (res.body) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          if (defaultType === 'community-logo') {
-            this.logoImg = res?.body?.url;
-          } else if (defaultType === 'community-cover') {
-            this.coverImg = res?.body?.url;
+          if (res.body) {
+            if (defaultType === 'community-logo') {
+              this.logoImg = res?.body?.url;
+            } else if (defaultType === 'community-cover') {
+              this.coverImg = res?.body?.url;
+            }
           }
-        }
-        // return '';
-      },
-      (err) => {
-        this.spinner.hide();
-        this.selectedFile = undefined;
-        return 'Could not upload the file:' + file.name;
-      }
-    );
+          // return '';
+        },
+        error:
+          (err) => {
+            this.spinner.hide();
+            this.selectedFile = undefined;
+            return 'Could not upload the file:' + file.name;
+          }
+      });
   }
-
-  // getProfilePic() {
-  //   this.spinner.show();
-  //   this.communityService.getLogoImg(this.userId).subscribe(
-  //     (res: any) => {
-  //       if (res.length) {
-  //         this.spinner.hide();
-  //         this.logoImg = res[0];
-  //       }
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  //   this.communityService.getCoverImg(this.userId).subscribe(
-  //     (res: any) => {
-  //       if (res) {
-  //         this.spinner.hide();
-  //         this.coverImg = res[0];
-  //       }
-  //     },
-  //     (error) => {
-  //       this.spinner.hide();
-  //       console.log(error);
-  //     }
-  //   );
-  // }
 
   changeUserType() {
     const id = window.sessionStorage.user_id;
     this.communityService.changeAccountType(id).subscribe(
-      (res: any) => {
-        if (res) {
-          return res;
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      {
+        next: (res: any) => {
+          if (res) {
+            return res;
+          }
+        },
+        error:
+          (error) => {
+            console.log(error);
+          }
+      });
   }
 
   createCommunityAdmin(id): void {
@@ -207,14 +189,16 @@ export class CommunityRegisterComponent implements OnInit, AfterViewInit {
       isAdmin: 'Y',
     };
     this.communityService.joinCommunity(data).subscribe(
-      (res: any) => {
-        if (res) {
-          return res;
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      {
+        next: (res: any) => {
+          if (res) {
+            return res;
+          }
+        },
+        error:
+          (error) => {
+            console.log(error);
+          }
+      });
   }
 }

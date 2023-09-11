@@ -65,22 +65,24 @@ export class ResetPasswordComponent {
         password: this.changePassword.form.controls['confirmPassword'].value,
       })
       .subscribe(
-        (result) => {
-          this.submitted = false;
-          this.loading = false;
-          this.msg = 'New password set successfully';
-          this.type = 'success';
-          this.changePassword.reset();
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 2300);
-        },
-        (error) => {
-          this.loading = false;
-          this.submitted = false;
-          this.msg = 'Something went wrong';
-          this.type = 'danger';
-        }
-      );
+        {
+          next: (result) => {
+            this.submitted = false;
+            this.loading = false;
+            this.msg = 'New password set successfully';
+            this.type = 'success';
+            this.changePassword.reset();
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 2300);
+          },
+          error:
+            (error) => {
+              this.loading = false;
+              this.submitted = false;
+              this.msg = 'Something went wrong';
+              this.type = 'danger';
+            }
+        });
   }
 }

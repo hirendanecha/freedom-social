@@ -47,27 +47,29 @@ export class PostComponent implements OnInit {
 
     this.spinner.show();
     this.postService.upload(files[0], this.pid, defaultType).subscribe(
-      (res: any) => {
-        if (res.body) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          this.postService.selectedFile = res?.body?.url;
-        }
-        // if (event.type === HttpEventType.UploadProgress) {
-        //   this.spinner.hide();
-        // } else if (event instanceof HttpResponse) {
-        //   this.spinner.hide();
-        //   this.selectedFiles = undefined;
-        //   this.cd.detectChanges();
-        //   // this.getSelectedImg();
-        // }
-        // return '';
-      },
-      (err) => {
-        this.spinner.hide();
-        this.selectedFiles = undefined;
-        return 'Could not upload the file:';
-      }
-    );
+          if (res.body) {
+            this.postService.selectedFile = res?.body?.url;
+          }
+          // if (event.type === HttpEventType.UploadProgress) {
+          //   this.spinner.hide();
+          // } else if (event instanceof HttpResponse) {
+          //   this.spinner.hide();
+          //   this.selectedFiles = undefined;
+          //   this.cd.detectChanges();
+          //   // this.getSelectedImg();
+          // }
+          // return '';
+        },
+        error:
+          (err) => {
+            this.spinner.hide();
+            this.selectedFiles = undefined;
+            return 'Could not upload the file:';
+          }
+      });
   }
 
   // getSelectedImg(): void {

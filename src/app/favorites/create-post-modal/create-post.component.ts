@@ -24,7 +24,7 @@ export class CreatePostComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public communityPostService: CommunityPostService,
     private cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.pid = sessionStorage.getItem('profileId');
@@ -42,27 +42,29 @@ export class CreatePostComponent implements OnInit {
 
     this.spinner.show();
     this.communityPostService.upload(files[0], this.pid, defaultType).subscribe(
-      (res: any) => {
-        if (res.body) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          this.communityPostService.selectedFile = res?.body?.url;
-        }
-        // if (event.type === HttpEventType.UploadProgress) {
-        //   this.spinner.hide();
-        // } else if (event instanceof HttpResponse) {
-        //   this.spinner.hide();
-        //   this.selectedFiles = undefined;
-        //   this.cd.detectChanges();
-        //   this.getSelectedImg();
-        // }
-        // return '';
-      },
-      (err) => {
-        this.spinner.hide();
-        this.selectedFiles = undefined;
-        return 'Could not upload the file:';
-      }
-    );
+          if (res.body) {
+            this.communityPostService.selectedFile = res?.body?.url;
+          }
+          // if (event.type === HttpEventType.UploadProgress) {
+          //   this.spinner.hide();
+          // } else if (event instanceof HttpResponse) {
+          //   this.spinner.hide();
+          //   this.selectedFiles = undefined;
+          //   this.cd.detectChanges();
+          //   this.getSelectedImg();
+          // }
+          // return '';
+        },
+        error:
+          (err) => {
+            this.spinner.hide();
+            this.selectedFiles = undefined;
+            return 'Could not upload the file:';
+          }
+      });
   }
 
   getSelectedImg(): void {

@@ -17,7 +17,7 @@ export class LocalCommunityComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router,
     private communityService: CommunityService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCommunityList();
@@ -27,17 +27,19 @@ export class LocalCommunityComponent implements OnInit {
     this.spinner.show();
     const profileId = sessionStorage.getItem('profileId');
     this.communityService.getCommunity(profileId).subscribe(
-      (res: any) => {
-        if (res.data) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          this.communityList = res.data;
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+          if (res.data) {
+            this.communityList = res.data;
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
     // this.socketService.getCommunity({ id: profileId }, (data) => {
     //   return data;
     // });
@@ -78,14 +80,16 @@ export class LocalCommunityComponent implements OnInit {
       IsActive: 'Y',
     };
     this.communityService.joinCommunity(data).subscribe(
-      (res: any) => {
-        if (res) {
-          this.goToCommunityDetails(community);
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      {
+        next: (res: any) => {
+          if (res) {
+            this.goToCommunityDetails(community);
+          }
+        },
+        error:
+          (error) => {
+            console.log(error);
+          }
+      });
   }
 }

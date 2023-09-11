@@ -68,13 +68,15 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   getCustomer(id): void {
     if (id) {
       this.customerService.getCustomer(id).subscribe(
-        (data: any) => {
-          this.customer = data;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        {
+          next: (data: any) => {
+            this.customer = data;
+          },
+          error:
+            (err) => {
+              console.log(err);
+            }
+        });
     }
   }
 
@@ -92,54 +94,56 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     }
     this.spinner.show();
     this.uploadService.upload(file, id, defaultType).subscribe(
-      (res: any) => {
-        this.spinner.hide();
-
-        if (res.body) {
-          this.profilePic = res?.body?.url;
-          this.creatProfile(this.customer);
-        }
-      },
-      (err) => {
-        this.spinner.hide();
-        this.profileImg = {
-          file: null,
-          url: ''
-        };
-        return 'Could not upload the file:' + file.name;
-      }
-    );
+      {
+        next: (res: any) => {
+          this.spinner.hide();
+          if (res.body) {
+            this.profilePic = res?.body?.url;
+            this.creatProfile(this.customer);
+          }
+        },
+        error:
+          (err) => {
+            this.spinner.hide();
+            this.profileImg = {
+              file: null,
+              url: ''
+            };
+            return 'Could not upload the file:' + file.name;
+          }
+      });
   }
 
   save() {
     this.spinner.show();
     // console.log(this.registerForm.value);
     this.customerService.createCustomer(this.customer).subscribe(
-      (data: any) => {
-        this.spinner.hide();
-
-        if (!data.error) {
-          this.submitted = true;
-          window.sessionStorage.user_id = data.data;
-          this.registrationMessage =
-            'Your account has registered successfully. Kindly login with your email and password !!!';
-          this.scrollTop();
-          this.isragister = true;
-          const id = data.data;
-          if (id) {
-            this.upload(this.profileImg?.file, id, 'profile');
-            localStorage.setItem('register', String(this.isragister));
-            this.router.navigateByUrl('/login?isVerify=false');
+      {
+        next: (data: any) => {
+          this.spinner.hide();
+          if (!data.error) {
+            this.submitted = true;
+            window.sessionStorage.user_id = data.data;
+            this.registrationMessage =
+              'Your account has registered successfully. Kindly login with your email and password !!!';
+            this.scrollTop();
+            this.isragister = true;
+            const id = data.data;
+            if (id) {
+              this.upload(this.profileImg?.file, id, 'profile');
+              localStorage.setItem('register', String(this.isragister));
+              this.router.navigateByUrl('/login?isVerify=false');
+            }
           }
-        }
-      },
-      (err) => {
-        this.registrationMessage = err.error.message;
-        this.type = 'danger';
-        this.spinner.hide();
-        this.scrollTop();
-      }
-    );
+        },
+        error:
+          (err) => {
+            this.registrationMessage = err.error.message;
+            this.type = 'danger';
+            this.spinner.hide();
+            this.scrollTop();
+          }
+      });
   }
 
   validatepassword() {
@@ -190,15 +194,17 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     this.spinner.show();
 
     this.customerService.getCountriesData().subscribe(
-      (result) => {
-        this.spinner.hide();
-        this.allCountryData = result;
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+      {
+        next: (result) => {
+          this.spinner.hide();
+          this.allCountryData = result;
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   onZipChange(event) {
@@ -244,18 +250,20 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       ProfilePicName: this.profilePic,
     };
     this.customerService.createProfile(profile).subscribe(
-      (data: any) => {
-        this.spinner.hide();
+      {
+        next: (data: any) => {
+          this.spinner.hide();
 
-        if (data) {
-          const profileId = data.data;
-          sessionStorage.setItem('profileId', profileId);
-        }
-      },
-      (err) => {
-        this.spinner.hide();
-      }
-    );
+          if (data) {
+            const profileId = data.data;
+            sessionStorage.setItem('profileId', profileId);
+          }
+        },
+        error:
+          (err) => {
+            this.spinner.hide();
+          }
+      });
   }
 
   clearProfileImg(event: any): void {

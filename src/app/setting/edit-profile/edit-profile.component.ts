@@ -149,27 +149,31 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
 
   getAllCountries() {
     this.customerService.getCountriesData().subscribe(
-      (result) => {
-        this.allCountryData = result;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      {
+        next: (result) => {
+          this.allCountryData = result;
+        },
+        error:
+          (error) => {
+            console.log(error);
+          }
+      });
   }
 
   onZipChange(event) {
     this.customerService.getZipData(event, this.customer?.Country).subscribe(
-      (data) => {
-        let zip_data = data[0];
-        this.customer.State = zip_data ? zip_data.state : '';
-        this.customer.City = zip_data ? zip_data.city : '';
-        // this.customer.Place = zip_data ? zip_data.places : '';
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+      {
+        next: (data) => {
+          let zip_data = data[0];
+          this.customer.State = zip_data ? zip_data.state : '';
+          this.customer.City = zip_data ? zip_data.city : '';
+          // this.customer.Place = zip_data ? zip_data.places : '';
+        },
+        error:
+          (err) => {
+            console.log(err);
+          }
+      });
   }
 
   confirmAndUpdateCustomer(): void {
@@ -252,19 +256,20 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
 
   getProfile(id): void {
     this.spinner.show();
-    this.customerService.getProfile(id).subscribe(
-      (res: any) => {
+    this.customerService.getProfile(id).subscribe({
+      next: (res: any) => {
+        this.spinner.hide();
         if (res.data) {
-          this.spinner.hide();
           this.customer = res.data[0];
           this.getAllCountries();
         }
       },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+      error:
+        (error) => {
+          this.spinner.hide();
+          console.log(error);
+        }
+    });
   }
 
   onProfileImgChange(event: any): void {
