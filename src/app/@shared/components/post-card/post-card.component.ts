@@ -9,6 +9,7 @@ import { ConfirmationModalComponent } from '../../modals/confirmation-modal/conf
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from 'src/app/services/shared.service';
 import { slideUp } from '../../animations/slideUp';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-post-card',
@@ -36,6 +37,7 @@ export class PostCardComponent {
     url: ''
   };
   isParent: boolean = false;
+  postComment = {};
 
   constructor(
     private seeFirstUserService: SeeFirstUserService,
@@ -44,33 +46,17 @@ export class PostCardComponent {
     private postService: PostService,
     private toaster: ToastService,
     private modalService: NgbModal,
+    private spinner: NgxSpinnerService,
     public sharedService: SharedService,
     private router: Router
   ) {
     this.profileId = sessionStorage.getItem('profileId');
   }
 
-  getSeeFirstIdByProfileId(id: number): void {
-    this.seeFirstUserService.getSeeFirstIdByProfileId(id).subscribe({
-      next: (res: any) => {
-        if (res) {
-          res.forEach((element: { SeeFirstProfileId: any }) => {
-            this.seeFirstList.push(element.SeeFirstProfileId);
-          });
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
-
   removeSeeFirstUser(id: number): void {
     this.seeFirstUserService.remove(Number(this.profileId), id).subscribe({
       next: (res) => {
-        if (this.getPostList) {
-          this.getPostList.emit();
-        }
+        this.getPostList?.emit();
       },
     });
   }
@@ -79,9 +65,7 @@ export class PostCardComponent {
     this.seeFirstUserService.create({ profileId: this.profileId, seeFirstProfileId: postProfileId }).subscribe({
       next: (res) => {
         console.log('Res : ', res);
-        if (this.getPostList) {
-          this.getPostList.emit();
-        }
+        this.getPostList?.emit();
       },
     });
   }
@@ -124,9 +108,7 @@ export class PostCardComponent {
             next: (res: any) => {
               if (res) {
                 this.toaster.success(res.message);
-                if (this.getPostList) {
-                  this.getPostList.emit();
-                }
+                this.getPostList.emit();
               }
             },
             error:
@@ -274,7 +256,6 @@ export class PostCardComponent {
         console.log(this.commentList);
         this.isReply = false;
         this.commentId = null;
-        // this.getPostList();
       });
     } else {
       this.toaster.danger('Please enter comment');
@@ -315,28 +296,78 @@ export class PostCardComponent {
   }
 
   commentOnPost(parentPostCommentElement, id): void {
-    const postComment = parentPostCommentElement.innerHTML;
+    this.commentData.comment = parentPostCommentElement.innerHTML;
+    if (this.commentData.comment) {
+      this.commentData.postId = id
+      this.commentData.profileId = this.profileId;
+      this.uploadPostFileAndCreatePost()
+      parentPostCommentElement.innerHTML = ''
+    } else {
+      this.toaster.danger('Please enter comment');
+    }
+  }
 
-    if (postComment) {
-      const commentData = {
-        postId: id,
-        comment: postComment,
-        profileId: this.profileId,
-      };
-      console.log(commentData);
-      this.socketService.commentOnPost(commentData, (data) => {
-        this.toaster.success('comment added on post');
-        parentPostCommentElement.innerText = '';
+  uploadPostFileAndCreatePost(): void {
+    if (this.commentData?.comment) {
+      if (this.commentData?.file?.name) {
+        this.spinner.show();
+        this.postService.upload(this.commentData?.file, this.profileId).subscribe({
+          next: (res: any) => {
+            this.spinner.hide();
+            if (res?.body?.url) {
+              this.commentData['file'] = null;
+              this.commentData['imageUrl'] = res?.body?.url;
+              this.submit();
+              console.log('this.postData : ', this.commentData);
+            }
+          },
+          error: (err) => {
+            this.spinner.hide();
+          },
+        });
+      } else {
+        this.submit();
+      }
+    }
+  }
+
+  submit(): void {
+    if (this.commentData?.parentCommentId) {
+      this.socketService.commentOnPost(this.commentData, (data) => {
+        this.toaster.success('replied on comment');
+        this.postComment = '';
+        this.commentData = {}
+        // childPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         console.log(data);
-        this.commentList.push(data[0]);
-        this.isExpand = true;
-        this.viewComments(id);
-        parentPostCommentElement.innerText = '';
+        this.commentList.map((ele: any) =>
+          data.filter((ele1) => {
+            if (ele.id === ele1.parentCommentId) {
+              ele?.['replyCommnetsList'].push(ele1);
+              return ele;
+            }
+          })
+        );
+        console.log(this.commentList);
+        this.isReply = false;
+        this.commentId = null;
       });
     } else {
-      this.toaster.danger('Please enter comment');
+      this.socketService.commentOnPost(this.commentData, (data) => {
+        this.toaster.success('comment added on post');
+        this.commentData.comment = '';
+        this.commentData = {}
+        // parentPostCommentElement.innerText = '';
+      });
+      this.socketService.socket.on('comments-on-post', (data: any) => {
+        this.commentList.push(data[0]);
+        this.isExpand = true;
+        this.viewComments(data[0]?.postId);
+        this.commentData.comment = '';
+        this.commentData = {}
+        // parentPostCommentElement.innerText = '';
+      });
     }
   }
 
