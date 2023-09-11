@@ -8,11 +8,13 @@ import { UnsubscribeProfileService } from 'src/app/services/unsubscribe-profile.
 import { ConfirmationModalComponent } from '../../modals/confirmation-modal/confirmation-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from 'src/app/services/shared.service';
+import { slideUp } from '../../animations/slideUp';
 
 @Component({
   selector: 'app-post-card',
   templateUrl: './post-card.component.html',
-  styleUrls: ['./post-card.component.scss']
+  styleUrls: ['./post-card.component.scss'],
+  animations: [slideUp],
 })
 export class PostCardComponent {
   @Input('post') post: any = {};
@@ -29,6 +31,11 @@ export class PostCardComponent {
   isReply = false;
 
   commentId = null;
+  commentData: any = {
+    file: null,
+    url: ''
+  };
+  isParent: boolean = false;
 
   constructor(
     private seeFirstUserService: SeeFirstUserService,
@@ -331,5 +338,27 @@ export class PostCardComponent {
     } else {
       this.toaster.danger('Please enter comment');
     }
+  }
+
+  onPostFileSelect(event: any, type: string): void {
+    if (type === 'parent') {
+      this.isParent = true;
+    } else {
+      this.isParent = false;
+    }
+    const file = event.target?.files?.[0] || {};
+    console.log(file)
+    if (file.type.includes('image/')) {
+      this.commentData['file'] = file;
+      this.commentData['imageUrl'] = URL.createObjectURL(file);
+      console.log('commentImg: ', this.commentData['imageUrl']);
+    } else {
+      this.toaster.danger(`sorry ${file.type} are not allowed!`)
+    }
+  }
+
+  removePostSelectedFile(): void {
+    this.commentData['file'] = null;
+    this.commentData['imageUrl'] = '';
   }
 }
