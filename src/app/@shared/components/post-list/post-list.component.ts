@@ -123,19 +123,6 @@ export class PostListComponent implements OnInit {
           // this.spinner.hide();
         }
       );
-      // this.postService.getPosts(page).subscribe(
-      //   (res: any) => {
-      //     if (res) {
-      //       this.postList = res;
-      //       this.spinner.hide();
-      //     }
-      //   },
-      //   (error) => {
-      //     this.spinner.hide();
-      //     console.log(error);
-      //   }
-      // );
-      // this.spinner.show();
       this.socketService.socket.on(
         'new-post',
         (data: any) => {
@@ -163,17 +150,19 @@ export class PostListComponent implements OnInit {
       this.spinner.show();
 
       this.postService.getPostsByProfileId(this.profileId).subscribe(
-        (res: any) => {
-          if (res) {
-            this.postList = res;
+        {
+          next: (res: any) => {
             this.spinner.hide();
-          }
-        },
-        (error) => {
-          this.spinner.hide();
-          console.log(error);
-        }
-      );
+            if (res) {
+              this.postList = res;
+            }
+          },
+          error:
+            (error) => {
+              this.spinner.hide();
+              console.log(error);
+            }
+        });
     }
   }
 
@@ -193,17 +182,19 @@ export class PostListComponent implements OnInit {
       if (res === 'success') {
         // post['hide'] = true;
         this.postService.deletePost(post.id).subscribe(
-          (res: any) => {
-            if (res) {
-              this.toaster.success(res.message);
+          {
+            next: (res: any) => {
               this.spinner.hide();
-              this.getPostList();
-            }
-          },
-          (error) => {
-            this.spinner.hide();
-          }
-        );
+              if (res) {
+                this.toaster.success(res.message);
+                this.getPostList();
+              }
+            },
+            error:
+              (error) => {
+                this.spinner.hide();
+              }
+          });
       }
     });
   }
@@ -505,34 +496,36 @@ export class PostListComponent implements OnInit {
     this.spinner.show();
     this.activePage = this.activePage + 1;
     this.postService.getPosts(this.activePage).subscribe(
-      (res: any) => {
-        if (res) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          res.data.forEach(
-            (element: {
-              totalReactCount: any;
-              likescount: any;
-              wowcount: any;
-              haliriouscount: any;
-              lovecount: any;
-              sadcount: any;
-            }) => {
-              // element.totalReactCount =
-              //   element.likescount +
-              //   element.wowcount +
-              //   element.haliriouscount +
-              //   element.lovecount +
-              //   element.sadcount;
-              this.postList.push(element);
-            }
-          );
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+          if (res) {
+            res.data.forEach(
+              (element: {
+                totalReactCount: any;
+                likescount: any;
+                wowcount: any;
+                haliriouscount: any;
+                lovecount: any;
+                sadcount: any;
+              }) => {
+                // element.totalReactCount =
+                //   element.likescount +
+                //   element.wowcount +
+                //   element.haliriouscount +
+                //   element.lovecount +
+                //   element.sadcount;
+                this.postList.push(element);
+              }
+            );
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   goToViewProfile(id: any): void {
@@ -600,14 +593,13 @@ export class PostListComponent implements OnInit {
         this.spinner.show();
         this.postService.upload(this.commentData?.file, this.profileId).subscribe({
           next: (res: any) => {
-            console.log('res==>', res.body);
+            this.spinner.hide();
             if (res?.body?.url) {
               this.commentData['file'] = null;
               this.commentData['imageUrl'] = res?.body?.url;
               this.submit();
               console.log('this.postData : ', this.commentData);
             }
-            this.spinner.hide();
           },
           error: (err) => {
             this.spinner.hide();

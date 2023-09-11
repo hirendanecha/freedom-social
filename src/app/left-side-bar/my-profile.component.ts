@@ -92,15 +92,17 @@ export class MyProfileComponent implements OnInit {
     const id = window.sessionStorage.user_id;
     if (id) {
       this.customerService?.getCustomer(id).subscribe(
-        (data: any) => {
-          if (data[0]) {
-            this.user = data[0];
-          }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        {
+          next: (data: any) => {
+            if (data[0]) {
+              this.user = data[0];
+            }
+          },
+          error:
+            (err) => {
+              console.log(err);
+            }
+        });
     }
   }
   openLoacalCommunity() {

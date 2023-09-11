@@ -185,19 +185,21 @@ export class FavoriteComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.activePage = this.activePage + 1;
     this.communityPostService.getPosts(this.activePage).subscribe(
-      (res: any) => {
-        if (res) {
-          this.spinner.hide();
-          res.data.forEach((element) => {
-            this.postList.push(element);
-          });
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+      {
+        next: (res: any) => {
+          if (res) {
+            this.spinner.hide();
+            res.data.forEach((element) => {
+              this.postList.push(element);
+            });
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   createNewPost(): void {
@@ -252,41 +254,41 @@ export class FavoriteComponent implements OnInit, AfterViewInit {
       ) {
         this.spinner.show();
         this.postService.getMetaData({ url: element }).subscribe(
-          (res: any) => {
-            if (res.meta.image) {
+          {
+            next: (res: any) => {
               this.spinner.hide();
-              this.postData = {
-                metaimage: res.meta?.image?.url,
-                metalink: res?.meta?.url || element,
-                description: des.split('http')[0],
-                metadescription: res?.meta?.description,
-                title: res?.meta?.title,
-                profileId: this.profileId,
-                communityId: this.communityId,
-              };
-              return this.postData;
-            } else {
-              this.spinner.hide();
-              this.postData = {
-                profileId: this.profileId,
-                description: des,
-                communityId: this.communityId,
-              };
-              return this.postData;
-            }
-          },
-          (error) => {
-            this.spinner.hide();
-            this.postData = {
-              profileId: this.profileId,
-              description: des,
-              communityId: this.communityId,
-            };
-            return this.postData;
-          }
-        );
+              if (res.meta.image) {
+                this.postData = {
+                  metaimage: res.meta?.image?.url,
+                  metalink: res?.meta?.url || element,
+                  description: des.split('http')[0],
+                  metadescription: res?.meta?.description,
+                  title: res?.meta?.title,
+                  profileId: this.profileId,
+                  communityId: this.communityId,
+                };
+                return this.postData;
+              } else {
+                this.postData = {
+                  profileId: this.profileId,
+                  description: des,
+                  communityId: this.communityId,
+                };
+                return this.postData;
+              }
+            },
+            error:
+              (error) => {
+                this.spinner.hide();
+                this.postData = {
+                  profileId: this.profileId,
+                  description: des,
+                  communityId: this.communityId,
+                };
+                return this.postData;
+              }
+          });
       } else {
-        this.spinner.hide();
         this.postData = {
           profileId: this.profileId,
           description: des,
@@ -317,17 +319,19 @@ export class FavoriteComponent implements OnInit, AfterViewInit {
       if (res === 'success') {
         // post['hide'] = true;
         this.communityPostService.deletePost(post.Id).subscribe(
-          (res: any) => {
-            if (res) {
+          {
+            next: (res: any) => {
               this.spinner.hide();
-              this.toaster.success(res.message);
-              this.getPostList();
-            }
-          },
-          (error) => {
-            this.spinner.hide();
-          }
-        );
+              if (res) {
+                this.toaster.success(res.message);
+                this.getPostList();
+              }
+            },
+            error:
+              (error) => {
+                this.spinner.hide();
+              }
+          });
       }
     });
   }

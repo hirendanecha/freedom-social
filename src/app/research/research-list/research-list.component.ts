@@ -36,7 +36,6 @@ export class ResearchListComponent {
         if (res?.length > 0) {
           this.groupPosts = res;
         }
-
         this.spinner.hide();
       },
       error: (err) => {
@@ -54,7 +53,6 @@ export class ResearchListComponent {
         if (res?.length > 0) {
           this.researches = res;
         }
-
         this.spinner.hide();
       },
       error: () => {

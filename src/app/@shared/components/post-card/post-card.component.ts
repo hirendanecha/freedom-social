@@ -15,7 +15,7 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./post-card.component.scss']
 })
 export class PostCardComponent {
-  @Input('post') post: any={};
+  @Input('post') post: any = {};
   @Output('getPostList') getPostList: EventEmitter<void> = new EventEmitter<void>();
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
 
@@ -113,18 +113,20 @@ export class PostCardComponent {
       if (res === 'success') {
         // post['hide'] = true;
         this.postService.deletePost(post.id).subscribe(
-          (res: any) => {
-            if (res) {
-              this.toaster.success(res.message);
-              if (this.getPostList) {
-                this.getPostList.emit();
+          {
+            next: (res: any) => {
+              if (res) {
+                this.toaster.success(res.message);
+                if (this.getPostList) {
+                  this.getPostList.emit();
+                }
               }
-            }
-          },
-          (error) => {
-            console.log('error : ', error);
-          }
-        );
+            },
+            error:
+              (error) => {
+                console.log('error : ', error);
+              }
+          });
       }
     });
   }

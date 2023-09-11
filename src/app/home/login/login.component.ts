@@ -63,8 +63,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.authService.customerlogin(this.loginForm.value).subscribe({
       next: (data: any) => {
+        this.spinner.hide();
         if (!data.error) {
-          this.spinner.hide();
           this.tokenStorage.saveToken(data?.accessToken);
           this.tokenStorage.saveUser(data.user);
           sessionStorage.setItem('profileId', data.user.profileId);
@@ -101,17 +101,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.authService
       .userVerificationResend({ username: this.loginForm.value.login_email })
       .subscribe(
-        (result: any) => {
-          this.msg = result.message;
-          // this.toaster.success(this.msg);
-          this.type = 'success';
-        },
-        (error) => {
-          this.msg = error.message;
-          // this.toaster.danger(this.msg);
-          this.type = 'danger';
-        }
-      );
+        {
+          next: (result: any) => {
+            this.msg = result.message;
+            // this.toaster.success(this.msg);
+            this.type = 'success';
+          },
+          error:
+            (error) => {
+              this.msg = error.message;
+              // this.toaster.danger(this.msg);
+              this.type = 'danger';
+            }
+        });
   }
 
   forgotPasswordOpen() {

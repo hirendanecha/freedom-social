@@ -37,22 +37,24 @@ export class MyCommunityComponent implements OnInit {
     this.spinner.show();
     this.communityList = [];
     this.communityService.getCommunityByUserId(this.profileId).subscribe(
-      (res: any) => {
-        if (res.data) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          // this.communityList = res.data;
-          res.data.forEach((element) => {
-            if (element.Id) {
-              this.communityList.push(element);
-            }
-          });
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+          if (res.data) {
+            // this.communityList = res.data;
+            res.data.forEach((element) => {
+              if (element.Id) {
+                this.communityList.push(element);
+              }
+            });
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   goToCommunityDetails(community): void {
@@ -81,7 +83,6 @@ export class MyCommunityComponent implements OnInit {
     modalRef.componentInstance.message =
       'Are you sure want to delete this community?';
     modalRef.result.then((res) => {
-      console.log(res);
       if (res === 'success') {
         this.communityService.deleteCommunity(id).subscribe({
           next: (res: any) => {

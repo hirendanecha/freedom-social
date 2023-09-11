@@ -67,10 +67,10 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
 
   getCommunityDetails(): void {
     this.spinner.show();
-    this.communityService.getCommunityById(this.communityId).subscribe(
-      (res: any) => {
+    this.communityService.getCommunityById(this.communityId).subscribe({
+      next: (res: any) => {
+        this.spinner.hide();
         if (res) {
-          this.spinner.hide();
           res.forEach((element) => {
             if (element.Id) {
               this.communityDetails = element;
@@ -82,29 +82,31 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
               });
             }
           });
-          console.log(this.adminList);
         }
       },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+      error:
+        (error) => {
+          this.spinner.hide();
+          console.log(error);
+        }
+    });
   }
 
   getCommunityPost(): void {
     this.spinner.show();
     this.communityPostService.getPostsByProfileId(this.communityId).subscribe(
-      (res: any) => {
-        if (res) {
-          this.communityPostList = res;
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+      {
+        next: (res: any) => {
+          if (res) {
+            this.communityPostList = res;
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   clickOnLike() {
@@ -124,16 +126,18 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
   deletePost(id): void {
     this.spinner.show();
     this.communityPostService.deletePost(id).subscribe(
-      (res) => {
-        if (res) {
-          this.spinner.hide();
-          this.getCommunityPost();
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-      }
-    );
+      {
+        next: (res) => {
+          if (res) {
+            this.spinner.hide();
+            this.getCommunityPost();
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+          }
+      });
   }
 
   createCommunityAdmin(member): void {
@@ -149,17 +153,18 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
         isAdmin: 'Y',
       };
     }
-    this.communityService.createCommunityAdmin(data).subscribe(
-      (res: any) => {
+    this.communityService.createCommunityAdmin(data).subscribe({
+      next: (res: any) => {
         if (res) {
           this.toaster.success(res.message);
           this.getCommunityDetails();
         }
       },
-      (error) => {
-        console.log(error);
-      }
-    );
+      error:
+        (error) => {
+          console.log(error);
+        }
+    });
   }
 
   goToViewProfile(id: any): void {

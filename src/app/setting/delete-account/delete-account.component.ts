@@ -29,22 +29,24 @@ export class DeleteAccountComponent implements OnInit {
     this.profileId = +sessionStorage.getItem('user_id');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   getProfile(id): void {
     this.spinner.show();
     this.customerService.getProfile(id).subscribe(
-      (res: any) => {
-        if (res.data) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          this.customer = res.data[0];
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+          if (res.data) {
+            this.customer = res.data[0];
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   deleteAccount(id): void {

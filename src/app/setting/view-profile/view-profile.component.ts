@@ -64,40 +64,44 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   getProfile(id): void {
     this.spinner.show();
     this.customerService.getProfile(id).subscribe(
-      (res: any) => {
-        if (res.data) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          this.customer = res.data[0];
-          this.userId = res.data[0].UserID;
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+          if (res.data) {
+            this.customer = res.data[0];
+            this.userId = res.data[0].UserID;
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   getCommunities(): void {
     this.spinner.show();
     this.communityList = [];
     this.communityService.getCommunityByUserId(this.profileId).subscribe(
-      (res: any) => {
-        if (res.data) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          // this.communityList = res.data;
-          res.data.forEach((element) => {
-            if (element.Id) {
-              this.communityList.push(element);
-            }
-          });
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+          if (res.data) {
+            // this.communityList = res.data;
+            res.data.forEach((element) => {
+              if (element.Id) {
+                this.communityList.push(element);
+              }
+            });
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   goToCommunityDetails(community): void {

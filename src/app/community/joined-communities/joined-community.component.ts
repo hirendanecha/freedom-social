@@ -19,7 +19,7 @@ export class JoinedCommunityComponent implements OnInit {
     private communityService: CommunityService,
     private modalService: NgbModal,
     private toaster: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCommunityList();
@@ -45,17 +45,19 @@ export class JoinedCommunityComponent implements OnInit {
     this.spinner.show();
     const profileId = sessionStorage.getItem('profileId');
     this.communityService.getJoinedCommunityByProfileId(profileId).subscribe(
-      (res: any) => {
-        if (res.data) {
+      {
+        next: (res: any) => {
           this.spinner.hide();
-          this.communityList = res.data;
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+          if (res.data) {
+            this.communityList = res.data;
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
   }
 
   removeFromCommunity(id): void {

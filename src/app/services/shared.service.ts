@@ -84,7 +84,6 @@ export class SharedService {
     this.customerService.getNotificationList(Number(id)).subscribe({
       next: (res: any) => {
         this.isNotify = false;
-        console.log(res);
         this.notificationList = res?.data;
       },
       error: (error) => {
