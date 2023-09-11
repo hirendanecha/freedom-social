@@ -90,7 +90,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
           if (res.data) {
             // this.communityList = res.data;
             res.data.forEach((element) => {
-              if (element.Id) {
+              if (element.Id && element.isApprove === 'Y') {
                 this.communityList.push(element);
               }
             });
