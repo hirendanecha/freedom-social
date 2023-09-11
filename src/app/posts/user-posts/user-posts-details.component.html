@@ -8,8 +8,9 @@
         *ngIf="!post?.hide && (post?.postdescription || post?.metadescription)"
       >
         <img
-          class="w-48-px h-48-px rounded-4" loading="lazy"
-          data-src="{{post.ProfilePicName}}"
+          class="w-48-px h-48-px rounded-4"
+          loading="lazy"
+          data-src="{{ post.ProfilePicName }}"
           onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
           alt="avatar"
         />
@@ -126,13 +127,19 @@
           </ng-container>
 
           <ng-container *ngIf="post?.imageUrl">
-            <img loading="lazy" data-src="{{post?.imageUrl}}" class="w-100 rounded-3" alt="image" />
+            <img
+              loading="lazy"
+              data-src="{{ post?.imageUrl }}"
+              class="w-100 rounded-3"
+              alt="image"
+            />
           </ng-container>
 
           <div class="border rounded-3" *ngIf="post?.metaimage">
             <a [href]="post.metalink" target="_blank" class="post-img">
-              <img loading="lazy"
-                data-src="{{post?.metaimage}}"
+              <img
+                loading="lazy"
+                data-src="{{ post?.metaimage }}"
                 class="w-100 rounded-top-3"
                 alt="image"
               />
@@ -274,38 +281,83 @@
               class="d-center gap-1 gap-sm-2 mdtxt"
               data-toggle="tooltip"
               data-placement="bottom"
+              title="Comming Soon!"
+            >
+              <i class="material-symbols-outlined mat-icon"> chat </i>
+              Video reply
+            </button>
+            <button
+              class="d-center gap-1 gap-sm-2 mdtxt"
+              data-toggle="tooltip"
+              data-placement="bottom"
               title="View Comments"
               (click)="viewComments(post?.id)"
             >
-              <i class="material-symbols-outlined mat-icon"> chat </i>
+              <i class="material-symbols-outlined mat-icon"> comment </i>
               Comments
             </button>
           </div>
-
           <form>
             <div class="d-flex mt-5 gap-3">
-              <img loading="lazy"
-                data-src="{{sharedService?.userData?.ProfilePicName}}"
+              <img
+                loading="lazy"
+                data-src="{{ sharedService?.userData?.ProfilePicName }}"
                 class="w-40-px h-40-px rounded-3"
                 alt="icon"
               />
 
-              <div
-                class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
-              >
-                <input
-                  placeholder="Write something to comment.."
-                  (keyup)="commentOnKeyEvent($event)"
-                />
+              <div class="input-area py-2 px-3 gap-2 align-items-center w-100">
+                <div class="d-flex">
+                  <div
+                    #parentPostCommentElement
+                    contenteditable
+                    placeholder="Write something to comment.."
+                    class="outline-0 w-100 comment-input"
+                  ></div>
+                  <div class="file-upload d-flex me-1">
+                    <label class="file">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        (change)="onPostFileSelect($event, 'parent')"
+                      />
+                      <span class="file-custom border-0 d-grid text-center">
+                        <span
+                          class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
+                        >
+                          perm_media
+                        </span>
+                      </span>
+                    </label>
+                  </div>
 
-                <div class="file-input d-flex gap-1 gap-md-2">
-                  <i
-                    class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
-                    role="button"
-                    (click)="commentOnPost(post.id)"
-                  >
-                    near_me
-                  </i>
+                  <div class="file-input d-flex gap-1 gap-md-2">
+                    <i
+                      class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
+                      role="button"
+                      (click)="commentOnPost(parentPostCommentElement, post.id)"
+                    >
+                      near_me
+                    </i>
+                  </div>
+                </div>
+                <div>
+                  <ng-container *ngIf="isParent && commentData?.imageUrl">
+                    <div class="position-relative w-100-px h-100-px mt-5">
+                      <img
+                        loading="lazy"
+                        data-src="{{ commentData?.imageUrl }}"
+                        class="w-100 h-100 rounded-4"
+                        alt="icon"
+                      />
+                      <span
+                        class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
+                        (click)="removePostSelectedFile()"
+                      >
+                        close
+                      </span>
+                    </div>
+                  </ng-container>
                 </div>
               </div>
             </div>
@@ -326,8 +378,9 @@
                   >
                     <div class="d-center align-items-baseline">
                       <img
-                        class="w-40-px h-40-px rounded-3"loading="lazy"
-                        data-src="{{comment?.ProfilePicName}}"
+                        class="w-40-px h-40-px rounded-3"
+                        loading="lazy"
+                        data-src="{{ comment?.ProfilePicName }}"
                         onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                         alt="avatar"
                       />
@@ -382,6 +435,13 @@
                         </div>
 
                         <p class="mdtxt mb-0" [innerHTML]="comment.comment"></p>
+                        <img
+                          *ngIf="comment.imageUrl"
+                          class="h-52-px w-52-px rounded-0 mt-1"
+                          loading="lazy"
+                          data-src="{{ comment.imageUrl }}"
+                          alt=""
+                        />
                       </div>
 
                       <ul class="friends-list d-flex gap-6 py-2 px-4 m-0">
@@ -428,53 +488,79 @@
                         "
                       >
                         <img
-                        loading="lazy"
-                          data-src="{{sharedService?.userData?.ProfilePicName}}"
+                          loading="lazy"
+                          data-src="{{
+                            sharedService?.userData?.ProfilePicName
+                          }}"
                           class="w-40-px h-40-px rounded-3"
                           alt="icon"
                         />
                         <div
-                          class="input-area py-1 px-3 h-40-px d-flex gap-2 align-items-center w-100"
+                          class="input-area py-2 px-3 gap-2 align-items-center w-100"
                         >
-                          <input
-                            placeholder="Write something to comment.."
-                            (keyup)="commentOnKeyEvent($event)"
-                          />
+                          <div class="d-flex">
+                            <div
+                              #childPostCommentElement
+                              contenteditable
+                              placeholder="Write something to comment.."
+                              class="outline-0 w-100 comment-input"
+                            ></div>
+                            <div class="file-input d-flex gap-1 gap-md-2">
+                              <div class="file-upload d-flex">
+                                <label class="file">
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    (change)="onPostFileSelect($event, 'child')"
+                                  />
+                                  <span
+                                    class="file-custom border-0 d-grid text-center"
+                                  >
+                                    <span
+                                      class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
+                                    >
+                                      perm_media
+                                    </span>
+                                  </span>
+                                </label>
+                              </div>
 
-                          <div class="file-input d-flex gap-1 gap-md-2">
-                            <!-- <div class="file-upload">
-                            <label class="file">
-                              <input type="file" />
-                              <span class="file-custom border-0 d-grid text-center">
-                                <span
-                                  class="material-symbols-outlined mat-icon m-0 xxltxt"
-                                >
-                                  gif_box
-                                </span>
-                              </span>
-                            </label>
+                              <i
+                                class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
+                                role="button"
+                                (click)="
+                                  replyOnComment(
+                                    childPostCommentElement,
+                                    post.id,
+                                    comment.id
+                                  )
+                                "
+                              >
+                                near_me
+                              </i>
+                            </div>
                           </div>
-
-                          <div class="file-upload">
-                            <label class="file">
-                              <input type="file" />
-                              <span class="file-custom border-0 d-grid text-center">
-                                <span
-                                  class="material-symbols-outlined mat-icon m-0 xxltxt"
-                                >
-                                  perm_media
-                                </span>
-                              </span>
-                            </label>
-                          </div> -->
-
-                            <i
-                              class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
-                              role="button"
-                              (click)="replyOnComment(post.id, comment.id)"
+                          <div class="d-flex">
+                            <ng-container
+                              *ngIf="!isParent && commentData?.imageUrl"
                             >
-                              near_me
-                            </i>
+                              <div
+                                class="position-relative w-52-px h-52-px mt-5"
+                              >
+                                <img
+                                  loading="lazy"
+                                  data-src="{{ commentData?.imageUrl }}"
+                                  class="w-100 h-100 rounded-4"
+                                  alt="icon"
+                                />
+                                <span
+                                  class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
+                                  (click)="removePostSelectedFile()"
+                                >
+                                  close
+                                </span>
+                              </div>
+                            </ng-container>
                           </div>
                         </div>
                       </div>
@@ -493,9 +579,9 @@
                           >
                             <div class="">
                               <img
-                              loading="lazy"
+                                loading="lazy"
                                 class="avatar-img w-40-px h-40-px rounded-3"
-                                data-src="{{reply.ProfilePicName}}"
+                                data-src="{{ reply.ProfilePicName }}"
                                 alt="avatar"
                               />
                             </div>
@@ -510,6 +596,13 @@
                                   <p class="mdtxt mb-0">
                                     {{ reply?.comment }}
                                   </p>
+                                  <img
+                                    *ngIf="reply.imageUrl"
+                                    class="h-52-px w-52-px rounded-0 mt-1"
+                                    loading="lazy"
+                                    data-src="{{ reply.imageUrl }}"
+                                    alt=""
+                                  />
                                 </div>
                                 <ng-container
                                   *ngIf="profileId == reply.profileId"

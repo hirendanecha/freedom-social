@@ -153,7 +153,7 @@
         <img
           class="w-48-px h-48-px rounded-4"
           loading="lazy"
-          data-src="{{post.ProfilePicName}}"
+          data-src="{{ post.ProfilePicName }}"
           onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
           alt="avatar"
         />
@@ -270,13 +270,18 @@
           </ng-container>
 
           <ng-container *ngIf="post?.imageUrl">
-            <img loading="lazy" data-src="{{post?.imageUr}}l" class="w-100 rounded-3" alt="image" />
+            <img
+              loading="lazy"
+              data-src="{{ post?.imageUr }}l"
+              class="w-100 rounded-3"
+              alt="image"
+            />
           </ng-container>
 
           <div class="border rounded-3" *ngIf="post?.metaimage">
             <a [href]="post.metalink" target="_blank" class="post-img">
               <img
-                data-src="{{post?.metaimage}}"
+                data-src="{{ post?.metaimage }}"
                 loading="lazy"
                 class="w-100 rounded-top-3"
                 alt="image"
@@ -411,7 +416,9 @@
                 thumb_up
               </i>
               {{
-                post?.likescount > 0 ? post?.likescount + " Likes" : 0 + " Like"
+                post?.likescount > 0
+                  ? post?.likescount + " Likes"
+                  : 0 + " Likes"
               }}
             </button>
 
@@ -430,7 +437,7 @@
           <form>
             <div class="d-flex mt-5 gap-3">
               <img
-                data-src="{{sharedService?.userData?.ProfilePicName}}"
+                data-src="{{ sharedService?.userData?.ProfilePicName }}"
                 loading="lazy"
                 class="w-40-px h-40-px rounded-3"
                 alt="icon"
@@ -473,7 +480,7 @@
                     <div class="d-center align-items-baseline">
                       <img
                         class="w-40-px h-40-px rounded-3"
-                        data-src="{{comment?.ProfilePicName}}"
+                        data-src="{{ comment?.ProfilePicName }}"
                         loading="lazy"
                         onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                         alt="avatar"
@@ -575,7 +582,9 @@
                         "
                       >
                         <img
-                          data-src="{{sharedService?.userData?.ProfilePicName}}"
+                          data-src="{{
+                            sharedService?.userData?.ProfilePicName
+                          }}"
                           loading="lazy"
                           class="w-40-px h-40-px rounded-3"
                           alt="icon"
@@ -642,7 +651,7 @@
                               <img
                                 class="avatar-img w-40-px h-40-px rounded-3"
                                 loading="lazy"
-                                data-src="{{reply.ProfilePicName}}"
+                                data-src="{{ reply.ProfilePicName }}"
                                 alt="avatar"
                               />
                             </div>
