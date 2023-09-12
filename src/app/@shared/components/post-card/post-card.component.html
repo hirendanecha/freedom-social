@@ -113,7 +113,7 @@
       [innerHTML]="post.postdescription"
     ></p>
 
-    <ng-container *ngIf="post.metalink">
+    <ng-container *ngIf="post?.metalink">
       <a
         class="post-description mdtxt pt-0 pb-1"
         [href]="post.metalink"

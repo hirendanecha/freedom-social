@@ -45,15 +45,18 @@ export class PostListComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const id = changes?.communityId?.currentValue;
-    // if (id && id != this.communityId) {
-    //   this.communityId = id;
 
-    //   this.getPostList();
-    // }
+    if (id) {
+      this.communityId = id;
+
+      this.getPostList();
+    }
   }
 
   ngOnInit(): void {
-    this.getPostList();
+    if (!this.communityId) {
+      this.getPostList();
+    }
 
     this.socketService.socket.on(
       'new-post',
