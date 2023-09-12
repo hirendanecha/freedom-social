@@ -81,11 +81,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   selectFiles(event) {
-    const file = event.target?.files?.[0] || {};
-    if (file) {
-      this.profileImg['file'] = file;
-      this.profileImg['url'] = URL.createObjectURL(file);
-    }
+    this.profileImg = event;
   }
 
   upload(file, id, defaultType) {

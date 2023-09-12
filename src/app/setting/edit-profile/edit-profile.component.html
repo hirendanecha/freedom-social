@@ -1,46 +1,10 @@
 <div class="d-flex w-100 gap-5 edit-profile">
-  <div class="single-box p-5 mb-5 sidebar-bar d-flex flex-column position-relative w-100">
-    <img
-      class="profile-img w-100 rounded-3"
-      loading="lazy"
-      data-src="{{
-        profileImg?.url || customer.ProfilePicName || '/assets/images/avtar/avtar.png'
-      }}"
-      onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
-      alt="Profile Image"
-    />
-
-    <div class="edit-image d-flex justify-content-center align-items-center w-100 h-100 c-pointer" (click)="profileImgFileTag.click()" >
-      <span class="material-symbols-outlined">
-        add_a_photo
-      </span>
-
-      <input type="file" #profileImgFileTag hidden class="d-none" accept="image/*" (change)="onProfileImgChange($event)"/>
-    </div>
-  </div>
+  <app-img-picker classes="w-300-px h-300-px" [url]="customer.ProfilePicName" (onFileChange)="onProfileImgChange($event)"/>
 
   <div class="d-flex flex-column mb-5 w-100">
-    <div class="single-box p-5 mb-5 d-flex flex-column position-relative w-100">
-      <img
-        class="cover-image w-100 rounded-3"
-        loading="lazy"
-        data-src="{{
-          profileCoverImg?.url || customer.CoverPicName || '/assets/images/profile-cover.png'
-        }}"
-        onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
-        [alt]="coverPic.name || 'Preview Image'"
-      />
+    <app-img-picker classes="w-100 h-300-px" defaultImg="/assets/images/profile-cover.png" [url]="customer.CoverPicName" (onFileChange)="onProfileCoverImgChange($event)"/>
 
-      <div class="edit-image d-flex justify-content-center align-items-center w-100 h-100 c-pointer" (click)="profileCoverImgFileTag.click()" >
-        <span class="material-symbols-outlined">
-          add_a_photo
-        </span>
-
-        <input type="file" #profileCoverImgFileTag hidden class="d-none" accept="image/*" (change)="onProfileCoverImgChange($event)"/>
-      </div>
-    </div>
-
-    <div class="single-box p-5">
+    <div class="single-box p-5 mt-5">
       <form
         id="loginForm"
         class="form-dark"

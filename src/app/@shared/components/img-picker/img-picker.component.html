@@ -1,11 +1,11 @@
-<div class="img-picker single-box mb-0 d-flex flex-column position-relative" [ngClass]="classes" >
+<div class="img-picker single-box mb-0 d-flex flex-column position-relative p-5 rounded-3" [ngClass]="classes" >
   <img
     class="w-100 h-100 rounded-3"
     loading="lazy"
     data-src="{{
-      fileData?.url || '/assets/images/avtar/placeholder-user.png'
+      fileData?.url || url || defaultImg
     }}"
-    onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+    onerror="this.onerror=null;this.src=defaultImg;"
   />
 
   <div class="edit-image d-flex justify-content-center align-items-center w-100 h-100 c-pointer" (click)="imgFileTagRef.click()" >

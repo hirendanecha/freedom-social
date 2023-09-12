@@ -63,37 +63,7 @@
 
                   <div class="col-12 col-md-6 mb-3 d-flex flex-column">
                     <label class="form-label text-light">Profile Picture<span class="text-danger">*</span></label>
-
-                    <div class="profile-img single-box p-5 mb-0 d-flex flex-column position-relative w-100 h-100">
-                      <img
-                        class="w-100 h-100 rounded-3"
-                        loading="lazy"
-                        data-src="{{
-                          profileImg?.url || '/assets/images/avtar/placeholder-user.png'
-                        }}"
-                        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
-                        alt="Profile Image"
-                      />
-
-                      <div class="edit-image d-flex justify-content-center align-items-center w-100 h-100 c-pointer" (click)="profileImgFileTag.click()" >
-                        <ng-container *ngIf="!profileImg?.url">
-                          <span class="material-symbols-outlined">
-                            add_a_photo
-                          </span>
-                        </ng-container>
-
-                        <ng-container *ngIf="profileImg?.url">
-                          <span
-                            class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
-                            (click)="clearProfileImg($event)"
-                          >
-                            close
-                          </span>
-                        </ng-container>
-
-                        <input type="file" name="profileImg" #profileImgFileTag hidden required class="d-none" accept="image/*" (change)="selectFiles($event)"/>
-                      </div>
-                    </div>
+                    <app-img-picker (onFileChange)="selectFiles($event)"/>
                   </div>
                 </div>
                 <div class="row">

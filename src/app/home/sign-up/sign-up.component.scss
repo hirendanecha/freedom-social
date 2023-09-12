@@ -66,32 +66,4 @@
       }
     }
   }
-
-  .profile-img {
-    min-width: 156px;
-    max-width: 156px;
-    min-height: 156px;
-    max-height: 156px;
-
-    .edit-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-
-      .material-symbols-outlined {
-        padding: 16px;
-        background-color: #6c757da3;
-        border-radius: 50%;
-        transition: 0.3s ease-in-out;
-        border: 2px solid transparent;
-      }
-
-      &:hover {
-        .material-symbols-outlined {
-          transform: scale(1.2);
-          background-color: var(--section-1st-color);
-        }
-      }
-    }
-  }
 }

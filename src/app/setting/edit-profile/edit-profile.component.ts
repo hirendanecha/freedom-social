@@ -245,18 +245,10 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   }
 
   onProfileImgChange(event: any): void {
-    const file = event.target?.files?.[0] || {};
-    if (file) {
-      this.profileImg['file'] = file;
-      this.profileImg['url'] = URL.createObjectURL(file);
-    }
+    this.profileImg = event;
   }
 
   onProfileCoverImgChange(event: any): void {
-    const file = event.target?.files?.[0] || {};
-    if (file) {
-      this.profileCoverImg['file'] = file;
-      this.profileCoverImg['url'] = URL.createObjectURL(file);
-    }
+    this.profileCoverImg = event;
   }
 }
