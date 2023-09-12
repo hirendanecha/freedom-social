@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { AddCommunityComponent } from '../community/add-community/add-community.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TokenStorageService } from '../services/token-storage.service';
 import { CustomerService } from '../services/customer.service';
+import { CommunityService } from '../services/community.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-my-list',
@@ -14,10 +13,12 @@ export class MyListComponent implements OnInit {
   isEXpand = false;
   isShow = false;
   user: any;
+  communityList = [];
+
   constructor(
     private router: Router,
-    private modalService: NgbModal,
-    private tokenStorageService: TokenStorageService,
+    private spinner: NgxSpinnerService,
+    private communityService: CommunityService,
     private customerService: CustomerService
   ) {
     this.router.events.subscribe((event: RouterEvent | any) => {
@@ -25,6 +26,8 @@ export class MyListComponent implements OnInit {
         this.isShow = event.url.includes('/people') || false;
       }
     });
+
+    this.getCommunityList();
   }
 
   ngOnInit(): void {
@@ -49,7 +52,33 @@ export class MyListComponent implements OnInit {
     this.isEXpand = !this.isEXpand;
   }
 
-  createCommunity() {
-    this.router.navigateByUrl('local-communities');
+  getCommunityList(): void {
+    this.spinner.show();
+    const profileId = sessionStorage.getItem('profileId');
+    this.communityService.getCommunity(profileId).subscribe({
+      next: (res: any) => {
+        this.spinner.hide();
+        if (res.data) {
+          this.communityList = res.data;
+        }
+      },
+      error: (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    });
+  }
+
+  goToCommunityDetails(community): void {
+    const communityName = community.CommunityName.replaceAll(
+      ' ',
+      '-'
+    ).toLowerCase();
+    console.log(communityName);
+    this.router.navigate([`community/${communityName}`], {
+      state: {
+        data: { id: community.Id },
+      },
+    });
   }
 }

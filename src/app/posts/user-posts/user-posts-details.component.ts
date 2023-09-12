@@ -265,7 +265,7 @@ export class UserPostDetailsComponent implements OnInit {
         console.log(data);
         this.commentList.push(data[0]);
         this.isExpand = true;
-        this.viewComments(data[0]?.id);
+        this.viewComments(data[0]?.postId);
         this.commentData.comment = '';
         this.commentData = {}
         // parentPostCommentElement.innerText = '';
