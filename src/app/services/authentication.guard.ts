@@ -19,7 +19,6 @@ export class AuthenticationGuard implements CanActivate {
     private tokenService: TokenStorageService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    console.log('Id', this.platformId);
   }
 
   canActivate(

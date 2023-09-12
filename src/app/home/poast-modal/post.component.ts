@@ -74,7 +74,6 @@ export class PostComponent implements OnInit {
 
   // getSelectedImg(): void {
   //   this.postService.getPostImg().subscribe((res: any) => {
-  //     console.log(res);
   //     this.postService.selectedFile = res[0].url;
   //   });
   // }
@@ -82,13 +81,11 @@ export class PostComponent implements OnInit {
   // addPost(): void {
   //   this.postData.profileid = this?.sharedService?.userData?.profileId;
   //   this.postData.imageUrl = this.selectedFile;
-  //   console.log(this.postData);
   //   this.spinner.show();
   //   if (this.postData) {
   //     this.postService.createPost(this.postData).subscribe(
   //       (res: any) => {
   //         this.spinner.hide();
-  //         console.log(res);
   //         this.activeModal.close();
   //         this.router.navigate(['home']);
   //       },

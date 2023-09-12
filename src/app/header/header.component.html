@@ -57,9 +57,10 @@
                     role="button"
                     (click)="openProfile(user.Id)"
                   >
-                    <img loading="lazy"
+                    <img
+                      loading="lazy"
                       class="w-32-px h-32-px rounded"
-                      data-src="{{user.ProfilePicName}}"
+                      data-src="{{ user.ProfilePicName }}"
                       [alt]="user.Username"
                       onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                     />
@@ -88,7 +89,6 @@
             >
           </li>
           <li>
-            <!-- routerLink="/favorite" -->
             <a
               routerLink="/research"
               routerLinkActive="active"
@@ -177,9 +177,10 @@
             <!-- profile-area -->
             <div class="profile-pic d-flex align-items-center">
               <span class="avatar cmn-head active-status">
-                <img loading="lazy"
+                <img
+                  loading="lazy"
                   class="avatar-img max-un"
-                  data-src="{{sharedService?.userData?.ProfilePicName}}"
+                  data-src="{{ sharedService?.userData?.ProfilePicName }}"
                   onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                   alt="avatar"
                   id="userMenuList"
@@ -200,8 +201,9 @@
       <div class="d-flex gap-3">
         <div class="avatar-item">
           <img
-            class="avatar-img max-un" loading="lazy"
-            data-src="{{sharedService?.userData?.ProfilePicName}}"
+            class="avatar-img max-un"
+            loading="lazy"
+            data-src="{{ sharedService?.userData?.ProfilePicName }}"
             onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
             alt="avatar"
           />
@@ -289,7 +291,8 @@
                 class="avatar-img w-52-px h-52-px rounded-5"
                 loading="lazy"
                 data-src="{{
-                  notification?.ProfilePicName || '/assets/images/avtar/placeholder-user.png'
+                  notification?.ProfilePicName ||
+                    '/assets/images/avtar/placeholder-user.png'
                 }}"
                 onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                 alt="avatar"

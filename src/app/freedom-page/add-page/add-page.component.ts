@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 export class AddFreedomPageComponent {
   @Input() closeIcon: boolean | undefined;
 
-  communityDetails = new Community();
+  pageDetails = new Community();
   submitted = false;
   registrationMessage = '';
   selectedFile: File;
@@ -23,7 +23,7 @@ export class AddFreedomPageComponent {
   coverImg: any;
   userId = '';
   profileId = '';
-  originurl = environment.webUrl + 'community/';
+  originUrl = environment.webUrl + 'page/';
   constructor(
     public activeModal: NgbActiveModal,
     private uploadService: UploadFilesService,
@@ -71,12 +71,14 @@ export class AddFreedomPageComponent {
 
   onSubmit() {
     this.spinner.show();
-    if (this.communityDetails.CommunityName && this.logoImg && this.coverImg) {
-      this.communityDetails.profileId = this.profileId;
-      this.communityDetails.logoImg = this.logoImg;
-      this.communityDetails.coverImg = this.coverImg;
-      if (this.communityDetails) {
-        this.communityService.createCommunity(this.communityDetails).subscribe(
+    if (this.pageDetails.CommunityName && this.logoImg && this.coverImg) {
+      this.pageDetails.profileId = this.profileId;
+      this.pageDetails.logoImg = this.logoImg;
+      this.pageDetails.coverImg = this.coverImg;
+      this.pageDetails.pageType = 'page';
+      this.pageDetails.isApprove = 'Y';
+      if (this.pageDetails) {
+        this.communityService.createCommunity(this.pageDetails).subscribe(
           {
             next: (res: any) => {
               this.spinner.hide();

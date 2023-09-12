@@ -9,7 +9,7 @@ import { CommunityService } from 'src/app/services/community.service';
   styleUrls: ['./pages.component.scss'],
 })
 export class PageComponent implements OnInit {
-  communityList = [];
+  pageList = [];
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -29,7 +29,7 @@ export class PageComponent implements OnInit {
         next: (res: any) => {
           this.spinner.hide();
           if (res.data) {
-            this.communityList = res.data;
+            this.pageList = res.data;
           }
         },
         error:
@@ -40,15 +40,14 @@ export class PageComponent implements OnInit {
       });
   }
 
-  goToCommunityDetails(community): void {
-    const communityName = community.CommunityName.replaceAll(
+  goToCommunityDetails(page): void {
+    const pageName = page.CommunityName.replaceAll(
       ' ',
       '-'
     ).toLowerCase();
-    console.log(communityName);
-    this.router.navigate([`page/${communityName}`], {
+    this.router.navigate([`page/${pageName}`], {
       state: {
-        data: { id: community.Id },
+        data: { id: page.Id },
       },
     });
     // this.router.navigateByUrl(`community/c/${communityName}`, {
@@ -56,18 +55,18 @@ export class PageComponent implements OnInit {
     // });
   }
 
-  joinCommunity(community): void {
+  joinCommunity(page): void {
     const profileId = sessionStorage.getItem('profileId');
     const data = {
       profileId: profileId,
-      communityId: community.Id,
+      communityId: page.Id,
       IsActive: 'Y',
     };
     this.communityService.joinCommunity(data).subscribe(
       {
         next: (res: any) => {
           if (res) {
-            this.goToCommunityDetails(community);
+            this.goToCommunityDetails(page);
           }
         },
         error:

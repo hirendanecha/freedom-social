@@ -106,7 +106,6 @@ export class UserPostDetailsComponent implements OnInit {
 
   deletePost(post): void {
     this.postId = null;
-    console.log(post.id);
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
@@ -116,7 +115,6 @@ export class UserPostDetailsComponent implements OnInit {
     modalRef.componentInstance.message =
       'Are you sure want to delete this post?';
     modalRef.result.then((res) => {
-      console.log(res);
       if (res === 'success') {
         // post['hide'] = true;
         this.postService.deletePost(post.id).subscribe(
@@ -166,7 +164,7 @@ export class UserPostDetailsComponent implements OnInit {
 
   likeDisLikePost(data): void {
     this.socketService.likeFeedPost(data, (res) => {
-      console.log(res);
+      return;
     });
     this.socketService.socket.on(
       'new-post',
@@ -212,12 +210,10 @@ export class UserPostDetailsComponent implements OnInit {
         this.spinner.show();
         this.postService.upload(this.commentData?.file, this.profileId).subscribe({
           next: (res: any) => {
-            console.log('res==>', res.body);
             if (res?.body?.url) {
               this.commentData['file'] = null;
               this.commentData['imageUrl'] = res?.body?.url;
               this.submit();
-              console.log('this.postData : ', this.commentData);
             }
             this.spinner.hide();
           },
@@ -240,7 +236,6 @@ export class UserPostDetailsComponent implements OnInit {
         // childPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
-        console.log(data);
         this.commentList.map((ele: any) =>
           data.filter((ele1) => {
             if (ele.id === ele1.parentCommentId) {
@@ -249,7 +244,6 @@ export class UserPostDetailsComponent implements OnInit {
             }
           })
         );
-        console.log(this.commentList);
         this.isReply = false;
         this.commentId = null;
         // this.getPostList();
@@ -262,7 +256,6 @@ export class UserPostDetailsComponent implements OnInit {
         // parentPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
-        console.log(data);
         this.commentList.push(data[0]);
         this.isExpand = true;
         this.viewComments(data[0]?.postId);
@@ -284,7 +277,6 @@ export class UserPostDetailsComponent implements OnInit {
     this.postService.getComments(id).subscribe({
       next: (res) => {
         if (res) {
-          console.log(res.data);
           // this.commentList = res.data.commmentsList.filter((ele: any) => {
           //   res.data.replyCommnetsList.some((element: any) => {
           //     if (ele?.id === element?.parentCommentId) {
@@ -292,7 +284,6 @@ export class UserPostDetailsComponent implements OnInit {
           //       return ele;
           //     }
           //   });
-          //   console.log(this.commentList);
           // });
           this.commentList = res.data.commmentsList.map((ele: any) => ({
             ...ele,
@@ -300,7 +291,6 @@ export class UserPostDetailsComponent implements OnInit {
               return ele.id === ele1.parentCommentId;
             }),
           }));
-          console.log(this.commentList);
         }
       },
       error: (error) => {
@@ -314,7 +304,6 @@ export class UserPostDetailsComponent implements OnInit {
       next: (res: any) => {
         this.toaster.success(res.message);
         this.isExpand = false;
-        // this.viewComments(id);
       },
       error: (error) => {
         console.log(error);
@@ -342,9 +331,8 @@ export class UserPostDetailsComponent implements OnInit {
       likeCount: comment.likeCount,
       actionType: 'L',
     };
-    console.log(data);
     this.socketService.likeFeedComments(data, (res) => {
-      console.log(res);
+      return;
     });
   }
   disLikeComments(comment): void {
@@ -357,9 +345,8 @@ export class UserPostDetailsComponent implements OnInit {
       toProfileId: Number(comment.profileId),
       likeCount: comment.likeCount,
     };
-    console.log(data);
     this.socketService.likeFeedComments(data, (res) => {
-      console.log(res);
+      return
     });
   }
 
@@ -384,24 +371,18 @@ export class UserPostDetailsComponent implements OnInit {
 
     if (atSymbolIndex !== -1) {
       this.userNameSearch = text.substring(atSymbolIndex + 1);
-      console.log('userNameSearch : ', this.userNameSearch);
-
       // if (this.userNameSearch?.length > 2) {
       //   this.getUserList(this.userNameSearch);
       // } else {
       //   this.clearUserSearchData();
       // }
     }
-    console.log(text);
     this.postComment = text;
-
     // if (lastChar === '@' || this.userNameSearch) {
     //   this.userNameSearch += lastChar;
-    //   console.log('userNameSearch : ', this.userNameSearch);
     //   // value.startsWith('@')
 
     //   // this.getUserList(value.slice(1));
-    //   // console.log('this.userList : ', this.userList);
     // }
   }
 
@@ -420,7 +401,7 @@ export class UserPostDetailsComponent implements OnInit {
       })
       .subscribe({
         next: (res) => {
-          console.log('Res : ', res);
+          return
         },
       });
 
@@ -456,7 +437,6 @@ export class UserPostDetailsComponent implements OnInit {
       .create({ profileId: this.profileId, seeFirstProfileId: postProfileId })
       .subscribe({
         next: (res) => {
-          console.log('Res : ', res);
           this.getPostList();
         },
       });
@@ -475,7 +455,6 @@ export class UserPostDetailsComponent implements OnInit {
     if (file.type.includes('image/')) {
       this.commentData['file'] = file;
       this.commentData['imageUrl'] = URL.createObjectURL(file);
-      console.log('commentImg: ', this.commentData['imageUrl']);
     } else {
       this.toaster.danger(`sorry ${file.type} are not allowed!`)
     }

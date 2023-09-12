@@ -14,7 +14,7 @@ import { ToastService } from 'src/app/services/toaster.service';
   styleUrls: ['./my-page.component.scss'],
 })
 export class MyPageComponent implements OnInit {
-  communityList = [];
+  pageList = [];
   communityId = '';
   isExpand = false;
   profileId: number;
@@ -35,16 +35,16 @@ export class MyPageComponent implements OnInit {
 
   getCommunities(): void {
     this.spinner.show();
-    this.communityList = [];
+    this.pageList = [];
     this.communityService.getCommunityByUserId(this.profileId).subscribe(
       {
         next: (res: any) => {
           this.spinner.hide();
           if (res.data) {
-            // this.communityList = res.data;
+            // this.pageList = res.data;
             res.data.forEach((element) => {
               if (element.Id) {
-                this.communityList.push(element);
+                this.pageList.push(element);
               }
             });
           }
@@ -57,15 +57,14 @@ export class MyPageComponent implements OnInit {
       });
   }
 
-  goToCommunityDetails(community): void {
-    const communityName = community.CommunityName.replaceAll(
+  goToCommunityDetails(page): void {
+    const pageName = page.CommunityName.replaceAll(
       ' ',
       '-'
     ).toLowerCase();
-    console.log(communityName);
-    this.router.navigate([`page/${communityName}`], {
+    this.router.navigate([`page/${pageName}`], {
       state: {
-        data: { id: community.Id },
+        data: { id: page.Id },
       },
     });
     // this.router.navigateByUrl(`community/c/${communityName}`, {
@@ -77,11 +76,11 @@ export class MyPageComponent implements OnInit {
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
-    modalRef.componentInstance.title = 'Delete Community';
+    modalRef.componentInstance.title = 'Delete Page';
     modalRef.componentInstance.confirmButtonLabel = 'Delete';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.message =
-      'Are you sure want to delete this community?';
+      'Are you sure want to delete this page?';
     modalRef.result.then((res) => {
       if (res === 'success') {
         this.communityService.deleteCommunity(id).subscribe({

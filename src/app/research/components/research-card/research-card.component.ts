@@ -12,10 +12,9 @@ export class ResearchCardComponent implements AfterViewInit {
 
   constructor(
     private router: Router
-  ) {}
+  ) { }
 
   ngAfterViewInit(): void {
-    console.log('post :', this.post);
   }
 
   openResearchPost(): void {

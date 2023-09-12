@@ -79,7 +79,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.spinner.hide();
-    console.log(this.socketService.socket);
 
     if (!this.socketService.socket.connected) {
       this.socketService.socket.connect();
@@ -87,7 +86,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.socketService.socket.emit('join', { room: this.profileId });
     this.socketService.socket.on('notification', (data: any) => {
-      console.log('notification data ==>', data);
       this.sharedService.isNotify = true;
     });
   }
@@ -103,7 +101,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.postData['file'] = file;
       this.postData['imageUrl'] = URL.createObjectURL(file);
     }
-    console.log('this.postData[files] : ', this.postData['file']);
   }
 
   removePostSelectedFile(): void {
@@ -181,8 +178,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   uploadPostFileAndCreatePost(): void {
-    console.log('this.postData : ', this.postData);
-
     if (this.postData?.postdescription) {
       if (this.postData?.file?.name) {
         this.spinner.show();
@@ -228,9 +223,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
-
-    console.log('this.postData : ', this.postData);
-
     if (this.postData?.postdescription) {
       this.spinner.show();
       this.socketService.createPost(this.postData, (data) => {
@@ -256,12 +248,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       // this.socketService.socket.on(
       //   'new-post-added',
       //   (res: any) => {
-      //     console.log('res: ', res);
-
       //     this.postList.push(res);
       //     this.spinner.hide();
       //     this.activePage = 1;
-
       //     this.postData['postdescription'] = '';
       //     this.postData['meta'] = {};
       //     this.postData['tags'] = [];
@@ -279,7 +268,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   getLinkData(): void {
     const postHtml = this.postMessageInput.nativeElement.innerHTML;
     const matches = postHtml.match(/(((https?:\/\/)|(www\.))[^\s]+)/gi);
-    console.log('matches : ', matches);
 
     if (matches?.length > 0) {
       const url = matches[0];
@@ -321,8 +309,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (atSymbolIndex !== -1) {
       this.userNameSearch = text.substring(atSymbolIndex + 1);
-      console.log('userNameSearch : ', this.userNameSearch);
-
       if (this.userNameSearch?.length > 2) {
         this.getUserList(this.userNameSearch);
       } else {
@@ -331,7 +317,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.clearUserSearchData();
     }
-    console.log(text);
     this.postData.postdescription = text;
   }
 
@@ -363,8 +348,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       `@${this.userNameSearch}`,
       `<a href="/settings/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a>`
     );
-    console.log('postHtml : ', postHtml);
-
     this.renderer.setProperty(
       this.postMessageInput.nativeElement,
       'innerHTML',
@@ -387,9 +370,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
-
-    console.log('this.postData : ', this.postData);
-
     if (this.postData?.postdescription) {
       this.spinner.show();
       this.socketService.editPost(this.postData, (data) => {
@@ -468,7 +448,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     modalRef.componentInstance.message =
       'Are you sure want to Leave from this community?';
     modalRef.result.then((res) => {
-      console.log(res);
       if (res === 'success') {
         const profileId = Number(sessionStorage.getItem('profileId'));
         this.communityService.removeFromCommunity(this.communityDetails?.Id, profileId).subscribe({
@@ -497,7 +476,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     modalRef.componentInstance.message =
       'Are you sure want to delete this community?';
     modalRef.result.then((res) => {
-      console.log(res);
       if (res === 'success') {
         this.communityService.deleteCommunity(this.communityDetails?.Id).subscribe({
           next: (res: any) => {

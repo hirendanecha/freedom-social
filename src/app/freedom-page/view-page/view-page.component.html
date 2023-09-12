@@ -8,7 +8,7 @@
           <div class="profile-picture position-relative text-start">
             <!-- src="/assets/images/profile-cover.png" -->
             <img loading="lazy"
-              data-src="{{communityDetails.coverImg}}"
+              data-src="{{pageDetails.coverImg}}"
               class="preview-image w-100"
               onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
               [alt]="'Preview Image'"
@@ -21,18 +21,18 @@
             <img
               class="preview-image w-100"
               loading="lazy"
-              data-src="{{ communityDetails.logoImg }}"
+              data-src="{{ pageDetails.logoImg }}"
               onerror="this.onerror=null;this.src='/assets/images/avtar/avtar.png';"
               [alt]="'Logo Image'"
             />
             <div class="community-details ms-2 d-grid">
               <h5 class="mb-0">
-                {{ communityDetails.CommunityName }}
+                {{ pageDetails.CommunityName }}
               </h5>
               <span>
-                {{ communityDetails?.CommunityDescription }}
+                {{ pageDetails?.CommunityDescription }}
               </span>
-              <span>{{ communityDetails.members }} member</span>
+              <span>{{ pageDetails.members }} member</span>
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@
                 <a
                   class="nav-link d-center"
                   [ngClass]="activeTab === 1 ? 'active' : ''"
-                  >Community Post</a
+                  >Page Post</a
                 >
               </li>
               <!-- <li class="nav-item" role="presentation" (click)="activeTab = 2">
@@ -86,7 +86,7 @@
         <ng-container *ngIf="activeTab === 1">
           <!-- <app-post-list [communityId]="communityId"></app-post-list> -->
           <div class="post-item d-flex flex-column gap-5 gap-md-7 mt-3">
-            <ng-container *ngFor="let post of communityPostList">
+            <ng-container *ngFor="let post of pagePostList">
               <div class="post-single-box p-3 p-sm-5" *ngIf="post.description">
                 <div class="top-area pb-5">
                   <div class="profile-area d-center justify-content-between">
@@ -273,7 +273,7 @@
                 </form> -->
               </div>
             </ng-container>
-            <div *ngIf="!communityPostList.length">
+            <div *ngIf="!pagePostList.length">
               <h3>No post available</h3>
             </div>
           </div>
@@ -285,7 +285,7 @@
           <h3>Hello Photos</h3>
         </ng-container> -->
         <ng-container *ngIf="activeTab === 2">
-          <h3>Community Memebers</h3>
+          <h3>Page Members</h3>
           <div class="row">
             <div class="col-md-6" *ngFor="let member of memberList">
               <div class="single-box member-single p-3">
@@ -315,7 +315,7 @@
                   </div>
                   <div
                     class="btn-group cus-dropdown d-flex gap-3"
-                    *ngIf="communityDetails.profileId !== member.profileId"
+                    *ngIf="pageDetails.profileId !== member.profileId"
                   >
                     <div ngbDropdown class="d-inline-block">
                       <button class="dropdown-btn" ngbDropdownToggle>

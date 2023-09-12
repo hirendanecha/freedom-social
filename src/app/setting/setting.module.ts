@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 
 import { SettingRoutingModule } from './setting-routing.module';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { UploadFilesComponent } from '../upload-files/upload-files.component';
 import { PipeModule } from '../pipe/pipe.module';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { SharedModule } from '../@shared/shared.module';
@@ -12,7 +11,6 @@ import { UnsubscribedUsersComponent } from './unsubscribed-users/unsubscribed-us
 @NgModule({
   declarations: [
     EditProfileComponent,
-    UploadFilesComponent,
     ViewProfileComponent,
     SeeFirstUserComponent,
     UnsubscribedUsersComponent

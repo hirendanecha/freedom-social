@@ -59,7 +59,6 @@ export class DeleteAccountComponent implements OnInit {
     modalRef.componentInstance.message =
       'Are you sure want to delete your account?';
     modalRef.result.then((res) => {
-      console.log(res);
       if (res === 'success') {
         this.customerService.deleteCustomer(id).subscribe({
           next: (res: any) => {

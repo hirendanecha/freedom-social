@@ -5,10 +5,11 @@
         <div class="upload-single cover-img">
           {{ customer?.CoverPicName }}
           <div class="profile-picture position-relative text-start">
-            <!-- src="/assets/images/profile-cover.png" -->
             <img
               loading="lazy"
-              data-src="{{customer?.CoverPicName || '/assets/images/profile-cover.png'}}"
+              data-src="{{
+                customer?.CoverPicName || '/assets/images/profile-cover.png'
+              }}"
               class="preview-image w-100"
               onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
               alt="Preview Image"
@@ -17,7 +18,6 @@
         </div>
         <div class="row mt-5">
           <div class="col-md-4 profile text-start d-flex align-items-center">
-            <!-- src="/assets/images/avtar/avtar.png" -->
             <img
               class="preview-image w-120-px h-120-px"
               loading="lazy"
@@ -29,9 +29,7 @@
               alt="Preview Image"
             />
             <div class="user-details ms-3">
-              <h3>
-                {{ customer?.FirstName }} {{ customer?.LastName }}
-              </h3>
+              <h3>{{ customer?.FirstName }} {{ customer?.LastName }}</h3>
               <h5 class="d-flex">
                 {{ customer?.Username }}
               </h5>
@@ -56,20 +54,6 @@
                   >Posts</a
                 >
               </li>
-              <!-- <li class="nav-item" role="presentation" (click)="activeTab = 2">
-                <a
-                  class="nav-link d-center"
-                  [ngClass]="activeTab === 2 ? 'active' : ''"
-                  >About</a
-                >
-              </li>
-              <li class="nav-item" role="presentation" (click)="activeTab = 3">
-                <a
-                  class="nav-link d-center"
-                  [ngClass]="activeTab === 3 ? 'active' : ''"
-                  >Photos</a
-                >
-              </li> -->
               <li
                 class="nav-item"
                 role="presentation"
@@ -99,12 +83,6 @@
         <ng-container *ngIf="activeTab === 1">
           <app-post-list parentComponent="ViewProfileComponent" />
         </ng-container>
-        <!-- <ng-container *ngIf="activeTab === 2">
-          <h3>Hello About</h3>
-        </ng-container>
-        <ng-container *ngIf="activeTab === 3">
-          <h3>Hello Photos</h3>
-        </ng-container> -->
         <ng-container *ngIf="activeTab === 2">
           <ng-container *ngIf="communityList.length; else noData">
             <div class="row">
@@ -117,7 +95,7 @@
                     <img
                       class="w-100 h-180-px rounded-3"
                       loading="lazy"
-                      data-src="{{community.coverImg}}"
+                      data-src="{{ community.coverImg }}"
                       alt="avatar"
                     />
                     <div
@@ -172,7 +150,7 @@
                     <img
                       class="w-48-px h-48-px m-3 rounded-3"
                       loading="lazy"
-                      data-src="{{community.logoImg}}"
+                      data-src="{{ community.logoImg }}"
                       alt="avatar"
                     />
                   </div>

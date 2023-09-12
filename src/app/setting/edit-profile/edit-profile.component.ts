@@ -5,9 +5,8 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, debounceTime, forkJoin, fromEvent, of } from 'rxjs';
 import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
@@ -24,12 +23,9 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 })
 export class EditProfileComponent implements OnInit, AfterViewInit {
   customer: Customer = new Customer();
-  registerForm!: FormGroup;
-  isragister = false;
-  registrationMessage = '';
+  allCountryData: any;
   confirm_password = '';
   msg = '';
-  allCountryData: any;
   userId = '';
   profilePic: any = {};
   coverPic: any = {};
@@ -88,29 +84,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
           this.spinner.hide();
           this.customer = data[0];
           this.getAllCountries();
-          // this.uploadService.getProfilePic(this.customer.Id).subscribe(
-          //   (res) => {
-          //     if (res.length) {
-          //       this.spinner.hide();
-          //       this.sharedService['userData']['ProfilePicName'] = res[0];
-          //     }
-          //   },
-          //   (error) => {
-          //     this.spinner.hide();
-          //     console.log(error);
-          //   }
-          // );
-          // this.uploadService.getCoverPic(this.customer.Id).subscribe(
-          //   (res) => {
-          //     if (res.length) {
-          //       this.coverPic = res[0];
-          //     }
-          //   },
-          //   (error) => {
-          //     this.spinner.hide();
-          //     console.log(error);
-          //   }
-          // );
         }
       },
       (err) => {
@@ -187,7 +160,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
       modalRef.componentInstance.message = 'Are you sure want to update profile details?';
 
       modalRef.result.then((res) => {
-        console.log(res);
         if (res === 'success') {
           this.uploadImgAndUpdateCustomer();
         }

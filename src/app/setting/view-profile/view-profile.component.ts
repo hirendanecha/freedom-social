@@ -21,12 +21,6 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 })
 export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   customer: Customer = new Customer();
-  registerForm!: FormGroup;
-  isragister = false;
-  registrationMessage = '';
-  confirm_password = '';
-  msg = '';
-  allCountryData: any;
   userId = '';
   profilePic: any = {};
   coverPic: any = {};
@@ -109,7 +103,6 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       ' ',
       '-'
     ).toLowerCase();
-    console.log(communityName);
     this.router.navigate(['community', communityName]);
   }
 

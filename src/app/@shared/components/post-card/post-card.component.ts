@@ -64,7 +64,6 @@ export class PostCardComponent {
   seeFirst(postProfileId: number): void {
     this.seeFirstUserService.create({ profileId: this.profileId, seeFirstProfileId: postProfileId }).subscribe({
       next: (res) => {
-        console.log('Res : ', res);
         this.getPostList?.emit();
       },
     });
@@ -75,7 +74,7 @@ export class PostCardComponent {
 
     this.unsubscribeProfileService.create({ profileId: this.profileId, unsubscribeProfileId: post?.profileid }).subscribe({
       next: (res) => {
-        console.log('Res : ', res);
+        return true;
       },
     });
   }
@@ -100,7 +99,6 @@ export class PostCardComponent {
     modalRef.componentInstance.message =
       'Are you sure want to delete this post?';
     modalRef.result.then((res) => {
-      console.log(res);
       if (res === 'success') {
         // post['hide'] = true;
         this.postService.deletePost(post.id).subscribe(
@@ -157,7 +155,7 @@ export class PostCardComponent {
 
   likeDisLikePost(data): void {
     this.socketService.likeFeedPost(data, (res) => {
-      console.log(res);
+      return;
     });
     // this.socketService.socket.on(
     //   'new-post',
@@ -182,7 +180,6 @@ export class PostCardComponent {
     this.postService.getComments(id).subscribe({
       next: (res) => {
         if (res) {
-          console.log(res.data);
           // this.commentList = res.data.commmentsList.filter((ele: any) => {
           //   res.data.replyCommnetsList.some((element: any) => {
           //     if (ele?.id === element?.parentCommentId) {
@@ -190,7 +187,6 @@ export class PostCardComponent {
           //       return ele;
           //     }
           //   });
-          //   console.log(this.commentList);
           // });
           this.commentList = res.data.commmentsList.map((ele: any) => ({
             ...ele,
@@ -198,7 +194,6 @@ export class PostCardComponent {
               return ele.id === ele1.parentCommentId;
             }),
           }));
-          console.log(this.commentList);
         }
       },
       error: (error) => {
@@ -244,7 +239,6 @@ export class PostCardComponent {
         childPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
-        console.log(data);
         this.commentList.map((ele: any) =>
           data.filter((ele1) => {
             if (ele.id === ele1.parentCommentId) {
@@ -253,7 +247,6 @@ export class PostCardComponent {
             }
           })
         );
-        console.log(this.commentList);
         this.isReply = false;
         this.commentId = null;
       });
@@ -273,9 +266,8 @@ export class PostCardComponent {
       likeCount: comment.likeCount,
       actionType: 'L',
     };
-    console.log(data);
     this.socketService.likeFeedComments(data, (res) => {
-      console.log(res);
+      return;
     });
   }
 
@@ -289,9 +281,8 @@ export class PostCardComponent {
       toProfileId: Number(comment.profileId),
       likeCount: comment.likeCount,
     };
-    console.log(data);
     this.socketService.likeFeedComments(data, (res) => {
-      console.log(res);
+      return;
     });
   }
 
@@ -318,7 +309,6 @@ export class PostCardComponent {
               this.commentData['file'] = null;
               this.commentData['imageUrl'] = res?.body?.url;
               this.submit();
-              console.log('this.postData : ', this.commentData);
             }
           },
           error: (err) => {
@@ -340,7 +330,6 @@ export class PostCardComponent {
         // childPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
-        console.log(data);
         this.commentList.map((ele: any) =>
           data.filter((ele1) => {
             if (ele.id === ele1.parentCommentId) {
@@ -349,7 +338,6 @@ export class PostCardComponent {
             }
           })
         );
-        console.log(this.commentList);
         this.isReply = false;
         this.commentId = null;
       });
@@ -378,11 +366,9 @@ export class PostCardComponent {
       this.isParent = false;
     }
     const file = event.target?.files?.[0] || {};
-    console.log(file)
     if (file.type.includes('image/')) {
       this.commentData['file'] = file;
       this.commentData['imageUrl'] = URL.createObjectURL(file);
-      console.log('commentImg: ', this.commentData['imageUrl']);
     } else {
       this.toaster.danger(`sorry ${file.type} are not allowed!`)
     }

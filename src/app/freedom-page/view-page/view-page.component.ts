@@ -1,23 +1,15 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   OnInit,
-  ViewChild,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject, debounceTime, fromEvent, map } from 'rxjs';
 import { Customer } from 'src/app/constant/customer';
 import { CommunityPostService } from 'src/app/services/community-post.service';
 import { CommunityService } from 'src/app/services/community.service';
-import { CustomerService } from 'src/app/services/customer.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { ToastService } from 'src/app/services/toaster.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UploadFilesService } from 'src/app/services/upload-files.service';
 
 @Component({
   selector: 'app-view-page',
@@ -26,23 +18,17 @@ import { UploadFilesService } from 'src/app/services/upload-files.service';
 })
 export class ViewPageComponent implements OnInit, AfterViewInit {
   customer: Customer = new Customer();
-  registerForm!: FormGroup;
-  isragister = false;
-  registrationMessage = '';
-  confirm_password = '';
-  msg = '';
-  allCountryData: any;
-  communityId = '';
+  pageId = '';
   profilePic: any = {};
   coverPic: any = {};
   activeTab = 1;
-  communityDetails: any = {};
+  pageDetails: any = {};
   memberList = [];
   postId = '';
   isExpand = false;
   isLike = false;
   userProfileId: number;
-  communityPostList = [];
+  pagePostList = [];
   adminList = [];
 
   constructor(
@@ -53,8 +39,7 @@ export class ViewPageComponent implements OnInit, AfterViewInit {
     private communityPostService: CommunityPostService,
     private toaster: ToastService
   ) {
-    // this.communityId = this.route.snapshot.paramMap.get('title');
-    this.communityId = history?.state?.data?.id;
+    this.pageId = history?.state?.data?.id;
     this.userProfileId = Number(sessionStorage.getItem('profileId'));
   }
   ngOnInit(): void {
@@ -67,13 +52,13 @@ export class ViewPageComponent implements OnInit, AfterViewInit {
 
   getCommunityDetails(): void {
     this.spinner.show();
-    this.communityService.getCommunityById(this.communityId).subscribe({
+    this.communityService.getCommunityById(this.pageId).subscribe({
       next: (res: any) => {
         this.spinner.hide();
         if (res) {
           res.forEach((element) => {
             if (element.Id) {
-              this.communityDetails = element;
+              this.pageDetails = element;
               this.memberList = element.memberList;
               this.memberList.forEach((ele) => {
                 if (ele.isAdmin === 'Y') {
@@ -94,11 +79,11 @@ export class ViewPageComponent implements OnInit, AfterViewInit {
 
   getCommunityPost(): void {
     this.spinner.show();
-    this.communityPostService.getPostsByProfileId(this.communityId).subscribe(
+    this.communityPostService.getPostsByProfileId(this.pageId).subscribe(
       {
         next: (res: any) => {
           if (res) {
-            this.communityPostList = res;
+            this.pagePostList = res;
           }
         },
         error:
@@ -114,7 +99,6 @@ export class ViewPageComponent implements OnInit, AfterViewInit {
   }
 
   openDropDown(id) {
-    console.log(id);
     this.postId = id;
     if (this.postId) {
       this.isExpand = true;

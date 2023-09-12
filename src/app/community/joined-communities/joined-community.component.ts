@@ -30,7 +30,6 @@ export class JoinedCommunityComponent implements OnInit {
       ' ',
       '-'
     ).toLowerCase();
-    console.log(communityName);
     this.router.navigate(['community', communityName]);
     // this.router.navigateByUrl(`community/c/${communityName}`, {
     //   query: community.Id,
@@ -66,7 +65,6 @@ export class JoinedCommunityComponent implements OnInit {
     modalRef.componentInstance.message =
       'Are you sure want to Leave from this community?';
     modalRef.result.then((res) => {
-      console.log(res);
       if (res === 'success') {
         const profileId = Number(sessionStorage.getItem('profileId'));
         this.communityService.removeFromCommunity(id, profileId).subscribe({

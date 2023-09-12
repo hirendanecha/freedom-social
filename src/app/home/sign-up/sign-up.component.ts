@@ -116,7 +116,6 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   save() {
     this.spinner.show();
-    // console.log(this.registerForm.value);
     this.customerService.createCustomer(this.customer).subscribe(
       {
         next: (data: any) => {

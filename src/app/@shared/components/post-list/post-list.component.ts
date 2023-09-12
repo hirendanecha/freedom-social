@@ -45,8 +45,6 @@ export class PostListComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const id = changes?.communityId?.currentValue;
-    console.log('changes : ', id);
-
     // if (id && id != this.communityId) {
     //   this.communityId = id;
 
