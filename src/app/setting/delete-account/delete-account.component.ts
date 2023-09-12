@@ -64,7 +64,7 @@ export class DeleteAccountComponent implements OnInit {
         this.customerService.deleteCustomer(id).subscribe({
           next: (res: any) => {
             if (res) {
-              this.toaster.success(res.message);
+              this.toaster.success(res.message || 'Account deleted successfully');
               this.tokenStorageService.signOut();
               this.router.navigateByUrl('register');
             }

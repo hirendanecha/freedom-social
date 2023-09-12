@@ -7,7 +7,7 @@
           <div class="row g-0">
             <div class="col-11 col-md-8 col-lg-7 col-xl-6 mx-auto">
               <p class="text-2 mb-5">
-                Not a member?
+                Not activated?
                 <a class="fw-500" routerLink="/register">Register</a>
               </p>
               <h3 class="mb-4">Log In to Your Account</h3>
@@ -29,7 +29,11 @@
                   {{ errorMessage || msg }}
                 </div>
                 <div class="mb-3">
-                  <label class="form-label text-light">Email Address</label>
+                  <label class="form-label text-light"
+                    >Email Address or Username<span class="text-danger"
+                      >*</span
+                    ></label
+                  >
                   <input
                     type="email"
                     class="input-area"
@@ -51,8 +55,12 @@
                 </div>
                 <div class="mb-3">
                   <div class="d-flex justify-content-between">
-                    <label class="form-label text-light">Password</label>
-                    <a class="fw-500 c-pointer" (click)="forgotPasswordOpen()">Forgot Password ?</a>
+                    <label class="form-label text-light"
+                      >Password<span class="text-danger">*</span></label
+                    >
+                    <a class="fw-500 c-pointer" (click)="forgotPasswordOpen()"
+                      >Forgot Password ?</a
+                    >
                   </div>
                   <input
                     type="password"

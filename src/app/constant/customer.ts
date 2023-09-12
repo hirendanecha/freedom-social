@@ -33,4 +33,5 @@ export class Community {
   logoImg: string;
   coverImg: string;
   isApprove: string;
+  pageType: string;
 }
