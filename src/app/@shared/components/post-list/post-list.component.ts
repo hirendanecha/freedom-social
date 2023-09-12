@@ -2,8 +2,10 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -19,13 +21,13 @@ import { SocketService } from 'src/app/services/socket.service';
   styleUrls: ['./post-list.component.scss'],
   animations: [slideUp],
 })
-export class PostListComponent implements OnInit {
-  @Input('parentComponent') parentComponent = '';
+export class PostListComponent implements OnInit, OnChanges {
+  @Input('parentComponent') parentComponent: string = '';
+  @Input('communityId') communityId: number = null;
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
 
   postList = [];
   seeFirstList = [];
-  communityId: number;
   profileId: string = '';
   activePage = 1;
 
@@ -36,20 +38,24 @@ export class PostListComponent implements OnInit {
     public sharedService: SharedService,
     private socketService: SocketService,
     private seeFirstUserService: SeeFirstUserService,
-    private router: Router
   ) {
     this.communityId = +history?.state?.data?.id;
     this.profileId = sessionStorage.getItem('profileId');
   }
 
-  ngOnInit(): void {
-    this.router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd) {
-        this.communityId = +history?.state?.data?.id;
+  ngOnChanges(changes: SimpleChanges): void {
+    const id = changes?.communityId?.currentValue;
+    console.log('changes : ', id);
 
-        this.getPostList();
-      }
-    });
+    // if (id && id != this.communityId) {
+    //   this.communityId = id;
+
+    //   this.getPostList();
+    // }
+  }
+
+  ngOnInit(): void {
+    this.getPostList();
 
     this.socketService.socket.on(
       'new-post',

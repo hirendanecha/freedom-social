@@ -11,7 +11,7 @@ import { NgbDropdown, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostService } from '../services/post.service';
 import { SharedService } from '../services/shared.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent, Scroll } from '@angular/router';
 import { SocketService } from '../services/socket.service';
 import { CustomerService } from '../services/customer.service';
 import { ToastService } from '../services/toaster.service';
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     imageUrl: '',
   };
 
-  communityId: number;
+  communitySlug: string;
   communityDetails: any;
   profileId = '';
 
@@ -60,20 +60,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private renderer: Renderer2,
     private toaster: ToastService,
     private communityService: CommunityService,
+    private route: ActivatedRoute
   ) {
-    this.communityId = +history?.state?.data?.id;
     this.profileId = sessionStorage.getItem('profileId');
-
     this.postData.profileid = +this.profileId;
-    this.postData.communityId = this.communityId;
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd) {
-        this.communityId = +history?.state?.data?.id;
+    this.router.events.subscribe((event: RouterEvent | any) => {
+      const name = this.route.snapshot.params.name;
 
-        this.getCommunityDetails();
+      if ((event instanceof NavigationEnd || event instanceof Scroll) && name) {
+        this.communitySlug = name;
+        this.getCommunityDetailsByName();
       }
     });
   }
@@ -112,10 +111,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.postData['imageUrl'] = '';
   }
 
-  getCommunityDetails(): void {
-    if (this.communityId) {
+  getCommunityDetailsByName(): void {
+    if (this.communitySlug) {
       this.spinner.show();
-      this.communityService.getCommunityById(this.communityId).subscribe(
+      this.communityService.getCommunityByName(this.communitySlug).subscribe(
         {
           next: (res: any) => {
             this.spinner.hide();
@@ -129,8 +128,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
                       (member: any) => member?.profileId
                     );
                   }
+
                   this.communityDetails = details;
-                  console.log('communityDetails : ', this.communityDetails);
+                  this.postData.communityId = this.communityDetails?.Id;
                 } else {
                   this.router.navigate(['local-community']);
                 }
@@ -164,7 +164,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (res: any) => {
           if (res) {
             this.toaster.success(res.message);
-            this.getCommunityDetails();
+            this.getCommunityDetailsByName();
           }
         },
         error:
@@ -449,7 +449,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.communityService.joinCommunity(data).subscribe(
       (res: any) => {
         if (res) {
-          this.getCommunityDetails();
+          this.getCommunityDetailsByName();
         }
       },
       (error) => {
@@ -475,7 +475,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           next: (res: any) => {
             if (res) {
               this.toaster.success(res.message);
-              this.getCommunityDetails();
+              this.getCommunityDetailsByName();
             }
           },
           error: (error) => {
@@ -503,7 +503,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           next: (res: any) => {
             if (res) {
               this.toaster.success(res.message);
-              this.getCommunityDetails();
+              this.getCommunityDetailsByName();
             }
           },
           error: (error) => {
