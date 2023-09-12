@@ -6,7 +6,6 @@ import { MyCommunityComponent } from './my-communities/my-community.component';
 import { JoinedCommunityComponent } from './joined-communities/joined-community.component';
 import { LocalCommunityComponent } from './local-communities/local-community.component';
 import { AddCommunityComponent } from './add-community/add-community.component';
-import { CommunityRegisterComponent } from './create-community/community-register.component';
 import { SharedModule } from '../@shared/shared.module';
 
 @NgModule({
@@ -16,7 +15,6 @@ import { SharedModule } from '../@shared/shared.module';
     JoinedCommunityComponent,
     LocalCommunityComponent,
     AddCommunityComponent,
-    CommunityRegisterComponent
   ],
   imports: [CommunityRoutingModule, SharedModule],
   exports: [
