@@ -74,9 +74,8 @@ export class CommunityService {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
 
-  getCommunityByName(name: string): Observable<any> {
-    const communityName = name.replace(/-/g, ' ');
-    return this.http.get(`${this.baseUrl}/byName/${communityName}`);
+  getCommunityBySlug(slug: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/bySlug/${slug}`);
   }
 
   deleteCommunity(id): Observable<any> {

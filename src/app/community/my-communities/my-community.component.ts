@@ -63,11 +63,7 @@ export class MyCommunityComponent implements OnInit {
       '-'
     ).toLowerCase();
     console.log(communityName);
-    this.router.navigate([`community/${communityName}`], {
-      state: {
-        data: { id: community.Id },
-      },
-    });
+    this.router.navigate(['community', communityName]);
     // this.router.navigateByUrl(`community/c/${communityName}`, {
     //   query: community.Id,
     // });

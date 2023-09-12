@@ -75,10 +75,6 @@ export class MyListComponent implements OnInit {
       '-'
     ).toLowerCase();
     console.log(communityName);
-    this.router.navigate([`community/${communityName}`], {
-      state: {
-        data: { id: community.Id },
-      },
-    });
+    this.router.navigate(['community', communityName]);
   }
 }

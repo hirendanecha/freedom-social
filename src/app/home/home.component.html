@@ -239,9 +239,9 @@
 
   <app-post-list
     parentComponent="HomeComponent"
+    [communityId]="communityDetails?.Id"
     (onEditPost)="onEditPost($event)"
   />
-    <!-- [communityId]="communityDetails?.Id" -->
 </ng-container>
 
 <ng-container

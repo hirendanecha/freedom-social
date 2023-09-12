@@ -110,11 +110,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       '-'
     ).toLowerCase();
     console.log(communityName);
-    this.router.navigate([`community/${communityName}`], {
-      state: {
-        data: { id: community.Id },
-      },
-    });
+    this.router.navigate(['community', communityName]);
   }
 
   openDropDown(id) {

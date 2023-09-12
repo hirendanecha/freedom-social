@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   getCommunityDetailsByName(): void {
     if (this.communitySlug) {
       this.spinner.show();
-      this.communityService.getCommunityByName(this.communitySlug).subscribe(
+      this.communityService.getCommunityBySlug(this.communitySlug).subscribe(
         {
           next: (res: any) => {
             this.spinner.hide();
