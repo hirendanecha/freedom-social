@@ -39,7 +39,6 @@ export class PostListComponent implements OnInit, OnChanges {
     private socketService: SocketService,
     private seeFirstUserService: SeeFirstUserService,
   ) {
-    this.communityId = +history?.state?.data?.id;
     this.profileId = sessionStorage.getItem('profileId');
   }
 
