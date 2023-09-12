@@ -19,11 +19,6 @@ const routes: Routes = [
       import('../community/community.module').then((m) => m.CommunityModule),
   },
   {
-    path: 'communities-post',
-    loadChildren: () =>
-      import('../favorites/favorite.module').then((m) => m.FavoriteModule),
-  },
-  {
     path: 'research',
     // canActivate: [AuthenticationGuard],
     loadChildren: () =>
@@ -48,10 +43,17 @@ const routes: Routes = [
         (m) => m.NotificationsModule
       ),
   },
+  {
+    path: 'pages',
+    loadChildren: () =>
+      import('../freedom-page/freedom-page.module').then(
+        (m) => m.FreedomPageModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ShellRoutingModule {}
+export class ShellRoutingModule { }
