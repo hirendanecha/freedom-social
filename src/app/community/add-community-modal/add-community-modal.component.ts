@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
@@ -6,15 +6,14 @@ import { slugify } from 'src/app/@shared/utils/utils';
 import { Community } from 'src/app/constant/customer';
 import { CommunityService } from 'src/app/services/community.service';
 import { ToastService } from 'src/app/services/toaster.service';
-import { UploadFilesService } from 'src/app/services/upload-files.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-community-modal',
-  templateUrl: './add-community.component.html',
-  styleUrls: ['./add-community.component.scss'],
+  templateUrl: './add-community-modal.component.html',
+  styleUrls: ['./add-community-modal.component.scss'],
 })
-export class AddCommunityComponent {
+export class AddCommunityModalComponent {
   @Input() closeIcon: boolean | undefined;
 
   communityDetails = new Community();

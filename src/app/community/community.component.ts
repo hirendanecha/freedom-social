@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AddCommunityComponent } from './add-community/add-community.component';
 import { Router } from '@angular/router';
+import { AddCommunityModalComponent } from './add-community-modal/add-community-modal.component';
 
 @Component({
   selector: 'app-community',
@@ -13,7 +13,7 @@ export class CommunityComponent {
   constructor(private modalService: NgbModal, private router: Router) {}
 
   createCommunity() {
-    const modalRef = this.modalService.open(AddCommunityComponent, {
+    const modalRef = this.modalService.open(AddCommunityModalComponent, {
       centered: true,
       backdrop: 'static',
       keyboard: false,
