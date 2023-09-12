@@ -29,6 +29,7 @@ export class Community {
   userId: string;
   profileId: string;
   CommunityName: string;
+  slug: string;
   CommunityDescription: string;
   logoImg: string;
   coverImg: string;

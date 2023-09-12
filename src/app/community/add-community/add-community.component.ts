@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { forkJoin } from 'rxjs';
+import { slugify } from 'src/app/@shared/utils/utils';
 import { Community } from 'src/app/constant/customer';
 import { CommunityService } from 'src/app/services/community.service';
 import { ToastService } from 'src/app/services/toaster.service';
@@ -19,14 +21,21 @@ export class AddCommunityComponent {
   submitted = false;
   registrationMessage = '';
   selectedFile: File;
-  logoImg: any;
-  coverImg: any;
   userId = '';
   profileId = '';
-  originurl = environment.webUrl + 'community/';
+  originUrl = environment.webUrl + 'community/';
+  logoImg: any = {
+    file: null,
+    url: ''
+  };
+  coverImg: any = {
+    file: null,
+    url: ''
+  };
+
+
   constructor(
     public activeModal: NgbActiveModal,
-    private uploadService: UploadFilesService,
     private spinner: NgxSpinnerService,
     private communityService: CommunityService,
     private toaster: ToastService
@@ -35,46 +44,49 @@ export class AddCommunityComponent {
     this.profileId = sessionStorage.getItem('profileId');
   }
 
-  selectFiles(event, type) {
-    this.selectedFile = event.target.files;
-    this.upload(this.selectedFile, type);
-  }
-
-  upload(file, defaultType): any {
-    if (file.size / (1024 * 1024) > 5) {
-      return 'Image file size exceeds 5 MB!';
+  uploadImgAndSubmit(): void {
+    let uploadObs = {};
+    if (this.logoImg?.file?.name) {
+      uploadObs['logoImg'] = this.communityService.upload(this.logoImg?.file, this.profileId, 'community-logo');
     }
-    this.spinner.show();
-    this.communityService
-      .upload(file[0], this.profileId, defaultType)
-      .subscribe(
-        {
-          next: (res: any) => {
-            this.spinner.hide();
-            if (res.body) {
-              if (defaultType === 'community-logo') {
-                this.logoImg = res?.body?.url;
-              } else if (defaultType === 'community-cover') {
-                this.coverImg = res?.body?.url;
-              }
-            }
-          },
-          error:
-            (err) => {
-              this.spinner.hide();
-              this.selectedFile = undefined;
-              return 'Could not upload the file:' + file.name;
-            }
-        }
-      );
+
+    if (this.coverImg?.file?.name) {
+      uploadObs['coverImg'] = this.communityService.upload(this.coverImg?.file, this.profileId, 'community-cover');
+    }
+
+    if (Object.keys(uploadObs)?.length > 0) {
+      this.spinner.show();
+
+      forkJoin(uploadObs).subscribe({
+        next: (res: any) => {
+          if (res?.logoImg?.body?.url) {
+            this.logoImg['file'] = null;
+            this.logoImg['url'] = res?.logoImg?.body?.url;
+          }
+
+          if (res?.coverImg?.body?.url) {
+            this.coverImg['file'] = null;
+            this.coverImg['url'] = res?.coverImg?.body?.url;
+          }
+
+          this.spinner.hide();
+          this.onSubmit();
+        },
+        error: (err) => {
+          this.spinner.hide();
+        },
+      });
+    } else {
+      this.onSubmit();
+    }
   }
 
   onSubmit() {
     this.spinner.show();
-    if (this.communityDetails.CommunityName && this.logoImg && this.coverImg) {
+    if (this.communityDetails.CommunityName && this.communityDetails.slug && this.logoImg?.url && this.coverImg?.url) {
       this.communityDetails.profileId = this.profileId;
-      this.communityDetails.logoImg = this.logoImg;
-      this.communityDetails.coverImg = this.coverImg;
+      this.communityDetails.logoImg = this.logoImg?.url;
+      this.communityDetails.coverImg = this.coverImg?.url;
       if (this.communityDetails) {
         this.communityService.createCommunity(this.communityDetails).subscribe(
           {
@@ -83,9 +95,8 @@ export class AddCommunityComponent {
               if (!res.error) {
                 this.submitted = true;
                 this.createCommunityAdmin(res.data);
-                this.activeModal.close('success');
                 this.toaster.success('Your Local Community will be approved withing 24 hours!');
-                // this.router.navigateByUrl('/home');
+                this.activeModal.close('success');
               }
             },
             error:
@@ -99,37 +110,6 @@ export class AddCommunityComponent {
       this.spinner.hide();
       this.toaster.danger('Please enter mandatory fields(*) data.');
     }
-  }
-
-  getProfilePic() {
-    // this.spinner.show();
-    this.communityService.getLogoImg(this.userId).subscribe(
-      {
-        next: (res: any) => {
-          if (res.length) {
-            // this.spinner.hide();
-            this.logoImg = res[0];
-          }
-        },
-        error:
-          (error) => {
-            console.log(error);
-          }
-      });
-    this.communityService.getCoverImg(this.userId).subscribe(
-      {
-        next: (res: any) => {
-          if (res) {
-            // this.spinner.hide();
-            this.coverImg = res[0];
-          }
-        },
-        error:
-          (error) => {
-            // this.spinner.hide();
-            console.log(error);
-          }
-      });
   }
 
   createCommunityAdmin(id): void {
@@ -151,5 +131,17 @@ export class AddCommunityComponent {
             console.log(error);
           }
       });
+  }
+
+  onCommunityNameChange(): void {
+    this.communityDetails.slug = slugify(this.communityDetails.CommunityName);
+  }
+
+  onLogoImgChange(event: any): void {
+    this.logoImg = event;
+  }
+
+  onCoverImgChange(event: any): void {
+    this.coverImg = event;
   }
 }

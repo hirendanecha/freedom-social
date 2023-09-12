@@ -11,190 +11,66 @@
 </div>
 
 <div class="modal-body text-center">
-  <div class="mid-area">
-    <div class="mb-5 gap-3">
-      <!-- <div class="profile-box">
-        <a
-          ><img
-            src="assets/images/avtar/avatar.png"
-            class="max-un"
-            alt="icon"
-        /></a>
-      </div>
-      <textarea
-        cols="10"
-        rows="2"
-        placeholder="Write something to Lerio.."
-      ></textarea> -->
-      <form
-        id="loginForm"
-        class="form-dark"
-        ngNativeValidate
-        autocomplete="off"
+  <form
+    id="loginForm"
+    class="form-dark row"
+    ngNativeValidate
+    autocomplete="off"
+  >
+    <div class="col-12 mb-5">
+      <label class="form-label d-flex"
+        >Community Name<span class="text-danger">*</span></label
       >
-        <div class="row">
-          <div class="col-12 mb-3">
-            <label class="form-label d-flex"
-              >Community Url<span class="text-danger">*</span></label
-            >
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span
-                  class="input-group-text h-100 border-0"
-                  id="basic-addon3"
-                  >{{ originurl }}</span
-                >
-              </div>
-              <input
-                type="text"
-                class="input-area"
-                name="cname"
-                [(ngModel)]="communityDetails.CommunityName"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 mb-3">
-            <label class="form-label d-flex">Community Description</label>
-            <textarea
-              name="dec"
-              cols="30"
-              rows="3"
-              placeholder="Enter your description"
-              [(ngModel)]="communityDetails.CommunityDescription"
-              required
-            ></textarea>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 mb-3 d-grid">
-            <label class="form-label d-flex"
-              >Logo Image<span class="text-danger">*</span></label
-            >
-            <!-- <input
-              type="file"
-              name="logo"
-              (change)="selectFiles($event, 'community-logo')"
-            /> -->
-            <ng-container *ngIf="!logoImg">
-              <input
-                type="file"
-                name="logo"
-                (change)="selectFiles($event, 'community-logo')"
-                required
-              />
-            </ng-container>
-            <img
-              class="w-25"
-              *ngIf="logoImg"
-              loading="lazy"
-              data-src="{{ logoImg }}"
-              alt=""
-            />
-          </div>
-          <div class="col-12 mb-3 d-grid">
-            <label class="form-label d-flex"
-              >Cover Image<span class="text-danger">*</span></label
-            >
-            <!-- <input
-              name="cover"
-              type="file"
-              placeholder="Enter your description"
-              (change)="selectFiles($event, 'community-cover')"
-            /> -->
-            <ng-container *ngIf="!coverImg">
-              <input
-                name="cover"
-                type="file"
-                placeholder="Enter your description"
-                (change)="selectFiles($event, 'community-cover')"
-                required
-              />
-            </ng-container>
-            <img
-              class="w-50"
-              *ngIf="coverImg"
-              loading="lazy"
-              data-src="{{ coverImg }}"
-              alt=""
-            />
-          </div>
-        </div>
-
-        <!-- <div class="form-check my-4 d-flex">
-                  <input class="form-check-input p-0" type="checkbox" />
-                  <label class="form-check-label ms-2"
-                    >I agree to the <a>Terms</a> and
-                    <a>Privacy Policy</a>.</label
-                  >
-                </div> -->
-        <!-- <button
-          class="btn btn-primary my-2 login-button"
-          type="submit"
-          [disabled]="submitted"
-        >
-          Create Community
-        </button> -->
-      </form>
+      <input
+        type="text"
+        class="input-area"
+        name="cname"
+        [(ngModel)]="communityDetails.CommunityName"
+        placeholder="Enter your community name"
+        (keyup)="onCommunityNameChange()"
+      />
     </div>
-    <!-- <div class="file-upload">
-      <label>Upload attachment</label>
-      <label class="file mt-1">
-        <input type="file" />
-        <span class="file-custom pt-8 pb-8 d-grid text-center">
-          <i class="material-symbols-outlined mat-icon"> perm_media </i>
-          <span>Drag here or click to upload photo.</span>
-        </span>
-      </label>
-    </div> -->
-    <!-- <div class="tooltips-area d-flex mt-3 gap-2">
-      <button
-        type="button"
-        class="btn d-center"
-        data-bs-toggle="tooltip"
-        data-bs-placement="top"
-        title="Fallings/Activity"
+
+    <div class="col-12 mb-5">
+      <label class="form-label d-flex"
+        >Community Url<span class="text-danger">*</span></label
       >
-        <i class="material-symbols-outlined mat-icon"> mood </i>
-      </button>
-      <button
-        type="button"
-        class="btn d-center"
-        data-bs-toggle="tooltip"
-        data-bs-placement="top"
-        title="Video"
-      >
-        <i class="material-symbols-outlined mat-icon"> movie </i>
-      </button>
-      <button
-        type="button"
-        class="btn d-center"
-        data-bs-toggle="tooltip"
-        data-bs-placement="top"
-        title="Maps"
-      >
-        <i class="material-symbols-outlined mat-icon"> location_on </i>
-      </button>
-      <button
-        type="button"
-        class="btn d-center"
-        data-bs-toggle="tooltip"
-        data-bs-placement="top"
-        title="Tag"
-      >
-        <i class="material-symbols-outlined mat-icon"> sell </i>
-      </button>
-    </div> -->
-    <!-- <div class="left-area">
-      <select>
-        <option value="1">Public</option>
-        <option value="2">Only Me</option>
-        <option value="3">Friends</option>
-        <option value="4">Custom</option>
-      </select>
-    </div> -->
-  </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text h-100 border-0 ps-5 pe-0">{{ originUrl }}</span>
+        </div>
+        <input
+          type="text"
+          class="input-area ps-1"
+          name="cSlug"
+          [(ngModel)]="communityDetails.slug"
+          placeholder="Enter community url slug"
+        />
+      </div>
+    </div>
+
+    <div class="col-12 mb-5">
+      <label class="form-label d-flex">Community Description</label>
+      <textarea
+        name="dec"
+        cols="30"
+        rows="3"
+        placeholder="Enter your description"
+        [(ngModel)]="communityDetails.CommunityDescription"
+        required
+      ></textarea>
+    </div>
+
+    <div class="col-12 col-md-6 mb-5 d-grid">
+      <label class="form-label d-flex">Logo Image<span class="text-danger">*</span></label>
+      <app-img-picker classes="w-160-px h-160-px" (onFileChange)="onLogoImgChange($event)"/>
+    </div>
+
+    <div class="col-12 col-md-6 mb-5 d-grid">
+      <label class="form-label d-flex">Cover Image<span class="text-danger">*</span></label>
+      <app-img-picker (onFileChange)="onCoverImgChange($event)"/>
+    </div>
+  </form>
 </div>
 
 <div class="modal-footer justify-content-end gap-3 border-0">
@@ -211,9 +87,8 @@
     type="submit"
     class="cmn-btn p-2"
     [disabled]="!communityDetails"
-    (click)="onSubmit()"
+    (click)="uploadImgAndSubmit()"
   >
-    <!-- (click)="" -->
     Create
   </button>
 </div>

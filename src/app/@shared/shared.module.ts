@@ -15,13 +15,15 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PostCardComponent } from './components/post-card/post-card.component';
+import { ImgPickerComponent } from './components/img-picker/img-picker.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
   MyListComponent,
   MyProfileComponent,
   PostListComponent,
-  PostCardComponent
+  PostCardComponent,
+  ImgPickerComponent
 ];
 
 const sharedModules = [

@@ -40,15 +40,8 @@ export class LocalCommunityComponent implements OnInit {
       });
   }
 
-  goToCommunityDetails(community): void {
-    const communityName = community.CommunityName.replaceAll(
-      ' ',
-      '-'
-    ).toLowerCase();
-    this.router.navigate(['community', communityName]);
-    // this.router.navigateByUrl(`community/c/${communityName}`, {
-    //   query: community.Id,
-    // });
+  goToCommunityDetails(community: any): void {
+    this.router.navigate(['community', community?.slug]);
   }
 
   joinCommunity(community): void {

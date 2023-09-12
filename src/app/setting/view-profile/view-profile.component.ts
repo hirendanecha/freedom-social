@@ -98,12 +98,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  goToCommunityDetails(community): void {
-    const communityName = community.CommunityName.replaceAll(
-      ' ',
-      '-'
-    ).toLowerCase();
-    this.router.navigate(['community', communityName]);
+  goToCommunityDetails(community: any): void {
+    this.router.navigate(['community', community?.slug]);
   }
 
   openDropDown(id) {

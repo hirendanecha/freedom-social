@@ -1,0 +1,29 @@
+<div class="img-picker single-box mb-0 d-flex flex-column position-relative" [ngClass]="classes" >
+  <img
+    class="w-100 h-100 rounded-3"
+    loading="lazy"
+    data-src="{{
+      fileData?.url || '/assets/images/avtar/placeholder-user.png'
+    }}"
+    onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+  />
+
+  <div class="edit-image d-flex justify-content-center align-items-center w-100 h-100 c-pointer" (click)="imgFileTagRef.click()" >
+    <ng-container *ngIf="!fileData?.url">
+      <span class="material-symbols-outlined">
+        add_a_photo
+      </span>
+    </ng-container>
+
+    <ng-container *ngIf="fileData?.url">
+      <span
+        class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
+        (click)="onClearFile($event)"
+      >
+        close
+      </span>
+    </ng-container>
+
+    <input type="file" #imgFileTagRef hidden required class="d-none" accept="image/*" (change)="onImgFileChange($event)"/>
+  </div>
+</div>
