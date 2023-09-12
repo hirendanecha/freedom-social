@@ -297,8 +297,8 @@
 
               <button ngbDropdownItem>
                 <a
+                  [href]="'settings/view-profile/' + member?.profileId"
                   class="droplist d-flex align-items-center gap-2"
-                  (click)="goToViewProfile(member?.profileId)"
                 >
                   <i class="material-symbols-outlined mat-icon"> person </i>
                   <span>View Profile</span>

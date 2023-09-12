@@ -65,12 +65,17 @@ export class CommunityService {
   getCommunityByUserId(id): Observable<any> {
     return this.http.get(`${this.baseUrl}/user/${id}`);
   }
+
   getJoinedCommunityByProfileId(id): Observable<any> {
     return this.http.get(`${this.baseUrl}/joined-community/${id}`);
   }
 
   getCommunityById(id): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
+  }
+
+  getCommunityByName(name): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${name}`);
   }
 
   deleteCommunity(id): Observable<any> {

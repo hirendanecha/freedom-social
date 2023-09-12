@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { slideUp } from 'src/app/@shared/animations/slideUp';
 import { PostService } from 'src/app/services/post.service';
@@ -34,14 +35,21 @@ export class PostListComponent implements OnInit {
     private postService: PostService,
     public sharedService: SharedService,
     private socketService: SocketService,
-    private seeFirstUserService: SeeFirstUserService
+    private seeFirstUserService: SeeFirstUserService,
+    private router: Router
   ) {
     this.communityId = +history?.state?.data?.id;
     this.profileId = sessionStorage.getItem('profileId');
   }
 
   ngOnInit(): void {
-    this.getPostList();
+    this.router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.communityId = +history?.state?.data?.id;
+
+        this.getPostList();
+      }
+    });
 
     this.socketService.socket.on(
       'new-post',

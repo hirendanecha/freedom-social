@@ -24,11 +24,12 @@
             <img loading="lazy"
               class="w-80-px h-80-px rounded-3"
               data-src="{{community?.logoImg}}"
+              onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
               alt="avatar"
             />
           </div>
           <a
-            ><h6 class="m-0 mb-2 mt-3">{{ community.CommunityName }}</h6></a
+          ><h6 class="m-0 mb-2 mt-3">{{ community.CommunityName }}</h6></a
           >
           <p class="smtxt public-group">{{ community.CommunityDescription }}</p>
           <div class="friends-list d-center mt-3 gap-1 text-center">

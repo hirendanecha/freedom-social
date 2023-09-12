@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CommunityService } from 'src/app/services/community.service';
-import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-local-community',
@@ -12,8 +10,8 @@ import { SocketService } from 'src/app/services/socket.service';
 })
 export class LocalCommunityComponent implements OnInit {
   communityList = [];
+
   constructor(
-    private socketService: SocketService,
     private spinner: NgxSpinnerService,
     private router: Router,
     private communityService: CommunityService
@@ -40,20 +38,6 @@ export class LocalCommunityComponent implements OnInit {
             console.log(error);
           }
       });
-    // this.socketService.getCommunity({ id: profileId }, (data) => {
-    //   return data;
-    // });
-    // this.socketService.socket.on(
-    //   'new-community',
-    //   (data) => {
-    //     this.spinner.hide();
-    //     this.communityList = data;
-    //   },
-    //   (error) => {
-    //     this.spinner.hide();
-    //     console.log(error);
-    //   }
-    // );
   }
 
   goToCommunityDetails(community): void {
