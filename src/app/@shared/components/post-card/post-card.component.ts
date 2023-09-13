@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostService } from 'src/app/services/post.service';
-import { SeeFirstUserService } from 'src/app/services/see-first-user.service';
-import { SocketService } from 'src/app/services/socket.service';
-import { ToastService } from 'src/app/services/toaster.service';
-import { UnsubscribeProfileService } from 'src/app/services/unsubscribe-profile.service';
+import { PostService } from 'src/app/@shared/services/post.service';
+import { SeeFirstUserService } from 'src/app/@shared/services/see-first-user.service';
+import { SocketService } from 'src/app/@shared/services/socket.service';
+import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { UnsubscribeProfileService } from 'src/app/@shared/services/unsubscribe-profile.service';
 import { ConfirmationModalComponent } from '../../modals/confirmation-modal/confirmation-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SharedService } from 'src/app/services/shared.service';
+import { SharedService } from 'src/app/@shared/services/shared.service';
 import { slideUp } from '../../animations/slideUp';
 import { NgxSpinnerService } from 'ngx-spinner';
 

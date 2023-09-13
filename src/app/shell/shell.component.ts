@@ -1,4 +1,3 @@
-import { animate, query, style } from '@angular/animations';
 import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 

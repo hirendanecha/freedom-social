@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ToastService } from 'src/app/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toaster.service';
 
 @Component({
   selector: 'app-img-picker',

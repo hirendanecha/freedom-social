@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationModalComponent } from '../../modals/confirmation-modal/confirmation-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CommunityService } from 'src/app/services/community.service';
-import { ToastService } from 'src/app/services/toaster.service';
+import { CommunityService } from 'src/app/@shared/services/community.service';
+import { ToastService } from 'src/app/@shared/services/toaster.service';
 
 @Component({
   selector: 'app-community-card',
