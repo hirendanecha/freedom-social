@@ -1,28 +1,15 @@
-<div class="head-area mt-5 mt-lg-0"></div>
-<div class="top-area mb-5 d-lg-flex gap-3 justify-content-between">
-  <ul ngbNav #nav="ngbNav" [activeId]="activeTab" class="nav pt-3 flex-wrap tab-area">
-    <li [ngbNavItem]="1">
-      <button ngbNavLink>My community</button>
-
-      <ng-template ngbNavContent>
-        <app-my-community></app-my-community>
-      </ng-template>
+<div class="mb-5 d-flex gap-3 justify-content-between">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="activeIdTab" (activeIdChange)="getCommunities()" class="nav pt-3 flex-wrap tab-area">
+    <li ngbNavItem="my">
+      <button ngbNavLink>My Community</button>
     </li>
 
-    <li [ngbNavItem]="2">
-      <button ngbNavLink>Joined communities</button>
-
-      <ng-template ngbNavContent>
-        <app-joined-community></app-joined-community>
-      </ng-template>
+    <li ngbNavItem="joined">
+      <button ngbNavLink>Joined Communities</button>
     </li>
 
-    <li [ngbNavItem]="3">
-      <button ngbNavLink>Find Local communities</button>
-
-      <ng-template ngbNavContent>
-        <app-local-community></app-local-community>
-      </ng-template>
+    <li ngbNavItem="local">
+      <button ngbNavLink>Find Local Communities</button>
     </li>
   </ul>
 
@@ -34,4 +21,14 @@
   </div>
 </div>
 
-<div class="tab-content" [ngbNavOutlet]="nav" ></div>
+<div class="row">
+  <ng-container *ngFor="let community of communities">
+    <div class="col-md-4 col-sm-6 pb-6">
+      <app-community-card [type]="activeIdTab" [community]="community" (getCommunities)="getCommunities()" />
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!communities.length">
+    <span>No community found</span>
+  </ng-container>
+</div>

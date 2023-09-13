@@ -4,13 +4,13 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-confirmation-modal',
   templateUrl: './confirmation-modal.component.html',
-  styleUrls: ['./confirmation-modal.component.css'],
+  styleUrls: ['./confirmation-modal.component.scss'],
 })
 export class ConfirmationModalComponent {
-  @Input() cancelButtonLabel: string | undefined;
-  @Input() confirmButtonLabel: string | undefined;
-  @Input() title: string | undefined;
+  @Input() cancelButtonLabel: string | undefined = 'Cancel';
+  @Input() confirmButtonLabel: string | undefined = 'Confirm';
+  @Input() title: string | undefined = 'Confirmation Dialog';
   @Input() message: string | undefined;
-  @Input() closeIcon: boolean | undefined;
+
   constructor(public activeModal: NgbActiveModal) {}
 }

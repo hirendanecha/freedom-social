@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PostCardComponent } from './components/post-card/post-card.component';
 import { ImgPickerComponent } from './components/img-picker/img-picker.component';
+import { CommunityCardComponent } from './components/community-card/community-card.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -23,7 +24,8 @@ const sharedComponents = [
   MyProfileComponent,
   PostListComponent,
   PostCardComponent,
-  ImgPickerComponent
+  ImgPickerComponent,
+  CommunityCardComponent
 ];
 
 const sharedModules = [
