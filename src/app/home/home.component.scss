@@ -116,6 +116,7 @@
 .post-message-input, .comment-input {
   font-size: 16px;
   min-height: 56px;
+  line-break: anywhere;
 
   &[placeholder]:empty {
     &:before {
