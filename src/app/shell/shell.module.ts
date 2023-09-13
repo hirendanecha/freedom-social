@@ -6,8 +6,6 @@ import { FooterComponent } from '../layouts/components/footer/footer.component';
 import {
   NgbActiveModal,
 } from '@ng-bootstrap/ng-bootstrap';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
-import { PipeModule } from '../@shared/pipe/pipe.module';
 import { ToastsContainer } from '../@shared/services/toast-container.component';
 import {
   LAZYLOAD_IMAGE_HOOKS,
@@ -15,10 +13,19 @@ import {
   ScrollHooks,
 } from 'ng-lazyload-image';
 import { SharedModule } from '../@shared/shared.module';
+import { MainLayoutComponent } from '../layouts/main-layout/main-layout.component';
+import { LeftSidebarLayoutComponent } from '../layouts/left-sidebar-layout/left-sidebar-layout.component';
+import { RightSidebarLayoutComponent } from '../layouts/right-sidebar-layout/right-sidebar-layout.component';
 
 @NgModule({
-  declarations: [HeaderComponent, ShellComponent, FooterComponent],
-  exports: [HeaderComponent, ShellComponent, FooterComponent],
+  declarations: [
+    HeaderComponent,
+    ShellComponent,
+    FooterComponent,
+    MainLayoutComponent,
+    LeftSidebarLayoutComponent,
+    RightSidebarLayoutComponent
+  ],
   providers: [
     NgbActiveModal,
     { provide: LAZYLOAD_IMAGE_HOOKS, useClass: ScrollHooks },
@@ -26,8 +33,6 @@ import { SharedModule } from '../@shared/shared.module';
   imports: [
     ShellRoutingModule,
     SharedModule,
-    PickerModule,
-    PipeModule,
     ToastsContainer,
     LazyLoadImageModule,
   ],

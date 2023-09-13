@@ -1,5 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent, Scroll } from '@angular/router';
 
 @Component({
   selector: 'app-shell',
@@ -12,53 +13,48 @@ export class ShellComponent {
   isLoginPgae = false;
   isResetPasswordPage = false;
   showButton = false;
-  constructor(private router: Router) {
-    this.router.events.subscribe((event: RouterEvent | any) => {
-      if (event instanceof NavigationEnd) {
-        if (event.url === '/') {
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location,
+  ) {
+    this.route.data.subscribe(v => console.log(v));
+
+    this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd || event instanceof Scroll) {
+        const url = this.location.path();
+        // const url = this.route.snapshot.url.toString();
+        console.log('url : ', url);
+
+
+        if (url === '/') {
           this.isShow = true;
           this.isShowMyProfile = true;
           this.isLoginPgae = true;
           this.isResetPasswordPage = true;
         } else {
           this.isShow =
-            event.url.includes('/communities') ||
-            event.url.includes('/settings') ||
-            event.url.includes('/login') ||
-            event.url.includes('/reset-password') ||
-            event.url.includes('/register') ||
-            event.url.includes('/notifications') ||
-            event.url.includes('/pages') ||
+            url.includes('/communities') ||
+            url.includes('/settings') ||
+            url.includes('/login') ||
+            url.includes('/reset-password') ||
+            url.includes('/register') ||
+            url.includes('/notifications') ||
+            url.includes('/pages') ||
             false;
-          this.isLoginPgae = event.url.includes('/login') || false;
+          this.isLoginPgae = url.includes('/login') || false;
           this.isShowMyProfile =
-            event.url.includes('/edit-profile') ||
-            event.url.includes('/view-profile') ||
-            event.url.includes('/login') ||
-            event.url.includes('/register') ||
-            event.url.includes('/reset-password') ||
-            event.url.includes('/notifications') ||
-            event.url.includes('/research') ||
+            url.includes('/edit-profile') ||
+            url.includes('/view-profile') ||
+            url.includes('/login') ||
+            url.includes('/register') ||
+            url.includes('/reset-password') ||
+            url.includes('/notifications') ||
+            url.includes('/research') ||
             false;
         }
       }
-    });
-    this.onWindowScroll();
-  }
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    if (window.scrollY > 300) {
-      this.showButton = true;
-    } else {
-      this.showButton = false;
-    }
-  }
-
-  scrollToTop() {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
     });
   }
 }

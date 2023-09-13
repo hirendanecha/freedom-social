@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { SharedService } from './@shared/services/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -7,22 +8,29 @@ import { NavigationEnd, Router, RouterEvent } from '@angular/router';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'freedom';
-  isLoginPage = false;
-  isSignUpPage = false;
-  isResetPasswordPage = false;
-  constructor(private router: Router) {
-    this.router.events.subscribe((event: RouterEvent | any) => {
-      if (event instanceof NavigationEnd) {
-        if (event.url === '/') {
-          this.isLoginPage = true;
-        } else {
-          this.isLoginPage = event.url.includes('/login') || false;
-          this.isResetPasswordPage =
-            event.url.includes('/reset-password') || false;
-          this.isSignUpPage = event.url.includes('/register') || false;
-        }
-      }
+  showButton = false;
+
+  constructor(
+    private sharedService: SharedService
+  ) {
+    this.sharedService.getUserDetails();
+    this.onWindowScroll();
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (window.scrollY > 300) {
+      this.showButton = true;
+    } else {
+      this.showButton = false;
+    }
+  }
+
+  scrollToTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
     });
   }
 }

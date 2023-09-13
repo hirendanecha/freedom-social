@@ -1,6 +1,7 @@
 :host {
   position: sticky;
   top: 100px;
+  width: 100%;
 
   .cus-scrollbar {
     max-height: calc(100vh - 120px);

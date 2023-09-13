@@ -50,9 +50,7 @@ export class HeaderComponent {
     private tokenStorageService: TokenStorageService,
     private customerService: CustomerService,
     private toaster: ToastService
-  ) {
-    this.sharedService.getUserDetails();
-  }
+  ) {}
 
   openUserMenu(): void {
     this.userMenusOverlayDialog = this.modaleService.open(this.userMenuList, {

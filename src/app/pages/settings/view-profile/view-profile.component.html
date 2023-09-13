@@ -72,13 +72,8 @@
     </div>
 
     <div class="d-lg-flex d-block w-100 gap-5 min-vh-100">
-      <div class="my-profile-sidebar" *ngIf="activeTab === 1">
-        <app-my-profile></app-my-profile>
-      </div>
-
       <div
-        class="flex-column mb-15"
-        [ngClass]="activeTab === 1 ? 'col-lg-6' : 'col-lg-9'"
+        class="flex-column mb-15 w-100"
       >
         <ng-container *ngIf="activeTab === 1">
           <app-post-list parentComponent="ViewProfileComponent" />
