@@ -5,11 +5,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CommunityService } from '../services/community.service';
 
 @Component({
-  selector: 'app-community',
-  templateUrl: './community.component.html',
-  styleUrls: ['./community.component.scss'],
+  selector: 'app-communities',
+  templateUrl: './communities.component.html',
+  styleUrls: ['./communities.component.scss'],
 })
-export class CommunityComponent {
+export class CommunitiesComponent {
   activeIdTab: string = 'my';
   communities: any = [];
   profileId: number = null;

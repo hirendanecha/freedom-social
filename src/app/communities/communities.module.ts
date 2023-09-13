@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 
-import { CommunityRoutingModule } from './community-routing.module';
-import { CommunityComponent } from './community.component';
 import { AddCommunityModalComponent } from './add-community-modal/add-community-modal.component';
 import { SharedModule } from '../@shared/shared.module';
+import { CommunitiesRoutingModule } from './communities-routing.module';
+import { CommunitiesComponent } from './communities.component';
 
 @NgModule({
   declarations: [
-    CommunityComponent,
+    CommunitiesComponent,
     AddCommunityModalComponent,
   ],
-  imports: [CommunityRoutingModule, SharedModule],
+  imports: [CommunitiesRoutingModule, SharedModule],
 })
-export class CommunityModule {}
+export class CommunitiesModule {}

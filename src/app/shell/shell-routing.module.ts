@@ -13,10 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('../home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'local-communities',
+    path: 'communities',
     // canActivate: [AuthenticationGuard],
     loadChildren: () =>
-      import('../community/community.module').then((m) => m.CommunityModule),
+      import('../communities/communities.module').then((m) => m.CommunitiesModule),
   },
   {
     path: 'research',
