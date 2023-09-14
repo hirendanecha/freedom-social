@@ -16,7 +16,7 @@ export class ResearchListComponent {
   btnGroupViewTypeCtrl: FormControl;
 
   groupPosts: any = [];
-
+  isExpand = false;
   constructor(
     private profileService: ProfileService,
     private spinner: NgxSpinnerService
@@ -77,5 +77,9 @@ export class ResearchListComponent {
         }
       });
     }
+  }
+
+  openToggle() {
+    this.isExpand = !this.isExpand;
   }
 }

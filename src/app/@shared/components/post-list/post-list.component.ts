@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -21,7 +22,7 @@ import { SocketService } from 'src/app/@shared/services/socket.service';
   styleUrls: ['./post-list.component.scss'],
   animations: [slideUp],
 })
-export class PostListComponent implements OnInit, OnChanges {
+export class PostListComponent implements OnInit, AfterViewInit, OnChanges {
   @Input('parentComponent') parentComponent: string = '';
   @Input('communityId') communityId: number = null;
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
@@ -42,24 +43,30 @@ export class PostListComponent implements OnInit, OnChanges {
     this.profileId = sessionStorage.getItem('profileId');
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const id = changes?.communityId?.currentValue;
-
-    if (id) {
-      this.communityId = id;
-
-      this.getPostList();
+  ngAfterViewInit(): void {
+    if (!this.socketService.socket.connected) {
+      this.socketService.socket.connect();
     }
-  }
 
-  ngOnInit(): void {
-    if (!this.communityId) {
-      this.getPostList();
-    }
+    this.socketService.socket.on(
+      'new-post-added',
+      (res: any) => {
+        this.spinner.hide();
+        if (res?.[0]) {
+          this.postList.unshift(res?.[0]);
+        }
+      },
+      (error: any) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
 
     this.socketService.socket.on(
       'new-post',
       (data: any) => {
+        this.spinner.hide();
+
         if (data.length > 0) {
           this.postList = data;
         }
@@ -68,6 +75,22 @@ export class PostListComponent implements OnInit, OnChanges {
         console.log(error);
       }
     );
+  }
+
+  ngOnInit(): void {
+    if (!this.communityId) {
+      this.getPostList();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const id = changes?.communityId?.currentValue;
+
+    if (id) {
+      this.communityId = id;
+
+      this.getPostList();
+    }
   }
 
   getPostList(): void {

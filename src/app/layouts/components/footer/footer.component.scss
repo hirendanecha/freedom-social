@@ -15,11 +15,11 @@
     }
     li {
       &:last-child {
-        border-top: 1px solid var(--border-color);
-        border-bottom: 1px solid var(--border-color);
+        border-top: 1px solid var(--bs-border-color);
+        border-bottom: 1px solid var(--bs-border-color);
       }
       &:first-child {
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--bs-border-color);
       }
     }
   }
@@ -37,6 +37,15 @@
   }
 }
 .notification-content {
+  min-width: 400px;
+  max-height: 420px;
+  overflow-y: scroll;
+  .unread-notification {
+    width: 13px;
+    height: 13px;
+    background: var(--primary-color);
+    border-radius: 50%;
+  }
   .abs-item {
     bottom: -5px;
     right: -5px;

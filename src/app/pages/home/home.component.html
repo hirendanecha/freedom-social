@@ -2,7 +2,9 @@
   <div class="single-box community-details p-5">
     <ng-container *ngIf="communityDetails?.coverImg">
       <img
-        data-src="{{ communityDetails?.coverImg || '/assets/images/profile-cover.png'}}"
+        data-src="{{
+          communityDetails?.coverImg || '/assets/images/profile-cover.png'
+        }}"
         class="w-100 h-272-px rounded-3 mb-5"
         onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
         [alt]="'Preview Image'"
@@ -115,7 +117,7 @@
           #postMessageInput
           contenteditable
           placeholder="Write something to post.."
-          class="post-message-input input-area"
+          class="post-message-input input-area c-text"
           (keyup)="messageOnKeyEvent()"
         ></div>
 
@@ -212,10 +214,10 @@
             />
             <span>Fallings/Activity</span>
           </li> -->
-          <div class="btn-area d-flex gap-3">
+          <div class="btn-area gap-3 w-100 d-flex justify-content-end">
             <button
               class="btn btn-sm btn-secondary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
-              *ngIf="postData?.postdescription"
+              *ngIf="postData?.postdescription || postData?.file?.name"
               (click)="resetPost()"
             >
               Cancel
@@ -223,8 +225,8 @@
             </button>
 
             <button
-              class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
-              [disabled]="!postData?.postdescription"
+              class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2 float-end"
+              [disabled]="!(postData?.postdescription || postData?.file?.name)"
               (click)="uploadPostFileAndCreatePost()"
             >
               {{ postData.id ? "Update Post" : "Post" }}
