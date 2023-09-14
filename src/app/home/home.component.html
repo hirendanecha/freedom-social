@@ -2,7 +2,9 @@
   <div class="single-box community-details p-5">
     <ng-container *ngIf="communityDetails?.coverImg">
       <img
-        data-src="{{ communityDetails?.coverImg || '/assets/images/profile-cover.png'}}"
+        data-src="{{
+          communityDetails?.coverImg || '/assets/images/profile-cover.png'
+        }}"
         class="w-100 h-272-px rounded-3 mb-5"
         onerror="this.onerror=null;this.src='/assets/images/profile-cover.png';"
         [alt]="'Preview Image'"
@@ -212,7 +214,7 @@
             />
             <span>Fallings/Activity</span>
           </li> -->
-          <div class="btn-area d-flex gap-3">
+          <div class="btn-area gap-3 w-100">
             <button
               class="btn btn-sm btn-secondary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
               *ngIf="postData?.postdescription"
@@ -223,7 +225,7 @@
             </button>
 
             <button
-              class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
+              class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2 float-end"
               [disabled]="!postData?.postdescription"
               (click)="uploadPostFileAndCreatePost()"
             >

@@ -17,7 +17,7 @@
       overflow-x: hidden;
       cursor: pointer;
       .user-details {
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--bs-border-color);
         .profile-pic {
           width: 35px;
           border-radius: 50px;
@@ -65,12 +65,12 @@
 
     li {
       &:last-child {
-        border-top: 1px solid var(--border-color);
-        border-bottom: 1px solid var(--border-color);
+        border-top: 1px solid var(--bs-border-color);
+        border-bottom: 1px solid var(--bs-border-color);
       }
 
       &:first-child {
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--bs-border-color);
       }
     }
   }

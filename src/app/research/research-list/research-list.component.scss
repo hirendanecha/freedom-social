@@ -4,15 +4,21 @@
   width: 100%;
 
   .research {
+    // z-index: -1;
     .sidebar {
       min-width: 300px;
       max-width: 300px;
     }
 
     .border-top {
-      border-color: var(--border-color) !important;
+      border-color: var(--bs-border-color) !important;
     }
   }
+}
+
+.mobile-sidebar {
+  position: absolute;
+  z-index: 1;
 }
 
 
@@ -41,6 +47,14 @@
 
     .carousel-control-next {
       right: -36px;
+    }
+  }
+
+  @media (max-width: 990px) {
+    .carousel {
+      .carousel-control-prev, .carousel-control-next {
+        width: 46px;
+      }
     }
   }
 }

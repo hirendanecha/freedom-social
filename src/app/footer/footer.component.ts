@@ -31,7 +31,7 @@ export class FooterComponent {
   isBreakpointLessThenSmall = false;
   isDark = false;
   constructor(
-    private modaleService: NgbModal,
+    private modalService: NgbModal,
     public sharedService: SharedService,
     private router: Router,
     private tokenStorageService: TokenStorageService,
@@ -42,7 +42,7 @@ export class FooterComponent {
   }
 
   openUserMenu(): void {
-    this.userMenusOverlayDialog = this.modaleService.open(this.userMenuList, {
+    this.userMenusOverlayDialog = this.modalService.open(this.userMenuList, {
       keyboard: true,
       size: 'sm',
       modalDialogClass: 'footer-user-menu-panale',
@@ -50,7 +50,7 @@ export class FooterComponent {
   }
 
   openNotificationList(): void {
-    this.userMenusOverlayDialog = this.modaleService.open(
+    this.userMenusOverlayDialog = this.modalService.open(
       this.notificationList,
       {
         keyboard: true,
@@ -62,7 +62,7 @@ export class FooterComponent {
   }
 
   openMessageList(): void {
-    this.userMenusOverlayDialog = this.modaleService.open(this.messageList, {
+    this.userMenusOverlayDialog = this.modalService.open(this.messageList, {
       keyboard: true,
       size: 'sm',
       modalDialogClass: 'footer-message-menu-panale',
@@ -113,7 +113,7 @@ export class FooterComponent {
   }
 
   forgotPasswordOpen() {
-    const modalRef = this.modaleService.open(ForgotPasswordComponent, {
+    const modalRef = this.modalService.open(ForgotPasswordComponent, {
       centered: true,
       backdrop: 'static',
       keyboard: false,
