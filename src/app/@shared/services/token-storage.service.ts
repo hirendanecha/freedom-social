@@ -16,6 +16,10 @@ export class TokenStorageService {
   signOut(): void {
     this.spinner.hide();
     window.sessionStorage.clear();
+
+    const theme = window.localStorage.getItem('theme');
+    window.localStorage.clear();
+    window.localStorage.setItem('theme', theme);
   }
 
   public saveToken(token: string): void {
@@ -24,19 +28,25 @@ export class TokenStorageService {
   }
 
   public getToken(): string {
-    return sessionStorage.getItem(TOKEN_KEY);
+    return window.sessionStorage.getItem(TOKEN_KEY);
   }
 
-  public saveUser(user): void {
+  public saveUser(user: any): void {
+    const userStr = JSON.stringify(user);
+
     window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.localStorage.removeItem(USER_KEY);
+
+    window.sessionStorage.setItem(USER_KEY, userStr);
+    window.localStorage.setItem(USER_KEY, userStr);
   }
 
   public getUser(): any {
-    return JSON.parse(sessionStorage.getItem(USER_KEY));
+    return JSON.parse(window.sessionStorage.getItem(USER_KEY) || window.localStorage.getItem(USER_KEY));
   }
+
   public getCredentials(): any {
-    this._credentials = JSON.parse(sessionStorage.getItem(USER_KEY));
+    this._credentials = this.getUser();
     const isAuthenticate = Object.keys(this._credentials || {}).length > 0;
     this.changeIsUserAuthenticated(isAuthenticate);
     return isAuthenticate;

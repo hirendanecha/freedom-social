@@ -2,25 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-
-  .research {
-    // z-index: -1;
-    .sidebar {
-      min-width: 300px;
-      max-width: 300px;
-    }
-
-    .border-top {
-      border-color: var(--bs-border-color) !important;
-    }
-  }
 }
-
-.mobile-sidebar {
-  position: absolute;
-  z-index: 1;
-}
-
 
 ::ng-deep {
   .carousel {

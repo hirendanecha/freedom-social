@@ -1,6 +1,6 @@
-import { Location } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterEvent, Scroll } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent, RoutesRecognized, Scroll } from '@angular/router';
+import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-shell',
@@ -8,53 +8,40 @@ import { ActivatedRoute, NavigationEnd, Router, RouterEvent, Scroll } from '@ang
   styleUrls: ['./shell.component.scss'],
 })
 export class ShellComponent {
-  isShow = false;
-  isShowMyProfile = false;
-  isLoginPgae = false;
-  isResetPasswordPage = false;
+
   showButton = false;
+  sidebar: any = {
+    isShowLeftSideBar: true,
+    isShowRightSideBar: true,
+    isShowResearchLeftSideBar: false,
+  };
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private location: Location,
-  ) {
-    this.route.data.subscribe(v => console.log(v));
+    private route: ActivatedRoute
+  ) {}
 
-    this.router.events.subscribe((event: any) => {
-      if (event instanceof NavigationEnd || event instanceof Scroll) {
-        const url = this.location.path();
-        // const url = this.route.snapshot.url.toString();
-        console.log('url : ', url);
+  ngOnInit() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd || event instanceof Scroll),
+      map(() => {
+        let child = this.route.firstChild;
 
-
-        if (url === '/') {
-          this.isShow = true;
-          this.isShowMyProfile = true;
-          this.isLoginPgae = true;
-          this.isResetPasswordPage = true;
-        } else {
-          this.isShow =
-            url.includes('/communities') ||
-            url.includes('/settings') ||
-            url.includes('/login') ||
-            url.includes('/reset-password') ||
-            url.includes('/register') ||
-            url.includes('/notifications') ||
-            url.includes('/pages') ||
-            false;
-          this.isLoginPgae = url.includes('/login') || false;
-          this.isShowMyProfile =
-            url.includes('/edit-profile') ||
-            url.includes('/view-profile') ||
-            url.includes('/login') ||
-            url.includes('/register') ||
-            url.includes('/reset-password') ||
-            url.includes('/notifications') ||
-            url.includes('/research') ||
-            false;
+        while (child) {
+          if (child.firstChild) {
+            child = child.firstChild;
+          } else if (Object.keys(child?.snapshot?.data)?.length > 0) {
+            return child.snapshot.data;
+          } else {
+            return {};
+          }
         }
-      }
+
+        return {};
+      }),
+    ).subscribe((data: any) => {
+      console.log(data);
+      this.sidebar = data;
     });
   }
 }

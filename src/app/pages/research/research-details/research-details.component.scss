@@ -2,15 +2,4 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-
-  .research {
-    .sidebar {
-      min-width: 300px;
-      max-width: 300px;
-    }
-
-    .border-top {
-      border-color: var(--border-color) !important;
-    }
-  }
 }

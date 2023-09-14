@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: 'edit-profile/:id',
     component: EditProfileComponent,
+    data: {
+      isShowLeftSideBar: false,
+      isShowRightSideBar: false
+    }
   },
   {
     path: 'view-profile/:id',
