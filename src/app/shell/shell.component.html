@@ -6,7 +6,7 @@
       <ng-container *ngIf="sidebar?.isShowLeftSideBar">
         <div class="my-profile-sidebar">
           <ng-container *ngIf="!sidebar?.isShowResearchLeftSideBar">
-            <app-my-profile />
+            <app-left-sidebar />
           </ng-container>
 
           <ng-container *ngIf="sidebar?.isShowResearchLeftSideBar">
@@ -21,7 +21,7 @@
 
       <ng-container *ngIf="sidebar?.isShowRightSideBar">
         <div class="my-list-sidebar d-lg-flex d-none">
-          <app-my-list />
+          <app-right-sidebar />
         </div>
       </ng-container>
     </div>

@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-claim-token',
-  templateUrl: './claim-token.component.html',
-  styleUrls: ['./claim-token.component.scss']
+  selector: 'app-claim-token-modal',
+  templateUrl: './claim-token-modal.component.html',
+  styleUrls: ['./claim-token-modal.component.scss']
 })
-export class ClaimTokenComponent {
+export class ClaimTokenModalComponent {
   @Input() cancelButtonLabel: string | undefined;
   @Input() confirmButtonLabel: string | undefined;
   @Input() closeIcon: boolean | undefined;

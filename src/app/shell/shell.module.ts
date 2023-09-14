@@ -14,12 +14,16 @@ import {
 } from 'ng-lazyload-image';
 import { SharedModule } from '../@shared/shared.module';
 import { ResearchSidebarComponent } from '../layouts/components/research-sidebar/research-sidebar.component';
+import { LeftSidebarComponent } from '../layouts/components/left-sidebar/left-sidebar.component';
+import { RightSidebarComponent } from '../layouts/components/right-sidebar/right-sidebar.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
     ShellComponent,
+    HeaderComponent,
     FooterComponent,
+    LeftSidebarComponent,
+    RightSidebarComponent,
     ResearchSidebarComponent
   ],
   providers: [

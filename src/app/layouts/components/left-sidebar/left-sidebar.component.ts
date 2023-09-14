@@ -5,18 +5,19 @@ import {
   Router,
   RouterEvent,
 } from '@angular/router';
-import { WalletLinkComponent } from './wallet-download-modal/1776-wallet.component';
+import { WalletLinkComponent } from '../../../@shared/modals/wallet-download-modal/1776-wallet.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ClaimTokenComponent } from './clai-1776-token/claim-token.component';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
+import { ClaimTokenModalComponent } from 'src/app/@shared/modals/clai-1776-token-modal/claim-token-modal.component';
 
 @Component({
-  selector: 'app-my-profile',
-  templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.scss'],
+  selector: 'app-left-sidebar',
+  templateUrl: './left-sidebar.component.html',
+  styleUrls: ['./left-sidebar.component.scss'],
 })
-export class MyProfileComponent implements OnInit {
+export class LeftSidebarComponent implements OnInit {
+
   isEXpand = false;
   isShowPeoplePages = false;
   isFriendRequest = false;
@@ -69,7 +70,7 @@ export class MyProfileComponent implements OnInit {
     modalRef.componentInstance.closeIcon = true;
   }
   openClaimTokenPopUp() {
-    const modalRef = this.modalService.open(ClaimTokenComponent, {
+    const modalRef = this.modalService.open(ClaimTokenModalComponent, {
       centered: true,
       keyboard: true,
       size: 'lg',

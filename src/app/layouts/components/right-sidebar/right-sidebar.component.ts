@@ -5,11 +5,11 @@ import { CommunityService } from '../../../@shared/services/community.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-my-list',
-  templateUrl: './my-list.component.html',
-  styleUrls: ['./my-list.component.scss'],
+  selector: 'app-right-sidebar',
+  templateUrl: './right-sidebar.component.html',
+  styleUrls: ['./right-sidebar.component.scss'],
 })
-export class MyListComponent implements OnInit {
+export class RightSidebarComponent implements OnInit {
   isEXpand = false;
   isShow = false;
   user: any;
