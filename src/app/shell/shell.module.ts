@@ -13,19 +13,13 @@ import {
   ScrollHooks,
 } from 'ng-lazyload-image';
 import { SharedModule } from '../@shared/shared.module';
-import { MainLayoutComponent } from '../layouts/main-layout/main-layout.component';
-import { LeftSidebarLayoutComponent } from '../layouts/left-sidebar-layout/left-sidebar-layout.component';
-import { RightSidebarLayoutComponent } from '../layouts/right-sidebar-layout/right-sidebar-layout.component';
-import { ResearchSidebarComponent } from '../pages/research/components/research-sidebar/research-sidebar.component';
+import { ResearchSidebarComponent } from '../layouts/components/research-sidebar/research-sidebar.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     ShellComponent,
     FooterComponent,
-    MainLayoutComponent,
-    LeftSidebarLayoutComponent,
-    RightSidebarLayoutComponent,
     ResearchSidebarComponent
   ],
   providers: [
