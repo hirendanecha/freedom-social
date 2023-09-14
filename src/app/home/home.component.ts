@@ -178,7 +178,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   uploadPostFileAndCreatePost(): void {
-    if (this.postData?.postdescription) {
+    if (this.postData?.postdescription || this.postData?.file?.name) {
       if (this.postData?.file?.name) {
         this.spinner.show();
         this.postService.upload(this.postData?.file, this.profileId).subscribe({
@@ -223,7 +223,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
-    if (this.postData?.postdescription) {
+
+    if (this.postData?.postdescription || this.postData?.imageUrl) {
       this.spinner.show();
       this.socketService.createPost(this.postData, (data) => {
         this.spinner.hide();
@@ -245,23 +246,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         ''
       );
 
-      // this.socketService.socket.on(
-      //   'new-post-added',
-      //   (res: any) => {
-      //     this.postList.push(res);
-      //     this.spinner.hide();
-      //     this.activePage = 1;
-      //     this.postData['postdescription'] = '';
-      //     this.postData['meta'] = {};
-      //     this.postData['tags'] = [];
-      //     this.postData['file'] = {};
-      //     this.postData['imageUrl'] = '';
-      //   },
-      //   (error: any) => {
-      //     this.spinner.hide();
-      //     console.log(error);
-      //   }
-      // );
+      this.socketService.socket.on(
+        'new-post-added',
+        (res: any) => {
+          this.spinner.hide();
+          this.postData['postdescription'] = '';
+          this.postData['meta'] = {};
+          this.postData['tags'] = [];
+          this.postData['file'] = {};
+          this.postData['imageUrl'] = '';
+        },
+        (error: any) => {
+          this.spinner.hide();
+          console.log(error);
+        }
+      );
     }
   }
 
@@ -370,7 +369,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
-    if (this.postData?.postdescription) {
+    if (this.postData?.postdescription || this.postData?.imageUrl) {
       this.spinner.show();
       this.socketService.editPost(this.postData, (data) => {
         this.spinner.hide();

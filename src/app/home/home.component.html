@@ -117,7 +117,7 @@
           #postMessageInput
           contenteditable
           placeholder="Write something to post.."
-          class="post-message-input input-area"
+          class="post-message-input input-area c-text"
           (keyup)="messageOnKeyEvent()"
         ></div>
 
@@ -217,7 +217,7 @@
           <div class="btn-area gap-3 w-100 d-flex justify-content-end">
             <button
               class="btn btn-sm btn-secondary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
-              *ngIf="postData?.postdescription"
+              *ngIf="postData?.postdescription || postData?.file?.name"
               (click)="resetPost()"
             >
               Cancel
@@ -226,7 +226,7 @@
 
             <button
               class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2 float-end"
-              [disabled]="!postData?.postdescription"
+              [disabled]="!(postData?.postdescription || postData?.file?.name)"
               (click)="uploadPostFileAndCreatePost()"
             >
               {{ postData.id ? "Update Post" : "Post" }}
