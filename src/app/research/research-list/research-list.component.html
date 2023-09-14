@@ -1,39 +1,114 @@
-<div class="research d-flex gap-5">
-  <div class="sidebar">
+<div class="d-flex d-lg-none justify-content-between">
+  <div class="d-block d-lg-none mobile-sidebar">
+    <button
+      class="button profile-active mb-4 mb-lg-0 d-flex align-items-center gap-2"
+      (click)="openToggle()"
+    >
+      <i class="material-symbols-outlined mat-icon"> menu </i>
+      View Topics
+      <!-- <span>My profile</span> -->
+    </button>
+    <div *ngIf="isExpand">
+      <app-research-sidebar />
+    </div>
+  </div>
+</div>
+<div class="research d-flex gap-5 mt-8 mt-lg-0 z-0">
+  <div class="sidebar d-lg-block d-none">
     <app-research-sidebar />
   </div>
-
   <div class="content w-100">
     <div class="single-box d-flex flex-column p-5 mb-3">
       <h6 class="text-start mb-5">Freedom Messaging</h6>
 
       <div class="d-flex flex-column border-top pt-5 gap-3">
-        <span class="font-12-px text-start">RESEARCH OF TRUTH IS HOW WE UNITE</span>
-        <span class="font-12-px text-start">UNINFORMED PROGRAMMED FOLKS MUST BE BROUGHT UP TO SPEED</span>
-        <span class="font-12-px text-start">PLEASE SHARE INFO IN FACEBOOK AND TWITTER, ETC</span>
+        <span class="font-12-px text-start"
+          >RESEARCH OF TRUTH IS HOW WE UNITE</span
+        >
+        <span class="font-12-px text-start"
+          >UNINFORMED PROGRAMMED FOLKS MUST BE BROUGHT UP TO SPEED</span
+        >
+        <span class="font-12-px text-start"
+          >PLEASE SHARE INFO IN FACEBOOK AND TWITTER, ETC</span
+        >
       </div>
     </div>
 
     <div class="single-box d-flex flex-column p-5 mb-3">
       <h6 class="text-start mb-5">Customize Your Feed</h6>
 
-      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-        <input type="radio" class="btn-check" name="btnGroupFeedType" [formControl]="btnGroupFeedTypeCtrl" value="All" id="btnRadioAll" autocomplete="off">
-        <label class="btn btn-outline-primary border-0 rounded" for="btnRadioAll">All</label>
+      <div
+        class="btn-group"
+        role="group"
+        aria-label="Basic radio toggle button group"
+      >
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnGroupFeedType"
+          [formControl]="btnGroupFeedTypeCtrl"
+          value="All"
+          id="btnRadioAll"
+          autocomplete="off"
+        />
+        <label
+          class="btn btn-outline-primary border-0 rounded"
+          for="btnRadioAll"
+          >All</label
+        >
 
-        <input type="radio" class="btn-check" name="btnGroupFeedType" [formControl]="btnGroupFeedTypeCtrl" value="Articles" id="btnRadioArticles" autocomplete="off">
-        <label class="btn btn-outline-primary border-0 rounded" for="btnRadioArticles">Articles</label>
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnGroupFeedType"
+          [formControl]="btnGroupFeedTypeCtrl"
+          value="Articles"
+          id="btnRadioArticles"
+          autocomplete="off"
+        />
+        <label
+          class="btn btn-outline-primary border-0 rounded"
+          for="btnRadioArticles"
+          >Articles</label
+        >
 
-        <input type="radio" class="btn-check" name="btnGroupFeedType" [formControl]="btnGroupFeedTypeCtrl" value="Videos" id="btnRadioVideos" autocomplete="off">
-        <label class="btn btn-outline-primary border-0 rounded" for="btnRadioVideos">Videos</label>
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnGroupFeedType"
+          [formControl]="btnGroupFeedTypeCtrl"
+          value="Videos"
+          id="btnRadioVideos"
+          autocomplete="off"
+        />
+        <label
+          class="btn btn-outline-primary border-0 rounded"
+          for="btnRadioVideos"
+          >Videos</label
+        >
 
-        <input type="radio" class="btn-check" name="btnGroupFeedType" [formControl]="btnGroupFeedTypeCtrl" value="Groups" id="btnRadioGroups" autocomplete="off">
-        <label class="btn btn-outline-primary border-0 rounded" for="btnRadioGroups">Groups</label>
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnGroupFeedType"
+          [formControl]="btnGroupFeedTypeCtrl"
+          value="Groups"
+          id="btnRadioGroups"
+          autocomplete="off"
+        />
+        <label
+          class="btn btn-outline-primary border-0 rounded"
+          for="btnRadioGroups"
+          >Groups</label
+        >
       </div>
 
       <ng-container *ngIf="btnGroupFeedTypeCtrl?.value === 'Groups'">
         <select name="research" class="input-area mt-5">
-          <option *ngFor="let research of researches" [value]="research?.FirstName">
+          <option
+            *ngFor="let research of researches"
+            [value]="research?.FirstName"
+          >
             {{ research?.FirstName }}
           </option>
         </select>
@@ -41,13 +116,31 @@
 
       <div class="d-flex gap-5 pt-5 mt-5 border-top">
         <div class="form-check form-check-inline">
-          <input class="form-check-input p-2" name="btnGroupViewType" type="radio" [formControl]="btnGroupViewTypeCtrl" id="btnRadioTopStories" value="TopStories">
-          <label class="form-check-label" for="btnRadioTopStories">Top Stories View</label>
+          <input
+            class="form-check-input p-2"
+            name="btnGroupViewType"
+            type="radio"
+            [formControl]="btnGroupViewTypeCtrl"
+            id="btnRadioTopStories"
+            value="TopStories"
+          />
+          <label class="form-check-label" for="btnRadioTopStories"
+            >Top Stories View</label
+          >
         </div>
 
         <div class="form-check form-check-inline">
-          <input class="form-check-input p-2" name="btnGroupViewType" type="radio" [formControl]="btnGroupViewTypeCtrl" id="btnRadioMostRecent" value="MostRecent">
-          <label class="form-check-label" for="btnRadioMostRecent">Most Recent View</label>
+          <input
+            class="form-check-input p-2"
+            name="btnGroupViewType"
+            type="radio"
+            [formControl]="btnGroupViewTypeCtrl"
+            id="btnRadioMostRecent"
+            value="MostRecent"
+          />
+          <label class="form-check-label" for="btnRadioMostRecent"
+            >Most Recent View</label
+          >
         </div>
       </div>
     </div>
@@ -57,19 +150,37 @@
         <ng-container *ngIf="group?.name && group?.posts?.length > 0">
           <div class="single-box d-flex flex-column p-5 mb-3">
             <div class="d-flex justify-content-between align-items-center mb-5">
-              <h6 class="text-start mb-0">{{group?.name}}</h6>
+              <h6 class="text-start mb-0">{{ group?.name }}</h6>
 
-              <a href="/research/detail/grpm/{{group?.groupUniqueLink}}" target="_blank" class="material-symbols-outlined c-pointer">chevron_right</a>
+              <a
+                href="/research/detail/grpm/{{ group?.groupUniqueLink }}"
+                target="_blank"
+                class="material-symbols-outlined c-pointer"
+                >chevron_right</a
+              >
             </div>
 
-            <ngb-carousel [showNavigationIndicators]="false" [interval]="0" (slide)="getNextPageGroupPostsById($event, group)" >
+            <ngb-carousel
+              [showNavigationIndicators]="false"
+              [interval]="0"
+              (slide)="getNextPageGroupPostsById($event, group)"
+            >
               <ng-container *ngFor="let post of group?.posts; let i = index">
-                <ng-container *ngIf="i !== 0 && (i+1)%3 === 0">
+                <ng-container *ngIf="i !== 0 && (i + 1) % 3 === 0">
                   <ng-template ngbSlide>
                     <div class="row px-2">
-                      <app-research-card [post]="group?.posts[i-2]" class="col-4 px-2" />
-                      <app-research-card [post]="group?.posts[i-1]" class="col-4 px-2" />
-                      <app-research-card [post]="group?.posts[i-0]" class="col-4 px-2" />
+                      <app-research-card
+                        [post]="group?.posts[i - 2]"
+                        class="col-4 px-2"
+                      />
+                      <app-research-card
+                        [post]="group?.posts[i - 1]"
+                        class="col-4 px-2"
+                      />
+                      <app-research-card
+                        [post]="group?.posts[i - 0]"
+                        class="col-4 px-2"
+                      />
                     </div>
                   </ng-template>
                 </ng-container>

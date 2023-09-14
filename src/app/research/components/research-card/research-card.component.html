@@ -1,15 +1,50 @@
-<div class="card group-post-card single-box border-secondary mb-0">
-  <div class="card-img-top c-pointer" [ngStyle]="{'background-image': 'url('+ (post?.image || 'https://freedom.social/assets/newtemplate/images/mb-logo.png') + ')'}" (click)="openResearchPost()"></div>
+<div class="card group-post-card single-box border-secondary mb-0 rounded-1">
+  <div
+    class="card-img-top c-pointer"
+    [ngStyle]="{
+      'background-image':
+        'url(' +
+        (post?.image ||
+          'https://freedom.social/assets/newtemplate/images/mb-logo.png') +
+        ')'
+    }"
+    (click)="openResearchPost()"
+  ></div>
 
   <div class="card-body p-2 border-top">
-    <span class="card-text font-12-px text-start c-pointer text-wrap" (click)="openResearchPost()" [innerHTML]="post?.title || post?.textpostdesc || post?.postdescription || post?.metadescription" >
+    <span
+      class="card-text font-12-px text-start c-pointer text-wrap"
+      (click)="openResearchPost()"
+      [innerHTML]="
+        post?.title ||
+        post?.textpostdesc ||
+        post?.postdescription ||
+        post?.metadescription
+      "
+    >
     </span>
 
-    <div class="d-flex flex-wrap justify-content-start align-items-start mt-2 pt-2 border-top">
-      <a href="#" class="link-primary font-12-px w-50 text-start">copy link url</a>
-      <a href="/research/post/{{post?.postToProfileID}}" target="_blank" class="link-primary font-12-px w-50 text-start">larger view</a>
-      <a href="#" class="link-primary font-12-px w-50 text-start">unsubscribe</a>
-      <a href="/research/post/{{post?.postToProfileID}}" target="_blank" class="link-primary font-12-px w-50 text-start">research</a>
+    <div
+      class="d-flex flex-wrap justify-content-start align-items-start mt-2 pt-2 border-top"
+    >
+      <a href="#" class="link-primary font-12-px w-50 text-start"
+        >copy link url</a
+      >
+      <a
+        href="/research/post/{{ post?.postToProfileID }}"
+        target="_blank"
+        class="link-primary font-12-px w-50 text-start"
+        >larger view</a
+      >
+      <a href="#" class="link-primary font-12-px w-50 text-start"
+        >unsubscribe</a
+      >
+      <a
+        href="/research/post/{{ post?.postToProfileID }}"
+        target="_blank"
+        class="link-primary font-12-px w-50 text-start"
+        >research</a
+      >
     </div>
   </div>
 </div>
