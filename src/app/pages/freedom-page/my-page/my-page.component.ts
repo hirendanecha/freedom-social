@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { CommunityService } from 'src/app/@shared/services/community.service';
 import { SocketService } from 'src/app/@shared/services/socket.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-my-page',
@@ -24,7 +24,7 @@ export class MyPageComponent implements OnInit {
     private router: Router,
     private socketService: SocketService,
     private modalService: NgbModal,
-    private toaster: ToastService
+    private toastService: ToastService
   ) {
     this.profileId = Number(sessionStorage.getItem('profileId'));
   }
@@ -86,13 +86,13 @@ export class MyPageComponent implements OnInit {
         this.communityService.deleteCommunity(id).subscribe({
           next: (res: any) => {
             if (res) {
-              this.toaster.success(res.message);
+              this.toastService.success(res.message);
               this.getCommunities();
             }
           },
           error: (error) => {
             console.log(error);
-            this.toaster.success(error.message);
+            this.toastService.success(error.message);
           },
         });
       }

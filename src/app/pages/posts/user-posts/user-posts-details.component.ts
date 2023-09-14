@@ -15,7 +15,7 @@ import { PostService } from 'src/app/@shared/services/post.service';
 import { SeeFirstUserService } from 'src/app/@shared/services/see-first-user.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { SocketService } from 'src/app/@shared/services/socket.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 import { UnsubscribeProfileService } from 'src/app/@shared/services/unsubscribe-profile.service';
 
 @Component({
@@ -70,7 +70,7 @@ export class UserPostDetailsComponent implements OnInit {
     private postService: PostService,
     public sharedService: SharedService,
     private socketService: SocketService,
-    private toaster: ToastService,
+    private toastService: ToastService,
     private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -122,7 +122,7 @@ export class UserPostDetailsComponent implements OnInit {
             next: (res: any) => {
               this.spinner.hide();
               if (res) {
-                this.toaster.success(res.message);
+                this.toastService.success(res.message);
                 this.getPostList();
               }
             },
@@ -187,7 +187,7 @@ export class UserPostDetailsComponent implements OnInit {
       this.uploadPostFileAndCreatePost()
       parentPostCommentElement.innerHTML = ''
     } else {
-      this.toaster.danger('Please enter comment');
+      this.toastService.danger('Please enter comment');
     }
   }
 
@@ -200,7 +200,7 @@ export class UserPostDetailsComponent implements OnInit {
       this.uploadPostFileAndCreatePost();
       childPostCommentElement.innerHTML = ''
     } else {
-      this.toaster.danger('Please enter comment');
+      this.toastService.danger('Please enter comment');
     }
   }
 
@@ -230,7 +230,7 @@ export class UserPostDetailsComponent implements OnInit {
   submit(): void {
     if (this.commentData.parentCommentId) {
       this.socketService.commentOnPost(this.commentData, (data) => {
-        this.toaster.success('replied on comment');
+        this.toastService.success('replied on comment');
         this.postComment = '';
         this.commentData = {}
         // childPostCommentElement.innerText = '';
@@ -250,7 +250,7 @@ export class UserPostDetailsComponent implements OnInit {
       });
     } else {
       this.socketService.commentOnPost(this.commentData, (data) => {
-        this.toaster.success('comment added on post');
+        this.toastService.success('comment added on post');
         this.commentData.comment = '';
         this.commentData = {}
         // parentPostCommentElement.innerText = '';
@@ -302,12 +302,12 @@ export class UserPostDetailsComponent implements OnInit {
   deleteComments(id): void {
     this.postService.deleteComments(id).subscribe({
       next: (res: any) => {
-        this.toaster.success(res.message);
+        this.toastService.success(res.message);
         this.isExpand = false;
       },
       error: (error) => {
         console.log(error);
-        this.toaster.danger(error.message);
+        this.toastService.danger(error.message);
       },
     });
   }
@@ -456,7 +456,7 @@ export class UserPostDetailsComponent implements OnInit {
       this.commentData['file'] = file;
       this.commentData['imageUrl'] = URL.createObjectURL(file);
     } else {
-      this.toaster.danger(`sorry ${file.type} are not allowed!`)
+      this.toastService.danger(`sorry ${file.type} are not allowed!`)
     }
   }
 

@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Community } from 'src/app/@shared/constant/customer';
 import { CommunityService } from 'src/app/@shared/services/community.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 import { UploadFilesService } from 'src/app/@shared/services/upload-files.service';
 import { environment } from 'src/environments/environment';
 
@@ -29,7 +29,7 @@ export class AddFreedomPageComponent {
     private uploadService: UploadFilesService,
     private spinner: NgxSpinnerService,
     private communityService: CommunityService,
-    private toaster: ToastService
+    private toastService: ToastService
   ) {
     this.userId = window.sessionStorage.user_id;
     this.profileId = sessionStorage.getItem('profileId');
@@ -86,20 +86,20 @@ export class AddFreedomPageComponent {
                 this.submitted = true;
                 this.createCommunityAdmin(res.data);
                 this.activeModal.close('success');
-                this.toaster.success('Your Local Community will be approved withing 24 hours!');
+                this.toastService.success('Your Local Community will be approved withing 24 hours!');
                 // this.router.navigateByUrl('/home');
               }
             },
             error:
               (err) => {
-                this.toaster.danger('Please change community name. this community name already in use.');
+                this.toastService.danger('Please change community name. this community name already in use.');
                 this.spinner.hide();
               }
           });
       }
     } else {
       this.spinner.hide();
-      this.toaster.danger('Please enter mandatory fields(*) data.');
+      this.toastService.danger('Please enter mandatory fields(*) data.');
     }
   }
 

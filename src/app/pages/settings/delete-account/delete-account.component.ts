@@ -6,7 +6,7 @@ import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-
 import { Customer } from 'src/app/@shared/constant/customer';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class DeleteAccountComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public sharedService: SharedService,
     private modalService: NgbModal,
-    private toaster: ToastService,
+    private toastService: ToastService,
     private router: Router,
     private tokenStorageService: TokenStorageService
   ) {
@@ -63,14 +63,14 @@ export class DeleteAccountComponent implements OnInit {
         this.customerService.deleteCustomer(id).subscribe({
           next: (res: any) => {
             if (res) {
-              this.toaster.success(res.message || 'Account deleted successfully');
+              this.toastService.success(res.message || 'Account deleted successfully');
               this.tokenStorageService.signOut();
               this.router.navigateByUrl('register');
             }
           },
           error: (error) => {
             console.log(error);
-            this.toaster.success(error.message);
+            this.toastService.success(error.message);
           },
         });
       }

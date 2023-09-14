@@ -17,7 +17,7 @@ import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { PostService } from 'src/app/@shared/services/post.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { SocketService } from 'src/app/@shared/services/socket.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-home',
@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private socketService: SocketService,
     private customerService: CustomerService,
     private renderer: Renderer2,
-    private toaster: ToastService,
+    private toastService: ToastService,
     private communityService: CommunityService,
     private route: ActivatedRoute
   ) {
@@ -161,7 +161,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       {
         next: (res: any) => {
           if (res) {
-            this.toaster.success(res.message);
+            this.toastService.success(res.message);
             this.getCommunityDetailsByName();
           }
         },
@@ -229,7 +229,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.spinner.show();
       this.socketService.createPost(this.postData, (data) => {
         this.spinner.hide();
-        this.toaster.success('Post created successfully.');
+        this.toastService.success('Post created successfully.');
 
         this.postData['postdescription'] = '';
         this.postData['meta'] = {};
@@ -374,7 +374,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.spinner.show();
       this.socketService.editPost(this.postData, (data) => {
         this.spinner.hide();
-        this.toaster.success('Post edited successfully.');
+        this.toastService.success('Post edited successfully.');
         return data;
       });
       this.postData['id'] = '';
@@ -453,13 +453,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.communityService.removeFromCommunity(this.communityDetails?.Id, profileId).subscribe({
           next: (res: any) => {
             if (res) {
-              this.toaster.success(res.message);
+              this.toastService.success(res.message);
               this.getCommunityDetailsByName();
             }
           },
           error: (error) => {
             console.log(error);
-            this.toaster.danger(error.message);
+            this.toastService.danger(error.message);
           },
         });
       }
@@ -480,13 +480,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.communityService.deleteCommunity(this.communityDetails?.Id).subscribe({
           next: (res: any) => {
             if (res) {
-              this.toaster.success(res.message);
+              this.toastService.success(res.message);
               this.getCommunityDetailsByName();
             }
           },
           error: (error) => {
             console.log(error);
-            this.toaster.success(error.message);
+            this.toastService.success(error.message);
           },
         });
       }

@@ -10,8 +10,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { TokenStorageService } from '../../../@shared/services/token-storage.service';
 import { Router } from '@angular/router';
 import { CustomerService } from '../../../@shared/services/customer.service';
-import { ToastService } from '../../../@shared/services/toaster.service';
 import { ForgotPasswordComponent } from 'src/app/pages/auth/forgot-password/forgot-password.component';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-header',
@@ -49,7 +49,7 @@ export class HeaderComponent {
     private router: Router,
     private tokenStorageService: TokenStorageService,
     private customerService: CustomerService,
-    private toaster: ToastService
+    private toastService: ToastService
   ) {}
 
   openUserMenu(): void {
@@ -107,7 +107,7 @@ export class HeaderComponent {
     this.spinner.show();
     // this.isCollapsed = true;
     this.tokenStorageService.signOut();
-    this.toaster.success('Logout successfully');
+    this.toastService.success('Logout successfully');
     this.router.navigate(['/login']);
     // this.isDomain = false;
   }
@@ -170,7 +170,7 @@ export class HeaderComponent {
     this.customerService.readUnreadNotification(id, isRead).subscribe({
       next: (res) => {
         this.sharedService.getNotificationList();
-        // this.toaster.success(res.message);
+        // this.toastService.success(res.message);
       },
     });
   }

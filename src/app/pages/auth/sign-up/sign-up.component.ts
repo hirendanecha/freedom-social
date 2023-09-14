@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { debounceTime, fromEvent } from 'rxjs';
 import { Customer } from 'src/app/@shared/constant/customer';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 import { UploadFilesService } from 'src/app/@shared/services/upload-files.service';
 @Component({
   selector: 'app-sign-up',
@@ -43,7 +43,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     private customerService: CustomerService,
     private router: Router,
     private uploadService: UploadFilesService,
-    private toaster: ToastService
+    private toastService: ToastService
   ) {
     this.customer.termAndPolicy = false;
   }
@@ -212,7 +212,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
           this.customer.State = zip_data ? zip_data.state : '';
           this.customer.City = zip_data ? zip_data.city : '';
         } else {
-          this.toaster.danger('Please check and enter valid country or zip code.');
+          this.toastService.danger('Please check and enter valid country or zip code.');
         }
 
         this.spinner.hide();

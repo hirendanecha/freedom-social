@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/@shared/services/auth.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -32,14 +32,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private spinner: NgxSpinnerService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private toaster: ToastService
+    private toastService: ToastService
   ) {
     const isVerify = this.route.snapshot.queryParams.isVerify;
     if (isVerify === 'false') {
       this.msg =
         'Please check your email and click the activation link to activate your account.';
       this.type = 'success';
-      // this.toaster.success(this.msg);
+      // this.toastService.success(this.msg);
     }
   }
 
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           window.sessionStorage.user_zip = data.user.ZipCode;
           this.isLoginFailed = false;
           this.isLoggedIn = true;
-          this.toaster.success('Logged in successfully');
+          this.toastService.success('Logged in successfully');
           this.router.navigate([`/home`]);
         } else {
           this.loginMessage = data.mesaage;
@@ -83,14 +83,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.errorMessage =
             'Invalid Email and Password. Kindly try again !!!!';
           this.isLoginFailed = true;
-          // this.toaster.danger(this.errorMessage);
+          // this.toastService.danger(this.errorMessage);
         }
       },
       error: (err) => {
         this.spinner.hide();
         console.log(err.error);
         this.errorMessage = err.error.message; //err.error.message;
-        // this.toaster.danger(this.errorMessage);
+        // this.toastService.danger(this.errorMessage);
         this.isLoginFailed = true;
         this.errorCode = err.error.errorCode;
       }
@@ -104,13 +104,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
         {
           next: (result: any) => {
             this.msg = result.message;
-            // this.toaster.success(this.msg);
+            // this.toastService.success(this.msg);
             this.type = 'success';
           },
           error:
             (error) => {
               this.msg = error.message;
-              // this.toaster.danger(this.msg);
+              // this.toastService.danger(this.msg);
               this.type = 'danger';
             }
         });

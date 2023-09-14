@@ -7,7 +7,6 @@ import {
   NgbModule,
   NgbNavModule,
 } from '@ng-bootstrap/ng-bootstrap';
-import { ToastsComponent } from './toaster/toaster.component';
 import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
@@ -30,7 +29,6 @@ const sharedModules = [
   ReactiveFormsModule,
   NgbDropdownModule,
   NgbNavModule,
-  ToastsComponent,
   NgbCollapseModule,
   NgbModule,
   NgxSpinnerModule,

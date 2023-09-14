@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 import { UnsubscribeProfileService } from 'src/app/@shared/services/unsubscribe-profile.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class UnsubscribedUsersComponent implements OnInit {
 
   constructor(
     private unsubscribeProfileService: UnsubscribeProfileService,
-    private toaster: ToastService
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class UnsubscribedUsersComponent implements OnInit {
     this.unsubscribeProfileService.remove(id).subscribe({
       next: (res: any) => {
         this.getUnsubscribeProfiles();
-        this.toaster.success(res.message);
+        this.toastService.success(res.message);
       },
     });
   }

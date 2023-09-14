@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { SeeFirstUserService } from '../../@shared/services/see-first-user.service';
 import { CustomerService } from '../../@shared/services/customer.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
-import { ToastService } from '../../@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-notification',
@@ -17,7 +16,7 @@ export class NotificationsComponent {
     private customerService: CustomerService,
     private spinner: NgxSpinnerService,
     private router: Router,
-    private toaster: ToastService
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -49,7 +48,7 @@ export class NotificationsComponent {
     this.customerService.deleteNotification(id).subscribe({
       next: (res) => {
         this.getNotificationList();
-        this.toaster.success(res.message);
+        this.toastService.success(res.message);
       },
     });
   }
@@ -57,7 +56,7 @@ export class NotificationsComponent {
   readUnreadNotification(id, isRead): void {
     this.customerService.readUnreadNotification(id, isRead).subscribe({
       next: (res) => {
-        this.toaster.success(res.message);
+        this.toastService.success(res.message);
         this.getNotificationList();
       },
     });

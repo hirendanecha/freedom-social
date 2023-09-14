@@ -6,7 +6,6 @@ import { FooterComponent } from '../layouts/components/footer/footer.component';
 import {
   NgbActiveModal,
 } from '@ng-bootstrap/ng-bootstrap';
-import { ToastsContainer } from '../@shared/services/toast-container.component';
 import {
   LAZYLOAD_IMAGE_HOOKS,
   LazyLoadImageModule,
@@ -24,7 +23,7 @@ import { RightSidebarComponent } from '../layouts/components/right-sidebar/right
     FooterComponent,
     LeftSidebarComponent,
     RightSidebarComponent,
-    ResearchSidebarComponent
+    ResearchSidebarComponent,
   ],
   providers: [
     NgbActiveModal,
@@ -33,7 +32,6 @@ import { RightSidebarComponent } from '../layouts/components/right-sidebar/right
   imports: [
     ShellRoutingModule,
     SharedModule,
-    ToastsContainer,
     LazyLoadImageModule,
   ],
 })

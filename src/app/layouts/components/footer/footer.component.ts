@@ -130,7 +130,7 @@ export class FooterComponent {
     this.customerService.readUnreadNotification(id, isRead).subscribe({
       next: (res) => {
         this.sharedService.getNotificationList();
-        // this.toaster.success(res.message);
+        // this.toastService.success(res.message);
       },
     });
   }

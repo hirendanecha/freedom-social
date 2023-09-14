@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ConfirmationModalComponent } from '../../modals/confirmation-modal/confirmation-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommunityService } from 'src/app/@shared/services/community.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-community-card',
@@ -22,7 +22,7 @@ export class CommunityCardComponent {
     private router: Router,
     private modalService: NgbModal,
     private communityService: CommunityService,
-    private toaster: ToastService
+    private toastService: ToastService
   ) {
     this.profileId = Number(sessionStorage.getItem('profileId'));
   }
@@ -31,7 +31,7 @@ export class CommunityCardComponent {
     if (this.community?.isApprove === 'Y') {
       this.router.navigate(['community', this.community?.slug]);
     } else {
-      this.toaster.danger('This community not approve yet.');
+      this.toastService.danger('This community not approve yet.');
     }
   }
 
@@ -80,13 +80,13 @@ export class CommunityCardComponent {
         actionObs.subscribe({
           next: (res: any) => {
             if (res) {
-              this.toaster.success(res.message);
+              this.toastService.success(res.message);
               this.getCommunities?.emit();
             }
           },
           error: (error) => {
             console.log(error);
-            this.toaster.success(error.message);
+            this.toastService.success(error.message);
           },
         });
       }

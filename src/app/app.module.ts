@@ -7,9 +7,13 @@ import { SharedModule } from './@shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeModule } from './pages/home/home.module';
+import { ToastsContainerComponent } from './@shared/components/toasts-container/toasts-container.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    ToastsContainerComponent
+  ],
   providers: [],
   bootstrap: [AppComponent],
   imports: [

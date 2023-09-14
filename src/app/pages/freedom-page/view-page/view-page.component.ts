@@ -9,7 +9,7 @@ import { Customer } from 'src/app/@shared/constant/customer';
 import { CommunityPostService } from 'src/app/@shared/services/community-post.service';
 import { CommunityService } from 'src/app/@shared/services/community.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-view-page',
@@ -37,7 +37,7 @@ export class ViewPageComponent implements OnInit, AfterViewInit {
     public sharedService: SharedService,
     private communityService: CommunityService,
     private communityPostService: CommunityPostService,
-    private toaster: ToastService
+    private toastService: ToastService
   ) {
     this.pageId = history?.state?.data?.id;
     this.userProfileId = Number(sessionStorage.getItem('profileId'));
@@ -140,7 +140,7 @@ export class ViewPageComponent implements OnInit, AfterViewInit {
     this.communityService.createCommunityAdmin(data).subscribe({
       next: (res: any) => {
         if (res) {
-          this.toaster.success(res.message);
+          this.toastService.success(res.message);
           this.getCommunityDetails();
         }
       },

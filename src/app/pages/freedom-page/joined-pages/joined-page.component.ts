@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { CommunityService } from 'src/app/@shared/services/community.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-joined-page',
@@ -18,7 +18,7 @@ export class JoinedPageComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private communityService: CommunityService,
     private modalService: NgbModal,
-    private toaster: ToastService
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -74,13 +74,13 @@ export class JoinedPageComponent implements OnInit {
         this.communityService.removeFromCommunity(id, profileId).subscribe({
           next: (res: any) => {
             if (res) {
-              this.toaster.success(res.message);
+              this.toastService.success(res.message);
               this.getCommunityList();
             }
           },
           error: (error) => {
             console.log(error);
-            this.toaster.danger(error.message);
+            this.toastService.danger(error.message);
           },
         });
       }

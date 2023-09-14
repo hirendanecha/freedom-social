@@ -5,7 +5,7 @@ import { forkJoin } from 'rxjs';
 import { slugify } from 'src/app/@shared/utils/utils';
 import { Community } from 'src/app/@shared/constant/customer';
 import { CommunityService } from 'src/app/@shared/services/community.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -37,7 +37,7 @@ export class AddCommunityModalComponent {
     public activeModal: NgbActiveModal,
     private spinner: NgxSpinnerService,
     private communityService: CommunityService,
-    private toaster: ToastService
+    private toastService: ToastService
   ) {
     this.userId = window.sessionStorage.user_id;
     this.profileId = sessionStorage.getItem('profileId');
@@ -94,20 +94,20 @@ export class AddCommunityModalComponent {
               if (!res.error) {
                 this.submitted = true;
                 this.createCommunityAdmin(res.data);
-                this.toaster.success('Your Local Community will be approved withing 24 hours!');
+                this.toastService.success('Your Local Community will be approved withing 24 hours!');
                 this.activeModal.close('success');
               }
             },
             error:
               (err) => {
-                this.toaster.danger('Please change community name. this community name already in use.');
+                this.toastService.danger('Please change community name. this community name already in use.');
                 this.spinner.hide();
               }
           });
       }
     } else {
       this.spinner.hide();
-      this.toaster.danger('Please enter mandatory fields(*) data.');
+      this.toastService.danger('Please enter mandatory fields(*) data.');
     }
   }
 

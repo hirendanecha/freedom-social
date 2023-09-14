@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SeeFirstUserService } from 'src/app/@shared/services/see-first-user.service';
-import { ToastService } from 'src/app/@shared/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-see-first-user',
@@ -12,7 +12,7 @@ export class SeeFirstUserComponent {
 
   constructor(
     private seeFirstUserService: SeeFirstUserService,
-    private toaster: ToastService
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class SeeFirstUserComponent {
     this.seeFirstUserService.remove(id).subscribe({
       next: (res: any) => {
         this.getSeeFirstUsers();
-        this.toaster.success(res.message);
+        this.toastService.success(res.message);
       },
     });
   }
