@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 import { ProfileService } from 'src/app/@shared/services/profile.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class ResearchSidebarComponent {
 
   constructor(
     private profileService: ProfileService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    public breakpointService: BreakpointService,
   ) {
     this.getGroups();
   }

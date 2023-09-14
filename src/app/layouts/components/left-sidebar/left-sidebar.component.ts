@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { ClaimTokenModalComponent } from 'src/app/@shared/modals/clai-1776-token-modal/claim-token-modal.component';
+import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 
 @Component({
   selector: 'app-left-sidebar',
@@ -19,41 +20,18 @@ import { ClaimTokenModalComponent } from 'src/app/@shared/modals/clai-1776-token
 export class LeftSidebarComponent implements OnInit {
 
   isEXpand = false;
-  isShowPeoplePages = false;
-  isFriendRequest = false;
-  isBlockList = false;
-  isSuggesation = false;
-  isAllFriends = false;
-  isEvents = false;
-  isHome = false;
-  isCommunity = false;
-  isPageResearch = false;
-  isSetting = false;
+
   isSettingMenuCollapse = true;
   isShowMyList = false;
   user: any = {};
+
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private modalService: NgbModal,
     public sharedService: SharedService,
-    private customerService: CustomerService
-  ) {
-    this.router.events.subscribe((event: RouterEvent | any) => {
-      if (event instanceof NavigationEnd) {
-        this.isHome = event.url.includes('/home') || false;
-        this.isShowPeoplePages = event.url.includes('/people') || false;
-        this.isAllFriends = event.url.includes('/people/all-friends') || false;
-        this.isBlockList = event.url.includes('/block-list') || false;
-        this.isSuggesation = event.url.includes('/suggesation') || false;
-        this.isFriendRequest = event.url.includes('/friend-request') || false;
-        this.isEvents = event.url.includes('/events') || false;
-        this.isCommunity = event.url.includes('/community') || false;
-        this.isPageResearch = event.url.includes('/communities-post') || false;
-        this.isSetting = event.url.includes('/settings') || false;
-      }
-    });
-  }
+    private customerService: CustomerService,
+    public breakpointService: BreakpointService,
+  ) {}
 
   ngOnInit(): void {
     this.getUserDetails();

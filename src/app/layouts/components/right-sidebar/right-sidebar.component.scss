@@ -1,10 +1,8 @@
 :host {
-  position: sticky;
-  max-height: 90vh;
-  top: 100px;
-  width: 100%;
-
-  .cus-scrollbar {
+  .right-sidebar.cus-scrollbar {
+    position: sticky;
+    top: 100px;
+    width: 100%;
     max-height: calc(100vh - 120px);
     overflow-x: auto;
   }

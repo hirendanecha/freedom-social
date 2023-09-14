@@ -1,20 +1,16 @@
 :host {
-  position: sticky;
-  top: 100px;
-  width: 100%;
-
-  .cus-scrollbar {
+  .left-sidebar.cus-scrollbar {
+    position: sticky;
+    top: 100px;
+    width: 100%;
     max-height: calc(100vh - 120px);
     overflow-x: auto;
-  }
+    cursor: pointer;
 
-  .profile-content {
     li {
       margin-top: 15px;
     }
-  }
-  .profile-sidebar {
-    cursor: pointer;
+
     .profile-pic {
       .avatar-img {
         border-radius: 15px;

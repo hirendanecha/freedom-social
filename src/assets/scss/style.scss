@@ -97,3 +97,9 @@ select.input-area {
 .outline-0 {
   outline: none;
 }
+
+.offcanvas {
+  background-color: var(--section-1st-color) !important;
+  width: 300px !important;
+  max-width: 90% !important;
+}

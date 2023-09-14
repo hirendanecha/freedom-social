@@ -3,6 +3,7 @@ import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { CustomerService } from '../../../@shared/services/customer.service';
 import { CommunityService } from '../../../@shared/services/community.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 
 @Component({
   selector: 'app-right-sidebar',
@@ -19,7 +20,8 @@ export class RightSidebarComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private communityService: CommunityService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    public breakpointService: BreakpointService,
   ) {
     this.router.events.subscribe((event: RouterEvent | any) => {
       if (event instanceof NavigationEnd) {

@@ -1,15 +1,3 @@
-@media (max-width: 990px) {
-  .main-content {
-    .my-profile-sidebar,
-    .my-list-sidebar {
-      min-width: 300px;
-      max-width: 100% !important;
-      position: relative;
-      z-index: 1;
-    }
-  }
-}
-
 .main-content {
   .my-profile-sidebar,
   .my-list-sidebar {

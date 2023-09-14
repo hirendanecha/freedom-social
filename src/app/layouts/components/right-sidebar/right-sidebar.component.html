@@ -1,7 +1,4 @@
-<!-- #Web View -->
-<div
-  class="cus-overflow cus-scrollbar d-lg-flex d-none flex-column single-box p-5"
->
+<div class="right-sidebar profile-sidebar cus-scrollbar d-flex flex-column p-5" [ngClass]="{'mh-100 vh-100': (breakpointService?.screen | async).lg.lessThen}">
   <div class="dashboard-img mb-5">
     <img class="w-100 rounded-3" src="/assets/images/freedom-dashboard.png" />
     <span class="mt-3 text-start font-14-px">
