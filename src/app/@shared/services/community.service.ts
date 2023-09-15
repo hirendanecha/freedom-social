@@ -10,7 +10,7 @@ import { Community } from '../constant/customer';
 export class CommunityService {
   private baseUrl = environment.serverUrl + 'community';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   upload(file: File, id: any, defaultType: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
@@ -32,8 +32,8 @@ export class CommunityService {
     return this.http.request(req);
   }
 
-  getCommunity(id): Observable<Community> {
-    return this.http.get<Community>(`${this.baseUrl}/?id=${id}`);
+  getCommunity(id, pageType: string): Observable<Community> {
+    return this.http.get<Community>(`${this.baseUrl}/?id=${id}&pageType=${pageType}`);
   }
 
   createCommunity(communityData: Community): Observable<Community> {
@@ -62,12 +62,12 @@ export class CommunityService {
     );
   }
 
-  getCommunityByUserId(id): Observable<any> {
-    return this.http.get(`${this.baseUrl}/user/${id}`);
+  getCommunityByUserId(id, pageType: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/user/${id}?pageType=${pageType}`);
   }
 
-  getJoinedCommunityByProfileId(id): Observable<any> {
-    return this.http.get(`${this.baseUrl}/joined-community/${id}`);
+  getJoinedCommunityByProfileId(id, pageType: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/joined-community/${id}?pageType=${pageType}`);
   }
 
   getCommunityById(id): Observable<any> {

@@ -51,7 +51,7 @@ export class RightSidebarComponent implements OnInit {
   getCommunityList(): void {
     this.spinner.show();
     const profileId = sessionStorage.getItem('profileId');
-    this.communityService.getCommunity(profileId).subscribe({
+    this.communityService.getCommunity(profileId, 'community').subscribe({
       next: (res: any) => {
         this.spinner.hide();
         if (res.data) {
