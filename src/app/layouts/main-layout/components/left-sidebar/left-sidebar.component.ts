@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletLinkComponent } from '../../../@shared/modals/wallet-download-modal/1776-wallet.component';
+import { WalletLinkComponent } from '../../../../@shared/modals/wallet-download-modal/1776-wallet.component';
 import { NgbActiveOffcanvas, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';

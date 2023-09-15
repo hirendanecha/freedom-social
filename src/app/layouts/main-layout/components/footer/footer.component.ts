@@ -1,11 +1,11 @@
 import { Component, EventEmitter, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { SharedService } from '../../../@shared/services/shared.service';
+import { SharedService } from '../../../../@shared/services/shared.service';
 import { Router } from '@angular/router';
-import { TokenStorageService } from '../../../@shared/services/token-storage.service';
+import { TokenStorageService } from '../../../../@shared/services/token-storage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CustomerService } from '../../../@shared/services/customer.service';
-import { ForgotPasswordComponent } from 'src/app/pages/auth/forgot-password/forgot-password.component';
+import { CustomerService } from '../../../../@shared/services/customer.service';
+import { ForgotPasswordComponent } from 'src/app/layouts/auth-layout/pages/forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-footer',

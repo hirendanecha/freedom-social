@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
-import { filter, map } from 'rxjs';
-import { BreakpointService } from '../@shared/services/breakpoint.service';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { RightSidebarComponent } from '../main-layout/components/right-sidebar/right-sidebar.component';
-import { LeftSidebarComponent } from '../main-layout/components/left-sidebar/left-sidebar.component';
-import { ResearchSidebarComponent } from '../main-layout/components/research-sidebar/research-sidebar.component';
+import { filter, map } from 'rxjs';
+import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
+import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
+import { ResearchSidebarComponent } from './components/research-sidebar/research-sidebar.component';
+import { RightSidebarComponent } from './components/right-sidebar/right-sidebar.component';
 
 @Component({
   selector: 'app-main-layout',

@@ -5,12 +5,12 @@ import {
   NgbModal,
   NgbModalRef,
 } from '@ng-bootstrap/ng-bootstrap';
-import { SharedService } from '../../../@shared/services/shared.service';
+import { SharedService } from '../../../../@shared/services/shared.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { TokenStorageService } from '../../../@shared/services/token-storage.service';
+import { TokenStorageService } from '../../../../@shared/services/token-storage.service';
 import { Router } from '@angular/router';
-import { CustomerService } from '../../../@shared/services/customer.service';
-import { ForgotPasswordComponent } from 'src/app/pages/auth/forgot-password/forgot-password.component';
+import { CustomerService } from '../../../../@shared/services/customer.service';
+import { ForgotPasswordComponent } from 'src/app/layouts/auth-layout/pages/forgot-password/forgot-password.component';
 import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({

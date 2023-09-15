@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { CustomerService } from '../../@shared/services/customer.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/@shared/services/toast.service';
+import { CustomerService } from 'src/app/@shared/services/customer.service';
 
 @Component({
   selector: 'app-notification',

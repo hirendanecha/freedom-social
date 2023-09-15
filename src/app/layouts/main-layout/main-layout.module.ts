@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HeaderComponent } from '../main-layout/components/header/header.component';
 import { MainLayoutComponent } from './main-layout.component';
-import { FooterComponent } from '../main-layout/components/footer/footer.component';
 import {
   NgbActiveModal, NgbActiveOffcanvas,
 } from '@ng-bootstrap/ng-bootstrap';
@@ -10,10 +8,12 @@ import {
   LazyLoadImageModule,
   ScrollHooks,
 } from 'ng-lazyload-image';
-import { SharedModule } from '../@shared/shared.module';
-import { ResearchSidebarComponent } from '../main-layout/components/research-sidebar/research-sidebar.component';
-import { LeftSidebarComponent } from '../main-layout/components/left-sidebar/left-sidebar.component';
 import { MainLayoutRoutingModule } from './main-layout-routing.module';
+import { SharedModule } from 'src/app/@shared/shared.module';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
+import { ResearchSidebarComponent } from './components/research-sidebar/research-sidebar.component';
 
 @NgModule({
   declarations: [

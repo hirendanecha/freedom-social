@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthenticationGuard } from '../@shared/guards/authentication.guard';
 import { MainLayoutComponent } from './main-layout.component';
+import { AuthenticationGuard } from 'src/app/@shared/guards/authentication.guard';
 
 const routes: Routes = [
   {
@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('../pages/home/home.module').then((m) => m.HomeModule),
+        loadChildren: () => import('./pages/home/home.module').then((m) => m.HomeModule),
         data: {
           isShowLeftSideBar: true,
           isShowRightSideBar: true
@@ -19,7 +19,7 @@ const routes: Routes = [
       },
       {
         path: 'post',
-        loadChildren: () => import('../pages/posts/post.module.').then((m) => m.PostModule),
+        loadChildren: () => import('./pages/posts/post.module.').then((m) => m.PostModule),
         data: {
           isShowLeftSideBar: true,
           isShowRightSideBar: true
@@ -27,35 +27,35 @@ const routes: Routes = [
       },
       {
         path: 'communities',
-        loadChildren: () => import('../pages/communities/communities.module').then((m) => m.CommunitiesModule),
+        loadChildren: () => import('./pages/communities/communities.module').then((m) => m.CommunitiesModule),
         data: {
           isShowLeftSideBar: true
         }
       },
       {
         path: 'pages',
-        loadChildren: () => import('../pages/freedom-page/freedom-page.module').then((m) => m.FreedomPageModule),
+        loadChildren: () => import('./pages/freedom-page/freedom-page.module').then((m) => m.FreedomPageModule),
         data: {
           isShowLeftSideBar: true
         }
       },
       {
         path: 'settings',
-        loadChildren: () => import('../pages/settings/settings.module').then((m) => m.SettingsModule),
+        loadChildren: () => import('./pages/settings/settings.module').then((m) => m.SettingsModule),
         data: {
           isShowLeftSideBar: true
         }
       },
       {
         path: 'notifications',
-        loadChildren: () => import('../pages/notifications/notification.module').then((m) => m.NotificationsModule),
+        loadChildren: () => import('./pages/notifications/notification.module').then((m) => m.NotificationsModule),
         data: {
           isShowLeftSideBar: true
         }
       },
       {
         path: 'research',
-        loadChildren: () => import('../pages/research/research.module').then((m) => m.ResearchModule),
+        loadChildren: () => import('./pages/research/research.module').then((m) => m.ResearchModule),
         data: {
           isShowLeftSideBar: true,
           isShowRightSideBar: true,
