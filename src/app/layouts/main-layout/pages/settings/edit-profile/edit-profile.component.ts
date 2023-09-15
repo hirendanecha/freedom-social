@@ -15,6 +15,7 @@ import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { PostService } from 'src/app/@shared/services/post.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -50,7 +51,8 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     private spinner: NgxSpinnerService,
     private tokenStorage: TokenStorageService,
     private postService: PostService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private toastService: ToastService
   ) {
     this.userId = this.route.snapshot.paramMap.get('id');
     this.profileId = sessionStorage.getItem('profileId');
@@ -217,9 +219,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
       this.customerService.updateProfile(this.profileId, this.customer).subscribe({
         next: (res: any) => {
           this.spinner.hide();
+          this.toastService.success('Update successfully');
         },
         error: (error) => {
           this.spinner.hide();
+          this.toastService.danger('Please try again');
           console.log(error);
         }
       });

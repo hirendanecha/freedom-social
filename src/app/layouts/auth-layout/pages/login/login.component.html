@@ -24,7 +24,7 @@
         {{ errorMessage || msg }}
       </div>
       <div class="mb-3">
-        <label class="form-label text-light"
+        <label class="form-label text-dark"
           >Email Address or Username<span class="text-danger"
             >*</span
           ></label
@@ -50,7 +50,7 @@
       </div>
       <div class="mb-3">
         <div class="d-flex justify-content-between">
-          <label class="form-label text-light"
+          <label class="form-label text-dark"
             >Password<span class="text-danger">*</span></label
           >
           <a class="fw-500 c-pointer" (click)="forgotPasswordOpen()"
@@ -65,14 +65,13 @@
           formControlName="Password"
         />
         <div
-          class="srv-validation-message text-danger"
-          *ngIf="
-              signInForm.submitted &&
-                 loginForm.controls['Password'].invalid &&
-                 loginForm.controls['Password'].errors?.['username']
-               "
-        >
-          Please enter valid email!
+        class="srv-validation-message text-danger"
+        *ngIf="
+            signInForm.submitted &&
+               loginForm.controls['Password'].invalid &&
+               loginForm.controls['Password'].errors?.['required']
+             "
+      >Please enter valid password!
         </div>
       </div>
 
