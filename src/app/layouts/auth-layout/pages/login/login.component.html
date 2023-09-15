@@ -1,94 +1,84 @@
-<div class="main-content">
-  <div class="container-fluid px-0">
-    <div class="row g-0 min-vh-100">
-      <!-- Login Form -->
-      <div class="login-content d-flex flex-column align-items-center">
-        <div class="container my-auto py-5">
-          <div class="row g-0">
-            <div class="col-11 col-md-8 col-lg-7 col-xl-6 mx-auto">
-              <p class="text-2 mb-5">
-                Not activated?
-                <a class="fw-500" routerLink="/register">Register</a>
-              </p>
-              <h3 class="mb-4">Log In to Your Account</h3>
-              <form
-                id="loginForm"
-                class="form-dark"
-                #signInForm="ngForm"
-                [formGroup]="loginForm"
-                (ngSubmit)="signInForm.form.valid && onSubmit()"
-                *ngIf="!isLoggedIn"
-                novalidate
-                autocomplete="none"
-              >
-                <div
-                  class="alert alert-{{ type }}"
-                  role="alert"
-                  *ngIf="errorMessage || msg"
-                >
-                  {{ errorMessage || msg }}
-                </div>
-                <div class="mb-3">
-                  <label class="form-label text-light"
-                    >Email Address or Username<span class="text-danger"
-                      >*</span
-                    ></label
-                  >
-                  <input
-                    type="email"
-                    class="input-area"
-                    required
-                    placeholder="Enter Your Email"
-                    formControlName="Email"
-                    autocomplete="email"
-                  />
-                  <div
-                    class="srv-validation-message text-danger"
-                    *ngIf="
-                        signInForm.submitted &&
-                           loginForm.controls['Email'].invalid &&
-                           loginForm.controls['Email'].errors?.['required']
-                         "
-                  >
-                    Email field is required.
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label text-light"
-                      >Password<span class="text-danger">*</span></label
-                    >
-                    <a class="fw-500 c-pointer" (click)="forgotPasswordOpen()"
-                      >Forgot Password ?</a
-                    >
-                  </div>
-                  <input
-                    type="password"
-                    class="input-area"
-                    required
-                    placeholder="Enter Password"
-                    formControlName="Password"
-                  />
-                  <div
-                    class="srv-validation-message text-danger"
-                    *ngIf="
-                        signInForm.submitted &&
-                           loginForm.controls['Password'].invalid &&
-                           loginForm.controls['Password'].errors?.['username']
-                         "
-                  >
-                    Please enter valid email!
-                  </div>
-                </div>
-                <button class="btn btn-primary my-2 login-button" type="submit">
-                  Log in
-                </button>
-              </form>
-            </div>
-          </div>
+<div class="row min-vh-100">
+  <div class="col-12 col-md-8 col-lg-7 col-xl-6 mx-auto d-flex flex-column justify-content-center">
+    <p class="text-2 mb-5">
+      Not activated?
+      <a class="fw-500" routerLink="/register">Register</a>
+    </p>
+    <h3 class="mb-4">Log In to Your Account</h3>
+
+    <form
+      id="loginForm"
+      class="form-dark d-flex flex-column"
+      #signInForm="ngForm"
+      [formGroup]="loginForm"
+      (ngSubmit)="signInForm.form.valid && onSubmit()"
+      *ngIf="!isLoggedIn"
+      novalidate
+      autocomplete="none"
+    >
+      <div
+        class="alert alert-{{ type }}"
+        role="alert"
+        *ngIf="errorMessage || msg"
+      >
+        {{ errorMessage || msg }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label text-light"
+          >Email Address or Username<span class="text-danger"
+            >*</span
+          ></label
+        >
+        <input
+          type="email"
+          class="input-area"
+          required
+          placeholder="Enter Your Email"
+          formControlName="Email"
+          autocomplete="email"
+        />
+        <div
+          class="srv-validation-message text-danger"
+          *ngIf="
+              signInForm.submitted &&
+                 loginForm.controls['Email'].invalid &&
+                 loginForm.controls['Email'].errors?.['required']
+               "
+        >
+          Email field is required.
         </div>
       </div>
-      <!-- Login Form End -->
-    </div>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between">
+          <label class="form-label text-light"
+            >Password<span class="text-danger">*</span></label
+          >
+          <a class="fw-500 c-pointer" (click)="forgotPasswordOpen()"
+            >Forgot Password ?</a
+          >
+        </div>
+        <input
+          type="password"
+          class="input-area"
+          required
+          placeholder="Enter Password"
+          formControlName="Password"
+        />
+        <div
+          class="srv-validation-message text-danger"
+          *ngIf="
+              signInForm.submitted &&
+                 loginForm.controls['Password'].invalid &&
+                 loginForm.controls['Password'].errors?.['username']
+               "
+        >
+          Please enter valid email!
+        </div>
+      </div>
+
+      <button class="btn btn-primary my-2 ms-auto" type="submit">
+        Log in
+      </button>
+    </form>
   </div>
 </div>

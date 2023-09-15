@@ -33,6 +33,8 @@ export class ResetPasswordComponent {
     this.route.queryParams.subscribe((params) => {
       this.userAccessToken = params['accesstoken'];
     });
+
+    this.spinner.hide();
   }
 
   mustMatch() {
