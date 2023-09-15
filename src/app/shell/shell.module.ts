@@ -4,7 +4,7 @@ import { HeaderComponent } from '../layouts/components/header/header.component';
 import { ShellComponent } from './shell.component';
 import { FooterComponent } from '../layouts/components/footer/footer.component';
 import {
-  NgbActiveModal,
+  NgbActiveModal, NgbActiveOffcanvas,
 } from '@ng-bootstrap/ng-bootstrap';
 import {
   LAZYLOAD_IMAGE_HOOKS,
@@ -14,7 +14,6 @@ import {
 import { SharedModule } from '../@shared/shared.module';
 import { ResearchSidebarComponent } from '../layouts/components/research-sidebar/research-sidebar.component';
 import { LeftSidebarComponent } from '../layouts/components/left-sidebar/left-sidebar.component';
-import { RightSidebarComponent } from '../layouts/components/right-sidebar/right-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -22,11 +21,11 @@ import { RightSidebarComponent } from '../layouts/components/right-sidebar/right
     HeaderComponent,
     FooterComponent,
     LeftSidebarComponent,
-    RightSidebarComponent,
     ResearchSidebarComponent,
   ],
   providers: [
     NgbActiveModal,
+    NgbActiveOffcanvas,
     { provide: LAZYLOAD_IMAGE_HOOKS, useClass: ScrollHooks },
   ],
   imports: [

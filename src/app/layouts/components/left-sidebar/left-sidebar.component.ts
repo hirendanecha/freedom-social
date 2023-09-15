@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterEvent,
-} from '@angular/router';
 import { WalletLinkComponent } from '../../../@shared/modals/wallet-download-modal/1776-wallet.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveOffcanvas, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { ClaimTokenModalComponent } from 'src/app/@shared/modals/clai-1776-token-modal/claim-token-modal.component';
@@ -19,17 +13,14 @@ import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 })
 export class LeftSidebarComponent implements OnInit {
 
-  isEXpand = false;
-
   isSettingMenuCollapse = true;
-  isShowMyList = false;
   user: any = {};
 
   constructor(
-    private router: Router,
     private modalService: NgbModal,
     public sharedService: SharedService,
     private customerService: CustomerService,
+    private activeOffcanvas: NgbActiveOffcanvas,
     public breakpointService: BreakpointService,
   ) {}
 
@@ -38,6 +29,8 @@ export class LeftSidebarComponent implements OnInit {
   }
 
   openWalletPopUp() {
+    this.closeSidebar();
+
     const modalRef = this.modalService.open(WalletLinkComponent, {
       centered: true,
       keyboard: true,
@@ -47,7 +40,10 @@ export class LeftSidebarComponent implements OnInit {
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
   }
+
   openClaimTokenPopUp() {
+    this.closeSidebar();
+
     const modalRef = this.modalService.open(ClaimTokenModalComponent, {
       centered: true,
       keyboard: true,
@@ -56,13 +52,6 @@ export class LeftSidebarComponent implements OnInit {
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Post';
     modalRef.componentInstance.closeIcon = true;
-  }
-
-  openToggle() {
-    this.isEXpand = !this.isEXpand;
-  }
-  openMyListToggle() {
-    this.isShowMyList = !this.isShowMyList;
   }
 
   getUserDetails(): void {
@@ -82,11 +71,8 @@ export class LeftSidebarComponent implements OnInit {
         });
     }
   }
-  openLoacalCommunity() {
-    this.router.navigateByUrl('/communities');
-  }
 
-  isActive(url: string): boolean {
-    return this.router.isActive(url, true);
+  closeSidebar(): void {
+    this.activeOffcanvas.dismiss('close');
   }
 }

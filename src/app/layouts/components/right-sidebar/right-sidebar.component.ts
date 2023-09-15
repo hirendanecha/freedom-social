@@ -4,6 +4,7 @@ import { CustomerService } from '../../../@shared/services/customer.service';
 import { CommunityService } from '../../../@shared/services/community.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
+import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-right-sidebar',
@@ -11,25 +12,22 @@ import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
   styleUrls: ['./right-sidebar.component.scss'],
 })
 export class RightSidebarComponent implements OnInit {
-  isEXpand = false;
-  isShow = false;
   user: any;
-  communityList = [];
+  communities = [];
 
   constructor(
     private router: Router,
     private spinner: NgxSpinnerService,
     private communityService: CommunityService,
     private customerService: CustomerService,
+    private activeOffcanvas: NgbActiveOffcanvas,
     public breakpointService: BreakpointService,
   ) {
-    this.router.events.subscribe((event: RouterEvent | any) => {
-      if (event instanceof NavigationEnd) {
-        this.isShow = event.url.includes('/people') || false;
+    this.breakpointService.screen.subscribe((res) => {
+      if (res.xl.gatherThen) {
+        this.getCommunityList();
       }
     });
-
-    this.getCommunityList();
   }
 
   ngOnInit(): void {
@@ -50,10 +48,6 @@ export class RightSidebarComponent implements OnInit {
     }
   }
 
-  openToggle() {
-    this.isEXpand = !this.isEXpand;
-  }
-
   getCommunityList(): void {
     this.spinner.show();
     const profileId = sessionStorage.getItem('profileId');
@@ -61,7 +55,7 @@ export class RightSidebarComponent implements OnInit {
       next: (res: any) => {
         this.spinner.hide();
         if (res.data) {
-          this.communityList = res.data;
+          this.communities = res.data;
         }
       },
       error: (error) => {
@@ -72,6 +66,11 @@ export class RightSidebarComponent implements OnInit {
   }
 
   goToCommunityDetails(community: any): void {
+    this.closeSidebar();
     this.router.navigate(['community', community?.slug]);
+  }
+
+  closeSidebar(): void {
+    this.activeOffcanvas.dismiss('close');
   }
 }

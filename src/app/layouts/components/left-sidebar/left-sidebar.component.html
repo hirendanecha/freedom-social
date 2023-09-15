@@ -21,6 +21,7 @@
         class="d-flex gap-4"
         routerLink="/communities"
         routerLinkActive="active"
+        (click)="closeSidebar()"
       >
         <i class="material-symbols-outlined fs-xxl mat-icon"> workspaces </i>
         <span>Local Communities</span>
@@ -31,13 +32,14 @@
         class="d-flex gap-4"
         routerLink="/pages"
         routerLinkActive="active"
+        (click)="closeSidebar()"
       >
         <i class="material-symbols-outlined fs-xxl mat-icon"> layers </i>
         <span>Freedom Pages</span>
       </a>
     </li>
     <li>
-      <a href="https://1776token.com/" target="_blank" class="d-flex gap-4">
+      <a href="https://1776token.com/" target="_blank" class="d-flex gap-4" (click)="closeSidebar()">
         <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
         <span>1776 Token</span>
       </a>
@@ -47,13 +49,14 @@
         href="https://localfoods.market/"
         target="_blank"
         class="d-flex gap-4"
+        (click)="closeSidebar()"
       >
         <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
         <span>Local Foods</span>
       </a>
     </li>
     <li>
-      <a href="https://lamarslist.com/" target="_blank" class="d-flex gap-4">
+      <a href="https://lamarslist.com/" target="_blank" class="d-flex gap-4" (click)="closeSidebar()">
         <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
         <span>Lamars List</span>
       </a>
@@ -78,13 +81,13 @@
       >
         <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
         <span class="me-auto">Settings</span>
-        <span class="material-symbols-outlined">{{ isSettingMenuCollapse ? 'expand_more' : 'expand_less'}}</span>
+        <span class="material-symbols-outlined">{{ collapse.shown ? 'expand_more' : 'expand_less'}}</span>
       </div>
 
       <div #collapse="ngbCollapse" [(ngbCollapse)]="isSettingMenuCollapse">
         <ul class="ps-3">
           <li>
-            <a routerLink="/settings/see-first-users" routerLinkActive="active" class="d-flex gap-4">
+            <a routerLink="/settings/see-first-users" routerLinkActive="active" class="d-flex gap-4" (click)="closeSidebar()">
               <i class="material-symbols-outlined fs-xxl mat-icon">
                 group_add
               </i>
@@ -93,7 +96,7 @@
           </li>
 
           <li>
-            <a routerLink="/settings/unsubscribed-users" routerLinkActive="active" class="d-flex gap-4">
+            <a routerLink="/settings/unsubscribed-users" routerLinkActive="active" class="d-flex gap-4" (click)="closeSidebar()">
               <i class="material-symbols-outlined fs-xxl mat-icon">
                 group_remove
               </i>
@@ -102,7 +105,7 @@
           </li>
 
           <li>
-            <a routerLink="/settings/delete-profile" routerLinkActive="active" class="d-flex gap-4">
+            <a routerLink="/settings/delete-profile" routerLinkActive="active" class="d-flex gap-4" (click)="closeSidebar()">
               <i class="material-symbols-outlined fs-xxl mat-icon">
                 person_remove
               </i>

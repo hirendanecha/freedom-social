@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Customer } from 'src/app/@shared/constant/customer';
+import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 import { CommunityService } from 'src/app/@shared/services/community.service';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
@@ -37,7 +38,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private tokenStorage: TokenStorageService,
     public sharedService: SharedService,
-    private communityService: CommunityService
+    private communityService: CommunityService,
+    public breakpointService: BreakpointService
   ) {
     this.profileId = this.route.snapshot.paramMap.get('id');
     if (this.profileId) {
