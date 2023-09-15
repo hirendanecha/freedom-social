@@ -14,7 +14,7 @@ import { PostListComponent } from './components/post-list/post-list.component';
 import { PostCardComponent } from './components/post-card/post-card.component';
 import { ImgPickerComponent } from './components/img-picker/img-picker.component';
 import { CommunityCardComponent } from './components/community-card/community-card.component';
-import { RightSidebarComponent } from '../layouts/components/right-sidebar/right-sidebar.component';
+import { RightSidebarComponent } from '../layouts/main-layout/components/right-sidebar/right-sidebar.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
