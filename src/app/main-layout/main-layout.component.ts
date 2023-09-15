@@ -3,16 +3,16 @@ import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { BreakpointService } from '../@shared/services/breakpoint.service';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { RightSidebarComponent } from '../layouts/components/right-sidebar/right-sidebar.component';
-import { LeftSidebarComponent } from '../layouts/components/left-sidebar/left-sidebar.component';
-import { ResearchSidebarComponent } from '../layouts/components/research-sidebar/research-sidebar.component';
+import { RightSidebarComponent } from '../main-layout/components/right-sidebar/right-sidebar.component';
+import { LeftSidebarComponent } from '../main-layout/components/left-sidebar/left-sidebar.component';
+import { ResearchSidebarComponent } from '../main-layout/components/research-sidebar/research-sidebar.component';
 
 @Component({
-  selector: 'app-shell',
-  templateUrl: './shell.component.html',
-  styleUrls: ['./shell.component.scss'],
+  selector: 'app-main-layout',
+  templateUrl: './main-layout.component.html',
+  styleUrls: ['./main-layout.component.scss'],
 })
-export class ShellComponent {
+export class MainLayoutComponent {
 
   showButton = false;
   sidebar: any = {

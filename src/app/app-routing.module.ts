@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./shell/shell.module').then((m) => m.ShellModule),
+        loadChildren: () => import('./main-layout/main-layout.module').then((m) => m.MainLayoutModule),
       },
       {
         path: '',

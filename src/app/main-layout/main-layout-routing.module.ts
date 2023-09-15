@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ShellComponent } from './shell.component';
 import { AuthenticationGuard } from '../@shared/guards/authentication.guard';
+import { MainLayoutComponent } from './main-layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ShellComponent,
+    component: MainLayoutComponent,
     canActivate: [AuthenticationGuard],
     children: [
       {
@@ -70,4 +70,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ShellRoutingModule { }
+export class MainLayoutRoutingModule { }
