@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private renderer: Renderer2,
     private toastService: ToastService,
     private communityService: CommunityService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.postData.profileid = +this.profileId;
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if ((event instanceof NavigationEnd || event instanceof Scroll) && name) {
         this.communitySlug = name;
-        this.getCommunityDetailsByName();
+        this.getCommunityDetailsBySlug();
       }
     });
   }
@@ -109,29 +109,27 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.postData['imageUrl'] = '';
   }
 
-  getCommunityDetailsByName(): void {
+  getCommunityDetailsBySlug(): void {
     if (this.communitySlug) {
       this.spinner.show();
       this.communityService.getCommunityBySlug(this.communitySlug).subscribe(
         {
           next: (res: any) => {
             this.spinner.hide();
-            if (res) {
-              if (res?.[0]?.Id) {
-                const details = res?.[0];
+            if (res?.Id) {
+              const details = res;
 
-                if (details?.members > 0) {
-                  if (details?.memberList?.length > 0) {
-                    details['memberIds'] = details?.memberList?.map(
-                      (member: any) => member?.profileId
-                    );
-                  }
-
-                  this.communityDetails = details;
-                  this.postData.communityId = this.communityDetails?.Id;
-                } else {
-                  this.router.navigate(['local-community']);
+              if (details?.members > 0) {
+                if (details?.memberList?.length > 0) {
+                  details['memberIds'] = details?.memberList?.map(
+                    (member: any) => member?.profileId
+                  );
                 }
+
+                this.communityDetails = details;
+                this.postData.communityId = this.communityDetails?.Id;
+              } else {
+                this.router.navigate(['local-community']);
               }
             }
           },
@@ -162,7 +160,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (res: any) => {
           if (res) {
             this.toastService.success(res.message);
-            this.getCommunityDetailsByName();
+            this.getCommunityDetailsBySlug();
           }
         },
         error:
@@ -429,7 +427,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.communityService.joinCommunity(data).subscribe(
       (res: any) => {
         if (res) {
-          this.getCommunityDetailsByName();
+          this.getCommunityDetailsBySlug();
         }
       },
       (error) => {
@@ -454,7 +452,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           next: (res: any) => {
             if (res) {
               this.toastService.success(res.message);
-              this.getCommunityDetailsByName();
+              this.getCommunityDetailsBySlug();
             }
           },
           error: (error) => {
@@ -481,7 +479,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           next: (res: any) => {
             if (res) {
               this.toastService.success(res.message);
-              this.getCommunityDetailsByName();
+              this.getCommunityDetailsBySlug();
             }
           },
           error: (error) => {

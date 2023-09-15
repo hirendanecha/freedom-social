@@ -28,12 +28,7 @@
           >
         </div>
 
-        <ng-container
-          *ngIf="
-            communityDetails?.memberIds?.includes(+profileId);
-            else elseJoinCommunity
-          "
-        >
+        <ng-container *ngIf="communityDetails?.memberIds?.includes(+profileId); else elseJoinCommunity">
           <ng-container
             *ngIf="
               communityDetails?.profileId === +profileId;
@@ -259,12 +254,7 @@
         <img
           class="w-48-px h-48-px rounded-4"
           loading="lazy"
-          data-src="
-           {{
-            member?.ProfilePicName ||
-              '/assets/images/avtar/placeholder-user.png'
-          }}
-          "
+          data-src="{{ member?.ProfilePicName || '/assets/images/avtar/placeholder-user.png' }}"
           onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png'"
           alt="avatar"
         />
@@ -281,7 +271,7 @@
         <div
           class="btn-group cus-dropdown d-flex gap-3"
           *ngIf="
-            profileId.toString() === communityDetails?.profileId.toString() &&
+            profileId?.toString() === communityDetails?.profileId?.toString() &&
             communityDetails?.profileId !== member?.profileId
           "
         >
