@@ -11,10 +11,10 @@ import {
 import { NavigationEnd, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { slideUp } from 'src/app/@shared/animations/slideUp';
-import { PostService } from 'src/app/services/post.service';
-import { SeeFirstUserService } from 'src/app/services/see-first-user.service';
-import { SharedService } from 'src/app/services/shared.service';
-import { SocketService } from 'src/app/services/socket.service';
+import { PostService } from 'src/app/@shared/services/post.service';
+import { SeeFirstUserService } from 'src/app/@shared/services/see-first-user.service';
+import { SharedService } from 'src/app/@shared/services/shared.service';
+import { SocketService } from 'src/app/@shared/services/socket.service';
 
 @Component({
   selector: 'app-post-list',

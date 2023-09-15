@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+::ng-deep {
+  .carousel {
+    .carousel-inner {
+      border-radius: var(--bs-border-radius);
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+      width: 32px;
+      opacity: 1;
+
+      span {
+        background-color: var(--bs-primary);
+        border-radius: 10px;
+        background-size: 18px;
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .carousel-control-prev {
+      left: -36px;
+    }
+
+    .carousel-control-next {
+      right: -36px;
+    }
+  }
+
+  @media (max-width: 990px) {
+    .carousel {
+      .carousel-control-prev, .carousel-control-next {
+        width: 46px;
+      }
+    }
+  }
+}

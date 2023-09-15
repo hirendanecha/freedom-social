@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ToastService } from 'src/app/services/toaster.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
 
 @Component({
   selector: 'app-img-picker',
@@ -19,13 +19,13 @@ export class ImgPickerComponent {
   };
 
   constructor(
-    private toaster: ToastService
+    private toastService: ToastService
   ) {}
 
   onImgFileChange(event: any): void {
     const file = event.target?.files?.[0] || {};
     if (file.size / (1024 * 1024) > 5) {
-      this.toaster.danger('Image file size exceeds 5 MB!');
+      this.toastService.danger('Image file size exceeds 5 MB!');
       return;
     }
 

@@ -7,25 +7,22 @@ import {
   NgbModule,
   NgbNavModule,
 } from '@ng-bootstrap/ng-bootstrap';
-import { ToastsComponent } from './toaster/toaster.component';
-import { MyListComponent } from '../right-side-bar/my-list.component';
 import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
-import { MyProfileComponent } from '../left-side-bar/my-profile.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PostCardComponent } from './components/post-card/post-card.component';
 import { ImgPickerComponent } from './components/img-picker/img-picker.component';
 import { CommunityCardComponent } from './components/community-card/community-card.component';
+import { RightSidebarComponent } from '../layouts/components/right-sidebar/right-sidebar.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
-  MyListComponent,
-  MyProfileComponent,
   PostListComponent,
   PostCardComponent,
   ImgPickerComponent,
-  CommunityCardComponent
+  CommunityCardComponent,
+  RightSidebarComponent,
 ];
 
 const sharedModules = [
@@ -34,7 +31,6 @@ const sharedModules = [
   ReactiveFormsModule,
   NgbDropdownModule,
   NgbNavModule,
-  ToastsComponent,
   NgbCollapseModule,
   NgbModule,
   NgxSpinnerModule,

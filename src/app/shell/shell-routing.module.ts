@@ -1,55 +1,69 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ShellComponent } from './shell.component';
+import { AuthenticationGuard } from '../@shared/guards/authentication.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
-    // canActivate: [AuthenticationGuard],
-    loadChildren: () => import('../home/home.module').then((m) => m.HomeModule),
-  },
-  {
-    path: 'communities',
-    // canActivate: [AuthenticationGuard],
-    loadChildren: () =>
-      import('../communities/communities.module').then((m) => m.CommunitiesModule),
-  },
-  {
-    path: 'research',
-    // canActivate: [AuthenticationGuard],
-    loadChildren: () =>
-      import('../research/research.module').then((m) => m.ResearchModule),
-  },
-  {
-    path: 'post',
-    // canActivate: [AuthenticationGuard],
-    loadChildren: () =>
-      import('../posts/post.module.').then((m) => m.PostModule),
-  },
-  {
-    path: 'settings',
-    // canActivate: [AuthenticationGuard],
-    loadChildren: () =>
-      import('../setting/setting.module').then((m) => m.SettingModule),
-  },
-  {
-    path: 'notifications',
-    loadChildren: () =>
-      import('../notifications/notification.module').then(
-        (m) => m.NotificationsModule
-      ),
-  },
-  {
-    path: 'pages',
-    loadChildren: () =>
-      import('../freedom-page/freedom-page.module').then(
-        (m) => m.FreedomPageModule
-      ),
-  },
+    component: ShellComponent,
+    canActivate: [AuthenticationGuard],
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../pages/home/home.module').then((m) => m.HomeModule),
+        data: {
+          isShowLeftSideBar: true,
+          isShowRightSideBar: true
+        }
+      },
+      {
+        path: 'post',
+        loadChildren: () => import('../pages/posts/post.module.').then((m) => m.PostModule),
+        data: {
+          isShowLeftSideBar: true,
+          isShowRightSideBar: true
+        }
+      },
+      {
+        path: 'communities',
+        loadChildren: () => import('../pages/communities/communities.module').then((m) => m.CommunitiesModule),
+        data: {
+          isShowLeftSideBar: true
+        }
+      },
+      {
+        path: 'pages',
+        loadChildren: () => import('../pages/freedom-page/freedom-page.module').then((m) => m.FreedomPageModule),
+        data: {
+          isShowLeftSideBar: true
+        }
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('../pages/settings/settings.module').then((m) => m.SettingsModule),
+        data: {
+          isShowLeftSideBar: true
+        }
+      },
+      {
+        path: 'notifications',
+        loadChildren: () => import('../pages/notifications/notification.module').then((m) => m.NotificationsModule),
+        data: {
+          isShowLeftSideBar: true
+        }
+      },
+      {
+        path: 'research',
+        loadChildren: () => import('../pages/research/research.module').then((m) => m.ResearchModule),
+        data: {
+          isShowLeftSideBar: true,
+          isShowRightSideBar: true,
+          isShowResearchLeftSideBar: true
+        }
+      }
+    ]
+  }
 ];
 
 @NgModule({

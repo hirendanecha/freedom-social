@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostService } from 'src/app/services/post.service';
-import { SeeFirstUserService } from 'src/app/services/see-first-user.service';
-import { SocketService } from 'src/app/services/socket.service';
-import { ToastService } from 'src/app/services/toaster.service';
-import { UnsubscribeProfileService } from 'src/app/services/unsubscribe-profile.service';
+import { PostService } from 'src/app/@shared/services/post.service';
+import { SeeFirstUserService } from 'src/app/@shared/services/see-first-user.service';
+import { SocketService } from 'src/app/@shared/services/socket.service';
+import { ToastService } from 'src/app/@shared/services/toast.service';
+import { UnsubscribeProfileService } from 'src/app/@shared/services/unsubscribe-profile.service';
 import { ConfirmationModalComponent } from '../../modals/confirmation-modal/confirmation-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SharedService } from 'src/app/services/shared.service';
+import { SharedService } from 'src/app/@shared/services/shared.service';
 import { slideUp } from '../../animations/slideUp';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -44,7 +44,7 @@ export class PostCardComponent {
     private unsubscribeProfileService: UnsubscribeProfileService,
     private socketService: SocketService,
     private postService: PostService,
-    private toaster: ToastService,
+    private toastService: ToastService,
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     public sharedService: SharedService,
@@ -105,7 +105,7 @@ export class PostCardComponent {
           {
             next: (res: any) => {
               if (res) {
-                this.toaster.success(res.message);
+                this.toastService.success(res.message);
                 this.getPostList.emit();
               }
             },
@@ -205,13 +205,13 @@ export class PostCardComponent {
   deleteComments(id): void {
     this.postService.deleteComments(id).subscribe({
       next: (res: any) => {
-        this.toaster.success(res.message);
+        this.toastService.success(res.message);
         this.isExpand = false;
         // this.viewComments(id);
       },
       error: (error) => {
         console.log(error);
-        this.toaster.danger(error.message);
+        this.toastService.danger(error.message);
       },
     });
   }
@@ -235,7 +235,7 @@ export class PostCardComponent {
         parentCommentId: commentId,
       };
       this.socketService.commentOnPost(commentData, (data) => {
-        this.toaster.success('replied on comment');
+        this.toastService.success('replied on comment');
         childPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
@@ -251,7 +251,7 @@ export class PostCardComponent {
         this.commentId = null;
       });
     } else {
-      this.toaster.danger('Please enter comment');
+      this.toastService.danger('Please enter comment');
     }
   }
 
@@ -294,7 +294,7 @@ export class PostCardComponent {
       this.uploadPostFileAndCreatePost()
       parentPostCommentElement.innerHTML = ''
     } else {
-      this.toaster.danger('Please enter comment');
+      this.toastService.danger('Please enter comment');
     }
   }
 
@@ -324,7 +324,7 @@ export class PostCardComponent {
   submit(): void {
     if (this.commentData?.parentCommentId) {
       this.socketService.commentOnPost(this.commentData, (data) => {
-        this.toaster.success('replied on comment');
+        this.toastService.success('replied on comment');
         this.postComment = '';
         this.commentData = {}
         // childPostCommentElement.innerText = '';
@@ -343,7 +343,7 @@ export class PostCardComponent {
       });
     } else {
       this.socketService.commentOnPost(this.commentData, (data) => {
-        this.toaster.success('comment added on post');
+        this.toastService.success('comment added on post');
         this.commentData.comment = '';
         this.commentData = {}
         // parentPostCommentElement.innerText = '';
@@ -370,7 +370,7 @@ export class PostCardComponent {
       this.commentData['file'] = file;
       this.commentData['imageUrl'] = URL.createObjectURL(file);
     } else {
-      this.toaster.danger(`sorry ${file.type} are not allowed!`)
+      this.toastService.danger(`sorry ${file.type} are not allowed!`)
     }
   }
 

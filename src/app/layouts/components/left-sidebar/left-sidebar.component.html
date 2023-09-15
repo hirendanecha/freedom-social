@@ -1,0 +1,119 @@
+<div class="left-sidebar profile-sidebar cus-scrollbar p-5" [ngClass]="{'mh-100 vh-100': (breakpointService?.screen | async).lg.lessThen}">
+  <div class="profile-pic d-flex gap-2" routerLink="/home">
+    <div class="position-relative">
+      <img
+        class="avatar-img max-un" loading="lazy"
+        data-src="{{sharedService?.userData?.ProfilePicName}}"
+        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+        alt="avatar"
+      />
+    </div>
+    <div class="text-area d-flex flex-column justify-content-center">
+      <h6 class="m-0 pb-1">
+        <span>{{ sharedService?.userData?.FirstName }}</span>
+      </h6>
+      <p class="mdtxt m-0">@{{ sharedService?.userData?.Username }}</p>
+    </div>
+  </div>
+  <ul class="profile-link m-0 mt-5 p-0 border-bottom-0">
+    <li>
+      <a
+        class="d-flex gap-4"
+        routerLink="/communities"
+        routerLinkActive="active"
+        (click)="closeSidebar()"
+      >
+        <i class="material-symbols-outlined fs-xxl mat-icon"> workspaces </i>
+        <span>Local Communities</span>
+      </a>
+    </li>
+    <li>
+      <a
+        class="d-flex gap-4"
+        routerLink="/pages"
+        routerLinkActive="active"
+        (click)="closeSidebar()"
+      >
+        <i class="material-symbols-outlined fs-xxl mat-icon"> layers </i>
+        <span>Freedom Pages</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://1776token.com/" target="_blank" class="d-flex gap-4" (click)="closeSidebar()">
+        <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+        <span>1776 Token</span>
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://localfoods.market/"
+        target="_blank"
+        class="d-flex gap-4"
+        (click)="closeSidebar()"
+      >
+        <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+        <span>Local Foods</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://lamarslist.com/" target="_blank" class="d-flex gap-4" (click)="closeSidebar()">
+        <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+        <span>Lamars List</span>
+      </a>
+    </li>
+    <li>
+      <a class="d-flex gap-4" (click)="openWalletPopUp()">
+        <i class="material-symbols-outlined fs-xxl mat-icon"> Download </i>
+        <span>Download 1776 Wallet</span>
+      </a>
+    </li>
+    <li>
+      <a class="d-flex gap-4" (click)="openClaimTokenPopUp()">
+        <i class="material-symbols-outlined fs-xxl mat-icon"> Token </i>
+        <span>Claim 50 free 1776</span>
+      </a>
+    </li>
+
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <div
+        class="d-flex gap-4 toggle-dropdown"
+        (click)="collapse.toggle()"
+      >
+        <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
+        <span class="me-auto">Settings</span>
+        <span class="material-symbols-outlined">{{ collapse.shown ? 'expand_more' : 'expand_less'}}</span>
+      </div>
+
+      <div #collapse="ngbCollapse" [(ngbCollapse)]="isSettingMenuCollapse">
+        <ul class="ps-3">
+          <li>
+            <a routerLink="/settings/see-first-users" routerLinkActive="active" class="d-flex gap-4" (click)="closeSidebar()">
+              <i class="material-symbols-outlined fs-xxl mat-icon">
+                group_add
+              </i>
+              <span>See First Users</span>
+            </a>
+          </li>
+
+          <li>
+            <a routerLink="/settings/unsubscribed-users" routerLinkActive="active" class="d-flex gap-4" (click)="closeSidebar()">
+              <i class="material-symbols-outlined fs-xxl mat-icon">
+                group_remove
+              </i>
+              <span>Unsubscribed Users</span>
+            </a>
+          </li>
+
+          <li>
+            <a routerLink="/settings/delete-profile" routerLinkActive="active" class="d-flex gap-4" (click)="closeSidebar()">
+              <i class="material-symbols-outlined fs-xxl mat-icon">
+                person_remove
+              </i>
+              <span>Delete Account</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>

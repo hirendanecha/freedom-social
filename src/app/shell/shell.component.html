@@ -1,29 +1,48 @@
+<app-header />
+
 <div class="main-content d-flex justify-content-start align-items-start">
   <div class="container pt-5">
-    <div class="d-lg-flex d-block w-100 gap-5 min-vh-100">
-      <div class="my-profile-sidebar" *ngIf="!isShowMyProfile">
-        <app-my-profile></app-my-profile>
+    <ng-container *ngIf="(breakpointService?.screen | async).xl.lessThen">
+      <div class="d-flex justify-content-between pb-5">
+        <ng-container *ngIf="(breakpointService?.screen | async).lg.lessThen">
+          <button class="button d-flex align-items-center gap-2" (click)="openLeftSidebar()" >
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="(breakpointService?.screen | async).xl.lessThen">
+          <button class="button d-flex align-items-center gap-2 ms-auto" (click)="openRightSidebar()">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span>Dashboard</span>
+          </button>
+        </ng-container>
       </div>
+    </ng-container>
+
+    <div class="d-lg-flex d-block w-100 gap-5 min-vh-100 main-layout">
+      <ng-container *ngIf="sidebar?.isShowLeftSideBar && (breakpointService?.screen | async).lg.gatherThen">
+        <div class="my-profile-sidebar">
+          <ng-container *ngIf="!sidebar?.isShowResearchLeftSideBar">
+            <app-left-sidebar />
+          </ng-container>
+
+          <ng-container *ngIf="sidebar?.isShowResearchLeftSideBar">
+            <app-research-sidebar />
+          </ng-container>
+        </div>
+      </ng-container>
 
       <div class="mb-15 w-100">
-        <router-outlet></router-outlet>
+        <router-outlet />
       </div>
 
-      <div class="my-list-sidebar d-lg-flex d-none" *ngIf="!isShow">
-        <app-my-list></app-my-list>
-      </div>
+      <ng-container *ngIf="sidebar?.isShowRightSideBar && (breakpointService?.screen | async).xl.gatherThen">
+        <div class="my-list-sidebar">
+          <app-right-sidebar />
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>
 
-<ng-container *ngIf="showButton">
-  <button
-    class="scrollToTop d-none d-lg-flex justify-content-center align-items-center"
-    (click)="scrollToTop()"
-    [ngClass]="showButton ? 'active' : ''"
-  >
-    <span class="material-symbols-outlined rotate-90">
-      keyboard_double_arrow_left
-    </span>
-  </button>
-</ng-container>
+<app-footer />

@@ -1,22 +1,22 @@
-<ng-container *ngIf="!isLoginPage && !isSignUpPage && !isResetPasswordPage">
-  <app-header></app-header>
-  <!-- <router-outlet></router-outlet> -->
-  <app-shell></app-shell>
-  <app-footer></app-footer>
+<router-outlet />
+
+<ng-container *ngIf="showButton">
+  <button
+    class="scrollToTop d-none d-lg-flex justify-content-center align-items-center"
+    (click)="scrollToTop()"
+    [ngClass]="showButton ? 'active' : ''"
+  >
+    <span class="material-symbols-outlined rotate-90">
+      keyboard_double_arrow_left
+    </span>
+  </button>
 </ng-container>
-<ng-container *ngIf="isLoginPage">
-  <app-login></app-login>
-</ng-container>
-<ng-container *ngIf="isResetPasswordPage">
-  <app-reset-password></app-reset-password>
-</ng-container>
-<ng-container *ngIf="isSignUpPage">
-  <app-sign-up></app-sign-up>
-</ng-container>
+
+<app-toasts-container />
 
 <ngx-spinner
   [fullScreen]="false"
-  bdColor="rgba(0, 0, 0, 0.8)"
+  bdColor="rgba(0, 0, 0, 0.5)"
   size="medium"
   color="#fff"
   type="ball-spin-clockwise"
@@ -24,5 +24,3 @@
 >
   <p style="color: white">Loading...</p>
 </ngx-spinner>
-
-<app-toasts></app-toasts>
