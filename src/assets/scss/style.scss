@@ -103,3 +103,9 @@ select.input-area {
   width: 300px !important;
   max-width: 90% !important;
 }
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
