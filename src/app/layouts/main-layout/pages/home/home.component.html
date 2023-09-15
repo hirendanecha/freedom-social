@@ -60,7 +60,11 @@
 
         <ng-template #elseJoinCommunity>
           <button class="btn btn-sm btn-success" (click)="joinCommunity()">
-            Join Community
+            {{
+              communityDetails?.pageType === "community"
+                ? "Join Community"
+                : "Join Page"
+            }}
           </button>
         </ng-template>
       </div>

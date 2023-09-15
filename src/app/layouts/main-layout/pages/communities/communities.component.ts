@@ -32,11 +32,11 @@ export class CommunitiesComponent {
     this.spinner.show();
 
     if (this.activeIdTab === 'joined') {
-      getCommunitiesObs = this.communityService.getJoinedCommunityByProfileId(this.profileId);
+      getCommunitiesObs = this.communityService.getJoinedCommunityByProfileId(this.profileId, 'community');
     } else if (this.activeIdTab === 'local') {
-      getCommunitiesObs = this.communityService.getCommunity(this.profileId);
+      getCommunitiesObs = this.communityService.getCommunity(this.profileId, 'community');
     } else {
-      getCommunitiesObs = this.communityService.getCommunityByUserId(this.profileId);
+      getCommunitiesObs = this.communityService.getCommunityByUserId(this.profileId, 'community');
     }
 
     getCommunitiesObs?.subscribe({

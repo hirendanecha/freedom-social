@@ -1,16 +1,18 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { forkJoin } from 'rxjs';
 import { Community } from 'src/app/@shared/constant/customer';
 import { CommunityService } from 'src/app/@shared/services/community.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
 import { UploadFilesService } from 'src/app/@shared/services/upload-files.service';
+import { slugify } from 'src/app/@shared/utils/utils';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-add-page',
-  templateUrl: './add-page.component.html',
-  styleUrls: ['./add-page.component.scss'],
+  selector: 'app-add-page-modal',
+  templateUrl: './add-page-modal.component.html',
+  styleUrls: ['./add-page-modal.component.scss'],
 })
 export class AddFreedomPageComponent {
   @Input() closeIcon: boolean | undefined;
@@ -37,44 +39,81 @@ export class AddFreedomPageComponent {
 
   selectFiles(event, type) {
     this.selectedFile = event.target.files;
-    this.upload(this.selectedFile, type);
+    // this.uploadImgAndSubmit(this.selectedFile, type);
   }
 
-  upload(file, defaultType): any {
-    if (file.size / (1024 * 1024) > 5) {
-      return 'Image file size exceeds 5 MB!';
+  // upload(file, defaultType): any {
+  //   if (file.size / (1024 * 1024) > 5) {
+  //     return 'Image file size exceeds 5 MB!';
+  //   }
+  //   this.spinner.show();
+  //   this.communityService
+  //     .upload(file[0], this.profileId, defaultType)
+  //     .subscribe(
+  //       {
+  //         next: (res: any) => {
+  //           this.spinner.hide();
+  //           if (res.body) {
+  //             if (defaultType === 'community-logo') {
+  //               this.logoImg = res?.body?.url;
+  //             } else if (defaultType === 'community-cover') {
+  //               this.coverImg = res?.body?.url;
+  //             }
+  //           }
+  //         },
+  //         error:
+  //           (err) => {
+  //             this.spinner.hide();
+  //             this.selectedFile = undefined;
+  //             return 'Could not upload the file:' + file.name;
+  //           }
+  //       }
+  //     );
+  // }
+
+  uploadImgAndSubmit(): void {
+    let uploadObs = {};
+    if (this.logoImg?.file?.name) {
+      uploadObs['logoImg'] = this.communityService.upload(this.logoImg?.file, this.profileId, 'page-logo');
     }
-    this.spinner.show();
-    this.communityService
-      .upload(file[0], this.profileId, defaultType)
-      .subscribe(
-        {
-          next: (res: any) => {
-            this.spinner.hide();
-            if (res.body) {
-              if (defaultType === 'community-logo') {
-                this.logoImg = res?.body?.url;
-              } else if (defaultType === 'community-cover') {
-                this.coverImg = res?.body?.url;
-              }
-            }
-          },
-          error:
-            (err) => {
-              this.spinner.hide();
-              this.selectedFile = undefined;
-              return 'Could not upload the file:' + file.name;
-            }
-        }
-      );
+
+    if (this.coverImg?.file?.name) {
+      uploadObs['coverImg'] = this.communityService.upload(this.coverImg?.file, this.profileId, 'page-cover');
+    }
+
+    if (Object.keys(uploadObs)?.length > 0) {
+      this.spinner.show();
+
+      forkJoin(uploadObs).subscribe({
+        next: (res: any) => {
+          if (res?.logoImg?.body?.url) {
+            this.logoImg['file'] = null;
+            this.logoImg['url'] = res?.logoImg?.body?.url;
+          }
+
+          if (res?.coverImg?.body?.url) {
+            this.coverImg['file'] = null;
+            this.coverImg['url'] = res?.coverImg?.body?.url;
+          }
+
+          this.spinner.hide();
+          this.onSubmit();
+        },
+        error: (err) => {
+          this.spinner.hide();
+        },
+      });
+    } else {
+      this.onSubmit();
+    }
   }
 
   onSubmit() {
     this.spinner.show();
-    if (this.pageDetails.CommunityName && this.logoImg && this.coverImg) {
+    if (this.pageDetails.CommunityName && this.pageDetails.slug && this.logoImg?.url && this.coverImg?.url) {
       this.pageDetails.profileId = this.profileId;
-      this.pageDetails.logoImg = this.logoImg;
-      this.pageDetails.coverImg = this.coverImg;
+      this.pageDetails.logoImg = this.logoImg?.url;
+      this.pageDetails.coverImg = this.coverImg?.url;
       this.pageDetails.pageType = 'page';
       this.pageDetails.isApprove = 'Y';
       if (this.pageDetails) {
@@ -86,13 +125,13 @@ export class AddFreedomPageComponent {
                 this.submitted = true;
                 this.createCommunityAdmin(res.data);
                 this.activeModal.close('success');
-                this.toastService.success('Your Local Community will be approved withing 24 hours!');
+                this.toastService.success('Freedom page created successfully');
                 // this.router.navigateByUrl('/home');
               }
             },
             error:
               (err) => {
-                this.toastService.danger('Please change community name. this community name already in use.');
+                this.toastService.danger('Please change page name. this page name already in use.');
                 this.spinner.hide();
               }
           });
@@ -153,5 +192,17 @@ export class AddFreedomPageComponent {
             console.log(error);
           }
       });
+  }
+
+  onLogoImgChange(event: any): void {
+    this.logoImg = event;
+  }
+
+  onCoverImgChange(event: any): void {
+    this.coverImg = event;
+  }
+
+  onCommunityNameChange(): void {
+    this.pageDetails.slug = slugify(this.pageDetails.CommunityName);
   }
 }

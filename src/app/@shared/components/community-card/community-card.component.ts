@@ -28,10 +28,14 @@ export class CommunityCardComponent {
   }
 
   goToCommunityDetailPage(): void {
-    if (this.community?.isApprove === 'Y') {
-      this.router.navigate(['community', this.community?.slug]);
+    if (this.community.pageType === 'page') {
+      this.router.navigate(['page', this.community?.slug]);
     } else {
-      this.toastService.danger('This community not approve yet.');
+      if (this.community?.isApprove === 'Y') {
+        this.router.navigate(['community', this.community?.slug]);
+      } else {
+        this.toastService.danger('This community not approve yet.');
+      }
     }
   }
 
@@ -70,17 +74,17 @@ export class CommunityCardComponent {
       actionObs = this.communityService.removeFromCommunity(this.community?.Id, this.profileId);
     }
 
-    modalRef.componentInstance.title = `${actionType} Community`;
+    modalRef.componentInstance.title = `${actionType} ${this.community.pageType}`;
     modalRef.componentInstance.confirmButtonLabel = actionType;
-    modalRef.componentInstance.message = `Are you sure want to ${actionType.toLowerCase()} this community?`;
+    modalRef.componentInstance.message = `Are you sure want to ${actionType.toLowerCase()} this ${this.community.pageType}?`;
 
     modalRef.result.then((res) => {
       if (res === 'success') {
-
+        console.log(this.community.pageType)
         actionObs.subscribe({
           next: (res: any) => {
             if (res) {
-              this.toastService.success(res.message);
+              this.toastService.success(`${this.community?.pageType} ${res.message} `);
               this.getCommunities?.emit();
             }
           },
