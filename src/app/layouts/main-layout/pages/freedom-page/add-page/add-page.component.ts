@@ -86,7 +86,7 @@ export class AddFreedomPageComponent {
                 this.submitted = true;
                 this.createCommunityAdmin(res.data);
                 this.activeModal.close('success');
-                this.toastService.success('Your Local Community will be approved withing 24 hours!');
+                this.toastService.success('Your Local Community will be approved within 24 hours!');
                 // this.router.navigateByUrl('/home');
               }
             },

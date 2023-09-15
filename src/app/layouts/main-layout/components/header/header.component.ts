@@ -156,13 +156,17 @@ export class HeaderComponent {
 
   openProfile(id) {
     if (id) {
-      this.router.navigate([`settings/view-profile/${id}`]);
+      this.router.navigate([`settings/view-profile/${id}`]).then(() => {
+        window.location.reload();
+      });
       this.searchText = '';
     }
   }
 
   viewUserPost(id) {
-    this.router.navigate([`post/${id}`]);
+    this.router.navigate([`post/${id}`]).then(() => {
+      window.location.reload();
+    });
     this.userMenusOverlayDialog.close();
   }
 

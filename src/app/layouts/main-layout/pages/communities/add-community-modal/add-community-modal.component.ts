@@ -94,7 +94,7 @@ export class AddCommunityModalComponent {
               if (!res.error) {
                 this.submitted = true;
                 this.createCommunityAdmin(res.data);
-                this.toastService.success('Your Local Community will be approved withing 24 hours!');
+                this.toastService.success('Your Local Community will be approved within 24 hours!');
                 this.activeModal.close('success');
               }
             },
