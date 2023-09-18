@@ -238,11 +238,21 @@
     </div>
   </ng-container>
 
-  <app-post-list
-    parentComponent="HomeComponent"
-    [communityId]="communityDetails?.Id"
-    (onEditPost)="onEditPost($event)"
-  />
+  <ng-container *ngIf="communitySlug && communityDetails?.Id">
+    <span>{{communityDetails?.Id}}</span>
+    <app-post-list
+      parentComponent="HomeComponent"
+      [communityId]="communityDetails?.Id"
+      (onEditPost)="onEditPost($event)"
+    />
+  </ng-container>
+
+  <ng-container *ngIf="!communitySlug">
+    <app-post-list
+      parentComponent="HomeComponent"
+      (onEditPost)="onEditPost($event)"
+    />
+  </ng-container>
 </ng-container>
 
 <ng-container

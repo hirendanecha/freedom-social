@@ -22,7 +22,7 @@ import { SocketService } from 'src/app/@shared/services/socket.service';
   styleUrls: ['./post-list.component.scss'],
   animations: [slideUp],
 })
-export class PostListComponent implements OnInit, AfterViewInit, OnChanges {
+export class PostListComponent implements OnInit, AfterViewInit {
   @Input('parentComponent') parentComponent: string = '';
   @Input('communityId') communityId: number = null;
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
@@ -30,7 +30,7 @@ export class PostListComponent implements OnInit, AfterViewInit, OnChanges {
   postList = [];
   seeFirstList = [];
   profileId: string = '';
-  activePage = 1;
+  activePage = 0;
 
 
   constructor(
@@ -78,19 +78,7 @@ export class PostListComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit(): void {
-    if (!this.communityId) {
-      this.getPostList();
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const id = changes?.communityId?.currentValue;
-
-    if (id) {
-      this.communityId = id;
-
-      this.getPostList();
-    }
+    this.getPostList();
   }
 
   getPostList(): void {
@@ -98,19 +86,22 @@ export class PostListComponent implements OnInit, AfterViewInit, OnChanges {
     this.postList = [];
 
     if (this.parentComponent === 'HomeComponent') {
-      this.socketService.getPost(
-        {
-          profileId: this.profileId,
-          communityId: this.communityId,
-          page: this.activePage,
-          size: 15,
-        },
-        (post) => {
-          // this.spinner.hide();
-        }
-      );
+      // this.socketService.getPost(
+      //   {
+      //     profileId: this.profileId,
+      //     communityId: this.communityId,
+      //     page: this.activePage,
+      //     size: 15,
+      //   },
+      //   (post) => {
+      //     // this.spinner.hide();
+      //   }
+      // );
+      this.loadMore();
 
-      this.getSeeFirstIdByProfileId(+this.profileId);
+      if (!this.communityId) {
+        this.getSeeFirstIdByProfileId(+this.profileId);
+      }
     } else {
       this.spinner.show();
 
