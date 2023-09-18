@@ -50,8 +50,8 @@ export class PostService {
     return this.http.request(req);
   }
 
-  getPosts(page) {
-    return this.http.get(`${this.baseUrl}/?page=${page}&size=15`);
+  getPosts(reqBody: any) {
+    return this.http.post(`${this.baseUrl}`, reqBody);
   }
 
   getPostsByProfileId(id) {

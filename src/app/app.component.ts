@@ -1,5 +1,4 @@
 import { Component, HostListener } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { SharedService } from './@shared/services/shared.service';
 
 @Component({

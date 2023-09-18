@@ -10,7 +10,7 @@ import {
 import { NgbDropdown, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent, Scroll } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, filter, takeUntil } from 'rxjs';
 import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { CommunityService } from 'src/app/@shared/services/community.service';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   userNameSearch = '';
 
   activeCommunityTab: number = 1;
+  isNavigationEnd = false;
 
   constructor(
     private modalService: NgbModal,
@@ -65,17 +66,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.postData.profileid = +this.profileId;
-  }
 
-  ngOnInit(): void {
-    this.router.events.subscribe((event: RouterEvent | any) => {
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd || event instanceof Scroll)).subscribe(() => {
+      this.isNavigationEnd = true;
       const name = this.route.snapshot.params.name;
 
-      if ((event instanceof NavigationEnd || event instanceof Scroll) && name) {
+      if (name) {
         this.communitySlug = name;
         this.getCommunityDetailsBySlug();
       }
     });
+  }
+
+  ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {

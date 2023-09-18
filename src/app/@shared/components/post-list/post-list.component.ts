@@ -62,19 +62,19 @@ export class PostListComponent implements OnInit, AfterViewInit {
       }
     );
 
-    this.socketService.socket.on(
-      'new-post',
-      (data: any) => {
-        this.spinner.hide();
+    // this.socketService.socket.on(
+    //   'new-post',
+    //   (data: any) => {
+    //     this.spinner.hide();
 
-        if (data.length > 0) {
-          this.postList = data;
-        }
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    //     if (data.length > 0) {
+    //       this.postList = data;
+    //     }
+    //   },
+    //   (error: any) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 
   ngOnInit(): void {
@@ -82,7 +82,7 @@ export class PostListComponent implements OnInit, AfterViewInit {
   }
 
   getPostList(): void {
-    this.activePage = 1;
+    this.activePage = 0;
     this.postList = [];
 
     if (this.parentComponent === 'HomeComponent') {
@@ -125,21 +125,19 @@ export class PostListComponent implements OnInit, AfterViewInit {
  loadMore(): void {
     this.spinner.show();
     this.activePage = this.activePage + 1;
-    this.postService.getPosts(this.activePage).subscribe(
-      {
-        next: (res: any) => {
-          this.spinner.hide();
+    this.postService.getPosts({ profileId: this.profileId, communityId: this.communityId, page: this.activePage, size: 15 }).subscribe({
+      next: (res: any) => {
+        this.spinner.hide();
 
-          if (res?.data?.length > 0) {
-            this.postList = [...this.postList, ...res?.data];
-          }
-        },
-        error:
-          (error) => {
-            this.spinner.hide();
-            console.log(error);
-          }
-      });
+        if (res?.data?.length > 0) {
+          this.postList = [...this.postList, ...res?.data];
+        }
+      },
+      error: (error) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    });
   }
 
   getSeeFirstIdByProfileId(id: number): void {
