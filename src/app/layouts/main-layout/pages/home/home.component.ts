@@ -123,18 +123,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             if (res?.Id) {
               const details = res;
 
-              if (details?.members > 0) {
-                if (details?.memberList?.length > 0) {
-                  details['memberIds'] = details?.memberList?.map(
-                    (member: any) => member?.profileId
-                  );
-                }
-
-                this.communityDetails = details;
-                this.postData.communityId = this.communityDetails?.Id;
-              } else {
-                this.router.navigate(['local-community']);
+              if (details?.memberList?.length > 0) {
+                details['memberIds'] = details?.memberList?.map(
+                  (member: any) => member?.profileId
+                );
               }
+
+              this.communityDetails = details;
+              this.postData.communityId = this.communityDetails?.Id;
             }
           },
           error:

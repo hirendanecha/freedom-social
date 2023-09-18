@@ -1,5 +1,5 @@
 <div class="post-item d-flex flex-column gap-4">
-  <ng-container *ngIf="postList?.length > 0; else elseNoPostFound">
+  <ng-container *ngIf="postList?.length > 0;">
     <ng-container *ngFor="let post of postList">
       <app-post-card [post]="post" (onEditPost)="onEditPost?.emit(post)" (getPostList)="getPostList()" />
     </ng-container>
@@ -14,10 +14,6 @@
     </div>
   </ng-container>
 </div>
-
-<ng-template #elseNoPostFound>
-  <h6 class="px-4 py-5 text-center">No Post Available</h6>
-</ng-template>
 
 <ng-template #elseNoCommentsFound>
   <span class="pt-5 m-0 text-start text-secondary">No comments yet!</span>

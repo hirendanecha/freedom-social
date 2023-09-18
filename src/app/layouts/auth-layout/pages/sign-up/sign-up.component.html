@@ -61,8 +61,7 @@
           <label class="form-label">Profile Picture<span class="text-danger">*</span></label>
           <app-img-picker (onFileChange)="selectFiles($event)"/>
         </div>
-      </div>
-      <div class="row">
+
         <div class="col-12 col-md-6 mb-3">
           <label class="form-label"
             >User Name<span class="text-danger">*</span></label
@@ -76,6 +75,7 @@
             required
           />
         </div>
+
         <div class="col-12 col-md-6 mb-3">
           <label class="form-label"
             >Email Address<span class="text-danger">*</span></label
@@ -89,8 +89,7 @@
             [(ngModel)]="customer.Email"
           />
         </div>
-      </div>
-      <div class="row">
+
         <div class="col-12 col-md-6 mb-3">
           <label class="form-label">Password<span class="text-danger">*</span></label>
           <input
@@ -104,6 +103,7 @@
             [(ngModel)]="customer.Password"
           />
         </div>
+
         <div class="col-12 col-md-6 mb-3">
           <label class="form-label">Confirm Password<span class="text-danger">*</span></label>
           <input
@@ -118,19 +118,7 @@
             [(ngModel)]="confirm_password"
           />
         </div>
-      </div>
-      <!-- <div class="row">
-        <div class="col-12 mb-3">
-          <label class="form-label">Profile Picture<span class="text-danger">*</span></label>
-          <input
-            type="file"
-            name="profilePicture"
-            (change)="selectFiles($event)"
-            required
-          />
-        </div>
-      </div> -->
-      <div class="row">
+
         <div class="col-12 col-md-6 mb-3">
           <label class="form-label">Mobile</label>
           <input
@@ -141,6 +129,7 @@
             [(ngModel)]="customer.MobileNo"
           />
         </div>
+
         <div class="col-12 col-md-6 mb-3">
           <label class="form-label">Country<span class="text-danger">*</span></label>
           <select
@@ -160,18 +149,7 @@
             </option>
           </select>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-6 mb-3">
-          <label class="form-label">Address</label>
-          <input
-            type="text"
-            class="input-area"
-            name="Address"
-            placeholder="Enter your address"
-            [(ngModel)]="customer.Address"
-          />
-        </div>
+
         <div class="col-12 col-md-6 mb-3">
           <label class="form-label">Zip Code<span class="text-danger">*</span></label>
           <input
@@ -185,8 +163,7 @@
             #zipCode
           />
         </div>
-      </div>
-      <div class="row">
+
         <div class="col-12 col-md-6 mb-3">
           <label class="form-label">State<span class="text-danger">*</span></label>
           <input
@@ -199,6 +176,7 @@
             [(ngModel)]="customer.State"
           />
         </div>
+
         <div class="col-12 col-md-6 mb-3">
           <label class="form-label">City<span class="text-danger">*</span></label>
           <input
