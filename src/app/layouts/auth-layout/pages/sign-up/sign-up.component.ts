@@ -65,21 +65,6 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getCustomer(id): void {
-    if (id) {
-      this.customerService.getCustomer(id).subscribe(
-        {
-          next: (data: any) => {
-            this.customer = data;
-          },
-          error:
-            (err) => {
-              console.log(err);
-            }
-        });
-    }
-  }
-
   selectFiles(event) {
     this.profileImg = event;
   }

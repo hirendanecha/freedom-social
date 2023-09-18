@@ -57,11 +57,11 @@ export class LeftSidebarComponent implements OnInit {
   getUserDetails(): void {
     const id = window.sessionStorage.user_id;
     if (id) {
-      this.customerService?.getCustomer(id).subscribe(
+      this.customerService.getCustomer(id).subscribe(
         {
           next: (data: any) => {
-            if (data[0]) {
-              this.user = data[0];
+            if (data) {
+              this.user = data;
             }
           },
           error:

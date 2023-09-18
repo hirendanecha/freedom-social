@@ -5,17 +5,11 @@ import { AppComponent } from './app.component';
 const routes: Routes = [
   {
     path: '',
-    component: AppComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./layouts/main-layout/main-layout.module').then((m) => m.MainLayoutModule),
-      },
-      {
-        path: '',
-        loadChildren: () => import('./layouts/auth-layout/auth-layout.module').then((m) => m.AuthLayoutModule),
-      }
-    ]
+    loadChildren: () => import('./layouts/main-layout/main-layout.module').then((m) => m.MainLayoutModule),
+  },
+  {
+    path: '',
+    loadChildren: () => import('./layouts/auth-layout/auth-layout.module').then((m) => m.AuthLayoutModule),
   },
   {
     path: '**',

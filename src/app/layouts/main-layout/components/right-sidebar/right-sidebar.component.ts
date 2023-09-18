@@ -31,21 +31,9 @@ export class RightSidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = window.sessionStorage.user_id;
-    if (id) {
-      this.customerService.getCustomer(id).subscribe(
-        {
-          next: (data: any) => {
-            if (data[0]) {
-              this.user = data[0];
-            }
-          },
-          error:
-            (err) => {
-              console.log(err);
-            }
-        });
-    }
+    this.customerService.customerObs.subscribe((res: any) => {
+      this.user = res;
+    });
   }
 
   getCommunityList(): void {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Customer } from '../constant/customer';
 
@@ -10,10 +10,17 @@ import { Customer } from '../constant/customer';
 export class CustomerService {
   private baseUrl = environment.serverUrl + 'customers';
 
+  customerObs: Subject<any> = new Subject<any>();
+
   constructor(private http: HttpClient) {}
 
   getCustomer(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}`);
+    this.http.get<any>(`${this.baseUrl}/${id}`).pipe(take(1)).subscribe((customers) => {
+      const cust = customers?.[0];
+      this.customerObs.next(cust);
+    });
+
+    return this.customerObs;
   }
 
   createCustomer(customer: Object): Observable<Object> {

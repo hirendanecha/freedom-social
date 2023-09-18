@@ -84,7 +84,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
       (data: any) => {
         if (data) {
           this.spinner.hide();
-          this.customer = data[0];
+          this.customer = data;
           this.getAllCountries();
         }
       },
