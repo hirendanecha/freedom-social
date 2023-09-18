@@ -67,15 +67,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.profileId = sessionStorage.getItem('profileId');
     this.postData.profileid = +this.profileId;
 
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd || event instanceof Scroll)).subscribe(() => {
-      this.isNavigationEnd = true;
-      const name = this.route.snapshot.params.name;
+    this.route.paramMap.subscribe((paramMap) => {
+      const name = paramMap.get('name');
 
       if (name) {
         this.communitySlug = name;
         this.getCommunityDetailsBySlug();
       }
-    });
+
+      this.isNavigationEnd = true;
+    })
   }
 
   ngOnInit(): void {

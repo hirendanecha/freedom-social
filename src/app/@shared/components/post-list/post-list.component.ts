@@ -22,7 +22,7 @@ import { SocketService } from 'src/app/@shared/services/socket.service';
   styleUrls: ['./post-list.component.scss'],
   animations: [slideUp],
 })
-export class PostListComponent implements OnInit, AfterViewInit {
+export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('parentComponent') parentComponent: string = '';
   @Input('communityId') communityId: number = null;
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
@@ -77,8 +77,13 @@ export class PostListComponent implements OnInit, AfterViewInit {
     // );
   }
 
-  ngOnInit(): void {
-    this.getPostList();
+  ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const id = changes?.communityId?.currentValue;
+    if (id) {
+      this.getPostList();
+    }
   }
 
   getPostList(): void {
