@@ -83,8 +83,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.spinner.hide();
-
     if (!this.socketService.socket.connected) {
       this.socketService.socket.connect();
     }

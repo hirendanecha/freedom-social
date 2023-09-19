@@ -48,16 +48,13 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       this.socketService.socket.connect();
     }
 
-    this.socketService.socket.on(
-      'new-post-added',
+    this.socketService.socket.on('new-post-added',
       (res: any) => {
-        this.spinner.hide();
         if (res?.[0]) {
           this.postList.unshift(res?.[0]);
         }
       },
       (error: any) => {
-        this.spinner.hide();
         console.log(error);
       }
     );
@@ -100,10 +97,6 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       //   }
       // );
       this.loadMore();
-
-      if (!this.communityId) {
-        this.getSeeFirstIdByProfileId(+this.profileId);
-      }
     } else {
       this.spinner.show();
 
@@ -125,6 +118,10 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
  loadMore(): void {
+    if (!this.communityId && this.activePage === 0) {
+      this.getSeeFirstIdByProfileId(+this.profileId);
+    }
+
     this.spinner.show();
     this.activePage = this.activePage + 1;
     this.postService.getPosts({ profileId: this.profileId, communityId: this.communityId, page: this.activePage, size: 15 }).subscribe({

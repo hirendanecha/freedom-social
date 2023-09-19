@@ -11,10 +11,9 @@ const USER_KEY = 'auth-user';
 export class TokenStorageService {
   isUserAuthenticated: Subject<boolean> = new BehaviorSubject<boolean>(false);
   public _credentials: any = {};
-  constructor(private spinner: NgxSpinnerService) {}
+  constructor() {}
 
   signOut(): void {
-    this.spinner.hide();
     window.sessionStorage.clear();
 
     const theme = window.localStorage.getItem('theme');

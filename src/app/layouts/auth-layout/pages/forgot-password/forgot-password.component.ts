@@ -28,10 +28,8 @@ export class ForgotPasswordComponent {
   ) { }
 
   verifyEmailSend(form: NgForm) {
-    this.spinner.show();
     this.submitted = true;
     if (form.form.invalid) {
-      this.spinner.hide();
       return;
     }
     this.loading = true;
@@ -39,6 +37,7 @@ export class ForgotPasswordComponent {
     const email = this.verifyEmail.form.controls['email'].value;
     // const password = this.verifyEmail.form.controls?.password?.value;
     if (email) {
+      this.spinner.show();
       this.authService
         .forgotPassword({
           email: email,
@@ -55,7 +54,6 @@ export class ForgotPasswordComponent {
                   'Please check your email and click the link to set new password.';
                 this.type = 'success';
               } else {
-                this.spinner.hide();
                 this.msg = result.message;
                 this.type = 'danger';
                 this.loading = false;

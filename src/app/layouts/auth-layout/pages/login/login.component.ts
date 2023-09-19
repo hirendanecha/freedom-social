@@ -56,7 +56,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.spinner.hide();
   }
 
   onSubmit(): void {

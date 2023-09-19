@@ -53,8 +53,6 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.spinner.hide();
-
     fromEvent(this.zipCode.nativeElement, 'input')
       .pipe(debounceTime(1000))
       .subscribe((event) => {

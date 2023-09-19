@@ -104,7 +104,6 @@ export class HeaderComponent {
   }
 
   logout(): void {
-    this.spinner.show();
     // this.isCollapsed = true;
     this.tokenStorageService.signOut();
     this.toastService.success('Logout successfully');

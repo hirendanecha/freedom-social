@@ -94,7 +94,6 @@ export class FooterComponent {
   }
 
   logout(): void {
-    this.spinner.show();
     // this.isCollapsed = true;
     this.tokenStorageService.signOut();
     this.router.navigate(['/login']);

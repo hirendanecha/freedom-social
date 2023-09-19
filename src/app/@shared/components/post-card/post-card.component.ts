@@ -19,11 +19,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class PostCardComponent {
   @Input('post') post: any = {};
+  @Input('seeFirstList') seeFirstList: any = [];
   @Output('getPostList') getPostList: EventEmitter<void> = new EventEmitter<void>();
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
 
   profileId = '';
-  seeFirstList: any = [];
   isOpenCommentsPostId = '';
   isExpand = false;
 
