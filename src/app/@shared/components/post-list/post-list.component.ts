@@ -80,10 +80,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    const id = changes?.communityId?.currentValue;
-    if (id) {
-      this.getPostList();
-    }
+    this.getPostList();
   }
 
   getPostList(): void {

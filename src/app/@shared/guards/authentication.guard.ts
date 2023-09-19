@@ -1,8 +1,6 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Router,
-  CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree,
@@ -12,30 +10,22 @@ import { TokenStorageService } from '../services/token-storage.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthenticationGuard implements CanActivate {
+export class AuthenticationGuard {
+
   constructor(
     private router: Router,
-    private tokenService: TokenStorageService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-  }
+    private tokenService: TokenStorageService
+  ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean | UrlTree {
-    if (isPlatformBrowser(this.platformId)) {
-      if (this.tokenService.getCredentials()) {
-        return true;
-      }
-
-      this.router.navigate(['/login'], {
-        queryParams: { redirect: state.url },
-      });
-
-      return false;
-    } else if (isPlatformServer(this.platformId)) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
+    if (this.tokenService.getCredentials()) {
       return true;
     }
+
+    this.router.navigate(['/login'], {
+      queryParams: { redirect: state.url },
+    });
+
+    return false;
   }
 }

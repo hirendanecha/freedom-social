@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, mapToCanActivate } from '@angular/router';
 import { MainLayoutComponent } from './main-layout.component';
 import { AuthenticationGuard } from 'src/app/@shared/guards/authentication.guard';
 
@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
-    canActivate: [AuthenticationGuard],
+    canActivate: mapToCanActivate([AuthenticationGuard]),
     children: [
       {
         path: '',

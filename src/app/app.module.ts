@@ -6,13 +6,14 @@ import { SharedModule } from './@shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastsContainerComponent } from './@shared/components/toasts-container/toasts-container.component';
+import { AuthenticationGuard } from './@shared/guards/authentication.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToastsContainerComponent
   ],
-  providers: [],
+  providers: [AuthenticationGuard],
   bootstrap: [AppComponent],
   imports: [
     AppRoutingModule,
