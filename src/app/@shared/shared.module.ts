@@ -15,6 +15,7 @@ import { PostCardComponent } from './components/post-card/post-card.component';
 import { ImgPickerComponent } from './components/img-picker/img-picker.component';
 import { CommunityCardComponent } from './components/community-card/community-card.component';
 import { RightSidebarComponent } from '../layouts/main-layout/components/right-sidebar/right-sidebar.component';
+import { PostMetaDataCardComponent } from './components/post-meta-data-card/post-meta-data-card.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -23,6 +24,7 @@ const sharedComponents = [
   ImgPickerComponent,
   CommunityCardComponent,
   RightSidebarComponent,
+  PostMetaDataCardComponent,
 ];
 
 const sharedModules = [

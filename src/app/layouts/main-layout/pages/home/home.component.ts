@@ -221,6 +221,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
 
+    console.log('postData : ', this.postData);
+
     if (this.postData?.postdescription || this.postData?.imageUrl) {
       this.spinner.show();
       this.socketService.createPost(this.postData, (data) => {
@@ -263,7 +265,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getLinkData(): void {
     const postHtml = this.postMessageInput.nativeElement.innerHTML;
-    const matches = postHtml.match(/(((https?:\/\/)|(www\.))[^\s]+)/gi);
+    const matches = postHtml.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/gi);
 
     if (matches?.length > 0) {
       const url = matches[0];
@@ -278,10 +280,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           .subscribe({
             next: (res: any) => {
               if (res?.meta?.image) {
+                const urls = res.meta?.image?.url;
+                const imgUrl = urls?.[0] || urls;
+
                 this.postData.meta = {
                   title: res?.meta?.title,
                   metadescription: res?.meta?.description,
-                  metaimage: res.meta?.image?.url,
+                  metaimage: imgUrl,
                   metalink: res?.meta?.url || url,
                   url: url,
                 };
@@ -294,6 +299,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             },
           });
       }
+    } else {
+      this.postData.meta = {};
     }
   }
 

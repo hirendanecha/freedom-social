@@ -104,14 +104,7 @@
       [innerHTML]="post.postdescription"
     ></p>
 
-    <ng-container *ngIf="post?.metalink">
-      <a
-        class="post-description mdtxt pt-0 pb-1"
-        [href]="post.metalink"
-        target="_blank"
-        >{{ post.metalink }}</a
-      >
-    </ng-container>
+    <app-post-meta-data-card [post]="post" />
 
     <ng-container *ngIf="post?.imageUrl">
       <img
@@ -121,21 +114,6 @@
         alt="image"
       />
     </ng-container>
-
-    <div class="border rounded-3" *ngIf="post?.metaimage">
-      <a [href]="post.metalink" target="_blank" class="post-img">
-        <img
-          loading="lazy"
-          data-src="{{ post?.metaimage }}"
-          class="w-100 rounded-top-3"
-          alt="image"
-        />
-        <p class="post-description mdtxt m-2">{{ post?.title }}</p>
-        <p class="post-description mdtxt m-2">
-          {{ post?.metadescription }}
-        </p>
-      </a>
-    </div>
     <!-- like -->
     <!-- <div
       class="total-react-share pb-4 d-center gap-2 flex-wrap justify-content-between pt-4"
@@ -346,7 +324,7 @@
       </div>
     </form>
 
-    <ng-container *ngIf="isExpand && isOpenCommentsPostId === post.id">
+    <ng-container *ngIf="isOpenCommentsPostId === post.id">
       <ng-container *ngIf="commentList.length > 0; else elseNoCommentsFound">
         <div class="comments-area mt-5">
           <div

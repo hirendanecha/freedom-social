@@ -24,8 +24,7 @@ export class PostCardComponent {
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
 
   profileId = '';
-  isOpenCommentsPostId = '';
-  isExpand = false;
+  isOpenCommentsPostId: number = null;
 
   commentList: any = [];
   replyCommentList: any = [];
@@ -168,14 +167,16 @@ export class PostCardComponent {
     // );
   }
 
-  viewComments(id): void {
-    this.isExpand = this.isOpenCommentsPostId == id ? false : true;
+  viewComments(id: number): void {
+    // this.isExpand = this.isOpenCommentsPostId == id ? false : true;
+    // this.isOpenCommentsPostId = id;
+    // if (!this.isExpand) {
+    //   this.isOpenCommentsPostId = null;
+    // } else {
+    //   this.isOpenCommentsPostId = id;
+    // }
+
     this.isOpenCommentsPostId = id;
-    if (!this.isExpand) {
-      this.isOpenCommentsPostId = null;
-    } else {
-      this.isOpenCommentsPostId = id;
-    }
 
     this.postService.getComments(id).subscribe({
       next: (res) => {
@@ -206,7 +207,7 @@ export class PostCardComponent {
     this.postService.deleteComments(id).subscribe({
       next: (res: any) => {
         this.toastService.success(res.message);
-        this.isExpand = false;
+        this.viewComments(id);
         // this.viewComments(id);
       },
       error: (error) => {
@@ -350,7 +351,6 @@ export class PostCardComponent {
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         this.commentList.push(data[0]);
-        this.isExpand = true;
         this.viewComments(data[0]?.postId);
         this.commentData.comment = '';
         this.commentData = {}
