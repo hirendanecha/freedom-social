@@ -33,6 +33,7 @@
     "font-awesome": "^4.7.0",
     "ng-lazyload-image": "^9.1.3",
     "ngx-spinner": "^16.0.2",
+    "ngx-trim-directive": "^3.0.0",
     "node-html-parser": "^6.1.5",
     "postcss-loader": "^7.3.3",
     "rxjs": "~7.8.0",

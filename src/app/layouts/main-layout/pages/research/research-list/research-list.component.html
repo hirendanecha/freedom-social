@@ -1,4 +1,32 @@
 <div class="research d-flex flex-column gap-3 z-0">
+  <!-- <div class="single-box d-flex flex-column p-5 mb-3">
+    <form [formGroup]="researchForm" *ngIf="researchForm" (submit)="createResearch()" autocomplete="off" role="form" class="form-dark d-flex flex-column row">
+      <div class="col form-group">
+        <label for="groupId" class="form-label">Select Group <span class="text-danger">*</span></label>
+        <input type="text" class="input-area" id="groupId" formControlName="groupId" [ngClass]="{ 'isInvalid': isFormSubmittedAndError('groupId') }" placeholder="Select select group" trim="blur">
+
+        <div *ngIf="isFormSubmittedAndError('groupId')" class="invalid-feedback">
+          <div *ngIf="isFormSubmittedAndError('groupId', 'required')">This field is required.</div>
+        </div>
+      </div>
+
+      <div class="col form-group">
+        <label for="postTitle" class="form-label">Paste article or video link <span class="text-danger">*</span></label>
+        <input type="text" class="input-area" id="postTitle" formControlName="postTitle" [ngClass]="{ 'isInvalid': isFormSubmittedAndError('postTitle') }" placeholder="Paste article or video link" trim="blur">
+
+        <div *ngIf="isFormSubmittedAndError('postTitle')" class="invalid-feedback">
+          <div *ngIf="isFormSubmittedAndError('postTitle', 'required')">This field is required.</div>
+        </div>
+      </div>
+
+      <div class="col-12 d-flex justify-content-end">
+        <button type="submit" class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2">
+          Post <i class="material-symbols-outlined font-20-px"> near_me </i>
+        </button>
+      </div>
+    </form>
+  </div> -->
+
   <div class="single-box d-flex flex-column p-5 mb-3">
     <h6 class="text-start mb-5">Freedom Messaging</h6>
 
@@ -127,8 +155,8 @@
   </div>
 
   <ng-container *ngIf="groupPosts?.length > 0">
-    <ng-container *ngFor="let group of groupPosts">
-      <ng-container *ngIf="group?.name && group?.posts?.length > 0">
+    <ng-container *ngFor="let group of groupPosts; let i = index">
+      <ng-container *ngIf="group?.name && group?.posts?.length > 0 && i === 0">
         <div class="single-box d-flex flex-column p-5 mb-3">
           <div class="d-flex justify-content-between align-items-center mb-5">
             <h6 class="text-start mb-0">{{ group?.name }}</h6>
@@ -149,13 +177,10 @@
             <ng-container *ngFor="let post of group?.posts; let i = index">
               <ng-container *ngIf="i !== 0 && (i + 1) % pagination.limit === 0">
                 <ng-template ngbSlide>
-                  <div class="d-flex">
+                  <div class="row px-2">
                     <ng-container *ngFor="let revIndex of pagination.limitArray">
-                      <div class="flex-fill d-flex flex-column">
-                        <app-research-card
-                          [post]="group?.posts[i - revIndex]"
-                          class="w-100 px-2"
-                        />
+                      <div class="px-2" [ngClass]="{'col-4': pagination.limit === 3, 'col-6': pagination.limit === 2, 'col-12': pagination.limit === 1}" >
+                        <app-research-card [post]="group?.posts[i - revIndex]"/>
                       </div>
                     </ng-container>
                   </div>

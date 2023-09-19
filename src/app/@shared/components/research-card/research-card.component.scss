@@ -1,27 +1,35 @@
-.group-post-card.card {
-  .card-img-top {
-    height: 120px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: white;
-  }
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 
-  .card-body {
-    .card-text {
-      display: -webkit-box;
-      flex-wrap: wrap;
-      width: 100%;
-      max-width: 200px;
-      height: 74px;
-      overflow: hidden;
-      -webkit-line-clamp: 4;
-      -webkit-box-orient: vertical;
+  .group-post-card.card {
+    width: 100%;
+
+    .card-img-top {
+      height: 120px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: white;
     }
-  }
 
-  .border-top {
-    border-color: var(--bs-border-color) !important;
+    .card-body {
+      .card-text {
+        display: -webkit-box;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 200px;
+        height: 74px;
+        overflow: hidden;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+      }
+    }
+
+    .border-top {
+      border-color: var(--bs-border-color) !important;
+    }
   }
 }
 

@@ -16,6 +16,7 @@ import { ImgPickerComponent } from './components/img-picker/img-picker.component
 import { CommunityCardComponent } from './components/community-card/community-card.component';
 import { RightSidebarComponent } from '../layouts/main-layout/components/right-sidebar/right-sidebar.component';
 import { PostMetaDataCardComponent } from './components/post-meta-data-card/post-meta-data-card.component';
+import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -37,6 +38,7 @@ const sharedModules = [
   NgbModule,
   NgxSpinnerModule,
   RouterModule,
+  NgxTrimDirectiveModule,
 ];
 
 @NgModule({

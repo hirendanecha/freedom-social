@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 import { ProfileService } from 'src/app/@shared/services/profile.service';
-import { numToRevArray } from 'src/app/@shared/utils/utils';
+import { ToastService } from 'src/app/@shared/services/toast.service';
+import { isFormSubmittedAndError, numToRevArray } from 'src/app/@shared/utils/utils';
 
 @Component({
   selector: 'app-research-list',
@@ -24,10 +25,20 @@ export class ResearchListComponent {
     limitArray: []
   };
 
+  researchForm = new FormGroup({
+    groupId: new FormControl('', [Validators.required]),
+    postTitle: new FormControl('', [Validators.required]),
+    postDescription: new FormControl('', [Validators.required]),
+    keywords: new FormControl('', [Validators.required]),
+    isClicked: new FormControl(false),
+    isSubmitted: new FormControl(false),
+  });
+
   constructor(
     private profileService: ProfileService,
     private spinner: NgxSpinnerService,
-    private breakpointService: BreakpointService
+    private breakpointService: BreakpointService,
+    private toastService: ToastService,
   ) {
     this.btnGroupFeedTypeCtrl = new FormControl('All');
     this.btnGroupViewTypeCtrl = new FormControl('TopStories');
@@ -61,6 +72,14 @@ export class ResearchListComponent {
     });
 
     this.getGroups();
+  }
+
+  get formIsClicked(): FormControl {
+    return this.researchForm.get('isClicked') as FormControl;
+  }
+
+  get formIsSubmitted(): FormControl {
+    return this.researchForm.get('isSubmitted') as FormControl;
   }
 
   groupsAndPosts(): void {
@@ -112,5 +131,35 @@ export class ResearchListComponent {
         }
       });
     }
+  }
+
+  createResearch(): void {
+    this.formIsClicked.setValue(true);
+    if (this.researchForm.invalid && this.formIsSubmitted.value === false) {
+      this.toastService.danger('Please enter valid values.');
+      return;
+    } else {
+      this.formIsSubmitted.setValue(true);
+      const reqObj = this.researchForm.value;
+      console.log('reqObj : ', reqObj);
+
+      // this.commonService.post(urlConstant.Product.Insert, reqObj).subscribe((res) => {
+      //   if (res) {
+      //     console.log('res : ', res);
+      //   } else {
+      //     this.toastService.danger(res['message']);
+      //   }
+      // }, (error: any) => {
+      //   this.toastService.danger(error.message);
+      // }).add(() => {
+      //   this.researchForm.reset();
+      //   this.formIsClicked.setValue(false);
+      //   this.formIsSubmitted.setValue(false);
+      // });
+    }
+  }
+
+  isFormSubmittedAndError(controlName: string, errorName: string = '', notError: Array<string> = new Array()): any {
+    return isFormSubmittedAndError(this.researchForm, this.formIsClicked.value, controlName, errorName, notError);
   }
 }

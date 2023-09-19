@@ -109,3 +109,19 @@ select.input-area {
   white-space: nowrap;
   overflow: hidden;
 }
+
+.form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 16px;
+
+  .invalid-feedback {
+    display: flex;
+    position: absolute;
+    right: 16px;
+    bottom: -2px;
+    justify-content: flex-end;
+  }
+}

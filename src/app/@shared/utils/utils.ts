@@ -1,7 +1,21 @@
+import { FormGroup } from "@angular/forms";
+
 export const slugify = (str: string) => {
   return str?.length > 0 ? str.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '') : '';
 }
 
 export const numToRevArray = (num: number) => {
   return Array(num).fill(0).map((x,i)=>i).reverse();
+}
+
+export const  isFormSubmittedAndError = (formGroup: FormGroup, isFormSubmitted: boolean, controlName: string, errorName: string = '', notError: Array<string> = new Array()): any => {
+  const otherError: any = formGroup.controls[controlName].errors;
+  // if(otherError) {
+  //     console.log(controlName, otherError);
+  // }
+
+  if (isFormSubmitted && otherError) {
+      return errorName == '' ? true : (otherError ? !Object.keys(otherError).some(err => notError.includes(err)) : true) ? formGroup.controls[controlName].hasError(errorName) : false;
+  }
+  return false;
 }
