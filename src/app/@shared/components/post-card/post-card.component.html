@@ -332,7 +332,7 @@
             *ngFor="let comment of commentList"
           >
             <div
-              class="parent-comment d-flex gap-2 gap-sm-4"
+              class="d-flex gap-3"
               *ngIf="comment.postId === post.id"
             >
               <div class="d-center align-items-baseline">
@@ -509,7 +509,7 @@
                         reply.parentCommentId === comment.id &&
                         reply.postId === post.id
                       "
-                      class="d-flex gap-2 gap-sm-4"
+                      class="d-flex gap-3"
                     >
                       <img
                         loading="lazy"
