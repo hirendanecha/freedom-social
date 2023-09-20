@@ -19,3 +19,19 @@ export const  isFormSubmittedAndError = (formGroup: FormGroup, isFormSubmitted: 
   }
   return false;
 }
+
+export const getTagUsersFromAnchorTags = (anchorTags: any[]): any[] => {
+  const tags = [];
+  for (const key in anchorTags) {
+    if (Object.prototype.hasOwnProperty.call(anchorTags, key)) {
+      const tag = anchorTags[key];
+
+      tags.push({
+        id: tag?.getAttribute('data-id'),
+        name: tag?.innerHTML,
+      });
+    }
+  }
+
+  return tags;
+}

@@ -112,39 +112,7 @@
       />
 
       <div class="w-100 position-relative">
-        <div
-          #postMessageInput
-          contenteditable
-          placeholder="Write something to post.."
-          class="post-message-input input-area c-text"
-          (keyup)="messageOnKeyEvent()"
-        ></div>
-
-        <div #userSearchDropdownRef ngbDropdown>
-          <div ngbDropdownMenu class="user-dropdown-menu w-100 overflow-auto">
-            <ng-container *ngFor="let user of userList">
-              <div
-                ngbDropdownItem
-                class="d-flex gap-3 pe-auto overflow-hidden"
-                role="button"
-                (click)="selectTagUser(user)"
-              >
-                <img
-                  loading="lazy"
-                  class="w-32-px h-32-px rounded"
-                  data-src="{{ user.ProfilePicName }}"
-                  [alt]="user.Username"
-                  onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
-                />
-                <span>{{ user.Username }}</span>
-              </div>
-            </ng-container>
-          </div>
-        </div>
-
-        <ng-container *ngIf="postData?.meta?.metaimage">
-          <app-post-meta-data-card [post]="postData?.meta" class="pt-5" />
-        </ng-container>
+        <app-tag-user-input [value]="postMessageInputValue" (onDataChange)="messageOnDataChangeEvent($event)" />
 
         <ng-container *ngIf="postData?.imageUrl">
           <div class="position-relative w-100-px h-100-px mt-5">
@@ -232,7 +200,7 @@
               [disabled]="!(postData?.postdescription || postData?.file?.name)"
               (click)="uploadPostFileAndCreatePost()"
             >
-              {{ postData.id ? "Update Post" : "Post" }}
+              {{ postData?.id ? "Update Post" : "Post" }}
 
               <i class="material-symbols-outlined font-20-px"> near_me </i>
             </button>

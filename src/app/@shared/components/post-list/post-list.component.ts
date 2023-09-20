@@ -31,7 +31,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   seeFirstList = [];
   profileId: string = '';
   activePage = 0;
-
+  editPostIndex: number = null;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -51,7 +51,11 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     this.socketService.socket.on('new-post-added',
       (res: any) => {
         if (res?.[0]) {
-          this.postList.unshift(res?.[0]);
+          if (this.editPostIndex >= 0) {
+            this.postList[this.editPostIndex] = res?.[0];
+          } else {
+            this.postList.unshift(res?.[0]);
+          }
         }
       },
       (error: any) => {
@@ -152,5 +156,10 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
         console.log(error);
       },
     });
+  }
+
+  onEditPostData(post: any, index: number): void {
+    this.editPostIndex = index;
+    this.onEditPost?.emit(post);
   }
 }

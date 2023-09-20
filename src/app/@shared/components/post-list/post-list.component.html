@@ -1,7 +1,7 @@
 <div class="post-item d-flex flex-column gap-4">
   <ng-container *ngIf="postList?.length > 0;">
-    <ng-container *ngFor="let post of postList">
-      <app-post-card [post]="post" [seeFirstList]="seeFirstList" (onEditPost)="onEditPost?.emit(post)" (getPostList)="getPostList()" />
+    <ng-container *ngFor="let post of postList;let i = index">
+      <app-post-card [post]="post" [seeFirstList]="seeFirstList" (onEditPost)="onEditPostData(post, i)" (getPostList)="getPostList()" />
     </ng-container>
 
     <div

@@ -1,16 +1,13 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   OnDestroy,
   OnInit,
   Renderer2,
-  ViewChild,
 } from '@angular/core';
-import { NgbDropdown, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ActivatedRoute, NavigationEnd, Router, RouterEvent, Scroll } from '@angular/router';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { CommunityService } from 'src/app/@shared/services/community.service';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
@@ -18,6 +15,7 @@ import { PostService } from 'src/app/@shared/services/post.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { SocketService } from 'src/app/@shared/services/socket.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
+import { getTagUsersFromAnchorTags } from 'src/app/@shared/utils/utils';
 
 @Component({
   selector: 'app-home',
@@ -26,11 +24,8 @@ import { ToastService } from 'src/app/@shared/services/toast.service';
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('userSearchDropdownRef', { static: false, read: NgbDropdown }) userSearchNgbDropdown: NgbDropdown;
-  @ViewChild('postMessageInput', { static: false }) postMessageInput: ElementRef;
-
-  ngUnsubscribe: Subject<void> = new Subject<void>();
-
+  postMessageInputValue: string = '';
+  postMessageTags: any[];
   postData: any = {
     profileid: '',
     communityId: '',
@@ -45,9 +40,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   communityDetails: any;
   profileId = '';
 
-  userList = [];
-  userNameSearch = '';
-
   activeCommunityTab: number = 1;
   isNavigationEnd = false;
 
@@ -56,10 +48,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private postService: PostService,
     public sharedService: SharedService,
-    private router: Router,
     private socketService: SocketService,
-    private customerService: CustomerService,
-    private renderer: Renderer2,
     private toastService: ToastService,
     private communityService: CommunityService,
     private route: ActivatedRoute,
@@ -80,6 +69,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.socketService.socket.on(
+      'new-post-added',
+      (res: any) => {
+        this.spinner.hide();
+        this.resetPost();
+      },
+      (error: any) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
   }
 
   ngAfterViewInit(): void {
@@ -94,8 +94,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
   }
 
   onPostFileSelect(event: any): void {
@@ -183,7 +181,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             if (res?.body?.url) {
               this.postData['file'] = null;
               this.postData['imageUrl'] = res?.body?.url;
-              this.submit();
+              this.createOrEditPost();
             }
 
             this.spinner.hide();
@@ -193,227 +191,48 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           },
         });
       } else {
-        this.submit();
+        this.createOrEditPost();
       }
     }
   }
 
-  submit(): void {
-    if (this.postData.id) {
-      this.editPost();
-    } else {
-      this.createNewPost();
-    }
-  }
-
-  createNewPost(): void {
-    const anchorTags = this.postMessageInput?.nativeElement?.children;
-
-    this.postData.tags = [];
-    for (const key in anchorTags) {
-      if (Object.prototype.hasOwnProperty.call(anchorTags, key)) {
-        const tag = anchorTags[key];
-
-        this.postData.tags.push({
-          id: tag?.getAttribute('data-id'),
-          name: tag?.innerHTML,
-        });
-      }
-    }
+  createOrEditPost(): void {
+    this.postData.tags = getTagUsersFromAnchorTags(this.postMessageTags);
 
     console.log('postData : ', this.postData);
 
     if (this.postData?.postdescription || this.postData?.imageUrl) {
       this.spinner.show();
-      this.socketService.createPost(this.postData, (data) => {
+      this.socketService.createOrEditPost(this.postData, (data) => {
         this.spinner.hide();
         this.toastService.success('Post created successfully.');
-
-        this.postData['postdescription'] = '';
-        this.postData['meta'] = {};
-        this.postData['tags'] = [];
-        this.postData['file'] = {};
-        this.postData['imageUrl'] = '';
-
         return data;
       });
-
-      this.clearUserSearchData();
-      this.renderer.setProperty(
-        this.postMessageInput.nativeElement,
-        'innerHTML',
-        ''
-      );
-
-      this.socketService.socket.on(
-        'new-post-added',
-        (res: any) => {
-          this.spinner.hide();
-          this.postData['postdescription'] = '';
-          this.postData['meta'] = {};
-          this.postData['tags'] = [];
-          this.postData['file'] = {};
-          this.postData['imageUrl'] = '';
-        },
-        (error: any) => {
-          this.spinner.hide();
-          console.log(error);
-        }
-      );
     }
   }
 
-  getLinkData(): void {
-    const postHtml = this.postMessageInput.nativeElement.innerHTML;
-    const matches = postHtml.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/gi);
-
-    if (matches?.length > 0) {
-      const url = matches[0];
-
-      if (!this.postData?.meta?.url?.includes(url)) {
-        this.spinner.show();
-        this.ngUnsubscribe.next();
-
-        this.postService
-          .getMetaData({ url })
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe({
-            next: (res: any) => {
-              if (res?.meta?.image) {
-                const urls = res.meta?.image?.url;
-                const imgUrl = urls?.[0] || urls;
-
-                this.postData.meta = {
-                  title: res?.meta?.title,
-                  metadescription: res?.meta?.description,
-                  metaimage: imgUrl,
-                  metalink: res?.meta?.url || url,
-                  url: url,
-                };
-              }
-
-              this.spinner.hide();
-            },
-            error: () => {
-              this.spinner.hide();
-            },
-          });
-      }
-    } else {
-      this.postData.meta = {};
-    }
-  }
-
-  messageOnKeyEvent(): void {
-    this.getLinkData();
-
-    const text = this.postMessageInput.nativeElement.innerHTML;
-    const atSymbolIndex = text.lastIndexOf('@');
-
-    if (atSymbolIndex !== -1) {
-      this.userNameSearch = text.substring(atSymbolIndex + 1);
-      if (this.userNameSearch?.length > 2) {
-        this.getUserList(this.userNameSearch);
-      } else {
-        this.clearUserSearchData();
-      }
-    } else {
-      this.clearUserSearchData();
-    }
-    this.postData.postdescription = text;
-  }
-
-  getUserList(search: string): void {
-    this.customerService.getProfileList(search).subscribe({
-      next: (res: any) => {
-        if (res?.data?.length > 0) {
-          this.userList = res.data;
-          this.userSearchNgbDropdown.open();
-        } else {
-          this.clearUserSearchData();
-        }
-      },
-      error: () => {
-        this.clearUserSearchData();
-      },
-    });
-  }
-
-  clearUserSearchData(): void {
-    this.userNameSearch = '';
-    this.userList = [];
-    this.userSearchNgbDropdown.close();
-  }
-
-  selectTagUser(user: any): void {
-    const postHtml = this.postMessageInput.nativeElement.innerHTML;
-    const text = postHtml.replace(
-      `@${this.userNameSearch}`,
-      `<a href="/settings/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a>`
-    );
-    this.renderer.setProperty(
-      this.postMessageInput.nativeElement,
-      'innerHTML',
-      text
-    );
-
-    this.postData.postdescription = text;
-  }
-
-  editPost(): void {
-    const anchorTags = this.postMessageInput?.nativeElement?.children;
-    this.postData.tags = [];
-    for (const key in anchorTags) {
-      if (Object.prototype.hasOwnProperty.call(anchorTags, key)) {
-        const tag = anchorTags[key];
-
-        this.postData.tags.push({
-          id: tag?.getAttribute('data-id'),
-          name: tag?.innerHTML,
-        });
-      }
-    }
-    if (this.postData?.postdescription || this.postData?.imageUrl) {
-      this.spinner.show();
-      this.socketService.editPost(this.postData, (data) => {
-        this.spinner.hide();
-        this.toastService.success('Post edited successfully.');
-        return data;
-      });
-      this.postData['id'] = '';
-      this.postData['postdescription'] = '';
-      this.postData['meta'] = {};
-      this.postData['tags'] = [];
-      this.postData['file'] = {};
-      this.postData['imageUrl'] = '';
-      this.spinner.hide();
-
-      this.clearUserSearchData();
-      this.renderer.setProperty(
-        this.postMessageInput.nativeElement,
-        'innerHTML',
-        ''
-      );
-    }
+  messageOnDataChangeEvent(data: any): void {
+    this.postData.postdescription = data?.html;
+    this.postData.meta = data?.meta;
+    this.postMessageTags = data?.tags;
   }
 
   resetPost() {
-    this.postData = {};
-    this.renderer.setProperty(
-      this.postMessageInput.nativeElement,
-      'innerHTML',
-      ''
-    );
+    this.postData['id'] = '';
+    this.postData['postdescription'] = '';
+    this.postData['meta'] = {};
+    this.postData['tags'] = [];
+    this.postData['file'] = {};
+    this.postData['imageUrl'] = '';
+
+    this.postMessageInputValue = '';
+    this.postMessageTags = [];
   }
 
   onEditPost(post: any): void {
     this.postData = { ...post };
 
-    this.renderer.setProperty(
-      this.postMessageInput.nativeElement,
-      'innerHTML',
-      this.postData?.postdescription
-    );
+    this.postMessageInputValue = this.postData?.postdescription;
 
     window.scroll({
       top: 0,

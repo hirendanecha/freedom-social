@@ -16,7 +16,8 @@ export class SocketService {
   getPost(params, callback: (post: any) => void) {
     this.socket.emit('get-new-post', params, callback);
   }
-  createPost(params, callback: (post: any) => void) {
+
+  createOrEditPost(params, callback: (post: any) => void) {
     this.socket.emit('create-new-post', params, callback);
   }
 

@@ -17,6 +17,7 @@ import { CommunityCardComponent } from './components/community-card/community-ca
 import { RightSidebarComponent } from '../layouts/main-layout/components/right-sidebar/right-sidebar.component';
 import { PostMetaDataCardComponent } from './components/post-meta-data-card/post-meta-data-card.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+import { TagUserInputComponent } from './components/tag-user-input/tag-user-input.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -26,6 +27,7 @@ const sharedComponents = [
   CommunityCardComponent,
   RightSidebarComponent,
   PostMetaDataCardComponent,
+  TagUserInputComponent,
 ];
 
 const sharedModules = [
