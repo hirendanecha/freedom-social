@@ -369,17 +369,6 @@
                         </i>
 
                         <div ngbDropdownMenu class="dropdown-menu">
-                          <!-- <button ngbDropdownItem>
-                            <a
-                              class="droplist d-flex align-items-center gap-2"
-                              (click)="postId = null"
-                            >
-                              <i class="material-symbols-outlined mat-icon">
-                                edit
-                              </i>
-                              <span>Edit</span>
-                            </a>
-                          </button> -->
                           <button ngbDropdownItem>
                             <a
                               class="droplist d-flex align-items-center gap-2"
@@ -396,10 +385,13 @@
                     </ng-container>
                   </div>
 
-                  <p class="mdtxt mb-0" [innerHTML]="comment.comment"></p>
+                  <ng-container *ngIf="comment?.comment">
+                    <p class="mdtxt mb-0" [innerHTML]="comment.comment"></p>
+                  </ng-container>
+
                   <img
                     *ngIf="comment.imageUrl"
-                    class="h-48-px w-48-px"
+                    class="h-48-px w-48-px rounded-2"
                     loading="lazy"
                     data-src="{{ comment.imageUrl }}"
                     alt=""
@@ -416,11 +408,9 @@
                           : likeComments(comment)
                       "
                     >
-                      <i
-                        class="material-symbols-outlined font-20-px"
-                        [ngClass]="{ active: comment.react == 'L' }"
-                        >thumb_up</i
-                      >
+                      <i class="material-symbols-outlined font-16-px">
+                        thumb_up
+                      </i>
                       {{ comment?.likeCount > 0 ? comment?.likeCount : 0 }}
                       Likes
                     </button>
@@ -431,114 +421,81 @@
                       class="d-center gap-1 gap-sm-2 font-12-px"
                       (click)="showReplySection(comment.id)"
                     >
-                      <i class="material-symbols-outlined font-20-px">chat</i>
+                      <i class="material-symbols-outlined font-16-px">
+                        chat
+                      </i>
                       Reply
                     </button>
                   </li>
                 </ul>
 
                 <div
-                  class="d-flex w-100 gap-2 mb-2 w-auto me-0"
                   *ngIf="
                     isReply &&
                     post.id === comment.postId &&
                     commentId === comment.id
                   "
+                  class="input-area py-2 px-3 gap-2 align-items-center w-100 mb-5"
                 >
-                  <img
-                    loading="lazy"
-                    data-src="{{ sharedService?.userData?.ProfilePicName }}"
-                    class="w-40-px h-40-px rounded-3"
-                    alt="icon"
-                  />
-                  <div
-                    class="input-area py-2 px-3 gap-2 align-items-center w-100"
-                  >
-                    <div class="d-flex">
-                      <div
-                        #childPostCommentElement
-                        contenteditable
-                        placeholder="Comment..."
-                        class="outline-0 w-100 comment-input c-text"
-                      ></div>
-                      <div class="file-input d-flex gap-1 gap-md-2">
-                        <!-- <div class="file-upload">
+                  <div class="d-flex">
+                    <div
+                      #childPostCommentElement
+                      contenteditable
+                      placeholder="Comment..."
+                      class="outline-0 w-100 comment-input c-text"
+                    ></div>
+                    <div class="file-input d-flex gap-1 gap-md-2">
+                      <div class="file-upload d-flex">
                         <label class="file">
-                          <input type="file" />
-                          <span class="file-custom border-0 d-grid text-center">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            (change)="onPostFileSelect($event, 'child')"
+                          />
+                          <span
+                            class="file-custom border-0 d-grid text-center"
+                          >
                             <span
-                              class="material-symbols-outlined mat-icon m-0 xxltxt"
-                            >
-                              gif_box
-                            </span>
-                          </span>
-                        </label>
-                      </div>
-
-                      <div class="file-upload">
-                        <label class="file">
-                          <input type="file" />
-                          <span class="file-custom border-0 d-grid text-center">
-                            <span
-                              class="material-symbols-outlined mat-icon m-0 xxltxt"
+                              class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                             >
                               perm_media
                             </span>
                           </span>
                         </label>
-                      </div> -->
-                        <div class="file-upload d-flex">
-                          <label class="file">
-                            <input
-                              type="file"
-                              accept="image/*"
-                              (change)="onPostFileSelect($event, 'child')"
-                            />
-                            <span
-                              class="file-custom border-0 d-grid text-center"
-                            >
-                              <span
-                                class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
-                              >
-                                perm_media
-                              </span>
-                            </span>
-                          </label>
-                        </div>
-
-                        <i
-                          class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
-                          role="button"
-                          (click)="
-                            replyOnComment(
-                              childPostCommentElement,
-                              post.id,
-                              comment.id
-                            )
-                          "
-                        >
-                          near_me
-                        </i>
                       </div>
+
+                      <i
+                        class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
+                        role="button"
+                        (click)="
+                          commentOnPost(
+                            childPostCommentElement,
+                            post.id,
+                            comment.id
+                          )
+                        "
+                      >
+                        near_me
+                      </i>
                     </div>
-                    <div class="d-flex">
-                      <ng-container *ngIf="!isParent && commentData?.imageUrl">
-                        <div class="position-relative w-52-px h-52-px mt-5">
-                          <img
-                            loading="lazy"
-                            data-src="{{ commentData?.imageUrl }}"
-                            class="w-100 h-100 rounded-4"
-                            alt="icon"
-                          />
-                          <span
-                            class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
-                            (click)="removePostSelectedFile()"
-                          >
-                            close
-                          </span>
-                        </div>
-                      </ng-container>
-                    </div>
+                  </div>
+                  <div class="d-flex">
+                    <ng-container *ngIf="!isParent && commentData?.imageUrl">
+                      <div class="position-relative w-52-px h-52-px mt-5">
+                        <img
+                          loading="lazy"
+                          data-src="{{ commentData?.imageUrl }}"
+                          class="w-100 h-100 rounded-4"
+                          alt="icon"
+                        />
+                        <span
+                          class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
+                          (click)="removePostSelectedFile()"
+                        >
+                          close
+                        </span>
+                      </div>
+                    </ng-container>
                   </div>
                 </div>
 
@@ -552,94 +509,84 @@
                         reply.parentCommentId === comment.id &&
                         reply.postId === post.id
                       "
-                      class="d-flex gap-2 gap-sm-4 align-items-baseline"
+                      class="d-flex gap-2 gap-sm-4"
                     >
-                      <div class="">
-                        <img
-                          class="avatar-img w-40-px h-40-px rounded-3"
-                          loading="lazy"
-                          data-src="{{ reply.ProfilePicName }}"
-                          alt="avatar"
-                        />
-                      </div>
+                      <img
+                        loading="lazy"
+                        data-src="{{ reply.ProfilePicName }}"
+                        class="w-40-px h-40-px rounded-3"
+                        alt="icon"
+                      />
+
                       <div class="info-item w-100">
                         <div
-                          class="top-area px-4 py-3 d-flex gap-3 align-items-start justify-content-between"
+                          class="top-area px-4 py-3 d-flex flex-column gap-2 align-items-start justify-content-start"
                         >
-                          <div class="friends-list title-area">
-                            <h6 class="m-0 mb-3">
-                              <a>{{ reply?.Username }}</a>
-                            </h6>
-                            <p
-                              class="mdtxt mb-0"
-                              [innerHTML]="reply?.comment"
-                            ></p>
-                            <img
-                              *ngIf="reply.imageUrl"
-                              class="h-52-px w-52-px rounded-0 mt-1"
-                              loading="lazy"
-                              data-src="{{ reply.imageUrl }}"
-                              alt=""
-                            />
-                          </div>
-                          <ng-container *ngIf="profileId == reply.profileId">
-                            <div ngbDropdown>
-                              <i
-                                class="material-symbols-outlined fs-xxl m-0"
-                                role="button"
-                                ngbDropdownToggle
-                              >
-                                more_horiz
-                              </i>
+                          <div
+                            class="d-flex justify-content-between align-items-center w-100"
+                          >
+                            <h6 class="m-0">{{ reply.Username }}</h6>
 
-                              <div ngbDropdownMenu class="dropdown-menu">
-                                <!-- <button ngbDropdownItem>
-                                <a
-                                  class="droplist d-flex align-items-center gap-2"
-                                  (click)="postId = null"
+                            <ng-container
+                              *ngIf="
+                                profileId == reply.profileId ||
+                                post.profileid == profileId
+                              "
+                            >
+                              <div ngbDropdown>
+                                <i
+                                  class="material-symbols-outlined font-20-px m-0"
+                                  role="button"
+                                  ngbDropdownToggle
                                 >
-                                  <i class="material-symbols-outlined mat-icon">
-                                    edit
-                                  </i>
-                                  <span>Edit</span>
-                                </a>
-                              </button> -->
-                                <button ngbDropdownItem>
-                                  <a
-                                    class="droplist d-flex align-items-center gap-2"
-                                    (click)="deleteComments(reply.id)"
-                                  >
-                                    <i
-                                      class="material-symbols-outlined mat-icon"
+                                  more_horiz
+                                </i>
+
+                                <div ngbDropdownMenu class="dropdown-menu">
+                                  <button ngbDropdownItem>
+                                    <a
+                                      class="droplist d-flex align-items-center gap-2"
+                                      (click)="deleteComments(reply.id)"
                                     >
-                                      delete
-                                    </i>
-                                    <span>Delete</span>
-                                  </a>
-                                </button>
+                                      <i class="material-symbols-outlined mat-icon">
+                                        delete
+                                      </i>
+                                      <span>Delete</span>
+                                    </a>
+                                  </button>
+                                </div>
                               </div>
-                            </div>
+                            </ng-container>
+                          </div>
+
+                          <ng-container *ngIf="reply?.comment">
+                            <p class="mdtxt mb-0" [innerHTML]="reply?.comment"></p>
                           </ng-container>
+
+                          <img
+                            *ngIf="reply.imageUrl"
+                            class="h-48-px w-48-px rounded-2"
+                            loading="lazy"
+                            data-src="{{ reply.imageUrl }}"
+                            alt=""
+                          />
                         </div>
-                        <ul class="friends-list like-share d-flex gap-6 mt-2">
+
+                        <ul class="friends-list d-flex gap-6 py-2 px-4 m-0">
                           <li class="d-center">
                             <button
-                              class="d-center gap-1 smtxt like-button"
+                              class="d-center gap-1 gap-sm-2 font-12-px"
                               (click)="
                                 reply.react == 'L'
                                   ? disLikeComments(reply)
                                   : likeComments(reply)
                               "
                             >
-                              <i
-                                class="material-symbols-outlined mat-icon"
-                                [ngClass]="reply.react === 'L' ? 'active' : ''"
-                              >
+                              <i class="material-symbols-outlined font-16-px">
                                 thumb_up
                               </i>
-                              <span class="ms-1 text-center">{{
-                                reply?.likeCount > 0 ? reply?.likeCount : 0
-                              }}</span>
+                              {{ reply?.likeCount > 0 ? reply?.likeCount : 0 }}
+                              Likes
                             </button>
                           </li>
                         </ul>

@@ -208,7 +208,6 @@ export class PostCardComponent {
       next: (res: any) => {
         this.toastService.success(res.message);
         this.viewComments(id);
-        // this.viewComments(id);
       },
       error: (error) => {
         console.log(error);
@@ -222,37 +221,6 @@ export class PostCardComponent {
     this.commentId = id;
     if (!this.isReply) {
       this.commentId = null;
-    }
-  }
-
-  replyOnComment(childPostCommentElement, id, commentId): void {
-    const postComment = childPostCommentElement.innerHTML;
-
-    if (postComment) {
-      const commentData = {
-        postId: id,
-        comment: postComment,
-        profileId: this.profileId,
-        parentCommentId: commentId,
-      };
-      this.socketService.commentOnPost(commentData, (data) => {
-        this.toastService.success('replied on comment');
-        childPostCommentElement.innerText = '';
-      });
-      this.socketService.socket.on('comments-on-post', (data: any) => {
-        this.commentList.map((ele: any) =>
-          data.filter((ele1) => {
-            if (ele.id === ele1.parentCommentId) {
-              ele?.['replyCommnetsList'].push(ele1);
-              return ele;
-            }
-          })
-        );
-        this.isReply = false;
-        this.commentId = null;
-      });
-    } else {
-      this.toastService.danger('Please enter comment');
     }
   }
 
@@ -287,20 +255,27 @@ export class PostCardComponent {
     });
   }
 
-  commentOnPost(parentPostCommentElement, id): void {
-    this.commentData.comment = parentPostCommentElement.innerHTML;
-    if (this.commentData.comment) {
-      this.commentData.postId = id
+  commentOnPost(parentPostCommentElement, postId, commentId = null): void {
+    const postComment = parentPostCommentElement.innerHTML;
+
+    if (postComment || this.commentData?.file?.name) {
+      this.commentData.comment = postComment;
+      this.commentData.postId = postId;
       this.commentData.profileId = this.profileId;
-      this.uploadPostFileAndCreatePost()
+
+      if (commentId) {
+        this.commentData['parentCommentId'] = commentId;
+      }
+
+      this.uploadCommentFileAndAddComment()
       parentPostCommentElement.innerHTML = ''
     } else {
       this.toastService.danger('Please enter comment');
     }
   }
 
-  uploadPostFileAndCreatePost(): void {
-    if (this.commentData?.comment) {
+  uploadCommentFileAndAddComment(): void {
+    if (this.commentData?.comment || this.commentData?.file?.name) {
       if (this.commentData?.file?.name) {
         this.spinner.show();
         this.postService.upload(this.commentData?.file, this.profileId).subscribe({
@@ -309,7 +284,7 @@ export class PostCardComponent {
             if (res?.body?.url) {
               this.commentData['file'] = null;
               this.commentData['imageUrl'] = res?.body?.url;
-              this.submit();
+              this.addComment();
             }
           },
           error: (err) => {
@@ -317,12 +292,12 @@ export class PostCardComponent {
           },
         });
       } else {
-        this.submit();
+        this.addComment();
       }
     }
   }
 
-  submit(): void {
+  addComment(): void {
     if (this.commentData?.parentCommentId) {
       this.socketService.commentOnPost(this.commentData, (data) => {
         this.toastService.success('replied on comment');
