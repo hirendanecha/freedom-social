@@ -1,31 +1,47 @@
 <div class="research d-flex flex-column gap-3 z-0">
-  <!-- <div class="single-box d-flex flex-column p-5 mb-3">
-    <form [formGroup]="researchForm" *ngIf="researchForm" (submit)="createResearch()" autocomplete="off" role="form" class="form-dark d-flex flex-column row">
-      <div class="col form-group">
-        <label for="groupId" class="form-label">Select Group <span class="text-danger">*</span></label>
-        <input type="text" class="input-area" id="groupId" formControlName="groupId" [ngClass]="{ 'isInvalid': isFormSubmittedAndError('groupId') }" placeholder="Select select group" trim="blur">
+  <ng-container *ngIf="sharedService?.isUserMediaApproved()">
+    <div class="single-box d-flex flex-column p-5 mb-3">
+      <form [formGroup]="researchForm" *ngIf="researchForm" (submit)="createResearch()" autocomplete="off" role="form" class="form-dark d-flex flex-column row">
+        <div class="col form-group">
+          <label for="posttoprofileid" class="form-label">Select Group <span class="text-danger">*</span></label>
+          <select class="input-area w-100" id="posttoprofileid" formControlName="posttoprofileid" placeholder="Select select group" trim="blur">
+            <option *ngFor="let research of researches" [value]="research?.ID">
+              {{ research?.FirstName }}
+            </option>
+          </select>
 
-        <div *ngIf="isFormSubmittedAndError('groupId')" class="invalid-feedback">
-          <div *ngIf="isFormSubmittedAndError('groupId', 'required')">This field is required.</div>
+          <div *ngIf="isFormSubmittedAndError('posttoprofileid')" class="invalid-feedback">
+            <div *ngIf="isFormSubmittedAndError('posttoprofileid', 'required')">This field is required.</div>
+          </div>
         </div>
-      </div>
 
-      <div class="col form-group">
-        <label for="postTitle" class="form-label">Paste article or video link <span class="text-danger">*</span></label>
-        <input type="text" class="input-area" id="postTitle" formControlName="postTitle" [ngClass]="{ 'isInvalid': isFormSubmittedAndError('postTitle') }" placeholder="Paste article or video link" trim="blur">
-
-        <div *ngIf="isFormSubmittedAndError('postTitle')" class="invalid-feedback">
-          <div *ngIf="isFormSubmittedAndError('postTitle', 'required')">This field is required.</div>
+        <div class="col form-group">
+          <label for="textpostdesc" class="form-label">Paste article or video link</label>
+          <app-tag-user-input id="textpostdesc" placeholder="Paste article or video link..." [value]="tagInputDefaultData" (onDataChange)="onTagUserInputChangeEvent($event, 'textpostdesc')" />
         </div>
-      </div>
 
-      <div class="col-12 d-flex justify-content-end">
-        <button type="submit" class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2">
-          Post <i class="material-symbols-outlined font-20-px"> near_me </i>
-        </button>
-      </div>
-    </form>
-  </div> -->
+        <div class="col form-group">
+          <label for="postdescription" class="form-label">Type or paste the Title or Description (no links) <span class="text-danger">*</span></label>
+          <app-tag-user-input id="postdescription" placeholder="What's going on?" [value]="tagInputDefaultData" (onDataChange)="onTagUserInputChangeEvent($event, 'postdescription')" />
+
+          <div *ngIf="isFormSubmittedAndError('postdescription')" class="invalid-feedback">
+            <div *ngIf="isFormSubmittedAndError('postdescription', 'required')">This field is required.</div>
+          </div>
+        </div>
+
+        <div class="col form-group">
+          <label for="keywords" class="form-label">Enter upto 5 tags separated by a comma</label>
+          <input type="text" class="input-area" id="keywords" formControlName="keywords" placeholder="Enter Keywords" trim="blur">
+        </div>
+
+        <div class="col-12 d-flex justify-content-end">
+          <button type="submit" class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2">
+            Post <i class="material-symbols-outlined font-20-px"> near_me </i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-container>
 
   <div class="single-box d-flex flex-column p-5 mb-3">
     <h6 class="text-start mb-5">Freedom Messaging</h6>

@@ -112,7 +112,7 @@
       />
 
       <div class="w-100 position-relative">
-        <app-tag-user-input [value]="postMessageInputValue" (onDataChange)="messageOnDataChangeEvent($event)" />
+        <app-tag-user-input placeholder="Write something to post.." [value]="postMessageInputValue" (onDataChange)="onTagUserInputChangeEvent($event)" />
 
         <ng-container *ngIf="postData?.imageUrl">
           <div class="position-relative w-100-px h-100-px mt-5">

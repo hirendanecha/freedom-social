@@ -1,7 +1,7 @@
 <div
   #tagInputDiv
   contenteditable
-  placeholder="Write something to post.."
+  [attr.placeholder]="placeholder"
   class="tag-input-div input-area c-text"
   (keyup)="messageOnKeyEvent()"
 ></div>

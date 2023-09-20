@@ -211,7 +211,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  messageOnDataChangeEvent(data: any): void {
+  onTagUserInputChangeEvent(data: any): void {
     this.postData.postdescription = data?.html;
     this.postData.meta = data?.meta;
     this.postMessageTags = data?.tags;

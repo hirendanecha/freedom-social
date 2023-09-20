@@ -13,6 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class TagUserInputComponent implements OnChanges, OnDestroy {
 
   @Input('value') value: string = '';
+  @Input('placeholder') placeholder: string = 'ss';
   @Output('onDataChange') onDataChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('tagInputDiv', { static: false }) tagInputDiv: ElementRef;
@@ -38,9 +39,10 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setTagInputDivValue(changes.value.currentValue);
+    const val = changes?.value?.currentValue;
+    this.setTagInputDivValue(val);
 
-    if (changes.value.currentValue === '') {
+    if (val === '') {
       this.clearUserSearchData();
       this.clearMetaData();
     } else {
@@ -63,7 +65,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   }
 
   checkUserTagFlag(): void {
-    const htmlText = this.tagInputDiv.nativeElement.innerHTML;
+    const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
 
     const atSymbolIndex = htmlText.lastIndexOf('@');
 
@@ -80,7 +82,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   }
 
   getMetaDataFromUrlStr(): void {
-    const htmlText = this.tagInputDiv.nativeElement.innerHTML;
+    const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
 
     const matches = htmlText.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/gi);
 
@@ -126,8 +128,9 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   }
 
   selectTagUser(user: any): void {
-    const postHtml = this.tagInputDiv.nativeElement.innerHTML;
-    const text = postHtml.replace(
+    const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
+
+    const text = htmlText.replace(
       `@${this.userNameSearch}`,
       `<a href="/settings/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a>`
     );
@@ -176,7 +179,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   emitChangeEvent(): void {
     if (this.tagInputDiv) {
       this.onDataChange.emit({
-        html: this.tagInputDiv.nativeElement.innerHTML,
+        html: this.tagInputDiv?.nativeElement?.innerHTML,
         tags: this.tagInputDiv?.nativeElement?.children,
         meta: this.metaData,
       });

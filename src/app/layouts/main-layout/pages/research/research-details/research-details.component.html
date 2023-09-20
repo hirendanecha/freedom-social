@@ -25,7 +25,9 @@
             <div class="row px-2">
               <ng-container *ngIf="posts?.length > 0; else elsePostNotFound" >
                 <ng-container *ngFor="let post of posts">
-                  <app-research-card [post]="post" class="col-4 px-2 pb-4" />
+                  <div class="col-4 px-2 pb-4">
+                    <app-research-card [post]="post" />
+                  </div>
                 </ng-container>
 
                 <button class="btn btn-sm btn-primary w-auto m-auto" *ngIf="isLoadMorePosts" (click)="loadMorePosts()">

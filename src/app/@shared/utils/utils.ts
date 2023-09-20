@@ -35,3 +35,10 @@ export const getTagUsersFromAnchorTags = (anchorTags: any[]): any[] => {
 
   return tags;
 }
+
+export const deleteExtraParamsFromReqObj = (reqObj: any): any => {
+  delete reqObj?.['isClicked'];
+  delete reqObj?.['isSubmitted'];
+
+  return reqObj;
+}

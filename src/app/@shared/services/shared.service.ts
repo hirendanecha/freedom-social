@@ -72,6 +72,10 @@ export class SharedService {
     }
   }
 
+  isUserMediaApproved(): boolean {
+    return this.userData?.MediaApproved === 1;
+  }
+
   getNotificationList() {
     const id = sessionStorage.getItem('profileId');
     this.customerService.getNotificationList(Number(id)).subscribe({

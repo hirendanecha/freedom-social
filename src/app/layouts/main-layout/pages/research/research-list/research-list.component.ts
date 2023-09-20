@@ -3,9 +3,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
+import { PostService } from 'src/app/@shared/services/post.service';
 import { ProfileService } from 'src/app/@shared/services/profile.service';
+import { SharedService } from 'src/app/@shared/services/shared.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
-import { isFormSubmittedAndError, numToRevArray } from 'src/app/@shared/utils/utils';
+import { deleteExtraParamsFromReqObj, isFormSubmittedAndError, numToRevArray } from 'src/app/@shared/utils/utils';
 
 @Component({
   selector: 'app-research-list',
@@ -25,17 +27,21 @@ export class ResearchListComponent {
     limitArray: []
   };
 
+  tagInputDefaultData: string = '';
   researchForm = new FormGroup({
-    groupId: new FormControl('', [Validators.required]),
-    postTitle: new FormControl('', [Validators.required]),
-    postDescription: new FormControl('', [Validators.required]),
-    keywords: new FormControl('', [Validators.required]),
+    posttoprofileid: new FormControl('', [Validators.required]),
+    textpostdesc: new FormControl(''),
+    postdescription: new FormControl('', [Validators.required]),
+    keywords: new FormControl(''),
+    posttype: new FormControl('S'),
     isClicked: new FormControl(false),
     isSubmitted: new FormControl(false),
   });
 
   constructor(
     private profileService: ProfileService,
+    private postService: PostService,
+    public sharedService: SharedService,
     private spinner: NgxSpinnerService,
     private breakpointService: BreakpointService,
     private toastService: ToastService,
@@ -80,6 +86,13 @@ export class ResearchListComponent {
 
   get formIsSubmitted(): FormControl {
     return this.researchForm.get('isSubmitted') as FormControl;
+  }
+
+  onTagUserInputChangeEvent(data: any, ctrlName: string): void {
+    this.researchForm.get(ctrlName).setValue(data?.html);
+    // this.postData.postdescription = data?.html;
+    // this.postData.meta = data?.meta;
+    // this.postMessageTags = data?.tags;
   }
 
   groupsAndPosts(): void {
@@ -140,22 +153,30 @@ export class ResearchListComponent {
       return;
     } else {
       this.formIsSubmitted.setValue(true);
-      const reqObj = this.researchForm.value;
+      const reqObj = deleteExtraParamsFromReqObj(this.researchForm.value);
+      reqObj['profileId'] = sessionStorage.getItem('profileId');
       console.log('reqObj : ', reqObj);
 
-      // this.commonService.post(urlConstant.Product.Insert, reqObj).subscribe((res) => {
-      //   if (res) {
-      //     console.log('res : ', res);
-      //   } else {
-      //     this.toastService.danger(res['message']);
-      //   }
-      // }, (error: any) => {
-      //   this.toastService.danger(error.message);
-      // }).add(() => {
-      //   this.researchForm.reset();
-      //   this.formIsClicked.setValue(false);
-      //   this.formIsSubmitted.setValue(false);
-      // });
+      this.postService.createPost(reqObj).subscribe({
+        next: (res) => {
+          if (res) {
+            this.tagInputDefaultData = 'reset';
+            console.log('res : ', res);
+            this.toastService.success('Research added successfully.');
+            this.groupsAndPosts();
+          } else {
+            this.toastService.danger(res['message']);
+          }
+        },
+        error: (error: any) => {
+          this.toastService.danger(error.message);
+        }
+      }).add(() => {
+        this.researchForm.reset();
+        this.tagInputDefaultData = '';
+        this.formIsClicked.setValue(false);
+        this.formIsSubmitted.setValue(false);
+      });
     }
   }
 
