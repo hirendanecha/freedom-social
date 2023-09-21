@@ -12,7 +12,7 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'page/:name',
+    path: 'pages/:name',
     component: HomeComponent,
   }
 ];
