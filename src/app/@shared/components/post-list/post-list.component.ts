@@ -77,7 +77,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     // );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getPostList();
@@ -102,7 +102,6 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       this.loadMore();
     } else {
       this.spinner.show();
-
       this.postService.getPostsByProfileId(this.profileId).subscribe(
         {
           next: (res: any) => {
@@ -120,7 +119,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
- loadMore(): void {
+  loadMore(): void {
     if (!this.communityId && this.activePage === 0) {
       this.getSeeFirstIdByProfileId(+this.profileId);
     }

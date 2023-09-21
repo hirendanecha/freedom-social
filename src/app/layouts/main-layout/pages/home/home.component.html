@@ -28,18 +28,20 @@
           >
         </div>
 
-        <ng-container *ngIf="communityDetails?.memberIds?.includes(+profileId); else elseJoinCommunity">
+        <ng-container
+          *ngIf="
+            communityDetails?.memberIds?.includes(+profileId);
+            else elseJoinCommunity
+          "
+        >
           <ng-container
             *ngIf="
               communityDetails?.profileId === +profileId;
               else elseLeaveCommunity
             "
           >
-            <button
-              class="btn btn-sm btn-danger"
-              (click)="removeFromCommunity()"
-            >
-              Delete Community
+            <button class="btn btn-sm btn-danger" (click)="deleteCommunity()">
+              Delete {{ communityDetails?.pageType }}
             </button>
           </ng-container>
 
@@ -48,18 +50,14 @@
               class="btn btn-sm btn-danger"
               (click)="removeFromCommunity()"
             >
-              Leave Community
+              Leave {{ communityDetails?.pageType }}
             </button>
           </ng-template>
         </ng-container>
 
         <ng-template #elseJoinCommunity>
           <button class="btn btn-sm btn-success" (click)="joinCommunity()">
-            {{
-              communityDetails?.pageType === "community"
-                ? "Join Community"
-                : "Join Page"
-            }}
+            Join {{ communityDetails?.pageType }}
           </button>
         </ng-template>
       </div>
@@ -112,7 +110,11 @@
       />
 
       <div class="w-100 position-relative">
-        <app-tag-user-input placeholder="Write something to post.." [value]="postMessageInputValue" (onDataChange)="onTagUserInputChangeEvent($event)" />
+        <app-tag-user-input
+          placeholder="Write something to post.."
+          [value]="postMessageInputValue"
+          (onDataChange)="onTagUserInputChangeEvent($event)"
+        />
 
         <ng-container *ngIf="postData?.imageUrl">
           <div class="position-relative w-100-px h-100-px mt-5">
@@ -237,7 +239,10 @@
         <img
           class="w-48-px h-48-px rounded-4"
           loading="lazy"
-          data-src="{{ member?.ProfilePicName || '/assets/images/avtar/placeholder-user.png' }}"
+          data-src="{{
+            member?.ProfilePicName ||
+              '/assets/images/avtar/placeholder-user.png'
+          }}"
           onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png'"
           alt="avatar"
         />

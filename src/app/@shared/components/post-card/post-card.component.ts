@@ -37,6 +37,7 @@ export class PostCardComponent {
   };
   isParent: boolean = false;
   postComment = {};
+  isExpand = false;
 
   constructor(
     private seeFirstUserService: SeeFirstUserService,
