@@ -7,6 +7,7 @@ import { TokenStorageService } from 'src/app/@shared/services/token-storage.serv
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/@shared/services/auth.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
+import { SharedService } from 'src/app/@shared/services/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private spinner: NgxSpinnerService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private sharedService: SharedService
   ) {
     const isVerify = this.route.snapshot.queryParams.isVerify;
     if (isVerify === 'false') {
@@ -72,6 +74,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           window.sessionStorage.user_id = data.user.Id;
           window.sessionStorage.user_country = data.user.Country;
           window.sessionStorage.user_zip = data.user.ZipCode;
+          this.sharedService.getUserDetails();
           this.isLoginFailed = false;
           this.isLoggedIn = true;
           this.toastService.success('Logged in successfully');
