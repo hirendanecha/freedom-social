@@ -43,11 +43,11 @@
     <a
       routerLink="/communities"
       role="button"
-      class="d-flex justify-content-center"
+      class="d-flex align-items-center"
       (click)="closeSidebar()"
     >
       {{ user?.AccountType }}
-      <span class="material-symbols-outlined font-20-px">
+      <span class="material-symbols-outlined font-20-px p-1">
         {{ user?.AccountType === "user" ? "add_circle" : "search" }}
       </span>
     </a>
