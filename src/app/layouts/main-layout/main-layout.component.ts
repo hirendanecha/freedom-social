@@ -45,7 +45,6 @@ export class MainLayoutComponent {
         return {};
       }),
     ).subscribe((data: any) => {
-      console.log(data);
       this.sidebar = data;
     });
   }

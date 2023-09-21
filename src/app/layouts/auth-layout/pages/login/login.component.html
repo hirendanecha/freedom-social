@@ -1,7 +1,9 @@
 <div class="row min-vh-100">
-  <div class="col-12 col-md-8 col-lg-7 col-xl-6 mx-auto d-flex flex-column justify-content-center">
+  <div
+    class="col-12 col-md-8 col-lg-7 col-xl-6 mx-auto d-flex flex-column justify-content-center"
+  >
     <p class="text-2 mb-5">
-      Not activated?
+      {{ label }}
       <a class="fw-500" routerLink="/register">Register</a>
     </p>
     <h3 class="mb-4">Log In to Your Account</h3>
@@ -25,9 +27,7 @@
       </div>
       <div class="mb-3">
         <label class="form-label"
-          >Email Address or Username<span class="text-danger"
-            >*</span
-          ></label
+          >Email Address or Username<span class="text-danger">*</span></label
         >
         <input
           type="email"
@@ -65,19 +65,18 @@
           formControlName="Password"
         />
         <div
-        class="srv-validation-message text-danger"
-        *ngIf="
+          class="srv-validation-message text-danger"
+          *ngIf="
             signInForm.submitted &&
                loginForm.controls['Password'].invalid &&
                loginForm.controls['Password'].errors?.['required']
              "
-      >Please enter valid password!
+        >
+          Please enter valid password!
         </div>
       </div>
 
-      <button class="btn btn-primary my-2 ms-auto" type="submit">
-        Log in
-      </button>
+      <button class="btn btn-primary my-2 ms-auto" type="submit">Log in</button>
     </form>
   </div>
 </div>

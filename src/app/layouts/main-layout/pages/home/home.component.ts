@@ -269,11 +269,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
-    modalRef.componentInstance.title = 'Leave Community';
+    modalRef.componentInstance.title = `Leave ${this.communityDetails.pageType}`;
     modalRef.componentInstance.confirmButtonLabel = 'Leave';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.message =
-      'Are you sure want to Leave from this community?';
+      `Are you sure want to Leave from this ${this.communityDetails.pageType}?`;
     modalRef.result.then((res) => {
       if (res === 'success') {
         const profileId = Number(sessionStorage.getItem('profileId'));
@@ -297,11 +297,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
-    modalRef.componentInstance.title = 'Delete Community';
+    modalRef.componentInstance.title = `Delete ${this.communityDetails.pageType}`;
     modalRef.componentInstance.confirmButtonLabel = 'Delete';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.message =
-      'Are you sure want to delete this community?';
+      `Are you sure want to delete this ${this.communityDetails.pageType}?`;
     modalRef.result.then((res) => {
       if (res === 'success') {
         this.communityService.deleteCommunity(this.communityDetails?.Id).subscribe({

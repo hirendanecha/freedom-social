@@ -46,9 +46,9 @@ export class NotificationsComponent {
 
   removeNotification(id: number): void {
     this.customerService.deleteNotification(id).subscribe({
-      next: (res) => {
+      next: (res: any) => {
+        this.toastService.success(res.message || 'Notification delete successfully');
         this.getNotificationList();
-        this.toastService.success(res.message);
       },
     });
   }
