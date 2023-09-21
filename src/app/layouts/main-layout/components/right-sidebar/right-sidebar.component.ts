@@ -14,6 +14,7 @@ import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 export class RightSidebarComponent implements OnInit {
   user: any;
   communities = [];
+  isCommunitiesLoader: boolean = false;
 
   constructor(
     private router: Router,
@@ -26,6 +27,8 @@ export class RightSidebarComponent implements OnInit {
     this.breakpointService.screen.subscribe((res) => {
       if (res.xl.gatherThen) {
         this.getCommunityList();
+      } else {
+        this.isCommunitiesLoader = false;
       }
     });
   }
@@ -39,6 +42,7 @@ export class RightSidebarComponent implements OnInit {
   getCommunityList(): void {
     this.spinner.show();
     const profileId = sessionStorage.getItem('profileId');
+    this.isCommunitiesLoader = true;
     this.communityService.getCommunity(profileId, 'community').subscribe({
       next: (res: any) => {
         this.spinner.hide();
@@ -49,6 +53,9 @@ export class RightSidebarComponent implements OnInit {
       error: (error) => {
         this.spinner.hide();
         console.log(error);
+      },
+      complete: () => {
+        this.isCommunitiesLoader = false;
       }
     });
   }

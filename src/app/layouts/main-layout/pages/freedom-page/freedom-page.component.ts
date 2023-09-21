@@ -14,6 +14,8 @@ export class FreedomPageComponent {
   activeIdTab: string = 'my';
   pageList = []
   profileId: number
+  isPageLoader: boolean = false;
+
   constructor(
     private modalService: NgbModal,
     private router: Router,
@@ -46,19 +48,20 @@ export class FreedomPageComponent {
   }
 
   getPages(): void {
-    let getCommunitiesObs = null;
+    let getPagesObs = null;
     this.pageList = [];
     this.spinner.show();
 
     if (this.activeIdTab === 'joined') {
-      getCommunitiesObs = this.communityService.getJoinedCommunityByProfileId(this.profileId, 'page');
+      getPagesObs = this.communityService.getJoinedCommunityByProfileId(this.profileId, 'page');
     } else if (this.activeIdTab === 'local') {
-      getCommunitiesObs = this.communityService.getCommunity(this.profileId, 'page');
+      getPagesObs = this.communityService.getCommunity(this.profileId, 'page');
     } else {
-      getCommunitiesObs = this.communityService.getCommunityByUserId(this.profileId, 'page');
+      getPagesObs = this.communityService.getCommunityByUserId(this.profileId, 'page');
     }
 
-    getCommunitiesObs?.subscribe({
+    this.isPageLoader = true;
+    getPagesObs?.subscribe({
       next: (res: any) => {
         this.spinner.hide();
 
@@ -71,6 +74,9 @@ export class FreedomPageComponent {
       error: (error) => {
         this.spinner.hide();
         console.log(error);
+      },
+      complete: () => {
+        this.isPageLoader = false;
       }
     });
   }
