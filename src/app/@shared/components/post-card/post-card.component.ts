@@ -197,12 +197,14 @@ export class PostCardComponent {
               return ele.id === ele1.parentCommentId;
             }),
           }));
-          this.isCommentsLoader = false;
         }
       },
       error: (error) => {
         console.log(error);
       },
+      complete: () => {
+        this.isCommentsLoader = false;
+      }
     });
   }
 

@@ -1,5 +1,5 @@
 <div class="post-item d-flex flex-column gap-4">
-  <ng-container *ngIf="postList?.length > 0;">
+  <ng-container *ngIf="postList?.length > 0; else elseNoPostFound">
     <ng-container *ngFor="let post of postList;let i = index">
       <app-post-card [post]="post" [seeFirstList]="seeFirstList" (onEditPost)="onEditPostData(post, i)" (getPostList)="getPostList()" />
     </ng-container>
@@ -14,3 +14,11 @@
     </div>
   </ng-container>
 </div>
+
+<ng-template #elseNoPostFound>
+  <app-inline-loader *ngIf="isPostLoader" />
+
+  <ng-container *ngIf="!isPostLoader">
+    <h6 class="px-4 py-5 text-center">No Post Available</h6>
+  </ng-container>
+</ng-template>
