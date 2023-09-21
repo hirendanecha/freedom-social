@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { Router } from '@angular/router';
 import { CustomerService } from '../../../../@shared/services/customer.service';
 import { CommunityService } from '../../../../@shared/services/community.service';
 import { NgxSpinnerService } from 'ngx-spinner';

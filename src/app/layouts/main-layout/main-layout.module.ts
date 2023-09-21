@@ -14,6 +14,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { ResearchSidebarComponent } from './components/research-sidebar/research-sidebar.component';
+import { ProfileMenusModalComponent } from './components/profile-menus-modal/profile-menus-modal.component';
+import { NotificationsModalComponent } from './components/notifications-modal/notifications-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,11 +24,8 @@ import { ResearchSidebarComponent } from './components/research-sidebar/research
     FooterComponent,
     LeftSidebarComponent,
     ResearchSidebarComponent,
-  ],
-  providers: [
-    NgbActiveModal,
-    NgbActiveOffcanvas,
-    { provide: LAZYLOAD_IMAGE_HOOKS, useClass: ScrollHooks },
+    ProfileMenusModalComponent,
+    NotificationsModalComponent,
   ],
   imports: [
     MainLayoutRoutingModule,
