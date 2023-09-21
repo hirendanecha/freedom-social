@@ -107,12 +107,7 @@
     <app-post-meta-data-card [post]="post" />
 
     <ng-container *ngIf="post?.imageUrl">
-      <img
-        loading="lazy"
-        data-src="{{ post?.imageUrl }}"
-        class="w-100 rounded-3"
-        alt="image"
-      />
+      <app-img-preview [src]="post?.imageUrl" classes="w-100" />
     </ng-container>
     <!-- like -->
     <!-- <div
@@ -389,13 +384,9 @@
                     <p class="mdtxt mb-0" [innerHTML]="comment.comment"></p>
                   </ng-container>
 
-                  <img
-                    *ngIf="comment.imageUrl"
-                    class="h-48-px w-48-px rounded-2"
-                    loading="lazy"
-                    data-src="{{ comment.imageUrl }}"
-                    alt=""
-                  />
+                  <ng-container *ngIf="comment.imageUrl">
+                    <app-img-preview [src]="comment?.imageUrl" classes="h-48-px w-48-px rounded-2" />
+                  </ng-container>
                 </div>
 
                 <ul class="friends-list d-flex gap-6 py-2 px-4 m-0">
@@ -563,13 +554,9 @@
                             <p class="mdtxt mb-0" [innerHTML]="reply?.comment"></p>
                           </ng-container>
 
-                          <img
-                            *ngIf="reply.imageUrl"
-                            class="h-48-px w-48-px rounded-2"
-                            loading="lazy"
-                            data-src="{{ reply.imageUrl }}"
-                            alt=""
-                          />
+                          <ng-container *ngIf="reply.imageUrl">
+                            <app-img-preview [src]="reply?.imageUrl" classes="h-48-px w-48-px rounded-2" />
+                          </ng-container>
                         </div>
 
                         <ul class="friends-list d-flex gap-6 py-2 px-4 m-0">

@@ -18,6 +18,7 @@ import { RightSidebarComponent } from '../layouts/main-layout/components/right-s
 import { PostMetaDataCardComponent } from './components/post-meta-data-card/post-meta-data-card.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { TagUserInputComponent } from './components/tag-user-input/tag-user-input.component';
+import { ImgPreviewComponent } from './components/img-preview/img-preview.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -28,6 +29,7 @@ const sharedComponents = [
   RightSidebarComponent,
   PostMetaDataCardComponent,
   TagUserInputComponent,
+  ImgPreviewComponent,
 ];
 
 const sharedModules = [
