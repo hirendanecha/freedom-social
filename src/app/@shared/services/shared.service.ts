@@ -45,15 +45,15 @@ export class SharedService {
   }
 
   getUserDetails() {
-    const localUserData = JSON.parse(localStorage.getItem('userData'));
-    if (localUserData?.ID) {
-      this.userData = localUserData;
-    }
-
-    this.spinner.show();
-
     const profileId = sessionStorage.getItem('profileId');
     if (profileId) {
+      const localUserData = JSON.parse(localStorage.getItem('userData'));
+      if (localUserData?.ID) {
+        this.userData = localUserData;
+      }
+
+      this.spinner.show();
+
       this.customerService.getProfile(profileId).subscribe({
         next: (res: any) => {
           this.spinner.hide();
