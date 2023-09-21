@@ -8,7 +8,7 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'community/:name',
+    path: 'communities/:name',
     component: HomeComponent,
   },
   {
