@@ -225,8 +225,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.postData['file'] = {};
     this.postData['imageUrl'] = '';
 
-    this.postMessageInputValue = '';
+    this.postMessageInputValue = ' ';
+    setTimeout(() => {
+      this.postMessageInputValue = '';
+    }, 100);
     this.postMessageTags = [];
+
+    console.log('postData : ', this.postData);
   }
 
   onEditPost(post: any): void {
