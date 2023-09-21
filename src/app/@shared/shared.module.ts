@@ -19,6 +19,7 @@ import { PostMetaDataCardComponent } from './components/post-meta-data-card/post
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { TagUserInputComponent } from './components/tag-user-input/tag-user-input.component';
 import { ImgPreviewComponent } from './components/img-preview/img-preview.component';
+import { InlineLoaderComponent } from './components/inline-loader/inline-loader.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -30,6 +31,7 @@ const sharedComponents = [
   PostMetaDataCardComponent,
   TagUserInputComponent,
   ImgPreviewComponent,
+  InlineLoaderComponent
 ];
 
 const sharedModules = [

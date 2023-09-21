@@ -612,5 +612,9 @@
 </div>
 
 <ng-template #elseNoCommentsFound>
-  <span class="pt-5 m-0 text-start text-secondary">No comments yet!</span>
+  <app-inline-loader *ngIf="isCommentsLoader" />
+
+  <ng-container *ngIf="!isCommentsLoader">
+    <span class="pt-5 m-0 text-start text-secondary">No comments yet!</span>
+  </ng-container>
 </ng-template>

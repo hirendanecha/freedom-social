@@ -37,7 +37,7 @@ export class PostCardComponent {
   };
   isParent: boolean = false;
   postComment = {};
-  isExpand = false;
+  isCommentsLoader: boolean = false;
 
   constructor(
     private seeFirstUserService: SeeFirstUserService,
@@ -178,6 +178,7 @@ export class PostCardComponent {
     // }
 
     this.isOpenCommentsPostId = id;
+    this.isCommentsLoader = true;
 
     this.postService.getComments(id).subscribe({
       next: (res) => {
@@ -196,6 +197,7 @@ export class PostCardComponent {
               return ele.id === ele1.parentCommentId;
             }),
           }));
+          this.isCommentsLoader = false;
         }
       },
       error: (error) => {
