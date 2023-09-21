@@ -8,7 +8,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { slideUp } from 'src/app/@shared/animations/slideUp';
 import { PostService } from 'src/app/@shared/services/post.service';
@@ -51,7 +50,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     this.socketService.socket.on('new-post-added',
       (res: any) => {
         if (res?.[0]) {
-          if (this.editPostIndex >= 0) {
+          if (this.editPostIndex) {
             this.postList[this.editPostIndex] = res?.[0];
           } else {
             this.postList.unshift(res?.[0]);
