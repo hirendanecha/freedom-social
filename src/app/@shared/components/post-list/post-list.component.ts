@@ -107,8 +107,8 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
         {
           next: (res: any) => {
             this.spinner.hide();
-            if (res) {
-              this.postList = res;
+            if (res?.data) {
+              this.postList = res?.data;
             }
           },
           error:
