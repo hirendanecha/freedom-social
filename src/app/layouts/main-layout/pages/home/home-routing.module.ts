@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
+import { PostDetailComponent } from './post-detail/post-detail.component';
 
 const routes: Routes = [
   {
@@ -8,12 +9,16 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'community/:name',
+    path: 'communities/:name',
     component: HomeComponent,
   },
   {
-    path: 'page/:name',
+    path: 'pages/:name',
     component: HomeComponent,
+  },
+  {
+    path: 'post/:id',
+    component: PostDetailComponent,
   }
 ];
 

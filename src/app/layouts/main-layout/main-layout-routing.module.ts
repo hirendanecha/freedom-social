@@ -18,14 +18,6 @@ const routes: Routes = [
         }
       },
       {
-        path: 'post',
-        loadChildren: () => import('./pages/posts/post.module.').then((m) => m.PostModule),
-        data: {
-          isShowLeftSideBar: true,
-          isShowRightSideBar: true
-        }
-      },
-      {
         path: 'communities',
         loadChildren: () => import('./pages/communities/communities.module').then((m) => m.CommunitiesModule),
         data: {

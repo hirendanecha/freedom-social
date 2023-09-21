@@ -37,54 +37,6 @@
     }
   }
 
-  .post-item {
-    .post-single-box {
-      .info-area {
-        .username {
-          color: var(--para-1st-color);
-        }
-      }
-
-      .post-description {
-        .postlink {
-          img {
-            border-radius: 0.5rem;
-          }
-          h3 {
-            font-size: 18px;
-            margin-top: 10px;
-          }
-        }
-      }
-      .total-react-share {
-        .like-count-section {
-          cursor: pointer;
-          ul {
-            li {
-              .active {
-                color: var(--primary-color) !important;
-              }
-            }
-          }
-        }
-      }
-      .like-comment-share {
-        .like-button {
-          .active {
-            color: var(--primary-color) !important;
-          }
-        }
-      }
-      .comments-area {
-        .like-button {
-          .active {
-            color: var(--primary-color) !important;
-          }
-        }
-      }
-    }
-  }
-
   .share-post {
     .post-message-input {
       a {
@@ -95,25 +47,7 @@
   }
 }
 
-.post-item {
-  .post-single-box {
-    .dropdown-toggle {
-      &::after {
-        display: none;
-      }
-    }
-    .post-description {
-      line-break: anywhere;
-    }
-    .post-profile {
-      max-width: 48px;
-      // height: 100%;
-      min-height: 48px;
-    }
-  }
-}
-
-.post-message-input, .comment-input {
+.comment-input {
   font-size: 16px;
   min-height: 56px;
 

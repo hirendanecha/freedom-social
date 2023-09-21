@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Customer } from 'src/app/@shared/constant/customer';
@@ -32,7 +32,6 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   isExpand = false;
   constructor(
     private modalService: NgbActiveModal,
-    private route: ActivatedRoute,
     private router: Router,
     private customerService: CustomerService,
     private spinner: NgxSpinnerService,
@@ -41,12 +40,16 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     private communityService: CommunityService,
     public breakpointService: BreakpointService
   ) {
-    this.profileId = this.route.snapshot.paramMap.get('id');
-    if (this.profileId) {
-      this.getProfile(this.profileId);
-    } else {
-      this.profileId = sessionStorage.getItem('profileId');
-    }
+    this.router.events.subscribe((event: any) => {
+      const id = event?.routerEvent?.url.split('/')[3];
+      if (id) {
+        this.getProfile(id);
+      } else {
+        this.profileId = sessionStorage.getItem('profileId');
+      }
+    });
+
+
   }
   ngOnInit(): void {
     if (!this.tokenStorage.getToken()) {
@@ -101,7 +104,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goToCommunityDetails(community: any): void {
-    this.router.navigate(['community', community?.slug]);
+    this.router.navigate(['communities', community?.slug]);
   }
 
   openDropDown(id) {

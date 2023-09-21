@@ -4,6 +4,10 @@
   width: 100%;
 
   .post-single-box {
+    background: var(--section-1st-color);
+    box-shadow: var(--box-shadow);
+    border-radius: 10px;
+
     .dropdown-toggle {
       &::after {
         display: none;
@@ -42,6 +46,196 @@
 
     .comment-input {
       min-height: 24px !important;
+    }
+
+    .info-area {
+      .username {
+        color: var(--para-1st-color);
+      }
+    }
+
+    .post-description {
+      .postlink {
+        img {
+          border-radius: 0.5rem;
+        }
+        h3 {
+          font-size: 18px;
+          margin-top: 10px;
+        }
+      }
+    }
+    .total-react-share {
+      .like-count-section {
+        cursor: pointer;
+        ul {
+          li {
+            .active {
+              color: var(--primary-color) !important;
+            }
+          }
+        }
+      }
+    }
+    .like-comment-share {
+      .like-button {
+        .active {
+          color: var(--primary-color) !important;
+        }
+      }
+    }
+    .comments-area {
+      .like-button {
+        .active {
+          color: var(--primary-color) !important;
+        }
+      }
+    }
+
+    .post-img {
+      width: 100% !important;
+      .single {
+        flex: 0 0 calc(50% - 6px);
+        img {
+          width: 100%;
+        }
+      }
+    }
+    .post-head {
+      color: var(--para-2nd-color);
+    }
+    .avatar {
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        width: 16px;
+        height: 16px;
+        background: #21e900;
+        border-radius: 50%;
+        top: -4px;
+        left: -4px;
+      }
+    }
+    .top-area {
+      .status {
+        color: var(--para-1st-color);
+      }
+    }
+    .description-item {
+      ul {
+        list-style-type: disc;
+        margin-left: 18px;
+        li {
+          color: var(--heading-1st-color);
+        }
+      }
+    }
+    .friends-list {
+      ul {
+        margin-left: 5px;
+      }
+      li {
+        margin-left: -5px;
+      }
+      p {
+        color: var(--para-1st-color);
+      }
+    }
+    .like-comment-share {
+      border-top: 1px solid var(--bs-border-color);
+      border-bottom: 1px solid var(--bs-border-color);
+    }
+    form {
+      span {
+        color: var(--para-1st-color);
+      }
+    }
+    .comments-area {
+      .top-area {
+        background: var(--box-1st-color);
+        border-radius: 10px;
+      }
+      .title-area {
+        p {
+          color: var(--para-3rd-color);
+        }
+      }
+      .like-share {
+        li {
+          position: relative;
+          &::before {
+            position: absolute;
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--para-3rd-color);
+            left: -15px;
+          }
+          &:first-child {
+            &::before {
+              display: none;
+            }
+          }
+        }
+        button {
+          color: var(--para-2nd-color);
+        }
+      }
+      .comment-form {
+        display: none;
+      }
+      .single-comment-area {
+        .parent-comment {
+          .avatar-item {
+            position: relative;
+            &:before {
+              content: "";
+              background: var(--border-2nd-color);
+              height: calc(100% - 20px);
+              width: 1px;
+              top: 70px;
+              position: absolute;
+              z-index: 1;
+            }
+          }
+        }
+        .sibling-comment {
+          position: relative;
+          &:before {
+            content: "";
+            background: var(--border-2nd-color);
+            height: calc(100% - -30px);
+            width: 1px;
+            top: 10px;
+            left: -36px;
+            position: absolute;
+            z-index: 1;
+          }
+        }
+      }
+      .comment-item-nested {
+        .avatar-item {
+          position: relative;
+          &:before {
+            content: "";
+            height: 40px;
+            width: 25px;
+            left: -36px;
+            bottom: 10px;
+            border: 1px solid var(--border-2nd-color);
+            border-top-color: transparent;
+            border-right-color: transparent;
+            position: absolute;
+            z-index: 1;
+            border-bottom-left-radius: 10px;
+          }
+        }
+      }
+    }
+    .comment-form {
+      margin-top: 24px;
     }
   }
 }

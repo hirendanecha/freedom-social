@@ -8,7 +8,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { slideUp } from 'src/app/@shared/animations/slideUp';
 import { PostService } from 'src/app/@shared/services/post.service';
@@ -51,7 +50,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     this.socketService.socket.on('new-post-added',
       (res: any) => {
         if (res?.[0]) {
-          if (this.editPostIndex >= 0) {
+          if (this.editPostIndex) {
             this.postList[this.editPostIndex] = res?.[0];
           } else {
             this.postList.unshift(res?.[0]);
@@ -78,7 +77,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     // );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getPostList();
@@ -103,13 +102,12 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       this.loadMore();
     } else {
       this.spinner.show();
-
       this.postService.getPostsByProfileId(this.profileId).subscribe(
         {
           next: (res: any) => {
             this.spinner.hide();
-            if (res) {
-              this.postList = res;
+            if (res?.data) {
+              this.postList = res?.data;
             }
           },
           error:
@@ -121,7 +119,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
- loadMore(): void {
+  loadMore(): void {
     if (!this.communityId && this.activePage === 0) {
       this.getSeeFirstIdByProfileId(+this.profileId);
     }

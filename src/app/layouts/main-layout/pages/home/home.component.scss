@@ -98,30 +98,3 @@
   }
 }
 
-.post-item {
-  .post-single-box {
-    .dropdown-toggle {
-      &::after {
-        display: none;
-      }
-    }
-    .post-description {
-      line-break: anywhere;
-    }
-    .post-profile {
-      max-width: 48px;
-      // height: 100%;
-      min-height: 48px;
-    }
-  }
-}
-
-.comment-input {
-  min-height: 24px !important;
-}
-
-.community-details, .community-members {
-  .description {
-    color: var(--para-1st-color);
-  }
-}

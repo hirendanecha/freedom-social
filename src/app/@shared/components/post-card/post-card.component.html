@@ -1,10 +1,13 @@
 <div
   @slideUp
   class="post-single-box d-flex gap-3 gap-sm-5 p-3 p-sm-5"
-  *ngIf="!post?.hide && (post?.postdescription || post?.metadescription || post?.imageUrl)"
+  *ngIf="
+    !post?.hide &&
+    (post?.postdescription || post?.metadescription || post?.imageUrl)
+  "
 >
   <img
-    class="w-48-px h-48-px rounded-4"
+    class="w-48-px h-48-px rounded-4 d-none d-lg-block"
     loading="lazy"
     data-src="{{ post.ProfilePicName }}"
     onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
@@ -12,89 +15,100 @@
   />
 
   <div class="d-flex flex-column w-100">
-    <div
-      class="profile-area d-center justify-content-between align-items-start h-24-px"
-    >
-      <div class="info-area d-flex justify-content-center align-items-center">
-        <div class="h6 m-0">{{ post.FirstName }}</div>
-        <div class="ms-3 username" *ngIf="post.Username">
-          @{{ post.Username | lowercase }}
-        </div>
+    <div class="d-flex">
+      <div class="w-48-px d-block d-lg-none">
+        <img
+          class="w-48-px h-48-px rounded-4"
+          loading="lazy"
+          data-src="{{ post.ProfilePicName }}"
+          onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+          alt="avatar"
+        />
       </div>
+      <div
+        class="profile-area d-center justify-content-between align-items-start h-24-px w-100 ms-2 ms-lg-0"
+      >
+        <div class="info-area d-flex justify-content-center align-items-center">
+          <div class="h6 m-0 d-none d-lg-block">{{ post.FirstName }}</div>
+          <div class="ms-lg-3 username" *ngIf="post.Username">
+            @{{ post.Username | lowercase }}
+          </div>
+        </div>
 
-      <div ngbDropdown>
-        <i
-          class="material-symbols-outlined fs-xxl m-0"
-          role="button"
-          ngbDropdownToggle
-        >
-          more_horiz
-        </i>
+        <div ngbDropdown>
+          <i
+            class="material-symbols-outlined fs-xxl m-0"
+            role="button"
+            ngbDropdownToggle
+          >
+            more_horiz
+          </i>
 
-        <div ngbDropdownMenu class="dropdown-menu">
-          <ng-container *ngIf="profileId != post.profileid">
-            <button
-              ngbDropdownItem
-              *ngIf="seeFirstList.includes(post?.profileid)"
-            >
-              <a
-                class="droplist d-flex alig n-items-center gap-2"
-                (click)="removeSeeFirstUser(post?.profileid)"
+          <div ngbDropdownMenu class="dropdown-menu">
+            <ng-container *ngIf="profileId != post.profileid">
+              <button
+                ngbDropdownItem
+                *ngIf="seeFirstList.includes(post?.profileid)"
               >
-                <i class="material-symbols-outlined mat-icon"> visibility </i>
-                <span>Stop See First</span>
-              </a>
-            </button>
-            <button
-              ngbDropdownItem
-              *ngIf="!seeFirstList.includes(post.profileid)"
-            >
-              <a
-                class="droplist d-flex align-items-center gap-2"
-                (click)="seeFirst(post?.profileid)"
+                <a
+                  class="droplist d-flex alig n-items-center gap-2"
+                  (click)="removeSeeFirstUser(post?.profileid)"
+                >
+                  <i class="material-symbols-outlined mat-icon"> visibility </i>
+                  <span>Stop See First</span>
+                </a>
+              </button>
+              <button
+                ngbDropdownItem
+                *ngIf="!seeFirstList.includes(post.profileid)"
               >
-                <i class="material-symbols-outlined mat-icon"> visibility </i>
-                <span>See First</span>
-              </a>
-            </button>
-            <button ngbDropdownItem>
-              <a
-                class="droplist d-flex align-items-center gap-2"
-                (click)="unsubscribe(post)"
-              >
-                <i class="material-symbols-outlined mat-icon">
-                  person_remove
-                </i>
-                <span>Unsubscribe</span>
-              </a>
-            </button>
-            <button ngbDropdownItem (click)="goToViewProfile(post.profileid)">
-              <a class="droplist d-flex align-items-center gap-2">
-                <i class="material-symbols-outlined mat-icon"> person </i>
-                <span>View Profile</span>
-              </a>
-            </button>
-          </ng-container>
-          <ng-container *ngIf="profileId == post.profileid">
-            <button ngbDropdownItem>
-              <a
-                class="droplist d-flex align-items-center gap-2"
-                (click)="editPost(post)"
-              >
-                <i class="material-symbols-outlined mat-icon"> edit </i>
-                <span>Edit</span>
-              </a>
-            </button>
-            <button ngbDropdownItem>
-              <a
-                class="droplist d-flex align-items-center gap-2"
-                (click)="deletePost(post)"
-              >
-                <i class="material-symbols-outlined mat-icon"> delete </i>
-                <span>Delete</span>
-              </a>
-            </button>
-          </ng-container>
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="seeFirst(post?.profileid)"
+                >
+                  <i class="material-symbols-outlined mat-icon"> visibility </i>
+                  <span>See First</span>
+                </a>
+              </button>
+              <button ngbDropdownItem>
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="unsubscribe(post)"
+                >
+                  <i class="material-symbols-outlined mat-icon">
+                    person_remove
+                  </i>
+                  <span>Unsubscribe</span>
+                </a>
+              </button>
+              <button ngbDropdownItem (click)="goToViewProfile(post.profileid)">
+                <a class="droplist d-flex align-items-center gap-2">
+                  <i class="material-symbols-outlined mat-icon"> person </i>
+                  <span>View Profile</span>
+                </a>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="profileId == post.profileid">
+              <button ngbDropdownItem>
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="editPost(post)"
+                >
+                  <i class="material-symbols-outlined mat-icon"> edit </i>
+                  <span>Edit</span>
+                </a>
+              </button>
+              <button ngbDropdownItem>
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="deletePost(post)"
+                >
+                  <i class="material-symbols-outlined mat-icon"> delete </i>
+                  <span>Delete</span>
+                </a>
+              </button>
+            </ng-container>
+          </div>
         </div>
       </div>
     </div>
@@ -213,7 +227,7 @@
       </div>
     </div> -->
     <div
-      class="mt-1 friends-list like-comment-share p-3 d-center flex-lg-wrap gap-3 gap-md-0 justify-content-lg-between"
+      class="mt-1 friends-list like-comment-share p-3 d-center flex-lg-wrap gap-3 gap-md-0 justify-content-between"
     >
       <button
         class="d-center gap-1 gap-sm-2 mdtxt"
@@ -225,7 +239,7 @@
         "
       >
         <i
-          class="material-symbols-outlined mat-icon"
+          class="material-symbols-outlined mat-icon font-20-px"
           [ngClass]="post.react == 'L' ? 'active' : ''"
         >
           thumb_up </i
@@ -238,7 +252,7 @@
         data-placement="bottom"
         title="Comming Soon!"
       >
-        <i class="material-symbols-outlined mat-icon"> chat </i>
+        <i class="material-symbols-outlined mat-icon font-20-px"> chat </i>
         Video reply
       </button>
       <button
@@ -248,7 +262,7 @@
         title="View Comments"
         (click)="viewComments(post?.id)"
       >
-        <i class="material-symbols-outlined mat-icon"> comment </i>
+        <i class="material-symbols-outlined mat-icon font-20-px"> comment </i>
         Comments
       </button>
     </div>
@@ -327,7 +341,7 @@
             *ngFor="let comment of commentList"
           >
             <div
-              class="d-flex gap-3"
+              class="d-flex gap-3 justify-content-sm-end"
               *ngIf="comment.postId === post.id"
             >
               <div class="d-center align-items-baseline">
@@ -385,7 +399,10 @@
                   </ng-container>
 
                   <ng-container *ngIf="comment.imageUrl">
-                    <app-img-preview [src]="comment?.imageUrl" classes="h-48-px w-48-px rounded-2" />
+                    <app-img-preview
+                      [src]="comment?.imageUrl"
+                      classes="h-48-px w-48-px rounded-2"
+                    />
                   </ng-container>
                 </div>
 
@@ -412,9 +429,7 @@
                       class="d-center gap-1 gap-sm-2 font-12-px"
                       (click)="showReplySection(comment.id)"
                     >
-                      <i class="material-symbols-outlined font-16-px">
-                        chat
-                      </i>
+                      <i class="material-symbols-outlined font-16-px"> chat </i>
                       Reply
                     </button>
                   </li>
@@ -443,9 +458,7 @@
                             accept="image/*"
                             (change)="onPostFileSelect($event, 'child')"
                           />
-                          <span
-                            class="file-custom border-0 d-grid text-center"
-                          >
+                          <span class="file-custom border-0 d-grid text-center">
                             <span
                               class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
                             >
@@ -539,7 +552,9 @@
                                       class="droplist d-flex align-items-center gap-2"
                                       (click)="deleteComments(reply.id)"
                                     >
-                                      <i class="material-symbols-outlined mat-icon">
+                                      <i
+                                        class="material-symbols-outlined mat-icon"
+                                      >
                                         delete
                                       </i>
                                       <span>Delete</span>
@@ -551,11 +566,17 @@
                           </div>
 
                           <ng-container *ngIf="reply?.comment">
-                            <p class="mdtxt mb-0" [innerHTML]="reply?.comment"></p>
+                            <p
+                              class="mdtxt mb-0"
+                              [innerHTML]="reply?.comment"
+                            ></p>
                           </ng-container>
 
                           <ng-container *ngIf="reply.imageUrl">
-                            <app-img-preview [src]="reply?.imageUrl" classes="h-48-px w-48-px rounded-2" />
+                            <app-img-preview
+                              [src]="reply?.imageUrl"
+                              classes="h-48-px w-48-px rounded-2"
+                            />
                           </ng-container>
                         </div>
 

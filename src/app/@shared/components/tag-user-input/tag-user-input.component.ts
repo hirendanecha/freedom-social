@@ -178,8 +178,11 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
   emitChangeEvent(): void {
     if (this.tagInputDiv) {
+      const htmlText = this.tagInputDiv?.nativeElement?.innerHTML;
+      this.value = htmlText;
+
       this.onDataChange.emit({
-        html: this.tagInputDiv?.nativeElement?.innerHTML,
+        html: htmlText,
         tags: this.tagInputDiv?.nativeElement?.children,
         meta: this.metaData,
       });

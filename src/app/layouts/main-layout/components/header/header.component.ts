@@ -50,7 +50,7 @@ export class HeaderComponent {
     private tokenStorageService: TokenStorageService,
     private customerService: CustomerService,
     private toastService: ToastService
-  ) {}
+  ) { }
 
   openUserMenu(): void {
     this.userMenusOverlayDialog = this.modaleService.open(this.userMenuList, {
@@ -155,17 +155,13 @@ export class HeaderComponent {
 
   openProfile(id) {
     if (id) {
-      this.router.navigate([`settings/view-profile/${id}`]).then(() => {
-        window.location.reload();
-      });
+      this.router.navigate([`settings/view-profile/${id}`]);
       this.searchText = '';
     }
   }
 
   viewUserPost(id) {
-    this.router.navigate([`post/${id}`]).then(() => {
-      window.location.reload();
-    });
+    this.router.navigate([`post/${id}`]);
     this.userMenusOverlayDialog.close();
   }
 

@@ -454,13 +454,11 @@
   // For Body
   .main-content
     .post-item
-    .post-single-box
     .comments-area
     .comment-item-nested
     .avatar-item,
-  .main-content
+    .main-content
     .post-item
-    .post-single-box
     .comments-area
     .single-comment-area
     .parent-comment
@@ -469,7 +467,7 @@
       width: 35px;
     }
   }
-  .main-content .post-item .post-single-box .comment-form {
+  .main-content .post-item .comment-form {
     margin-top: 10px;
   }
   .main-content .single-box .table {
@@ -477,7 +475,6 @@
   }
   .main-content
     .post-item
-    .post-single-box
     .comments-area
     .single-comment-area
     .parent-comment
@@ -486,13 +483,11 @@
   }
   .main-content
     .post-item
-    .post-single-box
     .comments-area
     .single-comment-area
     .sibling-comment:before,
   .main-content
     .post-item
-    .post-single-box
     .comments-area
     .comment-item-nested
     .avatar-item:before {
