@@ -91,17 +91,14 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     if (this.parentComponent === 'HomeComponent') {
       this.loadMore();
     } else {
-      this.spinner.show();
       this.isPostLoader = true;
       this.postService.getPostsByProfileId(this.profileId).subscribe({
         next: (res: any) => {
-          this.spinner.hide();
           if (res?.data) {
             this.postList = res?.data;
           }
         },
         error: (error) => {
-          this.spinner.hide();
           console.log(error);
         },
         complete: () => {
@@ -116,19 +113,15 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       this.getSeeFirstIdByProfileId(+this.profileId);
     }
 
-    this.spinner.show();
     this.activePage = this.activePage + 1;
     this.isPostLoader = true;
     this.postService.getPosts({ profileId: this.profileId, communityId: this.communityId, page: this.activePage, size: 15 }).subscribe({
       next: (res: any) => {
-        this.spinner.hide();
-
         if (res?.data?.length > 0) {
           this.postList = [...this.postList, ...res?.data];
         }
       },
       error: (error) => {
-        this.spinner.hide();
         console.log(error);
       },
       complete: () => {

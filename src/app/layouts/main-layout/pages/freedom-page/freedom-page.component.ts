@@ -50,7 +50,6 @@ export class FreedomPageComponent {
   getPages(): void {
     let getPagesObs = null;
     this.pageList = [];
-    this.spinner.show();
 
     if (this.activeIdTab === 'joined') {
       getPagesObs = this.communityService.getJoinedCommunityByProfileId(this.profileId, 'page');
@@ -63,8 +62,6 @@ export class FreedomPageComponent {
     this.isPageLoader = true;
     getPagesObs?.subscribe({
       next: (res: any) => {
-        this.spinner.hide();
-
         if (res?.data) {
           this.pageList = res?.data;
         } else {
@@ -72,7 +69,6 @@ export class FreedomPageComponent {
         }
       },
       error: (error) => {
-        this.spinner.hide();
         console.log(error);
       },
       complete: () => {

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginMessage = '';
   msg = '';
   type = 'danger';
-  label = 'Not activated?'
+
   constructor(
     private modalService: NgbModal,
     private router: Router,
@@ -43,9 +43,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         'Please check your email and click the activation link to activate your account.';
       this.type = 'success';
       // this.toastService.success(this.msg);
-    }
-    if (isVerify === 'true') {
-      this.label = 'Account activated'
+    } else if (isVerify === 'true') {
+      this.msg = 'Account activated'
+      this.type = 'success';
     }
   }
 

@@ -26,6 +26,7 @@ export class ResearchListComponent {
     limit: 0,
     limitArray: []
   };
+  isGroupPostsLoader: boolean = false;
 
   tagInputDefaultData: string = '';
   researchForm = new FormGroup({
@@ -96,18 +97,19 @@ export class ResearchListComponent {
   }
 
   groupsAndPosts(): void {
-    this.spinner.show();
+    this.isGroupPostsLoader = true;
 
     this.profileService.groupsAndPosts().subscribe({
       next: (res: any) => {
         if (res?.length > 0) {
           this.groupPosts = res;
         }
-        this.spinner.hide();
       },
       error: (err) => {
         this.groupPosts = [];
-        this.spinner.hide();
+      },
+      complete: () => {
+        this.isGroupPostsLoader = false;
       }
     });
   }

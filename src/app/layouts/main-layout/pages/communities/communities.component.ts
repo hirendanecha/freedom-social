@@ -30,7 +30,6 @@ export class CommunitiesComponent {
   getCommunities(): void {
     let getCommunitiesObs = null;
     this.communities = [];
-    this.spinner.show();
 
     if (this.activeIdTab === 'joined') {
       getCommunitiesObs = this.communityService.getJoinedCommunityByProfileId(this.profileId, 'community');
@@ -43,8 +42,6 @@ export class CommunitiesComponent {
     this.isCommunityLoader = true;
     getCommunitiesObs?.subscribe({
       next: (res: any) => {
-        this.spinner.hide();
-
         if (res?.data) {
           this.communities = res?.data;
         } else {
@@ -52,7 +49,6 @@ export class CommunitiesComponent {
         }
       },
       error: (error) => {
-        this.spinner.hide();
         console.log(error);
       },
       complete: () => {

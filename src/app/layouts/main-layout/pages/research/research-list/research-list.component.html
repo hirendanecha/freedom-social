@@ -211,5 +211,9 @@
 </div>
 
 <ng-template #elseNoGroupPostsFound>
-  <app-inline-loader />
+  <app-inline-loader *ngIf="isGroupPostsLoader" />
+
+  <ng-container *ngIf="!isGroupPostsLoader">
+    <span>No Group Posts found</span>
+  </ng-container>
 </ng-template>
