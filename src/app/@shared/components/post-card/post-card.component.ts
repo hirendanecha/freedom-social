@@ -274,8 +274,6 @@ export class PostCardComponent {
 
       this.uploadCommentFileAndAddComment()
       parentPostCommentElement.innerHTML = ''
-    } else {
-      this.toastService.danger('Please enter comment');
     }
   }
 
