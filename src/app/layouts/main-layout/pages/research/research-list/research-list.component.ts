@@ -33,7 +33,7 @@ export class ResearchListComponent {
     textpostdesc: new FormControl(''),
     postdescription: new FormControl('', [Validators.required]),
     keywords: new FormControl(''),
-    posttype: new FormControl('S'),
+    posttype: new FormControl('R'),
     isClicked: new FormControl(false),
     isSubmitted: new FormControl(false),
   });
