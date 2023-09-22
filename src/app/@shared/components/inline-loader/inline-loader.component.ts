@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-inline-loader',
@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class InlineLoaderComponent {
 
+  @Input('classes') classes: string = '';
+  @Input('spinnerClasses') spinnerClasses: string = '';
 }

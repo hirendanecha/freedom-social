@@ -38,6 +38,7 @@ export class PostCardComponent {
   isParent: boolean = false;
   postComment = {};
   isCommentsLoader: boolean = false;
+  isPostComment: boolean = false;
 
   constructor(
     private seeFirstUserService: SeeFirstUserService,
@@ -263,17 +264,23 @@ export class PostCardComponent {
   commentOnPost(parentPostCommentElement, postId, commentId = null): void {
     const postComment = parentPostCommentElement.innerHTML;
 
-    if (postComment || this.commentData?.file?.name) {
-      this.commentData.comment = postComment;
-      this.commentData.postId = postId;
-      this.commentData.profileId = this.profileId;
+    if (this.isPostComment === false) {
+      if (postComment || this.commentData?.file?.name) {
+        this.isPostComment = true;
+        this.commentData.comment = postComment;
+        this.commentData.postId = postId;
+        this.commentData.profileId = this.profileId;
 
-      if (commentId) {
-        this.commentData['parentCommentId'] = commentId;
+        if (commentId) {
+          this.commentData['parentCommentId'] = commentId;
+        }
+
+        this.uploadCommentFileAndAddComment()
+        parentPostCommentElement.innerHTML = ''
+      } else {
+        this.toastService.clear();
+        this.toastService.danger('Please enter comment');
       }
-
-      this.uploadCommentFileAndAddComment()
-      parentPostCommentElement.innerHTML = ''
     }
   }
 
@@ -309,6 +316,7 @@ export class PostCardComponent {
         // childPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
+        this.isPostComment = false;
         this.commentList.map((ele: any) =>
           data.filter((ele1) => {
             if (ele.id === ele1.parentCommentId) {
@@ -328,6 +336,7 @@ export class PostCardComponent {
         // parentPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
+        this.isPostComment = false;
         this.commentList.push(data[0]);
         this.viewComments(data[0]?.postId);
         this.commentData.comment = '';

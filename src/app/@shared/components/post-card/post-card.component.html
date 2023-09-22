@@ -277,6 +277,23 @@
         />
 
         <div class="input-area py-2 px-3 gap-2 align-items-center w-100">
+          <ng-container *ngIf="isParent && commentData?.imageUrl">
+            <div class="position-relative w-100-px h-100-px mb-2">
+              <img
+                loading="lazy"
+                data-src="{{ commentData?.imageUrl }}"
+                class="w-100-px h-100-px rounded-4"
+                alt="icon"
+              />
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
+                (click)="removePostSelectedFile()"
+              >
+                close
+              </span>
+            </div>
+          </ng-container>
+
           <div class="d-flex gap-2">
             <div
               #parentPostCommentElement
@@ -303,32 +320,15 @@
             </div>
 
             <div class="file-input d-flex gap-1 gap-md-2">
-              <i
-                class="material-symbols-outlined mat-icon m-0 font-24-px text-primary"
+              <span
+                class="material-symbols-outlined font-24-px text-primary"
                 role="button"
                 (click)="commentOnPost(parentPostCommentElement, post.id)"
               >
                 near_me
-              </i>
-            </div>
-          </div>
-
-          <ng-container *ngIf="isParent && commentData?.imageUrl">
-            <div class="position-relative w-100-px h-100-px mt-5">
-              <img
-                loading="lazy"
-                data-src="{{ commentData?.imageUrl }}"
-                class="w-100 h-100 rounded-4"
-                alt="icon"
-              />
-              <span
-                class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
-                (click)="removePostSelectedFile()"
-              >
-                close
               </span>
             </div>
-          </ng-container>
+          </div>
         </div>
       </div>
     </form>
