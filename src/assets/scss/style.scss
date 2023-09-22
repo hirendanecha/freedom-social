@@ -117,6 +117,10 @@ select.input-area {
   align-items: flex-start;
   padding-bottom: 16px;
 
+  .form-label {
+    text-align: start;
+  }
+
   .invalid-feedback {
     display: flex;
     position: absolute;

@@ -442,6 +442,23 @@
                   "
                   class="input-area py-2 px-3 gap-2 align-items-center w-100 mb-5"
                 >
+                  <ng-container *ngIf="!isParent && commentData?.imageUrl">
+                    <div class="position-relative w-52-px h-52-px mb-2">
+                      <img
+                        loading="lazy"
+                        data-src="{{ commentData?.imageUrl }}"
+                        class="w-100 h-100 rounded-4"
+                        alt="icon"
+                      />
+                      <span
+                        class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
+                        (click)="removePostSelectedFile()"
+                      >
+                        close
+                      </span>
+                    </div>
+                  </ng-container>
+
                   <div class="d-flex">
                     <div
                       #childPostCommentElement
@@ -481,24 +498,6 @@
                         near_me
                       </i>
                     </div>
-                  </div>
-                  <div class="d-flex">
-                    <ng-container *ngIf="!isParent && commentData?.imageUrl">
-                      <div class="position-relative w-52-px h-52-px mt-5">
-                        <img
-                          loading="lazy"
-                          data-src="{{ commentData?.imageUrl }}"
-                          class="w-100 h-100 rounded-4"
-                          alt="icon"
-                        />
-                        <span
-                          class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
-                          (click)="removePostSelectedFile()"
-                        >
-                          close
-                        </span>
-                      </div>
-                    </ng-container>
                   </div>
                 </div>
 
