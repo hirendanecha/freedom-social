@@ -7,23 +7,31 @@
     onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
   />
 
-  <div class="icon-eye d-flex flex-column justify-content-center align-items-center" (click)="previewSrc=src">
+  <div
+    class="icon-eye d-flex flex-column justify-content-center align-items-center"
+    (click)="previewSrc = src"
+  >
     <span class="material-symbols-outlined font-28-px">visibility</span>
   </div>
 </div>
 
 <ng-container *ngIf="previewSrc">
-  <div class="img-preview-full-screen d-flex flex-column justify-content-center align-items-center p-5">
-    <span class="material-symbols-outlined close-icon font-40-px" role="button" (click)="previewSrc=''">close</span>
+  <div
+    class="img-preview-full-screen d-flex flex-column justify-content-center align-items-center p-5"
+  >
+    <span
+      class="material-symbols-outlined close-icon font-40-px"
+      role="button"
+      (click)="previewSrc = ''"
+      >close</span
+    >
 
     <img
       loading="lazy"
-      width="600"
       data-src="{{ src }}"
-      class="w-80 h-80 rounded-3"
+      class="rounded-3"
       alt="preview-img"
       onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
     />
   </div>
 </ng-container>
-
