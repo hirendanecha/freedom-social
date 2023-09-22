@@ -4,8 +4,9 @@ import {
   OnDestroy,
   OnInit,
   Renderer2,
+  ViewChild,
 } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdown, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
@@ -42,6 +43,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   activeCommunityTab: number = 1;
   isNavigationEnd = false;
+  searchText = '';
+  @ViewChild('addMemberSearchDropdownRef', { static: false, read: NgbDropdown })
+  addMemberSearchNgbDropdown: NgbDropdown;
+  userList: any = [];
+  memberIds: any = []
 
   constructor(
     private modalService: NgbModal,
@@ -52,6 +58,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private toastService: ToastService,
     private communityService: CommunityService,
     private route: ActivatedRoute,
+    private customerService: CustomerService
   ) {
     this.profileId = sessionStorage.getItem('profileId');
     this.postData.profileid = +this.profileId;
@@ -123,9 +130,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
                 details['memberIds'] = details?.memberList?.map(
                   (member: any) => member?.profileId
                 );
+                details['adminIds'] = details?.memberList?.map(
+                  (member: any) =>
+                    member.isAdmin === 'Y' ?
+                      member?.profileId : null
+                );
               }
 
               this.communityDetails = details;
+              console.log(this.communityDetails)
               this.postData.communityId = this.communityDetails?.Id;
             }
           },
@@ -173,6 +186,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   uploadPostFileAndCreatePost(): void {
+    console.log(this.postData.file)
     if (this.postData?.postdescription || this.postData?.file?.name) {
       if (this.postData?.file?.name) {
         this.spinner.show();
@@ -246,13 +260,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  joinCommunity(): void {
-    const profileId = sessionStorage.getItem('profileId');
+  joinCommunity(id?): void {
+    const profileId = id || sessionStorage.getItem('profileId');
     const data = {
       profileId: profileId,
       communityId: this.communityDetails?.Id,
       IsActive: 'Y',
     };
+    this.searchText = '';
+    console.log(data)
     this.communityService.joinCommunity(data).subscribe(
       (res: any) => {
         if (res) {
@@ -265,19 +281,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  removeFromCommunity(): void {
+  removeFromCommunity(id?): void {
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = `Leave ${this.communityDetails.pageType}`;
-    modalRef.componentInstance.confirmButtonLabel = 'Leave';
+    modalRef.componentInstance.confirmButtonLabel = id ? 'Remove' : 'Leave';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.componentInstance.message =
-      `Are you sure want to Leave from this ${this.communityDetails.pageType}?`;
+    if (id) {
+      modalRef.componentInstance.message =
+        `Are you sure want to remove this member from ${this.communityDetails.pageType}?`;
+    } else {
+      modalRef.componentInstance.message =
+        `Are you sure want to Leave from this ${this.communityDetails.pageType}?`;
+    }
     modalRef.result.then((res) => {
       if (res === 'success') {
         const profileId = Number(sessionStorage.getItem('profileId'));
-        this.communityService.removeFromCommunity(this.communityDetails?.Id, profileId).subscribe({
+        this.communityService.removeFromCommunity(this.communityDetails?.Id, id || profileId).subscribe({
           next: (res: any) => {
             if (res) {
               this.toastService.success(res.message);
@@ -317,6 +338,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           },
         });
       }
+    });
+  }
+
+  getUserList(): void {
+    this.customerService.getProfileList(this.searchText).subscribe({
+      next: (res: any) => {
+        if (res?.data?.length > 0) {
+          this.userList = res.data;
+          this.addMemberSearchNgbDropdown?.open();
+        } else {
+          this.userList = [];
+          this.addMemberSearchNgbDropdown?.close();
+        }
+      },
+      error: () => {
+        this.userList = [];
+        this.addMemberSearchNgbDropdown?.close();
+      },
     });
   }
 }

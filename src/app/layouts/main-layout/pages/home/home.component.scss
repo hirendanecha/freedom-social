@@ -3,7 +3,10 @@
   flex-direction: column;
   width: 100%;
 }
-
+.search-user-list {
+  max-height: 332px;
+  overflow: auto;
+}
 ::ng-deep {
   .emoji-menu-panale {
     position: fixed;
@@ -37,4 +40,3 @@
     }
   }
 }
-
