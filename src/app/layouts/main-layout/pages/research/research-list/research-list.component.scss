@@ -32,6 +32,10 @@
     }
   }
 
+  .btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+    color: white !important;
+  }
+
   @media (max-width: 990px) {
     .carousel {
       .carousel-control-prev, .carousel-control-next {
