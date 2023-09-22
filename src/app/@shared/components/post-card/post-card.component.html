@@ -29,9 +29,8 @@
         class="profile-area d-center justify-content-between align-items-start h-24-px w-100 ms-2 ms-lg-0"
       >
         <div class="info-area d-flex justify-content-center align-items-center">
-          <div class="h6 m-0 d-none d-lg-block">{{ post.FirstName }}</div>
-          <div class="ms-lg-3 username" *ngIf="post.Username">
-            @{{ post.Username | lowercase }}
+          <div class="h6 m-0" *ngIf="post.Username">
+            {{ post.Username }}
           </div>
         </div>
 

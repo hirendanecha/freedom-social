@@ -5,7 +5,7 @@
     <ul class="list-group list-group-flush">
       <ng-container *ngFor="let profile of profiles">
         <li class="d-flex justify-content-between">
-          <div>{{ profile?.FirstName || profile?.Username }}</div>
+          <div>{{ profile?.Username }}</div>
           <button
             class="btn btn-primary btn-sm"
             (click)="removeSeeFirstUser(profile?.Id)"

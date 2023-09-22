@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       this.isNavigationEnd = true;
-    })
+    });
   }
 
   ngOnInit(): void {
