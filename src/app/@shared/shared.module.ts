@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
+  NgbActiveModal,
+  NgbActiveOffcanvas,
   NgbCollapseModule,
   NgbDropdownModule,
   NgbModule,
@@ -19,6 +21,8 @@ import { PostMetaDataCardComponent } from './components/post-meta-data-card/post
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { TagUserInputComponent } from './components/tag-user-input/tag-user-input.component';
 import { ImgPreviewComponent } from './components/img-preview/img-preview.component';
+import { InlineLoaderComponent } from './components/inline-loader/inline-loader.component';
+import { LAZYLOAD_IMAGE_HOOKS, ScrollHooks } from 'ng-lazyload-image';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -30,6 +34,7 @@ const sharedComponents = [
   PostMetaDataCardComponent,
   TagUserInputComponent,
   ImgPreviewComponent,
+  InlineLoaderComponent
 ];
 
 const sharedModules = [
@@ -49,5 +54,10 @@ const sharedModules = [
   declarations: sharedComponents,
   imports: sharedModules,
   exports: [...sharedModules, ...sharedComponents],
+  providers: [
+    NgbActiveModal,
+    NgbActiveOffcanvas,
+    { provide: LAZYLOAD_IMAGE_HOOKS, useClass: ScrollHooks },
+  ],
 })
 export class SharedModule { }

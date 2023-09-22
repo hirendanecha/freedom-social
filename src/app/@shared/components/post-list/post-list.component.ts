@@ -27,6 +27,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
 
   postList = [];
+  isPostLoader: boolean = false;
   seeFirstList = [];
   profileId: string = '';
   activePage = 0;
@@ -88,34 +89,25 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     this.postList = [];
 
     if (this.parentComponent === 'HomeComponent') {
-      // this.socketService.getPost(
-      //   {
-      //     profileId: this.profileId,
-      //     communityId: this.communityId,
-      //     page: this.activePage,
-      //     size: 15,
-      //   },
-      //   (post) => {
-      //     // this.spinner.hide();
-      //   }
-      // );
       this.loadMore();
     } else {
       this.spinner.show();
-      this.postService.getPostsByProfileId(this.profileId).subscribe(
-        {
-          next: (res: any) => {
-            this.spinner.hide();
-            if (res?.data) {
-              this.postList = res?.data;
-            }
-          },
-          error:
-            (error) => {
-              this.spinner.hide();
-              console.log(error);
-            }
-        });
+      this.isPostLoader = true;
+      this.postService.getPostsByProfileId(this.profileId).subscribe({
+        next: (res: any) => {
+          this.spinner.hide();
+          if (res?.data) {
+            this.postList = res?.data;
+          }
+        },
+        error: (error) => {
+          this.spinner.hide();
+          console.log(error);
+        },
+        complete: () => {
+          this.isPostLoader = false;
+        }
+      });
     }
   }
 
@@ -126,6 +118,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
 
     this.spinner.show();
     this.activePage = this.activePage + 1;
+    this.isPostLoader = true;
     this.postService.getPosts({ profileId: this.profileId, communityId: this.communityId, page: this.activePage, size: 15 }).subscribe({
       next: (res: any) => {
         this.spinner.hide();
@@ -137,6 +130,9 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       error: (error) => {
         this.spinner.hide();
         console.log(error);
+      },
+      complete: () => {
+        this.isPostLoader = false;
       }
     });
   }

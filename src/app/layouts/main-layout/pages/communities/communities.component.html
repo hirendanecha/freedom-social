@@ -33,6 +33,10 @@
   </ng-container>
 
   <ng-container *ngIf="!communities.length">
-    <span>No community found</span>
+    <app-inline-loader *ngIf="isCommunityLoader" />
+
+    <ng-container *ngIf="!isCommunityLoader">
+      <span>No community found</span>
+    </ng-container>
   </ng-container>
 </div>

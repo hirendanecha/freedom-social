@@ -53,7 +53,7 @@
     </a>
   </div>
 
-  <ng-container *ngIf="communities?.length > 0">
+  <ng-container *ngIf="communities?.length > 0; else elseNoCommunitiesFound">
     <div class="d-flex flex-column w-100">
       <ng-container *ngFor="let community of communities">
         <div
@@ -84,3 +84,7 @@
     </div>
   </ng-container>
 </div>
+
+<ng-template #elseNoCommunitiesFound>
+  <app-inline-loader *ngIf="isCommunitiesLoader" />
+</ng-template>

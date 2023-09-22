@@ -170,7 +170,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="groupPosts?.length > 0">
+  <ng-container *ngIf="groupPosts?.length > 0; else elseNoGroupPostsFound">
     <ng-container *ngFor="let group of groupPosts">
       <ng-container *ngIf="group?.name && group?.posts?.length > 0">
         <div class="single-box d-flex flex-column p-5 mb-3">
@@ -209,3 +209,7 @@
     </ng-container>
   </ng-container>
 </div>
+
+<ng-template #elseNoGroupPostsFound>
+  <app-inline-loader />
+</ng-template>
