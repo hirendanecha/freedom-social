@@ -24,7 +24,6 @@ import { getTagUsersFromAnchorTags } from 'src/app/@shared/utils/utils';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
-
   postMessageInputValue: string = '';
   postMessageTags: any[];
   postData: any = {
@@ -47,7 +46,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('addMemberSearchDropdownRef', { static: false, read: NgbDropdown })
   addMemberSearchNgbDropdown: NgbDropdown;
   userList: any = [];
-  memberIds: any = []
+  memberIds: any = [];
 
   constructor(
     private modalService: NgbModal,
@@ -100,14 +99,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 
   onPostFileSelect(event: any): void {
     const file = event.target?.files?.[0] || {};
-    if (file) {
-      this.postData['file'] = file;
-      this.postData['imageUrl'] = URL.createObjectURL(file);
+    if (file?.size < 5120000) {
+      if (file) {
+        this.postData['file'] = file;
+        this.postData['imageUrl'] = URL.createObjectURL(file);
+      }
+    } else {
+      this.toastService.warring('Image is too large!');
     }
   }
 
@@ -119,35 +121,31 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   getCommunityDetailsBySlug(): void {
     if (this.communitySlug) {
       this.spinner.show();
-      this.communityService.getCommunityBySlug(this.communitySlug).subscribe(
-        {
-          next: (res: any) => {
-            this.spinner.hide();
-            if (res?.Id) {
-              const details = res;
+      this.communityService.getCommunityBySlug(this.communitySlug).subscribe({
+        next: (res: any) => {
+          this.spinner.hide();
+          if (res?.Id) {
+            const details = res;
 
-              if (details?.memberList?.length > 0) {
-                details['memberIds'] = details?.memberList?.map(
-                  (member: any) => member?.profileId
-                );
-                details['adminIds'] = details?.memberList?.map(
-                  (member: any) =>
-                    member.isAdmin === 'Y' ?
-                      member?.profileId : null
-                );
-              }
+            if (details?.memberList?.length > 0) {
+              details['memberIds'] = details?.memberList?.map(
+                (member: any) => member?.profileId
+              );
+              details['adminIds'] = details?.memberList?.map((member: any) =>
+                member.isAdmin === 'Y' ? member?.profileId : null
+              );
+            }
 
-              this.communityDetails = details;
-              console.log(this.communityDetails)
-              this.postData.communityId = this.communityDetails?.Id;
-            }
-          },
-          error:
-            (error) => {
-              this.spinner.hide();
-              console.log(error);
-            }
-        });
+            this.communityDetails = details;
+            console.log(this.communityDetails);
+            this.postData.communityId = this.communityDetails?.Id;
+          }
+        },
+        error: (error) => {
+          this.spinner.hide();
+          console.log(error);
+        },
+      });
     }
   }
 
@@ -164,19 +162,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         isAdmin: 'Y',
       };
     }
-    this.communityService.createCommunityAdmin(data).subscribe(
-      {
-        next: (res: any) => {
-          if (res) {
-            this.toastService.success(res.message);
-            this.getCommunityDetailsBySlug();
-          }
-        },
-        error:
-          (error) => {
-            console.log(error);
-          }
-      });
+    this.communityService.createCommunityAdmin(data).subscribe({
+      next: (res: any) => {
+        if (res) {
+          this.toastService.success(res.message);
+          this.getCommunityDetailsBySlug();
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 
   addEmoji(event: { emoji: { native: any } }) {
@@ -186,7 +182,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   uploadPostFileAndCreatePost(): void {
-    console.log(this.postData.file)
+    console.log(this.postData.file);
     if (this.postData?.postdescription || this.postData?.file?.name) {
       if (this.postData?.file?.name) {
         this.spinner.show();
@@ -268,7 +264,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       IsActive: 'Y',
     };
     this.searchText = '';
-    console.log(data)
+    console.log(data);
     this.communityService.joinCommunity(data).subscribe(
       (res: any) => {
         if (res) {
@@ -289,27 +285,27 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     modalRef.componentInstance.confirmButtonLabel = id ? 'Remove' : 'Leave';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     if (id) {
-      modalRef.componentInstance.message =
-        `Are you sure want to remove this member from ${this.communityDetails.pageType}?`;
+      modalRef.componentInstance.message = `Are you sure want to remove this member from ${this.communityDetails.pageType}?`;
     } else {
-      modalRef.componentInstance.message =
-        `Are you sure want to Leave from this ${this.communityDetails.pageType}?`;
+      modalRef.componentInstance.message = `Are you sure want to Leave from this ${this.communityDetails.pageType}?`;
     }
     modalRef.result.then((res) => {
       if (res === 'success') {
         const profileId = Number(sessionStorage.getItem('profileId'));
-        this.communityService.removeFromCommunity(this.communityDetails?.Id, id || profileId).subscribe({
-          next: (res: any) => {
-            if (res) {
-              this.toastService.success(res.message);
-              this.getCommunityDetailsBySlug();
-            }
-          },
-          error: (error) => {
-            console.log(error);
-            this.toastService.danger(error.message);
-          },
-        });
+        this.communityService
+          .removeFromCommunity(this.communityDetails?.Id, id || profileId)
+          .subscribe({
+            next: (res: any) => {
+              if (res) {
+                this.toastService.success(res.message);
+                this.getCommunityDetailsBySlug();
+              }
+            },
+            error: (error) => {
+              console.log(error);
+              this.toastService.danger(error.message);
+            },
+          });
       }
     });
   }
@@ -321,22 +317,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     modalRef.componentInstance.title = `Delete ${this.communityDetails.pageType}`;
     modalRef.componentInstance.confirmButtonLabel = 'Delete';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.componentInstance.message =
-      `Are you sure want to delete this ${this.communityDetails.pageType}?`;
+    modalRef.componentInstance.message = `Are you sure want to delete this ${this.communityDetails.pageType}?`;
     modalRef.result.then((res) => {
       if (res === 'success') {
-        this.communityService.deleteCommunity(this.communityDetails?.Id).subscribe({
-          next: (res: any) => {
-            if (res) {
-              this.toastService.success(res.message);
-              this.getCommunityDetailsBySlug();
-            }
-          },
-          error: (error) => {
-            console.log(error);
-            this.toastService.success(error.message);
-          },
-        });
+        this.communityService
+          .deleteCommunity(this.communityDetails?.Id)
+          .subscribe({
+            next: (res: any) => {
+              if (res) {
+                this.toastService.success(res.message);
+                this.getCommunityDetailsBySlug();
+              }
+            },
+            error: (error) => {
+              console.log(error);
+              this.toastService.success(error.message);
+            },
+          });
       }
     });
   }

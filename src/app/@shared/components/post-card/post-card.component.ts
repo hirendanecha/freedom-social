@@ -353,11 +353,15 @@ export class PostCardComponent {
       this.isParent = false;
     }
     const file = event.target?.files?.[0] || {};
-    if (file.type.includes('image/')) {
-      this.commentData['file'] = file;
-      this.commentData['imageUrl'] = URL.createObjectURL(file);
+    if (file?.size < 5120000) {
+      if (file.type.includes('image/')) {
+        this.commentData['file'] = file;
+        this.commentData['imageUrl'] = URL.createObjectURL(file);
+      } else {
+        this.toastService.danger(`sorry ${file.type} are not allowed!`)
+      }
     } else {
-      this.toastService.danger(`sorry ${file.type} are not allowed!`)
+      this.toastService.warring('Image is too large!');
     }
   }
 

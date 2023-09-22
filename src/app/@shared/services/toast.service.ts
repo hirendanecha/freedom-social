@@ -17,7 +17,7 @@ export class ToastService {
   }
 
   warring(msg: string) {
-    this.toasts.push({ textOrTpl: msg, className: 'bg-warring text-light' });
+    this.toasts.push({ textOrTpl: msg, className: 'bg-warning text-light' });
   }
 
   remove(toast) {

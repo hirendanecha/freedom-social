@@ -57,6 +57,7 @@
   box-shadow: 0px 17px 12px var(--box-shadow) !important;
   border-radius: 10px !important;
   border-color: var(--bs-primary) !important;
+  z-index: 1 !important;
 
   .dropdown-item:hover, .dropdown-item:focus {
     background-color: #ababab57 !important;
