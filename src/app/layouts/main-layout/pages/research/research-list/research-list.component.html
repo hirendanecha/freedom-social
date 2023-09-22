@@ -17,12 +17,12 @@
 
         <div class="col form-group">
           <label for="textpostdesc" class="form-label">Paste article or video link</label>
-          <app-tag-user-input id="textpostdesc" placeholder="Paste article or video link..." [value]="tagInputDefaultData" (onDataChange)="onTagUserInputChangeEvent($event, 'textpostdesc')" />
+          <input type="text" class="input-area" id="textpostdesc" formControlName="textpostdesc" placeholder="Paste article or video link..." trim="blur">
         </div>
 
         <div class="col form-group">
           <label for="postdescription" class="form-label">Type or paste the Title or Description (no links) <span class="text-danger">*</span></label>
-          <app-tag-user-input id="postdescription" placeholder="What's going on?" [value]="tagInputDefaultData" (onDataChange)="onTagUserInputChangeEvent($event, 'postdescription')" />
+          <input type="text" class="input-area" id="postdescription" formControlName="postdescription" placeholder="What's going on?" trim="blur">
 
           <div *ngIf="isFormSubmittedAndError('postdescription')" class="invalid-feedback">
             <div *ngIf="isFormSubmittedAndError('postdescription', 'required')">This field is required.</div>
