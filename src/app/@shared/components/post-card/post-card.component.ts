@@ -128,6 +128,7 @@ export class PostCardComponent {
       profileId: this.profileId,
       likeCount: post.likescount,
       actionType: 'L',
+      toProfileId: post.profileid,
     };
     this.likeDisLikePost(data);
   }
@@ -150,6 +151,7 @@ export class PostCardComponent {
       postId: post.id,
       profileId: this.profileId,
       likeCount: post.likescount,
+      toProfileId: post.profileid,
     };
     this.likeDisLikePost(data);
   }

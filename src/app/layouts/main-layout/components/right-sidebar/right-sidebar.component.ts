@@ -5,6 +5,7 @@ import { CommunityService } from '../../../../@shared/services/community.service
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { UserRewardDetailsService } from 'src/app/@shared/services/user-reward-details.service';
 
 @Component({
   selector: 'app-right-sidebar',
@@ -15,6 +16,7 @@ export class RightSidebarComponent implements OnInit {
   user: any;
   communities = [];
   isCommunitiesLoader: boolean = false;
+  counts: any = {};
 
   constructor(
     private router: Router,
@@ -23,6 +25,7 @@ export class RightSidebarComponent implements OnInit {
     private customerService: CustomerService,
     private activeOffcanvas: NgbActiveOffcanvas,
     public breakpointService: BreakpointService,
+    private userRewardDetailsService: UserRewardDetailsService
   ) {
     this.breakpointService.screen.subscribe((res) => {
       if (res.xl.gatherThen) {
@@ -36,6 +39,17 @@ export class RightSidebarComponent implements OnInit {
   ngOnInit(): void {
     this.customerService.customerObs.subscribe((res: any) => {
       this.user = res;
+    });
+
+    this.getCountByProfileId();
+  }
+
+  getCountByProfileId(): void {
+    const profileId = sessionStorage.getItem('profileId');
+    this.userRewardDetailsService.getCountByProfileId(+profileId).subscribe((res: any) => {
+      if (res?.data) {
+        this.counts = res?.data || {};
+      }
     });
   }
 
