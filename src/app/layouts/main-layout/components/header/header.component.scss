@@ -5,6 +5,16 @@
   z-index: 999;
 
   .navbar {
+    .navbar-nav {
+      li {
+        .nav-icon.active {
+          i, span {
+            color: var(--primary-color) !important;
+          }
+        }
+      }
+    }
+
     .left-area, .right-area {
       width: 300px;
     }

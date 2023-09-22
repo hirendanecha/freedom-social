@@ -149,7 +149,7 @@ export class ResearchListComponent {
   createResearch(): void {
     this.formIsClicked.setValue(true);
     if (this.researchForm.invalid && this.formIsSubmitted.value === false) {
-      this.toastService.danger('Please enter valid values.');
+      this.toastService.danger('Please enter mandatory fields(*) data.');
       return;
     } else {
       this.formIsSubmitted.setValue(true);

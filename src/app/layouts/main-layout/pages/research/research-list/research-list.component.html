@@ -17,7 +17,7 @@
 
         <div class="col form-group">
           <label for="textpostdesc" class="form-label">Paste article or video link</label>
-          <app-tag-user-input id="textpostdesc" placeholder="Paste article or video link..." [value]="tagInputDefaultData" (onDataChange)="onTagUserInputChangeEvent($event, 'textpostdesc')" />
+          <input type="text" class="input-area" id="textpostdesc" formControlName="textpostdesc" placeholder="Paste article or video link..." trim="blur">
         </div>
 
         <div class="col form-group">

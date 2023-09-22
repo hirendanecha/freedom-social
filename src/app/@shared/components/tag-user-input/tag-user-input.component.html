@@ -3,7 +3,7 @@
   contenteditable
   [attr.placeholder]="placeholder"
   class="tag-input-div input-area c-text"
-  (keyup)="messageOnKeyEvent()"
+  (change)="messageOnKeyEvent()"
 ></div>
 
 <div #userSearchDropdownRef ngbDropdown>
@@ -28,6 +28,6 @@
   </div>
 </div>
 
-<ng-container *ngIf="metaData?.metaimage">
+<ng-container *ngIf="isShowMetaPreview && metaData?.metaimage">
   <app-post-meta-data-card [post]="metaData" class="pt-5" />
 </ng-container>

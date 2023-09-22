@@ -14,6 +14,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
   @Input('value') value: string = '';
   @Input('placeholder') placeholder: string = 'ss';
+  @Input('isShowMetaPreview') isShowMetaPreview: boolean = true;
   @Output('onDataChange') onDataChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('tagInputDiv', { static: false }) tagInputDiv: ElementRef;
