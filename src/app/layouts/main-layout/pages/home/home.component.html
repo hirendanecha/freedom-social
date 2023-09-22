@@ -233,6 +233,43 @@
 <ng-container
   *ngIf="activeCommunityTab === 2 && communityDetails?.memberList?.length > 0"
 >
+  <ng-container *ngIf="communityDetails?.adminIds.includes(+profileId)">
+    <div class="input-area h-48-px d-md-flex d-none align-items-center mb-3">
+      <i class="material-symbols-outlined mat-icon me-1">search</i>
+      <input
+        type="text"
+        name="search"
+        placeholder="add new member"
+        [(ngModel)]="searchText"
+        autocomplete="off"
+        (keyup)="getUserList()"
+      />
+    </div>
+
+    <ng-container *ngIf="searchText">
+      <div #addMemberSearchDropdownRef ngbDropdown>
+        <div ngbDropdownMenu class="search-user-list w-100">
+          <ng-container *ngFor="let user of userList">
+            <div
+              ngbDropdownItem
+              class="d-flex gap-3 pe-auto"
+              role="button"
+              (click)="joinCommunity(user.Id)"
+            >
+              <img
+                loading="lazy"
+                class="w-32-px h-32-px rounded"
+                data-src="{{ user.ProfilePicName }}"
+                [alt]="user.Username"
+                onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+              />
+              <span>{{ user.Username }}</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
   <div class="row community-members">
     <div class="col-md-6" *ngFor="let member of communityDetails?.memberList">
       <div class="single-box d-flex align-items-center gap-2 px-3 py-2">
@@ -259,8 +296,9 @@
         <div
           class="btn-group cus-dropdown d-flex gap-3"
           *ngIf="
-            profileId?.toString() === communityDetails?.profileId?.toString() &&
-            communityDetails?.profileId !== member?.profileId
+            communityDetails.profileId != member.profileId &&
+            profileId != member.profileId &&
+            communityDetails?.adminIds.includes(+profileId)
           "
         >
           <div ngbDropdown>
@@ -268,6 +306,17 @@
               <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
             </button>
             <div ngbDropdownMenu class="dropdown-menu">
+              <button ngbDropdownItem *ngIf="member?.isAdmin === 'Y'">
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="createCommunityAdmin(member)"
+                >
+                  <i class="material-symbols-outlined mat-icon">
+                    verified_user
+                  </i>
+                  <span>Make Community member</span>
+                </a>
+              </button>
               <button ngbDropdownItem *ngIf="member?.isAdmin === 'N'">
                 <a
                   class="droplist d-flex align-items-center gap-2"
@@ -276,10 +325,9 @@
                   <i class="material-symbols-outlined mat-icon">
                     verified_user
                   </i>
-                  <span>Make Community Member</span>
+                  <span>Make Community Admin</span>
                 </a>
               </button>
-
               <button ngbDropdownItem>
                 <a
                   [href]="'settings/view-profile/' + member?.profileId"
@@ -287,6 +335,17 @@
                 >
                   <i class="material-symbols-outlined mat-icon"> person </i>
                   <span>View Profile</span>
+                </a>
+              </button>
+              <button ngbDropdownItem>
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="removeFromCommunity(member.profileId)"
+                >
+                  <i class="material-symbols-outlined mat-icon">
+                    person_remove
+                  </i>
+                  <span>Remove member</span>
                 </a>
               </button>
             </div>
