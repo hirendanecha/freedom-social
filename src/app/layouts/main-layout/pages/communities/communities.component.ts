@@ -12,6 +12,7 @@ import { CommunityService } from 'src/app/@shared/services/community.service';
 export class CommunitiesComponent {
   activeIdTab: string = 'my';
   communities: any = [];
+  isCommunityLoader: boolean = false;
   profileId: number = null;
 
   constructor(
@@ -39,6 +40,7 @@ export class CommunitiesComponent {
       getCommunitiesObs = this.communityService.getCommunityByUserId(this.profileId, 'community');
     }
 
+    this.isCommunityLoader = true;
     getCommunitiesObs?.subscribe({
       next: (res: any) => {
         this.spinner.hide();
@@ -52,6 +54,9 @@ export class CommunitiesComponent {
       error: (error) => {
         this.spinner.hide();
         console.log(error);
+      },
+      complete: () => {
+        this.isCommunityLoader = false;
       }
     });
   }

@@ -86,6 +86,7 @@ export class AddCommunityModalComponent {
       this.communityDetails.profileId = this.profileId;
       this.communityDetails.logoImg = this.logoImg?.url;
       this.communityDetails.coverImg = this.coverImg?.url;
+      this.communityDetails.pageType = 'community'
       if (this.communityDetails) {
         this.communityService.createCommunity(this.communityDetails).subscribe(
           {

@@ -28,7 +28,6 @@ export class AddFreedomPageComponent {
   originUrl = environment.webUrl + 'page/';
   constructor(
     public activeModal: NgbActiveModal,
-    private uploadService: UploadFilesService,
     private spinner: NgxSpinnerService,
     private communityService: CommunityService,
     private toastService: ToastService
