@@ -11,109 +11,65 @@
 </div>
 
 <div class="modal-body text-center">
-  <div class="mid-area">
-    <div class="mb-5 gap-3">
-      <form
-        id="loginForm"
-        class="form-dark"
-        ngNativeValidate
-        autocomplete="off"
+  <form
+    class="form-dark row"
+    ngNativeValidate
+    autocomplete="off"
+  >
+    <div class="col-12 mb-5">
+      <label class="form-label d-flex"
+        >Page Name<span class="text-danger">*</span></label
       >
-        <div class="row">
-          <div class="col-12 mb-3">
-            <label class="form-label d-flex"
-              >Page Url<span class="text-danger">*</span></label
-            >
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span
-                  class="input-group-text h-100 border-0"
-                  id="basic-addon3"
-                  >{{ originUrl }}</span
-                >
-              </div>
-              <input
-                type="text"
-                class="input-area"
-                name="cname"
-                [(ngModel)]="pageDetails.CommunityName"
-                (keyup)="onCommunityNameChange()"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 mb-3">
-            <label class="form-label d-flex">Page Description</label>
-            <textarea
-              name="dec"
-              cols="30"
-              rows="3"
-              placeholder="Enter your description"
-              [(ngModel)]="pageDetails.CommunityDescription"
-              required
-            ></textarea>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6 mb-3 d-grid">
-            <label class="form-label d-flex"
-              >Logo Image<span class="text-danger">*</span></label
-            >
-            <!-- <input
-              type="file"
-              name="logo"
-              (change)="selectFiles($event, 'community-logo')"
-            /> -->
-            <!-- <ng-container *ngIf="!logoImg">
-              <input
-                type="file"
-                name="logo"
-                (change)="selectFiles($event, 'community-logo')"
-                required
-              />
-            </ng-container>
-            <img
-              class="w-25"
-              *ngIf="logoImg"
-              loading="lazy"
-              data-src="{{ logoImg }}"
-              alt=""
-            /> -->
-            <app-img-picker
-              classes="w-160-px h-160-px p-0"
-              (onFileChange)="onLogoImgChange($event)"
-            />
-          </div>
-          <div class="col-6 mb-3 d-grid">
-            <label class="form-label d-flex"
-              >Cover Image<span class="text-danger">*</span></label
-            >
-            <!-- <ng-container *ngIf="!coverImg">
-              <input
-                name="cover"
-                type="file"
-                placeholder="Enter your description"
-                (change)="selectFiles($event, 'community-cover')"
-                required
-              />
-            </ng-container>
-            <img
-              class="w-50"
-              *ngIf="coverImg"
-              loading="lazy"
-              data-src="{{ coverImg }}"
-              alt=""
-            /> -->
-            <app-img-picker
-              classes="w-160-px h-160-px p-0"
-              (onFileChange)="onCoverImgChange($event)"
-            />
-          </div>
-        </div>
-      </form>
+      <input
+        type="text"
+        class="input-area"
+        name="cname"
+        [(ngModel)]="pageDetails.CommunityName"
+        placeholder="Enter your page name"
+        (keyup)="onCommunityNameChange()"
+      />
     </div>
-  </div>
+
+    <div class="col-12 mb-5">
+      <label class="form-label d-flex"
+        >Page Url<span class="text-danger">*</span></label
+      >
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text h-100 border-0 ps-5 pe-0">{{ originUrl }}</span>
+        </div>
+        <input
+          type="text"
+          class="input-area ps-1"
+          name="cSlug"
+          [(ngModel)]="pageDetails.slug"
+          placeholder="Enter page url slug"
+        />
+      </div>
+    </div>
+
+    <div class="col-12 mb-5">
+      <label class="form-label d-flex">Page Description</label>
+      <textarea
+        name="dec"
+        cols="30"
+        rows="3"
+        placeholder="Enter your description"
+        [(ngModel)]="pageDetails.CommunityDescription"
+        required
+      ></textarea>
+    </div>
+
+    <div class="col-6 mb-5 d-grid">
+      <label class="form-label d-flex">Logo Image<span class="text-danger">*</span></label>
+      <app-img-picker classes="w-160-px h-160-px p-0" (onFileChange)="onLogoImgChange($event)"/>
+    </div>
+
+    <div class="col-6 mb-5 d-grid">
+      <label class="form-label d-flex">Cover Image<span class="text-danger">*</span></label>
+      <app-img-picker classes="w-160-px h-160-px p-0" (onFileChange)="onCoverImgChange($event)"/>
+    </div>
+  </form>
 </div>
 
 <div class="modal-footer justify-content-end gap-3 border-0">
