@@ -43,7 +43,7 @@ export class CommunityPostService {
   }
 
   getPostImg(): Observable<any> {
-    let id = sessionStorage.getItem('profileId');
+    let id = localStorage.getItem('profileId');
     return this.http.get(`${this.baseUrl}/files/community-post/${id}`);
   }
 

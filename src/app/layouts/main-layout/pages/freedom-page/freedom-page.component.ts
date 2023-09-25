@@ -22,7 +22,7 @@ export class FreedomPageComponent {
     private spinner: NgxSpinnerService,
     private communityService: CommunityService
   ) {
-    this.profileId = Number(sessionStorage.getItem('profileId'));
+    this.profileId = Number(localStorage.getItem('profileId'));
 
     this.getPages();
 

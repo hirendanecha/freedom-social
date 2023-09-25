@@ -26,7 +26,7 @@ export class DeleteAccountComponent implements OnInit {
     private router: Router,
     private tokenStorageService: TokenStorageService
   ) {
-    this.profileId = +sessionStorage.getItem('user_id');
+    this.profileId = +localStorage.getItem('user_id');
   }
 
   ngOnInit(): void { }

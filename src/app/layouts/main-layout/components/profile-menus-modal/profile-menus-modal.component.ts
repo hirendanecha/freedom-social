@@ -58,12 +58,12 @@ export class ProfileMenusModalComponent {
   }
 
   goToSetting() {
-    const userId = sessionStorage.getItem('user_id');
+    const userId = localStorage.getItem('user_id');
     this.router.navigate([`settings/edit-profile/${userId}`]);
   }
 
   goToViewProfile() {
-    const profileId = sessionStorage.getItem('profileId');
+    const profileId = localStorage.getItem('profileId');
     this.router.navigate([`settings/view-profile/${profileId}`]);
   }
 

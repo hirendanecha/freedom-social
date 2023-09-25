@@ -51,7 +51,7 @@ export class PostCardComponent {
     public sharedService: SharedService,
     private router: Router
   ) {
-    this.profileId = sessionStorage.getItem('profileId');
+    this.profileId = localStorage.getItem('profileId');
   }
 
   removeSeeFirstUser(id: number): void {

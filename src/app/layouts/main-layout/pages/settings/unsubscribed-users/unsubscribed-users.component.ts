@@ -20,7 +20,7 @@ export class UnsubscribedUsersComponent implements OnInit {
   }
 
   getUnsubscribeProfiles(): void {
-    const profileId = +sessionStorage.getItem('profileId');
+    const profileId = +localStorage.getItem('profileId');
 
     if (profileId > 0) {
       this.unsubscribeProfileService.getByProfileId(profileId).subscribe({

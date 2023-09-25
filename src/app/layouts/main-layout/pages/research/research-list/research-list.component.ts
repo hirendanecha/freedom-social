@@ -156,7 +156,7 @@ export class ResearchListComponent {
     } else {
       this.formIsSubmitted.setValue(true);
       const reqObj = deleteExtraParamsFromReqObj(this.researchForm.value);
-      reqObj['profileId'] = sessionStorage.getItem('profileId');
+      reqObj['profileId'] = localStorage.getItem('profileId');
       console.log('reqObj : ', reqObj);
 
       this.postService.createPost(reqObj).subscribe({

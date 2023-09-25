@@ -20,7 +20,7 @@ export class SeeFirstUserComponent {
   }
 
   getSeeFirstUsers(): void {
-    const profileId = +sessionStorage.getItem('profileId');
+    const profileId = +localStorage.getItem('profileId');
 
     if (profileId > 0) {
       this.seeFirstUserService.getByProfileId(profileId).subscribe({

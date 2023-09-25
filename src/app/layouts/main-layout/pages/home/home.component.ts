@@ -57,9 +57,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private toastService: ToastService,
     private communityService: CommunityService,
     private route: ActivatedRoute,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private router: Router
   ) {
-    this.profileId = sessionStorage.getItem('profileId');
+    this.profileId = localStorage.getItem('profileId');
     this.postData.profileid = +this.profileId;
 
     this.route.paramMap.subscribe((paramMap) => {
@@ -190,14 +191,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           next: (res: any) => {
             this.spinner.hide();
             if (this.postData.file?.size < 5120000) {
-            if (res?.body?.url) {
-              this.postData['file'] = null;
-              this.postData['imageUrl'] = res?.body?.url;
-              this.createOrEditPost();
+              if (res?.body?.url) {
+                this.postData['file'] = null;
+                this.postData['imageUrl'] = res?.body?.url;
+                this.createOrEditPost();
+              }
+            } else {
+              this.toastService.warring('Image is too large!');
             }
-          } else {
-            this.toastService.warring('Image is too large!');
-          }
           },
           error: (err) => {
             this.spinner.hide();
@@ -260,7 +261,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   joinCommunity(id?): void {
-    const profileId = id || sessionStorage.getItem('profileId');
+    const profileId = id || localStorage.getItem('profileId');
     const data = {
       profileId: profileId,
       communityId: this.communityDetails?.Id,
@@ -294,7 +295,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     modalRef.result.then((res) => {
       if (res === 'success') {
-        const profileId = Number(sessionStorage.getItem('profileId'));
+        const profileId = Number(localStorage.getItem('profileId'));
         this.communityService
           .removeFromCommunity(this.communityDetails?.Id, id || profileId)
           .subscribe({
@@ -329,7 +330,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             next: (res: any) => {
               if (res) {
                 this.toastService.success(res.message);
-                this.getCommunityDetailsBySlug();
+                // this.getCommunityDetailsBySlug();
+                this.router.navigate([
+                  `${
+                    this.communityDetails.pageType === 'community'
+                      ? 'communities'
+                      : 'pages'
+                  }`,
+                ]);
               }
             },
             error: (error) => {

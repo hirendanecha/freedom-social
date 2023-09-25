@@ -45,7 +45,7 @@ export class RightSidebarComponent implements OnInit {
   }
 
   getCountByProfileId(): void {
-    const profileId = sessionStorage.getItem('profileId');
+    const profileId = localStorage.getItem('profileId');
     this.userRewardDetailsService.getCountByProfileId(+profileId).subscribe((res: any) => {
       if (res?.data) {
         this.counts = res?.data || {};
@@ -54,7 +54,7 @@ export class RightSidebarComponent implements OnInit {
   }
 
   getCommunityList(): void {
-    const profileId = sessionStorage.getItem('profileId');
+    const profileId = localStorage.getItem('profileId');
     this.isCommunitiesLoader = true;
     this.communityService.getCommunity(profileId, 'community').subscribe({
       next: (res: any) => {

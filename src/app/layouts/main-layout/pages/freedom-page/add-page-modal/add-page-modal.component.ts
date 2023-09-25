@@ -33,7 +33,7 @@ export class AddFreedomPageComponent {
     private toastService: ToastService
   ) {
     this.userId = window.sessionStorage.user_id;
-    this.profileId = sessionStorage.getItem('profileId');
+    this.profileId = localStorage.getItem('profileId');
   }
 
   selectFiles(event, type) {

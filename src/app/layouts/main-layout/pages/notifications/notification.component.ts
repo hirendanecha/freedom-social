@@ -25,7 +25,7 @@ export class NotificationsComponent {
 
   getNotificationList() {
     this.spinner.show();
-    const id = sessionStorage.getItem('profileId');
+    const id = localStorage.getItem('profileId');
     this.customerService.getNotificationList(Number(id)).subscribe(
       {
         next: (res: any) => {

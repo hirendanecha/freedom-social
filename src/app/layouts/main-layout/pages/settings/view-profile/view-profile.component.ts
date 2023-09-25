@@ -44,7 +44,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       if (id) {
         this.getProfile(id);
       } else {
-        this.profileId = sessionStorage.getItem('profileId');
+        this.profileId = localStorage.getItem('profileId');
       }
     });
 

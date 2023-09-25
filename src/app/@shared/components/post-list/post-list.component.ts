@@ -40,7 +40,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     private socketService: SocketService,
     private seeFirstUserService: SeeFirstUserService,
   ) {
-    this.profileId = sessionStorage.getItem('profileId');
+    this.profileId = localStorage.getItem('profileId');
   }
 
   ngAfterViewInit(): void {
