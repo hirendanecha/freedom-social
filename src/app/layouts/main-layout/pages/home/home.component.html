@@ -124,23 +124,10 @@
               class="w-100 h-100 rounded-4"
               alt="icon"
             />
-            <span
-              class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer material-symbols-outlined"
-              (click)="removePostSelectedFile()"
-            >
-              close
-            </span>
+            <fa-icon [icon]="['fas', 'xmark']" class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer" role="button" (click)="removePostSelectedFile()" />
           </div>
         </ng-container>
 
-        <!-- <div class="abs-area position-absolute d-none d-sm-block">
-          <i
-            class="material-symbols-outlined mat-icon xxltxt"
-            (click)="openEmojiMenu()"
-          >
-            sentiment_satisfied
-          </i>
-        </div> -->
         <ul
           class="d-flex justify-content-between justify-content-lg-between flex-wrap ps-0 mb-0 gap-3 gap-sm-5 pt-3 pt-sm-5"
         >
@@ -155,7 +142,7 @@
             data-placement="bottom"
             title="Comming Soon!"
           > -->
-            <i class="material-symbols-outlined mat-icon">stream</i>
+            <fa-icon [icon]="['fas', 'satellite-dish']" />
             <span>Live</span>
           </li>
 
@@ -172,7 +159,7 @@
               accept="image/*"
               (change)="onPostFileSelect($event)"
             />
-            <i class="material-symbols-outlined mat-icon">add_a_photo</i>
+            <fa-icon [icon]="['fas', 'image']" />
             <span>Image</span>
           </li>
           <li
@@ -180,7 +167,7 @@
             ngbTooltip="Comming Soon!"
             placement="bottom"
           >
-            <i class="material-symbols-outlined mat-icon"> videocam </i>
+            <fa-icon [icon]="['fas', 'video']" />
             <span>Video</span>
           </li>
           <!-- <li class="d-flex align-items-center gap-2" (click)="createPost()">
@@ -198,7 +185,7 @@
               (click)="resetPost()"
             >
               Cancel
-              <i class="material-symbols-outlined font-20-px"> close </i>
+              <fa-icon [icon]="['fas', 'xmark']" />
             </button>
 
             <button
@@ -208,9 +195,7 @@
             >
               {{ postData?.id ? "Update Post" : "Post" }}
 
-              <i class="material-symbols-outlined font-20-px c-color">
-                near_me
-              </i>
+              <fa-icon [icon]="['fas', 'paper-plane']" class="c-color" />
             </button>
           </div>
         </ul>
@@ -241,7 +226,7 @@
 >
   <ng-container *ngIf="communityDetails?.adminIds.includes(+profileId)">
     <div class="input-area h-48-px d-md-flex d-none align-items-center mb-3">
-      <i class="material-symbols-outlined mat-icon me-1">search</i>
+      <fa-icon [icon]="['fas', 'magnifying-glass']" class="me-1" />
       <input
         type="text"
         name="search"
@@ -309,7 +294,7 @@
         >
           <div ngbDropdown>
             <button class="dropdown-btn d-flex" ngbDropdownToggle>
-              <i class="material-symbols-outlined fs-xxl m-0"> more_horiz </i>
+              <fa-icon [icon]="['fas', 'ellipsis']" class="fs-xxl m-0" />
             </button>
             <div ngbDropdownMenu class="dropdown-menu">
               <button ngbDropdownItem *ngIf="member?.isAdmin === 'Y'">
@@ -317,9 +302,7 @@
                   class="droplist d-flex align-items-center gap-2"
                   (click)="createCommunityAdmin(member)"
                 >
-                  <i class="material-symbols-outlined mat-icon">
-                    verified_user
-                  </i>
+                  <fa-icon [icon]="['fas', 'user-check']" />
                   <span>Make Community Member</span>
                 </a>
               </button>
@@ -328,9 +311,7 @@
                   class="droplist d-flex align-items-center gap-2"
                   (click)="createCommunityAdmin(member)"
                 >
-                  <i class="material-symbols-outlined mat-icon">
-                    verified_user
-                  </i>
+                  <fa-icon [icon]="['fas', 'user-check']" />
                   <span>Make Community Admin</span>
                 </a>
               </button>
@@ -339,7 +320,7 @@
                   [href]="'settings/view-profile/' + member?.profileId"
                   class="droplist d-flex align-items-center gap-2"
                 >
-                  <i class="material-symbols-outlined mat-icon"> person </i>
+                  <fa-icon [icon]="['fas', 'user']" />
                   <span>View Profile</span>
                 </a>
               </button>
@@ -348,9 +329,7 @@
                   class="droplist d-flex align-items-center gap-2"
                   (click)="removeFromCommunity(member.profileId)"
                 >
-                  <i class="material-symbols-outlined mat-icon">
-                    person_remove
-                  </i>
+                  <fa-icon [icon]="['fas', 'user-minus']" />
                   <span>Remove member</span>
                 </a>
               </button>
@@ -362,7 +341,7 @@
                   class="droplist d-flex align-items-center gap-2"
                   (click)="deleteCommunity()"
                 >
-                  <i class="material-symbols-outlined mat-icon"> delete </i>
+                  <fa-icon [icon]="['fas', 'trash-can']" />
                   <span>Delete Community</span>
                 </a>
               </button>

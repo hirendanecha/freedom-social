@@ -11,7 +11,7 @@
         </a>
 
         <div class="input-area h-48-px d-md-flex d-none align-items-center">
-          <i class="material-symbols-outlined mat-icon me-1">search</i>
+          <fa-icon [icon]="['fas', 'magnifying-glass']" class="me-1" />
           <input
             type="text"
             name="search"
@@ -58,10 +58,9 @@
             data-toggle="tooltip"
             data-placement="bottom"
             title="Home"
-            ><i class="mat-icon fs-xxl material-symbols-outlined mat-icon"
-              >home</i
-            ></a
-          >
+            >
+              <fa-icon [icon]="['fas', 'house']" class="fs-xxl" />
+            </a>
         </li>
         <li>
           <a
@@ -71,10 +70,9 @@
             data-toggle="tooltip"
             data-placement="bottom"
             title="Research"
-            ><i class="mat-icon fs-xxl material-symbols-outlined mat-icon"
-              >feed</i
-            ></a
-          >
+            >
+              <fa-icon [icon]="['fas', 'book-open']" class="fs-xxl" />
+            </a>
         </li>
         <li>
           <a
@@ -85,10 +83,9 @@
             data-toggle="tooltip"
             data-placement="bottom"
             title="FreedomTube"
-            ><i class="mat-icon fs-xxl material-symbols-outlined mat-icon"
-              >smart_display</i
-            ></a
           >
+            <fa-icon [icon]="['fas', 'play']" class="fs-xxl" />
+          </a>
         </li>
       </ul>
 
@@ -104,7 +101,7 @@
               *ngIf="sharedService.isNotify"
               class="abs-area position-absolute d-center smtxt"
             ></span>
-            <i class="material-symbols-outlined mat-icon">notifications</i>
+            <fa-icon [icon]="['fas', 'bell']" />
           </div>
         </div>
 
@@ -137,7 +134,7 @@
               class="button d-flex align-items-center gap-2"
               (click)="openLeftSidebar()"
             >
-              <span class="material-symbols-outlined">menu</span>
+              <fa-icon [icon]="['fas', 'bars']" />
             </button>
           </ng-container>
 
@@ -146,7 +143,7 @@
               class="button d-flex align-items-center gap-2 ms-5"
               (click)="openRightSidebar()"
             >
-              <span class="material-symbols-outlined">dashboard</span>
+              <fa-icon [icon]="['fas', 'border-all']" />
               <span>Dashboard</span>
             </button>
           </ng-container>

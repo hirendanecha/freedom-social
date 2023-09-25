@@ -100,9 +100,7 @@
                           class="dropdown-btn"
                           (click)="openDropDown(community.id)"
                         >
-                          <i class="material-symbols-outlined fs-xxl m-0">
-                            more_horiz
-                          </i>
+                          <fa-icon [icon]="['fas', 'ellipsis']" class="fs-xxl" />
                         </button>
                         <ul
                           class="dropdown-menu p-4 pt-2 mt-6"
@@ -116,9 +114,7 @@
                               class="droplist d-flex align-items-center gap-2"
                               (click)="communityId = null"
                             >
-                              <i class="material-symbols-outlined mat-icon">
-                                edit
-                              </i>
+                              <fa-icon [icon]="['fas', 'pen-to-square']" />
                               <span>Edit</span>
                             </a>
                           </li>
@@ -127,9 +123,7 @@
                               class="droplist d-flex align-items-center gap-2"
                               (click)="communityId = null"
                             >
-                              <i class="material-symbols-outlined mat-icon">
-                                delete
-                              </i>
+                              <fa-icon [icon]="['fas', 'trash-can']" />
                               <span>Delete</span>
                             </a>
                           </li>

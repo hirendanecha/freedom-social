@@ -2,7 +2,7 @@
   <div class="single-item">
     <div class="icon-area d-center position-relative" (click)="openNotificationsModal()">
       <span *ngIf="sharedService.isNotify" class="abs-area position-absolute d-center smtxt"></span>
-      <i class="material-symbols-outlined mat-icon">notifications</i>
+      <fa-icon [icon]="['fas', 'bell']" />
     </div>
   </div>
 

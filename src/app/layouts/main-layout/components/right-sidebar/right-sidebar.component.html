@@ -48,9 +48,7 @@
       class="d-flex align-items-center"
       (click)="closeSidebar()"
     >
-      <span class="material-symbols-outlined font-20-px p-1">
-        {{ user?.AccountType === "user" ? "add_circle" : "search" }}
-      </span>
+      <fa-icon [icon]="['fas', user?.AccountType === 'user' ? 'circle-plus' : 'magnifying-glass']" class="font-20-px p-1" />
     </a>
   </div>
 
@@ -79,7 +77,7 @@
             </p>
           </div>
 
-          <span class="material-symbols-outlined ms-auto"> navigate_next </span>
+          <fa-icon [icon]="['fas', 'chevron-right']" class="ms-auto" />
         </div>
       </ng-container>
     </div>

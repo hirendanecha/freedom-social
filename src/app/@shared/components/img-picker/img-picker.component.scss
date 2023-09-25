@@ -8,16 +8,20 @@
       top: 0;
       left: 0;
 
-      .material-symbols-outlined {
-        padding: 16px;
+      .eye-icon {
+        width: 40px;
+        height: 40px;
         background-color: #6c757da3;
         border-radius: 50%;
         transition: 0.3s ease-in-out;
         border: 2px solid transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       &:hover {
-        .material-symbols-outlined {
+        .eye-icon {
           transform: scale(1.2);
           background-color: var(--section-1st-color);
         }

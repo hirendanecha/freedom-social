@@ -14,6 +14,6 @@
       <ng-template #text>{{ toast.textOrTpl }}</ng-template>
     </div>
 
-    <span class="material-symbols-outlined c-pointer text-white" (click)="toastService.remove(toast)" >close</span>
+    <fa-icon [icon]="['fas', 'angles-up']" class="c-pointer" (click)="toastService.remove(toast)" ></fa-icon>
   </ngb-toast>
 </div>

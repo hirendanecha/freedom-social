@@ -13,7 +13,7 @@
       cursor: pointer;
       transition: 0.3s ease-in-out;
 
-      span {
+      fa-icon {
         transition: 0.3s ease-in-out;
         color: transparent;
       }
@@ -22,7 +22,7 @@
         transition: 0.3s ease-in-out;
         background-color: #00000075;
 
-        span {
+        fa-icon {
           color: #fff;
         }
       }

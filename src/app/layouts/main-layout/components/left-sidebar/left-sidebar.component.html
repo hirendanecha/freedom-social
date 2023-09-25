@@ -28,7 +28,7 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <i class="material-symbols-outlined fs-xxl mat-icon"> workspaces </i>
+        <fa-icon [icon]="['fas', 'network-wired']" class="fs-xxl" />
         <span>Local Communities</span>
       </a>
     </li>
@@ -39,7 +39,7 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <i class="material-symbols-outlined fs-xxl mat-icon"> layers </i>
+        <fa-icon [icon]="['fas', 'layer-group']" class="fs-xxl" />
         <span>Freedom Pages</span>
       </a>
     </li>
@@ -50,7 +50,7 @@
         class="d-flex gap-4"
         (click)="closeSidebar()"
       >
-        <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+        <fa-icon [icon]="['fas', 'link']" class="fs-xxl" />
         <span>1776 Token</span>
       </a>
     </li>
@@ -61,7 +61,7 @@
         class="d-flex gap-4"
         (click)="closeSidebar()"
       >
-        <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+        <fa-icon [icon]="['fas', 'link']" class="fs-xxl" />
         <span>Local Foods</span>
       </a>
     </li>
@@ -72,30 +72,28 @@
         class="d-flex gap-4"
         (click)="closeSidebar()"
       >
-        <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
+        <fa-icon [icon]="['fas', 'link']" class="fs-xxl" />
         <span>Lamars List</span>
       </a>
     </li>
     <li>
       <a class="d-flex gap-4" (click)="openWalletPopUp()">
-        <i class="material-symbols-outlined fs-xxl mat-icon"> Download </i>
+        <fa-icon [icon]="['fas', 'download']" class="fs-xxl" />
         <span>Download 1776 Wallet</span>
       </a>
     </li>
     <li>
       <a class="d-flex gap-4" (click)="openClaimTokenPopUp()">
-        <i class="material-symbols-outlined fs-xxl mat-icon"> Token </i>
+        <fa-icon [icon]="['fas', 'certificate']" class="fs-xxl" />
         <span>Claim 50 free 1776</span>
       </a>
     </li>
 
     <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
       <div class="d-flex gap-4 toggle-dropdown" (click)="collapse.toggle()">
-        <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
+        <fa-icon [icon]="['fas', 'gear']" class="fs-xxl" />
         <span class="me-auto">Settings</span>
-        <span class="material-symbols-outlined">{{
-          collapse.shown ? "expand_more" : "expand_less"
-        }}</span>
+        <fa-icon [icon]="['fas', collapse.shown ? 'chevron-down' : 'chevron-up']" />
       </div>
 
       <div #collapse="ngbCollapse" [(ngbCollapse)]="isSettingMenuCollapse">
@@ -107,9 +105,7 @@
               class="d-flex gap-4"
               (click)="closeSidebar()"
             >
-              <i class="material-symbols-outlined fs-xxl mat-icon">
-                group_add
-              </i>
+              <fa-icon [icon]="['fas', 'user-plus']" class="fs-xxl" />
               <span>See First Users</span>
             </a>
           </li>
@@ -121,9 +117,7 @@
               class="d-flex gap-4"
               (click)="closeSidebar()"
             >
-              <i class="material-symbols-outlined fs-xxl mat-icon">
-                group_remove
-              </i>
+              <fa-icon [icon]="['fas', 'user-minus']" class="fs-xxl" />
               <span>Unsubscribed Users</span>
             </a>
           </li>
@@ -135,28 +129,26 @@
               class="d-flex gap-4"
               (click)="closeSidebar()"
             >
-              <i class="material-symbols-outlined fs-xxl mat-icon">
-                person_remove
-              </i>
+              <fa-icon [icon]="['fas', 'user-xmark']" class="fs-xxl" />
               <span>Delete Account</span>
-            </a>
-          </li>
-          <li class="d-lg-none d-block">
-            <a class="d-flex gap-4" (click)="openProfileMenuModal()">
-              <i class="material-symbols-outlined fs-xxl mat-icon"> person </i>
-              <span>Profile</span>
-            </a>
-          </li>
-          <li class="d-lg-none d-block">
-            <a class="d-flex gap-4" (click)="openRightSidebar()">
-              <i class="material-symbols-outlined fs-xxl mat-icon">
-                dashboard
-              </i>
-              <span>Dashboard</span>
             </a>
           </li>
         </ul>
       </div>
+    </li>
+
+    <li class="d-lg-none d-block">
+      <a class="d-flex gap-4" (click)="openProfileMenuModal()">
+        <fa-icon [icon]="['fas', 'user']" class="fs-xxl" />
+        <span>Profile</span>
+      </a>
+    </li>
+
+    <li class="d-lg-none d-block">
+      <a class="d-flex gap-4" (click)="openRightSidebar()">
+        <fa-icon [icon]="['fas', 'border-all']" class="fs-xxl" />
+        <span>Dashboard</span>
+      </a>
     </li>
   </ul>
 </div>

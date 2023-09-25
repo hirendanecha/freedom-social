@@ -4,22 +4,22 @@
 
     <div class="d-flex gap-5 py-5 border-top">
       <div class="d-flex align-items-center gap-1">
-        <span class="material-symbols-outlined font-20-px">person</span>
+        <fa-icon [icon]="['fas', 'user']" class="font-20-px" />
         <span class="font-12-px">clarkzkent</span>
       </div>
 
       <div class="d-flex align-items-center gap-1">
-        <span class="material-symbols-outlined font-20-px">calendar_month</span>
+        <fa-icon [icon]="['fas', 'calendar-days']" class="font-20-px" />
         <span class="font-12-px">Jun 24, 2023</span>
       </div>
 
       <div class="d-flex align-items-center gap-1">
-        <span class="material-symbols-outlined font-20-px">schedule</span>
+        <fa-icon [icon]="['fas', 'clock']" class="font-20-px" />
         <span class="font-12-px">10:30 PM</span>
       </div>
 
       <div class="d-flex align-items-center gap-1">
-        <span class="material-symbols-outlined font-20-px">chat</span>
+        <fa-icon [icon]="['fas', 'message']" class="font-20-px" />
         <span class="font-12-px">0</span>
       </div>
     </div>
@@ -33,12 +33,12 @@
 
     <div class="d-flex justify-content-between gap-5 px-5 py-3 mt-5 border-top border-bottom">
       <div class="d-flex align-items-center gap-2 c-pointer">
-        <span class="material-symbols-outlined">thumb_up</span>
+        <fa-icon [icon]="['fas', 'thumbs-up']" class="font-20-px" />
         <span>0</span>
       </div>
 
       <div class="d-flex align-items-center gap-2 c-pointer">
-        <span class="material-symbols-outlined font-20-px">autorenew</span>
+        <fa-icon [icon]="['fas', 'rotate']" class="font-20-px" />
         <span>Revibe</span>
       </div>
     </div>
@@ -50,9 +50,7 @@
         <input placeholder="Research or comment..." />
 
         <div class="file-input d-flex gap-1 gap-md-2">
-          <i class="material-symbols-outlined mat-icon m-0 font-24-px text-primary" role="button">
-            near_me
-          </i>
+          <fa-icon [icon]="['fas', 'paper-plane']" class="m-0 font-24-px text-primary" role="button"/>
         </div>
       </div>
     </div>

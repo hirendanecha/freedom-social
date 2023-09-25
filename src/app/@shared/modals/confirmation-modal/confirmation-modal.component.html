@@ -1,9 +1,7 @@
 <div class="modal-header">
   <h6 class="text-start m-0">{{ title }}</h6>
 
-  <span role="button" class="material-symbols-outlined font-20-px" (click)="activeModal.close('cancel')">
-    close
-  </span>
+  <fa-icon [icon]="['fas', 'xmark']" class="font-20-px" role="button" (click)="activeModal.close()" />
 </div>
 
 <div class="modal-body text-start">

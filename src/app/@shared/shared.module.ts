@@ -24,6 +24,58 @@ import { ImgPreviewComponent } from './components/img-preview/img-preview.compon
 import { InlineLoaderComponent } from './components/inline-loader/inline-loader.component';
 import { LAZYLOAD_IMAGE_HOOKS, ScrollHooks } from 'ng-lazyload-image';
 import { CopyClipboardDirective } from './directives/copy-clipboard.directive';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import {
+  faAngleDoubleUp,
+  faCamera,
+  faEye,
+  faXmark,
+  faBars,
+  faBorderAll,
+  faChevronDown,
+  faChevronUp,
+  faChevronRight,
+  faCirclePlus,
+  faMagnifyingGlass,
+  faDownload,
+  faUser,
+  faCalendarDays,
+  faClock,
+  faMessage,
+  faThumbsUp,
+  faRotate,
+  faTrashCan,
+  faEllipsis,
+  faUserMinus,
+  faPenToSquare,
+  faLink,
+  faComment,
+  faImage,
+  faPaperPlane,
+  faBell,
+  faHouse,
+  faBookOpen,
+  faPlay,
+  faNetworkWired,
+  faLayerGroup,
+  faCertificate,
+  faGear,
+  faUserPlus,
+  faUserXmark,
+  faRightFromBracket,
+  faUnlockKeyhole,
+  faSun,
+  faMoon,
+  faPlus,
+  faSatelliteDish,
+  faVideo,
+  faUserCheck,
+  faCheck,
+  faSquareCheck,
+  faSquareXmark,
+} from '@fortawesome/free-solid-svg-icons';
+import { ClaimTokenModalComponent } from './modals/clai-1776-token-modal/claim-token-modal.component';
+import { WalletLinkComponent } from './modals/wallet-download-modal/1776-wallet.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -37,6 +89,8 @@ const sharedComponents = [
   ImgPreviewComponent,
   InlineLoaderComponent,
   CopyClipboardDirective,
+  ClaimTokenModalComponent,
+  WalletLinkComponent,
 ];
 
 const sharedModules = [
@@ -50,6 +104,7 @@ const sharedModules = [
   NgxSpinnerModule,
   RouterModule,
   NgxTrimDirectiveModule,
+  FontAwesomeModule,
 ];
 
 @NgModule({
@@ -62,4 +117,56 @@ const sharedModules = [
     { provide: LAZYLOAD_IMAGE_HOOKS, useClass: ScrollHooks },
   ],
 })
-export class SharedModule { }
+export class SharedModule {
+  constructor(library: FaIconLibrary) {
+    library.addIcons(
+      faAngleDoubleUp,
+      faCamera,
+      faEye,
+      faXmark,
+      faBars,
+      faBorderAll,
+      faChevronDown,
+      faChevronUp,
+      faChevronRight,
+      faCirclePlus,
+      faMagnifyingGlass,
+      faDownload,
+      faUser,
+      faCalendarDays,
+      faClock,
+      faMessage,
+      faThumbsUp,
+      faRotate,
+      faTrashCan,
+      faEllipsis,
+      faUserMinus,
+      faPenToSquare,
+      faLink,
+      faComment,
+      faImage,
+      faPaperPlane,
+      faBell,
+      faHouse,
+      faBookOpen,
+      faPlay,
+      faNetworkWired,
+      faLayerGroup,
+      faCertificate,
+      faGear,
+      faUserPlus,
+      faUserXmark,
+      faRightFromBracket,
+      faUnlockKeyhole,
+      faSun,
+      faMoon,
+      faPlus,
+      faSatelliteDish,
+      faVideo,
+      faUserCheck,
+      faCheck,
+      faSquareCheck,
+      faSquareXmark,
+    );
+  }
+}

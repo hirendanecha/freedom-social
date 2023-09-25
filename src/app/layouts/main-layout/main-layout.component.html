@@ -2,22 +2,6 @@
 
 <div class="main-content d-flex justify-content-start align-items-start">
   <div class="container pt-5">
-    <!-- <ng-container *ngIf="(breakpointService?.screen | async).xl.lessThen">
-      <div class="d-flex justify-content-between pb-5">
-        <ng-container *ngIf="(breakpointService?.screen | async).lg.lessThen">
-          <button class="button d-flex align-items-center gap-2" (click)="openLeftSidebar()" >
-            <span class="material-symbols-outlined">menu</span>
-          </button>
-        </ng-container>
-
-        <ng-container *ngIf="(breakpointService?.screen | async).xl.lessThen">
-          <button class="button d-flex align-items-center gap-2 ms-auto" (click)="openRightSidebar()">
-            <span class="material-symbols-outlined">dashboard</span>
-            <span>Dashboard</span>
-          </button>
-        </ng-container>
-      </div>
-    </ng-container> -->
     <div class="d-lg-flex d-block w-100 gap-5 min-vh-100 main-layout">
       <ng-container *ngIf="sidebar?.isShowLeftSideBar && (breakpointService?.screen | async).lg.gatherThen">
         <div class="my-profile-sidebar">
