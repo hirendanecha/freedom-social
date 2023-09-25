@@ -48,7 +48,8 @@
         </ng-container>
 
         <ng-container *ngIf="type === 'my' && community?.isApprove === 'N'">
-          <span class="text-danger m-0">Not Approve</span>
+          <span class="text-danger m-0 c-class">Waiting Approval within 24hours</span>
+          <!-- <span class="text-danger m-0">Not Approve</span> -->
         </ng-container>
       </div>
     </ng-container>

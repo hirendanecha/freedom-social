@@ -99,4 +99,8 @@
   .c-color{
     color: var(--bs-primary-rgb) !important;
   }
+  
+  ngb-tooltip-window {
+    z-index: 1 !important;
+  }
 }
