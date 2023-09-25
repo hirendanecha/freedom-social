@@ -188,13 +188,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.spinner.show();
         this.postService.upload(this.postData?.file, this.profileId).subscribe({
           next: (res: any) => {
+            this.spinner.hide();
+            if (this.postData.file?.size < 5120000) {
             if (res?.body?.url) {
               this.postData['file'] = null;
               this.postData['imageUrl'] = res?.body?.url;
               this.createOrEditPost();
             }
-
-            this.spinner.hide();
+          } else {
+            this.toastService.warring('Image is too large!');
+          }
           },
           error: (err) => {
             this.spinner.hide();

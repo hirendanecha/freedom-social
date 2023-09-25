@@ -24,16 +24,19 @@ export class ImgPickerComponent {
 
   onImgFileChange(event: any): void {
     const file = event.target?.files?.[0] || {};
-    if (file.size / (1024 * 1024) > 5) {
-      this.toastService.danger('Image file size exceeds 5 MB!');
-      return;
-    }
-
+    // if (file.size / (1024 * 1024) > 5) {
+    //   this.toastService.danger('Image file size exceeds 5 MB!');
+    //   return;
+    // }
+    if (file?.size < 5120000) {
     if (file) {
       this.fileData['file'] = file;
       this.fileData['url'] = URL.createObjectURL(file);
 
       this.onFileChange.emit(this.fileData);
+    }}
+    else {
+      this.toastService.warring('Image is too large!');
     }
   }
 

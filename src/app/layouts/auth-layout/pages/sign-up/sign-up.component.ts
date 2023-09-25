@@ -68,17 +68,20 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   upload(file, id, defaultType) {
-    if (file.size / (1024 * 1024) > 5) {
-      return 'Image file size exceeds 5 MB!';
-    }
+    // if (file.size / (1024 * 1024) > 5) {
+    //   return 'Image file size exceeds 5 MB!';
+    // }
     this.spinner.show();
     this.uploadService.upload(file, id, defaultType).subscribe(
       {
         next: (res: any) => {
           this.spinner.hide();
+          if (file?.size < 5120000) {
           if (res.body) {
             this.profilePic = res?.body?.url;
             this.creatProfile(this.customer);
+          }}else {
+            this.toastService.warring('Image is too large!');
           }
         },
         error:

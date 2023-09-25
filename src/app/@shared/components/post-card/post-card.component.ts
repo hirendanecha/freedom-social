@@ -293,10 +293,14 @@ export class PostCardComponent {
         this.postService.upload(this.commentData?.file, this.profileId).subscribe({
           next: (res: any) => {
             this.spinner.hide();
+            if (this.commentData.file?.size < 5120000) {
             if (res?.body?.url) {
               this.commentData['file'] = null;
               this.commentData['imageUrl'] = res?.body?.url;
               this.addComment();
+            }
+          }else {
+              this.toastService.warring('Image is too large!');
             }
           },
           error: (err) => {
