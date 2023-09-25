@@ -23,7 +23,7 @@
 
         <div class="col form-group">
           <label for="postdescription" class="form-label">Type or paste the Title or Description (no links) <span class="text-danger">*</span></label>
-          <input type="text" class="input-area" id="postdescription" formControlName="postdescription" placeholder="What's going on?" trim="blur">
+          <textarea class="input-area" id="postdescription" formControlName="postdescription" placeholder="What's going on?" trim="blur"></textarea>
 
           <div *ngIf="isFormSubmittedAndError('postdescription')" class="invalid-feedback">
             <div *ngIf="isFormSubmittedAndError('postdescription', 'required')">This field is required.</div>
