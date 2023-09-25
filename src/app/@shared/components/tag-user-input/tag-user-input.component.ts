@@ -15,6 +15,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   @Input('value') value: string = '';
   @Input('placeholder') placeholder: string = 'ss';
   @Input('isShowMetaPreview') isShowMetaPreview: boolean = true;
+  @Input('isAllowTagUser') isAllowTagUser: boolean = true;
   @Output('onDataChange') onDataChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('tagInputDiv', { static: false }) tagInputDiv: ElementRef;
@@ -66,19 +67,21 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   }
 
   checkUserTagFlag(): void {
-    const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
+    if (this.isAllowTagUser) {
+      const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
 
-    const atSymbolIndex = htmlText.lastIndexOf('@');
+      const atSymbolIndex = htmlText.lastIndexOf('@');
 
-    if (atSymbolIndex !== -1) {
-      this.userNameSearch = htmlText.substring(atSymbolIndex + 1);
-      if (this.userNameSearch?.length > 2) {
-        this.getUserList(this.userNameSearch);
+      if (atSymbolIndex !== -1) {
+        this.userNameSearch = htmlText.substring(atSymbolIndex + 1);
+        if (this.userNameSearch?.length > 2) {
+          this.getUserList(this.userNameSearch);
+        } else {
+          this.clearUserSearchData();
+        }
       } else {
         this.clearUserSearchData();
       }
-    } else {
-      this.clearUserSearchData();
     }
   }
 

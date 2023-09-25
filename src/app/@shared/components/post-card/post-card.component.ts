@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { slideUp } from '../../animations/slideUp';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-post-card',
@@ -39,6 +40,7 @@ export class PostCardComponent {
   postComment = {};
   isCommentsLoader: boolean = false;
   isPostComment: boolean = false;
+  webUrl = environment.webUrl;
 
   constructor(
     private seeFirstUserService: SeeFirstUserService,

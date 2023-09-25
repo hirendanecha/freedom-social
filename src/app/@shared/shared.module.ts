@@ -23,6 +23,7 @@ import { TagUserInputComponent } from './components/tag-user-input/tag-user-inpu
 import { ImgPreviewComponent } from './components/img-preview/img-preview.component';
 import { InlineLoaderComponent } from './components/inline-loader/inline-loader.component';
 import { LAZYLOAD_IMAGE_HOOKS, ScrollHooks } from 'ng-lazyload-image';
+import { CopyClipboardDirective } from './directives/copy-clipboard.directive';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -34,7 +35,8 @@ const sharedComponents = [
   PostMetaDataCardComponent,
   TagUserInputComponent,
   ImgPreviewComponent,
-  InlineLoaderComponent
+  InlineLoaderComponent,
+  CopyClipboardDirective,
 ];
 
 const sharedModules = [

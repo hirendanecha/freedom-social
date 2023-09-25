@@ -35,6 +35,7 @@ export class ResearchListComponent {
     postdescription: new FormControl('', [Validators.required]),
     keywords: new FormControl(''),
     posttype: new FormControl('R'),
+    meta: new FormControl({}),
     isClicked: new FormControl(false),
     isSubmitted: new FormControl(false),
   });
@@ -91,8 +92,10 @@ export class ResearchListComponent {
 
   onTagUserInputChangeEvent(data: any, ctrlName: string): void {
     this.researchForm.get(ctrlName).setValue(data?.html);
+    this.researchForm.get('meta').setValue(data?.meta || {});
+    console.log('data : ', data);
+
     // this.postData.postdescription = data?.html;
-    // this.postData.meta = data?.meta;
     // this.postMessageTags = data?.tags;
   }
 
@@ -156,13 +159,18 @@ export class ResearchListComponent {
     } else {
       this.formIsSubmitted.setValue(true);
       const reqObj = deleteExtraParamsFromReqObj(this.researchForm.value);
+      const meta = {...reqObj['meta']};
+      delete reqObj['meta'];
       reqObj['profileId'] = localStorage.getItem('profileId');
+      reqObj['title'] = meta?.title;
+      reqObj['metadescription'] = meta?.metadescription;
+      reqObj['metaimage'] = meta?.metaimage;
+      reqObj['metalink'] = meta?.metalink;
       console.log('reqObj : ', reqObj);
 
       this.postService.createPost(reqObj).subscribe({
         next: (res) => {
           if (res) {
-            this.tagInputDefaultData = 'reset';
             console.log('res : ', res);
             this.toastService.success('Research added successfully.');
             this.groupsAndPosts();
@@ -175,7 +183,10 @@ export class ResearchListComponent {
         }
       }).add(() => {
         this.researchForm.reset();
-        this.tagInputDefaultData = '';
+        this.tagInputDefaultData = 'reset';
+        setTimeout(() => {
+          this.tagInputDefaultData = '';
+        }, 100);
         this.formIsClicked.setValue(false);
         this.formIsSubmitted.setValue(false);
       });
