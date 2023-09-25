@@ -34,7 +34,7 @@
             else elseJoinCommunity
           "
         >
-          <ng-container
+          <!-- <ng-container
             *ngIf="
               communityDetails?.profileId === +profileId;
               else elseLeaveCommunity
@@ -43,7 +43,7 @@
             <button class="btn btn-sm btn-danger" (click)="deleteCommunity()">
               Delete {{ communityDetails?.pageType }}
             </button>
-          </ng-container>
+          </ng-container> -->
 
           <ng-template #elseLeaveCommunity>
             <button
@@ -88,7 +88,7 @@
           <a
             class="nav-link d-center"
             [ngClass]="activeCommunityTab === 2 ? 'active' : ''"
-            >Members</a
+            >Admin</a
           >
         </li>
       </ul>
@@ -145,11 +145,11 @@
           class="d-flex justify-content-between justify-content-lg-between flex-wrap ps-0 mb-0 gap-3 gap-sm-5 pt-3 pt-sm-5"
         >
           <li
-          class="d-flex gap-2 align-items-center"
-          ngbTooltip="Comming Soon!"
-          placement="bottom"
+            class="d-flex gap-2 align-items-center"
+            ngbTooltip="Comming Soon!"
+            placement="bottom"
           >
-          <!-- <li
+            <!-- <li
             class="d-flex gap-2 align-items-center"
             data-toggle="tooltip"
             data-placement="bottom"
@@ -208,7 +208,9 @@
             >
               {{ postData?.id ? "Update Post" : "Post" }}
 
-              <i class="material-symbols-outlined font-20-px c-color"> near_me </i>
+              <i class="material-symbols-outlined font-20-px c-color">
+                near_me
+              </i>
             </button>
           </div>
         </ul>
@@ -318,7 +320,7 @@
                   <i class="material-symbols-outlined mat-icon">
                     verified_user
                   </i>
-                  <span>Make Community member</span>
+                  <span>Make Community Member</span>
                 </a>
               </button>
               <button ngbDropdownItem *ngIf="member?.isAdmin === 'N'">
@@ -352,11 +354,33 @@
                   <span>Remove member</span>
                 </a>
               </button>
+              <button
+                ngbDropdownItem
+                *ngIf="communityDetails.profileId === profileId"
+              >
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="deleteCommunity()"
+                >
+                  <i class="material-symbols-outlined mat-icon"> delete </i>
+                  <span>Delete Community</span>
+                </a>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="d-flex justify-content-end">
+    <ng-container *ngIf="communityDetails?.profileId === +profileId">
+      <button
+        class="btn btn-sm btn-danger w-152-px float-end"
+        (click)="deleteCommunity()"
+      >
+        Delete {{ communityDetails?.pageType }}
+      </button>
+    </ng-container>
   </div>
 </ng-container>
 

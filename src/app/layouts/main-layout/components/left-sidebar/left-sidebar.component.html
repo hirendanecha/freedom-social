@@ -1,15 +1,23 @@
-<div class="left-sidebar profile-sidebar cus-scrollbar p-5" [ngClass]="{'mh-100 vh-100': (breakpointService?.screen | async).lg.lessThen}">
+<div
+  class="left-sidebar profile-sidebar cus-scrollbar p-5"
+  [ngClass]="{
+    'mh-100 vh-100': (breakpointService?.screen | async).lg.lessThen
+  }"
+>
   <div class="profile-pic d-flex gap-2" routerLink="/home">
     <div class="position-relative">
       <img
-        class="avatar-img max-un" loading="lazy"
-        data-src="{{sharedService?.userData?.ProfilePicName}}"
+        class="avatar-img max-un"
+        loading="lazy"
+        data-src="{{ sharedService?.userData?.ProfilePicName }}"
         onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
         alt="avatar"
       />
     </div>
     <div class="text-area d-flex flex-column justify-content-start">
-      <h6 class="m-0 text-ellipsis w-200-px">{{ sharedService?.userData?.Username }}</h6>
+      <h6 class="m-0 text-ellipsis w-200-px">
+        {{ sharedService?.userData?.Username }}
+      </h6>
     </div>
   </div>
   <ul class="profile-link m-0 mt-5 p-0 border-bottom-0">
@@ -36,7 +44,12 @@
       </a>
     </li>
     <li>
-      <a href="https://1776token.com/" target="_blank" class="d-flex gap-4" (click)="closeSidebar()">
+      <a
+        href="https://1776token.com/"
+        target="_blank"
+        class="d-flex gap-4"
+        (click)="closeSidebar()"
+      >
         <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
         <span>1776 Token</span>
       </a>
@@ -53,7 +66,12 @@
       </a>
     </li>
     <li>
-      <a href="https://lamarslist.com/" target="_blank" class="d-flex gap-4" (click)="closeSidebar()">
+      <a
+        href="https://lamarslist.com/"
+        target="_blank"
+        class="d-flex gap-4"
+        (click)="closeSidebar()"
+      >
         <i class="material-symbols-outlined fs-xxl mat-icon"> Link </i>
         <span>Lamars List</span>
       </a>
@@ -71,20 +89,24 @@
       </a>
     </li>
 
-    <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-      <div
-        class="d-flex gap-4 toggle-dropdown"
-        (click)="collapse.toggle()"
-      >
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="d-flex gap-4 toggle-dropdown" (click)="collapse.toggle()">
         <i class="material-symbols-outlined fs-xxl mat-icon"> settings </i>
         <span class="me-auto">Settings</span>
-        <span class="material-symbols-outlined">{{ collapse.shown ? 'expand_more' : 'expand_less'}}</span>
+        <span class="material-symbols-outlined">{{
+          collapse.shown ? "expand_more" : "expand_less"
+        }}</span>
       </div>
 
       <div #collapse="ngbCollapse" [(ngbCollapse)]="isSettingMenuCollapse">
         <ul class="ps-3">
           <li>
-            <a routerLink="/settings/see-first-users" routerLinkActive="active" class="d-flex gap-4" (click)="closeSidebar()">
+            <a
+              routerLink="/settings/see-first-users"
+              routerLinkActive="active"
+              class="d-flex gap-4"
+              (click)="closeSidebar()"
+            >
               <i class="material-symbols-outlined fs-xxl mat-icon">
                 group_add
               </i>
@@ -93,7 +115,12 @@
           </li>
 
           <li>
-            <a routerLink="/settings/unsubscribed-users" routerLinkActive="active" class="d-flex gap-4" (click)="closeSidebar()">
+            <a
+              routerLink="/settings/unsubscribed-users"
+              routerLinkActive="active"
+              class="d-flex gap-4"
+              (click)="closeSidebar()"
+            >
               <i class="material-symbols-outlined fs-xxl mat-icon">
                 group_remove
               </i>
@@ -102,11 +129,30 @@
           </li>
 
           <li>
-            <a routerLink="/settings/delete-profile" routerLinkActive="active" class="d-flex gap-4" (click)="closeSidebar()">
+            <a
+              routerLink="/settings/delete-profile"
+              routerLinkActive="active"
+              class="d-flex gap-4"
+              (click)="closeSidebar()"
+            >
               <i class="material-symbols-outlined fs-xxl mat-icon">
                 person_remove
               </i>
               <span>Delete Account</span>
+            </a>
+          </li>
+          <li class="d-lg-none d-block">
+            <a class="d-flex gap-4" (click)="openProfileMenuModal()">
+              <i class="material-symbols-outlined fs-xxl mat-icon"> person </i>
+              <span>Profile</span>
+            </a>
+          </li>
+          <li class="d-lg-none d-block">
+            <a class="d-flex gap-4" (click)="openRightSidebar()">
+              <i class="material-symbols-outlined fs-xxl mat-icon">
+                dashboard
+              </i>
+              <span>Dashboard</span>
             </a>
           </li>
         </ul>

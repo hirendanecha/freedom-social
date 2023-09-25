@@ -45,7 +45,7 @@ export class SharedService {
   }
 
   getUserDetails() {
-    const profileId = sessionStorage.getItem('profileId');
+    const profileId = localStorage.getItem('profileId');
     if (profileId) {
       const localUserData = JSON.parse(localStorage.getItem('userData'));
       if (localUserData?.ID) {
@@ -77,7 +77,7 @@ export class SharedService {
   }
 
   getNotificationList() {
-    const id = sessionStorage.getItem('profileId');
+    const id = localStorage.getItem('profileId');
     this.customerService.getNotificationList(Number(id)).subscribe({
       next: (res: any) => {
         this.isNotify = false;

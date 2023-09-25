@@ -72,12 +72,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (!data.error) {
           this.tokenStorage.saveToken(data?.accessToken);
           this.tokenStorage.saveUser(data.user);
-          sessionStorage.setItem('profileId', data.user.profileId);
-          sessionStorage.setItem('communityId', data.user.communityId);
-          window.sessionStorage.user_level_id = 2;
-          window.sessionStorage.user_id = data.user.Id;
-          window.sessionStorage.user_country = data.user.Country;
-          window.sessionStorage.user_zip = data.user.ZipCode;
+          localStorage.setItem('profileId', data.user.profileId);
+          localStorage.setItem('communityId', data.user.communityId);
+          window.localStorage.user_level_id = 2;
+          window.localStorage.user_id = data.user.Id;
+          window.localStorage.user_country = data.user.Country;
+          window.localStorage.user_zip = data.user.ZipCode;
           this.sharedService.getUserDetails();
           this.isLoginFailed = false;
           this.isLoggedIn = true;

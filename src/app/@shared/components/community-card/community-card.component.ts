@@ -24,7 +24,7 @@ export class CommunityCardComponent {
     private communityService: CommunityService,
     private toastService: ToastService
   ) {
-    this.profileId = Number(sessionStorage.getItem('profileId'));
+    this.profileId = Number(localStorage.getItem('profileId'));
   }
 
   goToCommunityDetailPage(): void {

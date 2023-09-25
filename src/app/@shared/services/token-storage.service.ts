@@ -22,26 +22,28 @@ export class TokenStorageService {
   }
 
   public saveToken(token: string): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
+    // window.sessionStorage.removeItem(TOKEN_KEY);
+    // window.localStorage.setItem(TOKEN_KEY, token);
+    window.localStorage.setItem(TOKEN_KEY, token);
   }
 
   public getToken(): string {
-    return window.sessionStorage.getItem(TOKEN_KEY);
+    // return window.localStorage.getItem(TOKEN_KEY);
+    return window.localStorage.getItem(TOKEN_KEY);
   }
 
   public saveUser(user: any): void {
     const userStr = JSON.stringify(user);
 
-    window.sessionStorage.removeItem(USER_KEY);
+    // window.sessionStorage.removeItem(USER_KEY);
     window.localStorage.removeItem(USER_KEY);
 
-    window.sessionStorage.setItem(USER_KEY, userStr);
     window.localStorage.setItem(USER_KEY, userStr);
+    // window.localStorage.setItem(USER_KEY, userStr);
   }
 
   public getUser(): any {
-    return JSON.parse(window.sessionStorage.getItem(USER_KEY) || window.localStorage.getItem(USER_KEY));
+    return JSON.parse(window.localStorage.getItem(USER_KEY));
   }
 
   public getCredentials(): any {

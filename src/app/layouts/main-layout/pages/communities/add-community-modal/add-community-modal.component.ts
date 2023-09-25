@@ -40,7 +40,7 @@ export class AddCommunityModalComponent {
     private toastService: ToastService
   ) {
     this.userId = window.sessionStorage.user_id;
-    this.profileId = sessionStorage.getItem('profileId');
+    this.profileId = localStorage.getItem('profileId');
   }
 
   uploadImgAndSubmit(): void {

@@ -55,7 +55,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     private toastService: ToastService
   ) {
     this.userId = this.route.snapshot.paramMap.get('id');
-    this.profileId = sessionStorage.getItem('profileId');
+    this.profileId = localStorage.getItem('profileId');
     if (this.profileId) {
       this.getProfile(this.profileId);
     } else {

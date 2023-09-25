@@ -237,7 +237,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
           if (data) {
             const profileId = data.data;
-            sessionStorage.setItem('profileId', profileId);
+            localStorage.setItem('profileId', profileId);
           }
         },
         error:
