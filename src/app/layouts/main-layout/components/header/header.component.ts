@@ -2,12 +2,17 @@ import { Component, ViewChild } from '@angular/core';
 import {
   NgbDropdown,
   NgbModal,
+  NgbOffcanvas,
 } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from '../../../../@shared/services/shared.service';
 import { Router } from '@angular/router';
 import { CustomerService } from '../../../../@shared/services/customer.service';
 import { ProfileMenusModalComponent } from '../profile-menus-modal/profile-menus-modal.component';
 import { NotificationsModalComponent } from '../notifications-modal/notifications-modal.component';
+import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
+import { RightSidebarComponent } from '../../components/right-sidebar/right-sidebar.component';
+import { ResearchSidebarComponent } from '../../components/research-sidebar/research-sidebar.component';
+import { LeftSidebarComponent } from '../../components/left-sidebar/left-sidebar.component';
 
 @Component({
   selector: 'app-header',
@@ -25,11 +30,22 @@ export class HeaderComponent {
   userList: any = [];
   searchText = '';
 
+
+  showButton = false;
+  sidebar: any = {
+    isShowLeftSideBar: true,
+    isShowRightSideBar: true,
+    isShowResearchLeftSideBar: false,
+  };
+
   constructor(
     private modalService: NgbModal,
     public sharedService: SharedService,
     private router: Router,
     private customerService: CustomerService,
+    public breakpointService: BreakpointService,
+    private offcanvasService: NgbOffcanvas,
+
   ) {
     this.sharedService.getNotificationList();
   }
@@ -72,4 +88,12 @@ export class HeaderComponent {
       this.searchText = '';
     }
   }
+
+  openLeftSidebar() {
+		this.offcanvasService.open(this.sidebar?.isShowResearchLeftSideBar ? ResearchSidebarComponent : LeftSidebarComponent, { position: 'start', panelClass: 'w-300-px' });
+	}
+
+  openRightSidebar() {
+		this.offcanvasService.open(RightSidebarComponent, { position: 'end', panelClass: 'w-300-px' });
+	}
 }

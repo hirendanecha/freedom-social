@@ -24,6 +24,7 @@ import { getTagUsersFromAnchorTags } from 'src/app/@shared/utils/utils';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  tooltipContent = 'Comming Soon!';
   postMessageInputValue: string = '';
   postMessageTags: any[];
   postData: any = {

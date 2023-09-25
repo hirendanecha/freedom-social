@@ -145,11 +145,16 @@
           class="d-flex justify-content-between justify-content-lg-between flex-wrap ps-0 mb-0 gap-3 gap-sm-5 pt-3 pt-sm-5"
         >
           <li
+          class="d-flex gap-2 align-items-center"
+          [ngbTooltip]="tooltipContent"
+          placement="bottom"
+          >
+          <!-- <li
             class="d-flex gap-2 align-items-center"
             data-toggle="tooltip"
             data-placement="bottom"
             title="Comming Soon!"
-          >
+          > -->
             <i class="material-symbols-outlined mat-icon">stream</i>
             <span>Live</span>
           </li>
@@ -172,9 +177,8 @@
           </li>
           <li
             class="d-flex gap-2 align-items-center"
-            data-toggle="tooltip"
-            data-placement="bottom"
-            title="Comming Soon!"
+            [ngbTooltip]="tooltipContent"
+            placement="bottom"
           >
             <i class="material-symbols-outlined mat-icon"> videocam </i>
             <span>Video</span>
