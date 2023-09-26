@@ -28,13 +28,15 @@
       <div
         class="profile-area d-center justify-content-between align-items-start h-24-px w-100 ms-2 ms-lg-0"
       >
-        <div class="info-area d-flex gap-1 justify-content-center align-items-center">
+        <div class="info-area d-flex flex-wrap gap-1 justify-content-start align-items-center">
           <div class="h6 m-0" *ngIf="post.Username">
             {{ post.Username }}
           </div>
           <ng-container *ngIf="post?.groupName" >
             <span>posted on</span>
-            <a [href]="'/research/detail/grpm/' + post?.groupLink" target="_blank" class="h6 m-0">{{post?.groupName}}</a>
+            <a [href]="'/research/detail/grpm/' + post?.groupLink" target="_blank" class="m-0">
+              <span class="fw-bold m-0">{{post?.groupName}}</span>
+            </a>
             <span>Group</span>
           </ng-container>
         </div>

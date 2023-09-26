@@ -323,6 +323,10 @@ option {
   font-weight: 300;
 }
 
+fa-icon svg path {
+  fill: var(--para-2nd-color) !important;
+}
+
 li {
   font-size: inherit;
 }
