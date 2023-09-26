@@ -31,8 +31,8 @@ export class CustomerService {
     return this.http.put(`${this.baseUrl}/${id}`, value);
   }
 
-  deleteCustomer(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  deleteCustomer(id: number, profileId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}?profileId=${profileId}`, { responseType: 'text' });
   }
 
   getCustomersList(): Observable<any> {

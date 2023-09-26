@@ -3,3 +3,9 @@
   flex-direction: column;
   width: 100%;
 }
+
+::ng-deep .c-icon-color{
+  svg path {
+    fill: var(--secondary-color) !important;
+  }
+}
