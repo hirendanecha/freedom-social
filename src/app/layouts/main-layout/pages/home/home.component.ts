@@ -138,7 +138,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             this.communityDetails = details;
-            console.log(this.communityDetails);
             this.postData.communityId = this.communityDetails?.Id;
           }
         },
