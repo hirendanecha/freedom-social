@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   onPostFileSelect(event: any): void {
     const file = event.target?.files?.[0] || {};
@@ -183,7 +183,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   uploadPostFileAndCreatePost(): void {
-    console.log(this.postData.file);
     if (this.postData?.postdescription || this.postData?.file?.name) {
       if (this.postData?.file?.name) {
         this.spinner.show();
@@ -238,19 +237,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.postData['tags'] = [];
     this.postData['file'] = {};
     this.postData['imageUrl'] = '';
-
     this.postMessageInputValue = ' ';
     setTimeout(() => {
       this.postMessageInputValue = '';
     }, 100);
     this.postMessageTags = [];
-
-    console.log('postData : ', this.postData);
   }
 
   onEditPost(post: any): void {
     this.postData = { ...post };
-
     this.postMessageInputValue = this.postData?.postdescription;
 
     window.scroll({
@@ -258,6 +253,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       left: 0,
       behavior: 'smooth',
     });
+
   }
 
   joinCommunity(id?): void {
@@ -332,10 +328,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.toastService.success(res.message);
                 // this.getCommunityDetailsBySlug();
                 this.router.navigate([
-                  `${
-                    this.communityDetails.pageType === 'community'
-                      ? 'communities'
-                      : 'pages'
+                  `${this.communityDetails.pageType === 'community'
+                    ? 'communities'
+                    : 'pages'
                   }`,
                 ]);
               }
