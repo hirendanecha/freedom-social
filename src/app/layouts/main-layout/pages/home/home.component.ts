@@ -211,8 +211,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   createOrEditPost(): void {
     this.postData.tags = getTagUsersFromAnchorTags(this.postMessageTags);
 
-    console.log('postData : ', this.postData);
-
     if (this.postData?.postdescription || this.postData?.imageUrl) {
       this.spinner.show();
       this.socketService.createOrEditPost(this.postData, (data) => {
