@@ -14,7 +14,7 @@
     </ng-container>
 
     <ng-container *ngIf="fileData?.url">
-      <fa-icon [icon]="['fas', 'xmark']" class="position-absolute top-0 start-100 translate-middle badge bg-danger py-1 font-16-px c-pointer" (click)="onClearFile($event)" />
+      <fa-icon [icon]="['fas', 'xmark']" class="position-absolute top-0 start-100 translate-middle badge bg-danger py-1 font-16-px c-pointer c-icon-color" (click)="onClearFile($event)" />
     </ng-container>
 
     <input type="file" #imgFileTagRef hidden required class="d-none" accept="image/*" (change)="onImgFileChange($event)"/>

@@ -96,8 +96,10 @@
       }
     }
   }
-  .c-color{
-    color: var(--bs-primary-rgb) !important;
+  .c-icon-color{
+     svg path {
+      fill: var( --secondary-color);
+    }
   }
   
   ngb-tooltip-window {
