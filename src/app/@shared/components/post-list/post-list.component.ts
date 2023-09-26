@@ -51,7 +51,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     this.socketService.socket.on('new-post-added',
       (res: any) => {
         if (res?.[0]) {
-          if (this.editPostIndex) {
+          if (this.editPostIndex >= 0) {
             this.postList[this.editPostIndex] = res?.[0];
           } else {
             this.postList.unshift(res?.[0]);
@@ -147,6 +147,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
 
   onEditPostData(post: any, index: number): void {
     this.editPostIndex = index;
+    console.log('editPostIndex', this.editPostIndex);
     this.onEditPost?.emit(post);
   }
 }

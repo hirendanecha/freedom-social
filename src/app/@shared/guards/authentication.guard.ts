@@ -15,7 +15,7 @@ export class AuthenticationGuard {
   constructor(
     private router: Router,
     private tokenService: TokenStorageService
-  ) {}
+  ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
     if (this.tokenService.getToken()) {
