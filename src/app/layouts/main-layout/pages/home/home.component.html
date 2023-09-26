@@ -124,7 +124,12 @@
               class="w-100 h-100 rounded-4"
               alt="icon"
             />
-            <fa-icon [icon]="['fas', 'xmark']" class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer" role="button" (click)="removePostSelectedFile()" />
+            <fa-icon
+              [icon]="['fas', 'xmark']"
+              class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer"
+              role="button"
+              (click)="removePostSelectedFile()"
+            />
           </div>
         </ng-container>
 
@@ -303,7 +308,7 @@
                   (click)="createCommunityAdmin(member)"
                 >
                   <fa-icon [icon]="['fas', 'user-check']" />
-                  <span>Make Community Member</span>
+                  <span>Make {{ this.communityDetails.pageType }} member</span>
                 </a>
               </button>
               <button ngbDropdownItem *ngIf="member?.isAdmin === 'N'">
@@ -312,7 +317,7 @@
                   (click)="createCommunityAdmin(member)"
                 >
                   <fa-icon [icon]="['fas', 'user-check']" />
-                  <span>Make Community Admin</span>
+                  <span>Make {{ this.communityDetails.pageType }} admin</span>
                 </a>
               </button>
               <button ngbDropdownItem>
