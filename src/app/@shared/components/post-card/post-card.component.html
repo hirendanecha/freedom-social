@@ -28,21 +28,32 @@
       <div
         class="profile-area d-center justify-content-between align-items-start h-24-px w-100 ms-2 ms-lg-0"
       >
-        <div class="info-area d-flex flex-wrap gap-1 justify-content-start align-items-center">
+        <div
+          class="info-area d-flex flex-wrap gap-1 justify-content-start align-items-center"
+        >
           <div class="h6 m-0" *ngIf="post.Username">
             {{ post.Username }}
           </div>
-          <ng-container *ngIf="post?.groupName" >
+          <ng-container *ngIf="post?.groupName">
             <span>posted on</span>
-            <a [href]="'/research/detail/grpm/' + post?.groupLink" target="_blank" class="m-0">
-              <span class="fw-bold m-0">{{post?.groupName}}</span>
+            <a
+              [href]="'/research/detail/grpm/' + post?.groupLink"
+              target="_blank"
+              class="m-0"
+            >
+              <span class="fw-bold m-0">{{ post?.groupName }}</span>
             </a>
             <span>Group</span>
           </ng-container>
         </div>
 
         <div ngbDropdown>
-          <fa-icon [icon]="['fas', 'ellipsis']" class="font-24-px m-0" role="button" ngbDropdownToggle />
+          <fa-icon
+            [icon]="['fas', 'ellipsis']"
+            class="font-24-px m-0"
+            role="button"
+            ngbDropdownToggle
+          />
 
           <div ngbDropdownMenu class="dropdown-menu">
             <ng-container *ngIf="profileId != post.profileid">
@@ -108,7 +119,10 @@
             </ng-container>
 
             <button ngbDropdownItem>
-              <a class="droplist d-flex align-items-center gap-2" [appCopyClipboard]="webUrl+'post/'+post.id">
+              <a
+                class="droplist d-flex align-items-center gap-2"
+                [appCopyClipboard]="webUrl + 'post/' + post.id"
+              >
                 <fa-icon [icon]="['fas', 'link']" />
                 <span>Copy URL</span>
               </a>
@@ -141,7 +155,11 @@
           post.react == 'L' ? dislikeFeedPost(post) : reactLikeOnPost(post)
         "
       >
-        <fa-icon [icon]="['fas', 'thumbs-up']" class="font-20-px" [ngClass]="post.react == 'L' ? 'active' : ''" />
+        <fa-icon
+          [icon]="['fas', 'thumbs-up']"
+          class="font-20-px"
+          [ngClass]="post.react == 'L' ? 'active' : ''"
+        />
         {{ post?.likescount > 0 ? post?.likescount : 0 }}
         <p class="d-lg-block d-none m-0">Likes</p>
       </button>
@@ -183,7 +201,11 @@
                 class="w-100-px h-100-px rounded-4"
                 alt="icon"
               />
-              <fa-icon [icon]="['fas', 'xmark']" class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer text-white" (click)="removePostSelectedFile()" />
+              <fa-icon
+                [icon]="['fas', 'xmark']"
+                class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer text-white"
+                (click)="removePostSelectedFile()"
+              />
             </div>
           </ng-container>
 
@@ -202,14 +224,25 @@
                   accept="image/*"
                   (change)="onPostFileSelect($event, 'parent')"
                 />
-                <span class="file-custom border-0 d-grid text-center" role="button">
-                  <fa-icon [icon]="['fas', 'image']" class="m-0 font-20-px text-primary" />
+                <span
+                  class="file-custom border-0 d-grid text-center"
+                  role="button"
+                >
+                  <fa-icon
+                    [icon]="['fas', 'image']"
+                    class="m-0 font-20-px text-primary"
+                  />
                 </span>
               </label>
             </div>
 
             <div class="file-input d-flex gap-1 gap-md-2">
-              <fa-icon [icon]="['fas', 'paper-plane']" class="m-0 font-20-px text-primary" role="button" (click)="commentOnPost(parentPostCommentElement, post.id)" />
+              <fa-icon
+                [icon]="['fas', 'paper-plane']"
+                class="m-0 font-20-px text-primary"
+                role="button"
+                (click)="commentOnPost(parentPostCommentElement, post.id)"
+              />
             </div>
           </div>
         </div>
@@ -252,7 +285,12 @@
                       "
                     >
                       <div ngbDropdown>
-                        <fa-icon [icon]="['fas', 'ellipsis']" class="font-20-px m-0" role="button" ngbDropdownToggle />
+                        <fa-icon
+                          [icon]="['fas', 'ellipsis']"
+                          class="font-20-px m-0"
+                          role="button"
+                          ngbDropdownToggle
+                        />
 
                         <div ngbDropdownMenu class="dropdown-menu">
                           <button ngbDropdownItem>
@@ -291,7 +329,10 @@
                           : likeComments(comment)
                       "
                     >
-                      <fa-icon [icon]="['fas', 'thumbs-up']" class="font-16-px" />
+                      <fa-icon
+                        [icon]="['fas', 'thumbs-up']"
+                        class="font-16-px"
+                      />
                       {{ comment?.likeCount > 0 ? comment?.likeCount : 0 }}
                       Likes
                     </button>
@@ -324,7 +365,11 @@
                         class="w-100 h-100 rounded-4"
                         alt="icon"
                       />
-                      <fa-icon [icon]="['fas', 'xmark']" class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer text-white" (click)="removePostSelectedFile()" />
+                      <fa-icon
+                        [icon]="['fas', 'xmark']"
+                        class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer text-white"
+                        (click)="removePostSelectedFile()"
+                      />
                     </div>
                   </ng-container>
 
@@ -343,13 +388,30 @@
                             accept="image/*"
                             (change)="onPostFileSelect($event, 'child')"
                           />
-                          <span class="file-custom border-0 d-grid text-center" role="button">
-                            <fa-icon [icon]="['fas', 'image']" class="m-0 font-24-px text-primary" />
+                          <span
+                            class="file-custom border-0 d-grid text-center"
+                            role="button"
+                          >
+                            <fa-icon
+                              [icon]="['fas', 'image']"
+                              class="m-0 font-24-px text-primary"
+                            />
                           </span>
                         </label>
                       </div>
 
-                      <fa-icon [icon]="['fas', 'paper-plane']" class="m-0 font-24-px text-primary" role="button" (click)="commentOnPost(childPostCommentElement, post.id, comment.id)" />
+                      <fa-icon
+                        [icon]="['fas', 'paper-plane']"
+                        class="m-0 font-24-px text-primary"
+                        role="button"
+                        (click)="
+                          commentOnPost(
+                            childPostCommentElement,
+                            post.id,
+                            comment.id
+                          )
+                        "
+                      />
                     </div>
                   </div>
                 </div>
@@ -371,6 +433,7 @@
                         data-src="{{ reply.ProfilePicName }}"
                         class="w-40-px h-40-px rounded-3"
                         alt="icon"
+                        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                       />
 
                       <div class="info-item w-100">
@@ -389,7 +452,12 @@
                               "
                             >
                               <div ngbDropdown>
-                                <fa-icon [icon]="['fas', 'ellipsis']" class="font-20-px m-0" role="button" ngbDropdownToggle />
+                                <fa-icon
+                                  [icon]="['fas', 'ellipsis']"
+                                  class="font-20-px m-0"
+                                  role="button"
+                                  ngbDropdownToggle
+                                />
 
                                 <div ngbDropdownMenu class="dropdown-menu">
                                   <button ngbDropdownItem>
@@ -431,7 +499,10 @@
                                   : likeComments(reply)
                               "
                             >
-                              <fa-icon [icon]="['fas', 'thumbs-up']" class="font-16-px" />
+                              <fa-icon
+                                [icon]="['fas', 'thumbs-up']"
+                                class="font-16-px"
+                              />
                               {{ reply?.likeCount > 0 ? reply?.likeCount : 0 }}
                               Likes
                             </button>
