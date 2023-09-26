@@ -17,6 +17,7 @@ import { TokenStorageService } from 'src/app/@shared/services/token-storage.serv
 export class DeleteAccountComponent implements OnInit {
   customer = new Customer();
   profileId: number;
+  userId: number;
   constructor(
     private customerService: CustomerService,
     private spinner: NgxSpinnerService,
@@ -26,7 +27,8 @@ export class DeleteAccountComponent implements OnInit {
     private router: Router,
     private tokenStorageService: TokenStorageService
   ) {
-    this.profileId = +localStorage.getItem('user_id');
+    this.userId = +localStorage.getItem('user_id');
+    this.profileId = +localStorage.getItem('profileId');
   }
 
   ngOnInit(): void { }
@@ -49,7 +51,7 @@ export class DeleteAccountComponent implements OnInit {
       });
   }
 
-  deleteAccount(id): void {
+  deleteAccount(): void {
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
       centered: true,
     });
@@ -60,7 +62,7 @@ export class DeleteAccountComponent implements OnInit {
       'Are you sure want to delete your account?';
     modalRef.result.then((res) => {
       if (res === 'success') {
-        this.customerService.deleteCustomer(id).subscribe({
+        this.customerService.deleteCustomer(this.userId, this.profileId).subscribe({
           next: (res: any) => {
             if (res) {
               this.toastService.success(res.message || 'Account deleted successfully');

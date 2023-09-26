@@ -60,3 +60,17 @@
     }
   }
 }
+
+::ng-deep .c-icon-color{
+  svg path {
+    fill: var(--secondary-color) !important;
+  }
+}
+
+.icon-container .font-28-px {
+  display: none;
+}
+
+.icon-container:hover .font-28-px {
+  display: inline-block;
+}
