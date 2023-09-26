@@ -8,8 +8,8 @@
     .navbar-nav {
       li {
         .nav-icon.active {
-          i, span {
-            color: var(--primary-color) !important;
+          fa-icon svg path {
+            fill: var(--primary-color) !important;
           }
         }
       }
