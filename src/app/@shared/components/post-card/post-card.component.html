@@ -42,7 +42,7 @@
         </div>
 
         <div ngbDropdown>
-          <fa-icon [icon]="['fas', 'ellipsis']" class="fs-xxl m-0" role="button" ngbDropdownToggle />
+          <fa-icon [icon]="['fas', 'ellipsis']" class="font-24-px m-0" role="button" ngbDropdownToggle />
 
           <div ngbDropdownMenu class="dropdown-menu">
             <ng-container *ngIf="profileId != post.profileid">
@@ -187,7 +187,7 @@
             </div>
           </ng-container>
 
-          <div class="d-flex gap-2">
+          <div class="d-flex gap-2 align-items-center">
             <div
               #parentPostCommentElement
               contenteditable
@@ -203,13 +203,13 @@
                   (change)="onPostFileSelect($event, 'parent')"
                 />
                 <span class="file-custom border-0 d-grid text-center" role="button">
-                  <fa-icon [icon]="['fas', 'image']" class="m-0 font-24-px text-primary" />
+                  <fa-icon [icon]="['fas', 'image']" class="m-0 font-20-px text-primary" />
                 </span>
               </label>
             </div>
 
             <div class="file-input d-flex gap-1 gap-md-2">
-              <fa-icon [icon]="['fas', 'paper-plane']" class="m-0 font-24-px text-primary" role="button" (click)="commentOnPost(parentPostCommentElement, post.id)" />
+              <fa-icon [icon]="['fas', 'paper-plane']" class="m-0 font-20-px text-primary" role="button" (click)="commentOnPost(parentPostCommentElement, post.id)" />
             </div>
           </div>
         </div>

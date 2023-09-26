@@ -142,7 +142,7 @@
             data-placement="bottom"
             title="Comming Soon!"
           > -->
-            <fa-icon [icon]="['fas', 'satellite-dish']" />
+            <fa-icon [icon]="['fas', 'satellite-dish']" class="font-20-px" />
             <span>Live</span>
           </li>
 
@@ -159,7 +159,7 @@
               accept="image/*"
               (change)="onPostFileSelect($event)"
             />
-            <fa-icon [icon]="['fas', 'image']" />
+            <fa-icon [icon]="['fas', 'image']" class="font-20-px" />
             <span>Image</span>
           </li>
           <li
@@ -167,7 +167,7 @@
             ngbTooltip="Comming Soon!"
             placement="bottom"
           >
-            <fa-icon [icon]="['fas', 'video']" />
+            <fa-icon [icon]="['fas', 'video']" class="font-20-px" />
             <span>Video</span>
           </li>
           <!-- <li class="d-flex align-items-center gap-2" (click)="createPost()">
@@ -294,7 +294,7 @@
         >
           <div ngbDropdown>
             <button class="dropdown-btn d-flex" ngbDropdownToggle>
-              <fa-icon [icon]="['fas', 'ellipsis']" class="fs-xxl m-0" />
+              <fa-icon [icon]="['fas', 'ellipsis']" class="font-24-px m-0" />
             </button>
             <div ngbDropdownMenu class="dropdown-menu">
               <button ngbDropdownItem *ngIf="member?.isAdmin === 'Y'">

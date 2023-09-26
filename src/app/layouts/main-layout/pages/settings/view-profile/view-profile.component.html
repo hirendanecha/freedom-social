@@ -100,16 +100,16 @@
                           class="dropdown-btn"
                           (click)="openDropDown(community.id)"
                         >
-                          <fa-icon [icon]="['fas', 'ellipsis']" class="fs-xxl" />
+                          <fa-icon [icon]="['fas', 'ellipsis']" class="font-24-px" />
                         </button>
                         <ul
-                          class="dropdown-menu p-4 pt-2 mt-6"
+                          class="dropdown-menu p-4 pt-2"
                           [ngClass]="
                             communityId === community.id ? 'show' : ''
                           "
                           (mouseleave)="communityId = null"
                         >
-                          <li>
+                          <!-- <li>
                             <a
                               class="droplist d-flex align-items-center gap-2"
                               (click)="communityId = null"
@@ -117,7 +117,7 @@
                               <fa-icon [icon]="['fas', 'pen-to-square']" />
                               <span>Edit</span>
                             </a>
-                          </li>
+                          </li> -->
                           <li>
                             <a
                               class="droplist d-flex align-items-center gap-2"

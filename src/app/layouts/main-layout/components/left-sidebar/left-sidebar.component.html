@@ -28,7 +28,7 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <fa-icon [icon]="['fas', 'network-wired']" class="fs-xxl" />
+        <fa-icon [icon]="['fas', 'network-wired']" class="font-24-px" />
         <span>Local Communities</span>
       </a>
     </li>
@@ -39,7 +39,7 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <fa-icon [icon]="['fas', 'layer-group']" class="fs-xxl" />
+        <fa-icon [icon]="['fas', 'layer-group']" class="font-24-px" />
         <span>Freedom Pages</span>
       </a>
     </li>
@@ -50,7 +50,7 @@
         class="d-flex gap-4"
         (click)="closeSidebar()"
       >
-        <fa-icon [icon]="['fas', 'link']" class="fs-xxl" />
+        <fa-icon [icon]="['fas', 'link']" class="font-24-px" />
         <span>1776 Token</span>
       </a>
     </li>
@@ -61,7 +61,7 @@
         class="d-flex gap-4"
         (click)="closeSidebar()"
       >
-        <fa-icon [icon]="['fas', 'link']" class="fs-xxl" />
+        <fa-icon [icon]="['fas', 'link']" class="font-24-px" />
         <span>Local Foods</span>
       </a>
     </li>
@@ -72,26 +72,26 @@
         class="d-flex gap-4"
         (click)="closeSidebar()"
       >
-        <fa-icon [icon]="['fas', 'link']" class="fs-xxl" />
+        <fa-icon [icon]="['fas', 'link']" class="font-24-px" />
         <span>Lamars List</span>
       </a>
     </li>
     <li>
       <a class="d-flex gap-4" (click)="openWalletPopUp()">
-        <fa-icon [icon]="['fas', 'download']" class="fs-xxl" />
+        <fa-icon [icon]="['fas', 'download']" class="font-24-px" />
         <span>Download 1776 Wallet</span>
       </a>
     </li>
     <li>
       <a class="d-flex gap-4" (click)="openClaimTokenPopUp()">
-        <fa-icon [icon]="['fas', 'certificate']" class="fs-xxl" />
+        <fa-icon [icon]="['fas', 'certificate']" class="font-24-px" />
         <span>Claim 50 free 1776</span>
       </a>
     </li>
 
     <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      <div class="d-flex gap-4 toggle-dropdown" (click)="collapse.toggle()">
-        <fa-icon [icon]="['fas', 'gear']" class="fs-xxl" />
+      <div class="d-flex gap-4 toggle-dropdown align-items-center" (click)="collapse.toggle()">
+        <fa-icon [icon]="['fas', 'gear']" class="font-24-px" />
         <span class="me-auto">Settings</span>
         <fa-icon [icon]="['fas', collapse.shown ? 'chevron-down' : 'chevron-up']" />
       </div>
@@ -105,7 +105,7 @@
               class="d-flex gap-4"
               (click)="closeSidebar()"
             >
-              <fa-icon [icon]="['fas', 'user-plus']" class="fs-xxl" />
+              <fa-icon [icon]="['fas', 'user-plus']" class="font-24-px" />
               <span>See First Users</span>
             </a>
           </li>
@@ -117,7 +117,7 @@
               class="d-flex gap-4"
               (click)="closeSidebar()"
             >
-              <fa-icon [icon]="['fas', 'user-minus']" class="fs-xxl" />
+              <fa-icon [icon]="['fas', 'user-minus']" class="font-24-px" />
               <span>Unsubscribed Users</span>
             </a>
           </li>
@@ -129,7 +129,7 @@
               class="d-flex gap-4"
               (click)="closeSidebar()"
             >
-              <fa-icon [icon]="['fas', 'user-xmark']" class="fs-xxl" />
+              <fa-icon [icon]="['fas', 'user-xmark']" class="font-24-px" />
               <span>Delete Account</span>
             </a>
           </li>
@@ -139,14 +139,14 @@
 
     <li class="d-lg-none d-block">
       <a class="d-flex gap-4" (click)="openProfileMenuModal()">
-        <fa-icon [icon]="['fas', 'user']" class="fs-xxl" />
+        <fa-icon [icon]="['fas', 'user']" class="font-24-px" />
         <span>Profile</span>
       </a>
     </li>
 
     <li class="d-lg-none d-block">
       <a class="d-flex gap-4" (click)="openRightSidebar()">
-        <fa-icon [icon]="['fas', 'border-all']" class="fs-xxl" />
+        <fa-icon [icon]="['fas', 'border-all']" class="font-24-px" />
         <span>Dashboard</span>
       </a>
     </li>

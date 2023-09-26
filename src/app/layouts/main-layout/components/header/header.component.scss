@@ -15,7 +15,8 @@
       }
     }
 
-    .left-area, .right-area {
+    .left-area,
+    .right-area {
       width: 300px;
     }
 
@@ -45,19 +46,29 @@
         }
       }
     }
+
+    .left-area {
+      .search-user-list {
+        max-height: 332px;
+        overflow: auto;
+        top: 30px;
+        left: -240px;
+      }
+    }
   }
 }
 
 @media (max-width: 768px) {
   .header-section {
     .navbar {
-      .left-area, .right-area {
+      .left-area,
+      .right-area {
         width: 48px;
       }
     }
   }
 }
 
-.c-color{
+.c-color {
   background: var(--box-1st-color);
 }
