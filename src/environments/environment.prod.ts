@@ -1,5 +1,5 @@
 const url = 'https://freedom-api.opash.in';
-const webUrl = 'https://dev.freedom.opash.in/';
+const webUrl = 'https://freedom.buzz/';
 
 // const url = 'http://localhost:8080';
 // const webUrl = 'http://localhost:4200/';
