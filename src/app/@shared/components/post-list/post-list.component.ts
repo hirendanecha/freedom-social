@@ -34,6 +34,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   activePage = 0;
   editPostIndex: number = null;
   isLoading = false;
+  hasMoreData = true;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -119,7 +120,7 @@ onScroll(event: Event) {
   const threshold = windowHeight * thresholdFraction;
 
   if (scrollY + windowHeight >= documentHeight - threshold) {
-    if (!this.isLoading) {
+    if (!this.isLoading && this.hasMoreData) {
         this.loadMore();
     }
   }
@@ -140,6 +141,8 @@ onScroll(event: Event) {
         this.isPostLoader = false;
         if (res?.data?.length > 0) {
           this.postList = [...this.postList, ...res?.data];
+        } else {
+          this.hasMoreData = false;
         }
       },
       error: (error) => {
