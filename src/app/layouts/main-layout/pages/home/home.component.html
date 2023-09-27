@@ -123,10 +123,11 @@
               data-src="{{ postData?.imageUrl }}"
               class="w-100 h-100 rounded-4"
               alt="icon"
+              onerror="this.onerror=null;"
             />
             <fa-icon
               [icon]="['fas', 'xmark']"
-              class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer"
+              class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer c-icon-color"
               role="button"
               (click)="removePostSelectedFile()"
             />

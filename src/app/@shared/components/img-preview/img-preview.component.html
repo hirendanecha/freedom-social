@@ -9,7 +9,7 @@
 
   <div
     class="icon-eye d-flex flex-column justify-content-center align-items-center c-icon-color icon-container"
-    (click)="previewSrc = src"
+    (click)="openImagePreview(src)"
   >
     <fa-icon [icon]="['fas', 'eye']" class="font-28-px" />
   </div>
@@ -17,9 +17,9 @@
 
 <ng-container *ngIf="previewSrc">
   <div
-    class="img-preview-full-screen d-flex flex-column justify-content-center align-items-center p-5 c-icon-color"
+    class="img-preview-full-screen d-flex flex-column justify-content-center align-items-center p-5 c-icon-color" (click)="closeImagePreview()"
   >
-    <fa-icon [icon]="['fas', 'xmark']" class="c-pointer close-icon font-40-px" (click)="previewSrc = ''" />
+    <fa-icon [icon]="['fas', 'xmark']" class="c-pointer close-icon font-40-px" (click)="closeImagePreview()" />
 
     <img
       loading="lazy"
@@ -28,6 +28,7 @@
       class="w-80 h-80 rounded-3"
       alt="preview-img"
       onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+      (click)="stopPropagation($event)"
     />
   </div>
 </ng-container>

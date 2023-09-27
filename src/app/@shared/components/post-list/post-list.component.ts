@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   OnInit,
@@ -32,6 +33,8 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   profileId: string = '';
   activePage = 0;
   editPostIndex: number = null;
+  isLoading = false;
+  hasMoreData = false;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -108,24 +111,47 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
+@HostListener('window:scroll', ['$event'])
+onScroll(event: Event) {
+  const scrollY = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+  const thresholdFraction = 0.2;
+  const threshold = windowHeight * thresholdFraction;
+
+  if (scrollY + windowHeight >= documentHeight - threshold) {
+    if (!this.isLoading && !this.hasMoreData) {
+        this.loadMore();
+    }
+  }
+}
+
   loadMore(): void {
+    this.isPostLoader = true;
+    this.isLoading = true;
+    
     if (!this.communityId && this.activePage === 0) {
       this.getSeeFirstIdByProfileId(+this.profileId);
     }
 
     this.activePage = this.activePage + 1;
-    this.isPostLoader = true;
     this.postService.getPosts({ profileId: this.profileId, communityId: this.communityId, page: this.activePage, size: 15 }).subscribe({
       next: (res: any) => {
+        this.isLoading = false;
+        this.isPostLoader = false;
         if (res?.data?.length > 0) {
           this.postList = [...this.postList, ...res?.data];
+        } else {
+          this.hasMoreData = true;
         }
       },
       error: (error) => {
+        this.isLoading = false;
         console.log(error);
       },
       complete: () => {
         this.isPostLoader = false;
+        this.isLoading = false;
       }
     });
   }
