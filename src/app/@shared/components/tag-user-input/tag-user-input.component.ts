@@ -91,7 +91,6 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     const matches = htmlText.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/gi);
 
     const url = matches?.[0];
-    console.log('url : ', url);
 
     if (url) {
       if (!url?.includes(this.metaData?.url)) {

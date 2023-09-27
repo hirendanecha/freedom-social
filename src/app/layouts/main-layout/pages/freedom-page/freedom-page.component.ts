@@ -25,8 +25,6 @@ export class FreedomPageComponent {
     this.profileId = Number(localStorage.getItem('profileId'));
 
     this.getPages();
-
-    console.log('spinner : ', spinner.spinnerObservable);
   }
 
   createCommunity() {
