@@ -296,6 +296,15 @@
                           <button ngbDropdownItem>
                             <a
                               class="droplist d-flex align-items-center gap-2"
+                              (click)="editComment(comment)"
+                            >
+                              <fa-icon [icon]="['fas', 'pen-to-square']" />
+                              <span>Edit</span>
+                            </a>
+                          </button>
+                          <button ngbDropdownItem>
+                            <a
+                              class="droplist d-flex align-items-center gap-2"
                               (click)="deleteComments(comment.id)"
                             >
                               <fa-icon [icon]="['fas', 'trash-can']" />
@@ -460,6 +469,17 @@
                                 />
 
                                 <div ngbDropdownMenu class="dropdown-menu">
+                                  <button ngbDropdownItem>
+                                    <a
+                                      class="droplist d-flex align-items-center gap-2"
+                                      (click)="editComment(reply)"
+                                    >
+                                      <fa-icon
+                                        [icon]="['fas', 'pen-to-square']"
+                                      />
+                                      <span>Edit</span>
+                                    </a>
+                                  </button>
                                   <button ngbDropdownItem>
                                     <a
                                       class="droplist d-flex align-items-center gap-2"

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/@shared/services/post.service';
 import { SeeFirstUserService } from 'src/app/@shared/services/see-first-user.service';
@@ -11,6 +11,7 @@ import { SharedService } from 'src/app/@shared/services/shared.service';
 import { slideUp } from '../../animations/slideUp';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
+import { ReplyCommentModalComponent } from '../../modals/reply-comment-modal/reply-comment-modal.component';
 
 @Component({
   selector: 'app-post-card',
@@ -23,6 +24,7 @@ export class PostCardComponent {
   @Input('seeFirstList') seeFirstList: any = [];
   @Output('getPostList') getPostList: EventEmitter<void> = new EventEmitter<void>();
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('parentPostCommentElement', { static: false }) parentPostCommentElement: ElementRef;
 
   profileId = '';
   isOpenCommentsPostId: number = null;
@@ -42,6 +44,7 @@ export class PostCardComponent {
   isPostComment: boolean = false;
   webUrl = environment.webUrl;
 
+
   constructor(
     private seeFirstUserService: SeeFirstUserService,
     private unsubscribeProfileService: UnsubscribeProfileService,
@@ -51,7 +54,8 @@ export class PostCardComponent {
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     public sharedService: SharedService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {
     this.profileId = localStorage.getItem('profileId');
   }
@@ -91,6 +95,43 @@ export class PostCardComponent {
       this.onEditPost.emit(post);
     }
   }
+
+  editComment(comment): void {
+    if (comment.parentCommentId) {
+      const modalRef = this.modalService.open(ReplyCommentModalComponent, {
+        centered: true,
+      });
+      modalRef.componentInstance.title = 'Edit Comment';
+      modalRef.componentInstance.confirmButtonLabel = 'Comment';
+      modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+      modalRef.componentInstance.data = comment;
+      modalRef.result.then((res) => {
+        if (res) {
+          this.commentData.comment = res?.comment;
+          this.commentData.postId = res?.postId;
+          this.commentData.profileId = res?.profileId;
+          this.commentData['id'] = res?.id
+          this.commentData.parentCommentId = res?.parentCommentId
+          this.commentData['file'] = res?.file
+          this.commentData['imageUrl'] = res?.url
+          this.uploadCommentFileAndAddComment();
+        }
+      });
+    } else {
+      this.renderer.setProperty(
+        this.parentPostCommentElement?.nativeElement,
+        'innerHTML',
+        comment.comment
+      );
+      this.commentData['id'] = comment.id
+      if (comment.imageUrl) {
+        this.commentData['imageUrl'] = comment.imageUrl
+        this.isParent = true;
+      }
+    }
+    console.log(comment);
+  }
+
 
   deletePost(post): void {
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
@@ -267,18 +308,16 @@ export class PostCardComponent {
 
   commentOnPost(parentPostCommentElement, postId, commentId = null): void {
     const postComment = parentPostCommentElement.innerHTML;
-
+    console.log(this.commentData)
     if (this.isPostComment === false) {
       if (postComment || this.commentData?.file?.name) {
         this.isPostComment = true;
         this.commentData.comment = postComment;
         this.commentData.postId = postId;
         this.commentData.profileId = this.profileId;
-
         if (commentId) {
           this.commentData['parentCommentId'] = commentId;
         }
-
         this.uploadCommentFileAndAddComment()
         parentPostCommentElement.innerHTML = ''
       } else {
@@ -333,6 +372,7 @@ export class PostCardComponent {
             }
           })
         );
+        this.viewComments(this.commentData?.postId);
         this.isReply = false;
         this.commentId = null;
       });
