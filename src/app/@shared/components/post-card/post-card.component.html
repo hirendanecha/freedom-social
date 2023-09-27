@@ -199,6 +199,7 @@
                 loading="lazy"
                 data-src="{{ commentData?.imageUrl }}"
                 class="w-100-px h-100-px rounded-4"
+                onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                 alt="icon"
               />
               <fa-icon
@@ -363,6 +364,7 @@
                         loading="lazy"
                         data-src="{{ commentData?.imageUrl }}"
                         class="w-100 h-100 rounded-4"
+                        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                         alt="icon"
                       />
                       <fa-icon
