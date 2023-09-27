@@ -147,7 +147,6 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
 
   onEditPostData(post: any, index: number): void {
     this.editPostIndex = index;
-    console.log('editPostIndex', this.editPostIndex);
     this.onEditPost?.emit(post);
   }
 }

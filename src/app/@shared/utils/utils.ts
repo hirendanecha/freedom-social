@@ -10,9 +10,6 @@ export const numToRevArray = (num: number) => {
 
 export const  isFormSubmittedAndError = (formGroup: FormGroup, isFormSubmitted: boolean, controlName: string, errorName: string = '', notError: Array<string> = new Array()): any => {
   const otherError: any = formGroup.controls[controlName].errors;
-  // if(otherError) {
-  //     console.log(controlName, otherError);
-  // }
 
   if (isFormSubmitted && otherError) {
       return errorName == '' ? true : (otherError ? !Object.keys(otherError).some(err => notError.includes(err)) : true) ? formGroup.controls[controlName].hasError(errorName) : false;

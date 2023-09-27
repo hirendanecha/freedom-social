@@ -80,7 +80,6 @@ export class CommunityCardComponent {
 
     modalRef.result.then((res) => {
       if (res === 'success') {
-        console.log(this.community.pageType)
         actionObs.subscribe({
           next: (res: any) => {
             if (res) {

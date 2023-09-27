@@ -23,8 +23,6 @@ export class CommunitiesComponent {
     this.profileId = Number(localStorage.getItem('profileId'));
 
     this.getCommunities();
-
-    console.log('spinner : ', spinner.spinnerObservable);
   }
 
   getCommunities(): void {
