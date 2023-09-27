@@ -219,7 +219,9 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
       this.customerService.updateProfile(this.profileId, this.customer).subscribe({
         next: (res: any) => {
           this.spinner.hide();
-          this.toastService.success('Update successfully');
+          if (!res.error) {
+            this.toastService.success(res.message);
+          }
         },
         error: (error) => {
           this.spinner.hide();

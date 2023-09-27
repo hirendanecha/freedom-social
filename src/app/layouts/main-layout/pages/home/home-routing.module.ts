@@ -6,7 +6,8 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
   {
     path: 'home',
@@ -30,4 +31,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomeRoutingModule {}
+export class HomeRoutingModule { }
