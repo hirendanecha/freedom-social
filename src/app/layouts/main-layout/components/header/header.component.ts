@@ -13,6 +13,7 @@ import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 import { RightSidebarComponent } from '../../components/right-sidebar/right-sidebar.component';
 import { ResearchSidebarComponent } from '../../components/research-sidebar/research-sidebar.component';
 import { LeftSidebarComponent } from '../../components/left-sidebar/left-sidebar.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -37,6 +38,7 @@ export class HeaderComponent {
     isShowRightSideBar: true,
     isShowResearchLeftSideBar: false,
   };
+  environment = environment
 
   constructor(
     private modalService: NgbModal,
@@ -90,10 +92,10 @@ export class HeaderComponent {
   }
 
   openLeftSidebar() {
-		this.offcanvasService.open(this.sidebar?.isShowResearchLeftSideBar ? ResearchSidebarComponent : LeftSidebarComponent, { position: 'start', panelClass: 'w-300-px' });
-	}
+    this.offcanvasService.open(this.sidebar?.isShowResearchLeftSideBar ? ResearchSidebarComponent : LeftSidebarComponent, { position: 'start', panelClass: 'w-300-px' });
+  }
 
   openRightSidebar() {
-		this.offcanvasService.open(RightSidebarComponent, { position: 'end', panelClass: 'w-300-px' });
-	}
+    this.offcanvasService.open(RightSidebarComponent, { position: 'end', panelClass: 'w-300-px' });
+  }
 }
