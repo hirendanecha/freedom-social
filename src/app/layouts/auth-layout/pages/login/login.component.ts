@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/@shared/services/auth.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -72,8 +73,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       next: (data: any) => {
         this.spinner.hide();
         if (!data.error) {
-          this.cookieService.set('token', data?.accessToken);
-          this.cookieService.set('auth-user', JSON.stringify(data?.user));
+          this.cookieService.set('token', data?.accessToken, 365, environment.domain);
+          this.cookieService.set('auth-user', JSON.stringify(data?.user), 365, environment?.domain);
           this.tokenStorage.saveToken(data?.accessToken);
           this.tokenStorage.saveUser(data.user);
           localStorage.setItem('profileId', data.user.profileId);

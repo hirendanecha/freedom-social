@@ -13,5 +13,5 @@ export const environment = {
   socketUrl: `${url}/`,
   webUrl: webUrl,
   tubeUrl: tubeUrl,
-
+  domain: '.freedom.buzz'
 };
