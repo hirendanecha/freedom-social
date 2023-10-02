@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BehaviorSubject, Subject } from 'rxjs';
 
@@ -11,13 +12,18 @@ const USER_KEY = 'auth-user';
 export class TokenStorageService {
   isUserAuthenticated: Subject<boolean> = new BehaviorSubject<boolean>(false);
   public _credentials: any = {};
-  constructor() {}
+  
+  constructor(private cookieService: CookieService) { }
 
   signOut(): void {
     window.sessionStorage.clear();
 
     const theme = window.localStorage.getItem('theme');
     window.localStorage.clear();
+    if (this.cookieService.check('auth-user')) {
+      this.cookieService.delete('auth-user', '/');
+      this.cookieService.delete('token', '/');
+    }
     window.localStorage.setItem('theme', theme);
   }
 

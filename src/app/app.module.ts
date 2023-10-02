@@ -7,13 +7,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastsContainerComponent } from './@shared/components/toasts-container/toasts-container.component';
 import { AuthenticationGuard } from './@shared/guards/authentication.guard';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToastsContainerComponent
   ],
-  providers: [AuthenticationGuard],
+  providers: [AuthenticationGuard, CookieService],
   bootstrap: [AppComponent],
   imports: [
     AppRoutingModule,
@@ -24,4 +25,4 @@ import { AuthenticationGuard } from './@shared/guards/authentication.guard';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule { }
