@@ -73,8 +73,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       next: (data: any) => {
         this.spinner.hide();
         if (!data.error) {
-          this.cookieService.set('token', data?.accessToken, { domain: `.${environment.domain}`, secure: true, sameSite: 'None' });
-          this.cookieService.set('auth-user', JSON.stringify(data?.user), { domain: `.${environment.domain}`, secure: true, sameSite: 'None' });
+          this.cookieService.set('token', data?.accessToken, 36000, '/', `.${environment.domain}`, true, 'Lax');
+          this.cookieService.set('auth-user', JSON.stringify(data?.user), 36000, '/', `.${environment.domain}`, true, 'None');
           this.tokenStorage.saveToken(data?.accessToken);
           this.tokenStorage.saveUser(data.user);
           localStorage.setItem('profileId', data.user.profileId);
