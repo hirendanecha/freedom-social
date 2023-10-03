@@ -12,7 +12,7 @@ export class CustomerService {
 
   customerObs: Subject<any> = new Subject<any>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getCustomer(id: number): Observable<any> {
     this.http.get<any>(`${this.baseUrl}/${id}`).pipe(take(1)).subscribe((customers) => {
@@ -84,6 +84,12 @@ export class CustomerService {
   readUnreadNotification(id: number, isRead: string): Observable<any> {
     return this.http.get(
       `${this.baseUrl}/edit-notification/${id}?isRead=${isRead}`
+    );
+  }
+
+  logout(): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/logout`
     );
   }
 }

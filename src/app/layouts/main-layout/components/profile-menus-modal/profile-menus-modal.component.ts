@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbActiveOffcanvas, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
@@ -21,7 +22,8 @@ export class ProfileMenusModalComponent {
     private toastService: ToastService,
     private tokenStorageService: TokenStorageService,
     private router: Router,
-  ) {}
+    private customerService: CustomerService,
+  ) { }
 
   closeMenu(e: MouseEvent, type: string) {
     if (e && type) {
@@ -51,6 +53,11 @@ export class ProfileMenusModalComponent {
 
   logout(): void {
     // this.isCollapsed = true;
+    this.customerService.logout().subscribe({
+      next: (res => {
+        console.log(res)
+      })
+    })
     this.tokenStorageService.signOut();
     this.toastService.success('Logout successfully');
     this.router.navigate(['/login']);

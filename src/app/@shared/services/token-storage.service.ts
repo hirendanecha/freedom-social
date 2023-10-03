@@ -20,7 +20,8 @@ export class TokenStorageService {
 
     const theme = window.localStorage.getItem('theme');
     window.localStorage.clear();
-    this.cookieService.deleteAll('auth-user');
+    this.cookieService.delete('auth-user');
+    this.cookieService.deleteAll()
     window.localStorage.setItem('theme', theme);
   }
 
