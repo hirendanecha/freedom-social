@@ -12,7 +12,7 @@ const USER_KEY = 'auth-user';
 export class TokenStorageService {
   isUserAuthenticated: Subject<boolean> = new BehaviorSubject<boolean>(false);
   public _credentials: any = {};
-  
+
   constructor(private cookieService: CookieService) { }
 
   signOut(): void {
@@ -20,10 +20,7 @@ export class TokenStorageService {
 
     const theme = window.localStorage.getItem('theme');
     window.localStorage.clear();
-    if (this.cookieService.check('auth-user')) {
-      this.cookieService.delete('auth-user', '/');
-      this.cookieService.delete('token', '/');
-    }
+    this.cookieService.deleteAll('auth-user');
     window.localStorage.setItem('theme', theme);
   }
 
