@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { AuthHeaderComponent } from './components/auth-header/auth-header.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AuthHeaderComponent } from './components/auth-header/auth-header.compon
     SignUpComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    AuthHeaderComponent
+    AuthHeaderComponent,
+    LandingPageComponent
   ],
   imports: [
     SharedModule,

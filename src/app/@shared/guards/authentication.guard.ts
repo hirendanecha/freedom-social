@@ -21,7 +21,7 @@ export class AuthenticationGuard {
     if (this.tokenService.getToken()) {
       return true;
     }
-    this.router.navigate(['/login'], {
+    this.router.navigate(['/auth'], {
       queryParams: { redirect: state.url },
     });
 

@@ -60,7 +60,7 @@ export class ProfileMenusModalComponent {
     })
     this.tokenStorageService.signOut();
     this.toastService.success('Logout successfully');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth']);
     // this.isDomain = false;
   }
 
