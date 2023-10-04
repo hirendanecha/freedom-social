@@ -6,8 +6,19 @@
       alt=""
     />
     <div class="">
-        <button class="btn btn-primary alt third w-80-px" [routerLink]="['/login']">Login</button>
-        <button class="btn btn-outline-primary alt third w-80-px ms-2" [routerLink]="['/register']">Signup</button>
+      <button
+        class="btn btn-primary alt third w-80-px"
+        routerLink="/login"
+        (click)="openLoginPage()"
+      >
+        Login
+      </button>
+      <button
+        class="btn btn-outline-primary alt third w-80-px ms-2"
+        (click)="openSignPage()"
+      >
+        Signup
+      </button>
     </div>
   </nav>
 

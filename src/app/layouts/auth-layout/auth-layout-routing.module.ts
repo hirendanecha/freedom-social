@@ -11,11 +11,7 @@ const routes: Routes = [
     path: '',
     component: AuthLayoutComponent,
     children: [
-      {
-        path: 'auth',
-        component: LandingPageComponent,
-      },
-      {
+       {
         path: 'login',
         component: LoginComponent,
       },
