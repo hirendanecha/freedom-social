@@ -1,133 +1,161 @@
-.bg-color{
-   background: #11134d;
-   height: 100vh;
-   width: 100vw;
+.bg-color {
+  background: #11134d;
+  height: 100vh;
+  width: 100vw;
 }
-.auth-btns{
-@media (max-width:560px) {
+.auth-btns {
+  @media (max-width: 560px) {
     justify-content: center;
-}
+  }
 }
 .answers_main {
-    padding: 30px 200px;
+  padding: 30px 200px;
 }
 
-@media(min-width: 768px)and ((max-width:1440px)) {
-    .answers_main {
-        padding:90px 20px 120px
-    }
+@media (min-width: 768px) and ((max-width: 1440px)) {
+  .answers_main {
+    padding: 90px 20px 120px;
+  }
 }
 
-@media(max-width: 767px) {
-    .answers_main {
-        padding:90px 20px 120px
-    }
+@media (max-width: 767px) {
+  .answers_main {
+    padding: 90px 20px 120px;
+  }
 }
 
 .answers_main h1 {
-    font-weight: 400;
-    font-size: 50px;
-    line-height: 80px;
-    text-align: center;
-    letter-spacing: -.015em
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 80px;
+  text-align: center;
+  letter-spacing: -0.015em;
 }
 
-@media(max-width: 767px) {
-    .answers_main h1 {
-        font-size:24px;
-        line-height: 30px
-    }
+@media (max-width: 767px) {
+  .answers_main h1 {
+    font-size: 24px;
+    line-height: 30px;
+  }
 }
 
 .answers_main .answers_token {
-    display: grid;
-    grid-template-columns: 1fr;
-    margin: 40px 0;
-    grid-gap: 40px;
-    gap: 40px;
-    place-items: center
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 40px 0;
+  grid-gap: 40px;
+  gap: 40px;
+  place-items: center;
 }
 
 .answers_main .answers_token img {
-    border-radius: 8px
+  border-radius: 8px;
 }
 
 @media only screen and (min-width: 576px) {
-    .answers_main .answers_token {
-        grid-template-columns:repeat(2,1fr)
-    }
+  .answers_main .answers_token {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media only screen and (min-width: 992px) {
-    .answers_main .answers_token {
-        grid-template-columns:repeat(4,1fr)
-    }
+  .answers_main .answers_token {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 @media only screen and (min-width: 1200px) {
-    .answers_main .answers_token {
-        gap:70px
-    }
+  .answers_main .answers_token {
+    gap: 70px;
+  }
 }
 
 .answers_main .Answers_online__lw6jA {
-    width: 100%;
-    display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center
+  width: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
 }
 
-@media(max-width: 992px) {
-    .answers_main .Answers_online__lw6jA {
-        flex-direction:column;
-        grid-gap: 24px
-    }
+@media (max-width: 992px) {
+  .answers_main .Answers_online__lw6jA {
+    flex-direction: column;
+    grid-gap: 24px;
+  }
 }
 
 .answers_main .Answers_online__lw6jA .Answers_onlineMain__jeDay {
-    max-width: 575px;
-    width: 100%
+  max-width: 575px;
+  width: 100%;
 }
 
 .answers_main .Answers_online__lw6jA .Answers_rightAnswer___Ek_r {
-    max-width: 690px;
-    width: 100%;
-    background: #fff;
-    box-shadow: 0 4px 4px 7px rgba(23,25,84,.05);
-    padding: 50px
+  max-width: 690px;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 4px 4px 7px rgba(23, 25, 84, 0.05);
+  padding: 50px;
 }
 
-@media(max-width: 992px) {
-    .answers_main .Answers_online__lw6jA .Answers_rightAnswer___Ek_r {
-        box-shadow:unset;
-        height: auto;
-        padding: 0;
-        margin-top: 10px
-    }
+@media (max-width: 992px) {
+  .answers_main .Answers_online__lw6jA .Answers_rightAnswer___Ek_r {
+    box-shadow: unset;
+    height: auto;
+    padding: 0;
+    margin-top: 10px;
+  }
 }
 
-.answers_main .Answers_online__lw6jA .Answers_rightAnswer___Ek_r .Answers_internet__ywf41 {
-    display: flex;
-    align-items: flex-start;
-    grid-gap: 10px
+.answers_main
+  .Answers_online__lw6jA
+  .Answers_rightAnswer___Ek_r
+  .Answers_internet__ywf41 {
+  display: flex;
+  align-items: flex-start;
+  grid-gap: 10px;
 }
 
-.answers_main .Answers_online__lw6jA .Answers_rightAnswer___Ek_r .Answers_internet__ywf41 p {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: -.015em;
-    color: #6f7275;
-    margin-bottom: 16px
+.answers_main
+  .Answers_online__lw6jA
+  .Answers_rightAnswer___Ek_r
+  .Answers_internet__ywf41
+  p {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.015em;
+  color: #6f7275;
+  margin-bottom: 16px;
 }
 
-.answers_main .Answers_online__lw6jA .Answers_rightAnswer___Ek_r .Answers_internet__ywf41 img {
-    width: 33px;
-    height: 23px;
-    margin-top: 6px
+.answers_main
+  .Answers_online__lw6jA
+  .Answers_rightAnswer___Ek_r
+  .Answers_internet__ywf41
+  img {
+  width: 33px;
+  height: 23px;
+  margin-top: 6px;
 }
 
-.answers_main .Answers_online__lw6jA .Answers_rightAnswer___Ek_r .Answers_internet__ywf41:last-child {
-    margin-bottom: 0
+.answers_main
+  .Answers_online__lw6jA
+  .Answers_rightAnswer___Ek_r
+  .Answers_internet__ywf41:last-child {
+  margin-bottom: 0;
+}
+
+.landing-btn {
+  .btn-primary {
+    background: #11134d;
+    color: #fff;
+    border: #11134d;
+    height: 38px;
+  }
+  .btn-outline {
+    border-color: #11134d;
+    color: #11134d;
+    height: 38px;
+  }
 }

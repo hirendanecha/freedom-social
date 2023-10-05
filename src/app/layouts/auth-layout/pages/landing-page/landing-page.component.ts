@@ -7,9 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent {
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) { }
 
   openLoginPage(): void {
     this.router.navigate(['/login']);
