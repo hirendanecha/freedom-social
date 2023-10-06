@@ -221,6 +221,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
           this.spinner.hide();
           if (!res.error) {
             this.toastService.success(res.message);
+            this.sharedService.getUserDetails();
           }
         },
         error: (error) => {

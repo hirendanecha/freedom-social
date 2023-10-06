@@ -179,14 +179,6 @@ export class PostCardComponent {
   dislikeFeedPost(post) {
     if (post.react == 'L') {
       post.likescount = post.likescount - 1;
-    } else if (post.react == 'LO') {
-      post.lovecount = post.lovecount - 1;
-    } else if (post.react == 'HA') {
-      post.haliriouscount = post.haliriouscount - 1;
-    } else if (post.react == 'WO') {
-      post.wowcount = post.wowcount - 1;
-    } else if (post.react == 'SA') {
-      post.sadcount = post.sadcount - 1;
     }
     post.totalReactCount = post.totalReactCount - 1;
     post.react = null;
@@ -275,7 +267,7 @@ export class PostCardComponent {
     }
   }
 
-  likeComments(comment): void {
+  likeComments(comment) {
     comment.likeCount = comment.likeCount + 1;
     comment.react = 'L';
     const data = {
@@ -291,7 +283,7 @@ export class PostCardComponent {
     });
   }
 
-  disLikeComments(comment): void {
+  disLikeComments(comment) {
     comment.likeCount = comment.likeCount - 1;
     comment.react = null;
     const data = {

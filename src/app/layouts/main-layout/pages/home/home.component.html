@@ -187,7 +187,11 @@
           <div class="btn-area gap-3 w-100 d-flex justify-content-end">
             <button
               class="btn btn-sm btn-secondary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
-              *ngIf="postData?.postdescription || postData?.file?.name"
+              *ngIf="
+                postData?.postdescription ||
+                postData?.file?.name ||
+                postData.imageUrl
+              "
               (click)="resetPost()"
             >
               Cancel

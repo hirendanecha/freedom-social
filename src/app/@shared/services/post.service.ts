@@ -24,7 +24,7 @@ export class PostService {
   selectedFile: any;
   postData: any = {};
   private baseUrl = environment.serverUrl + 'posts';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   upload(
     files: File,
@@ -36,7 +36,7 @@ export class PostService {
     formData.append('file', files);
     formData.append('id', id);
     formData.append('default', defaultType);
-
+    console.log(formData)
     const req = new HttpRequest(
       'POST',
       `${this.baseUrl}/upload-post`,

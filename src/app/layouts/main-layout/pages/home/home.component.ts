@@ -96,7 +96,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.socketService.socket.emit('join', { room: this.profileId });
     this.socketService.socket.on('notification', (data: any) => {
-      this.sharedService.isNotify = true;
+      console.log(data)
+      if (data) {
+        this.sharedService.isNotify = true;
+      }
     });
   }
 
