@@ -2,20 +2,70 @@
   height: 100vh;
   width: 100vw;
   background: #11134d;
- 
-  .text-s{
-    font-size: min(max(20px, 2vw), 36px) !important;
-    }
-  .text-white{
-    font-size: min(max(20px, 2vw), 44px);
 
-    @media (max-width:560px) {
+  .text-s {
+    font-size: min(max(16px, 1vw), 22px);
+  }
+  .c-fonts {
+    font-size: min(max(25px, 2vw), 44px);
+
+    @media (max-width: 999px) {
       padding: 0 5px;
-      line-height: 28px;
+      line-height: 33px;
+    }
+  }
+
+  .custom-height {
+    height: calc(100% - 300px);
+    min-height: 400px;
+  }
+  .sub-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: start;
+
+    .head-text {
+      font-size: min(max(25px, 2vw), 36px) !important;
+      @media (max-width: 684px) {
+        line-height: 24px;
+      }
+    }
+
+    .sub-text {
+      color: #11134d !important;
+      font-size: min(max(14px, 2vw), 24px);
+    }
+    .c-width {
+      max-width: 722px;
+      // padding: 0 20px;
+      @media (max-width: 684px) {
+        line-height: 24px;
+        padding: 0;
+      }
+    }
+  }
+  .c-footer {
+    max-height: 530px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .footer-txt {
+      color: #fff;
+      font-size: min(max(15px, 2vw), 20px) !important;
+      text-align: center;
+      padding: 0 10px;
+      @media (max-width: 600px) {
+        line-height: 19px;
+      }
     }
   }
 }
-.bg-color{
+.bg-color {
   background: #11134d;
 }
 .auth-btns {
@@ -30,13 +80,13 @@
 
 @media (min-width: 768px) and ((max-width: 1440px)) {
   .answers_main {
-    padding: 90px 20px 120px;
+    padding: 50px 20px 120px;
   }
 }
 
 @media (max-width: 767px) {
   .answers_main {
-    padding: 90px 20px 120px;
+    padding: 50px 20px 120px;
   }
 }
 
