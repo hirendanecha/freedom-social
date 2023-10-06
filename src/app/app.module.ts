@@ -8,11 +8,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastsContainerComponent } from './@shared/components/toasts-container/toasts-container.component';
 import { AuthenticationGuard } from './@shared/guards/authentication.guard';
 import { CookieService } from 'ngx-cookie-service';
+import { LandingPageComponent } from './layouts/auth-layout/pages/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ToastsContainerComponent
+    ToastsContainerComponent,
+    LandingPageComponent
   ],
   providers: [AuthenticationGuard, CookieService],
   bootstrap: [AppComponent],

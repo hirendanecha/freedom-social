@@ -7,12 +7,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent {
+  mobileMenuToggle: boolean = false
+
   constructor(private router: Router) { }
 
   openLoginPage(): void {
+    this.mobileMenuToggle = false;
     this.router.navigate(['/login']);
   }
   openSignPage(): void {
+    this.mobileMenuToggle = false;
     this.router.navigate(['/register']);
+  }
+  mobileMenu():void{
+  this.mobileMenuToggle = !this.mobileMenuToggle;
+  }
+  closeMenu(){
+    this.mobileMenuToggle = false;
   }
 }
