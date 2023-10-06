@@ -54,8 +54,9 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     this.socketService.socket.on('new-post-added',
       (res: any) => {
         if (res?.[0]) {
-          if (this.editPostIndex >= 0) {
+          if (this.editPostIndex >= 0 && this.editPostIndex != null) {
             this.postList[this.editPostIndex] = res?.[0];
+            this.editPostIndex = null;
           } else {
             this.postList.unshift(res?.[0]);
           }
@@ -111,25 +112,25 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-@HostListener('window:scroll', ['$event'])
-onScroll(event: Event) {
-  const scrollY = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const documentHeight = document.documentElement.scrollHeight;
-  const thresholdFraction = 0.2;
-  const threshold = windowHeight * thresholdFraction;
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event) {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const thresholdFraction = 0.2;
+    const threshold = windowHeight * thresholdFraction;
 
-  if (scrollY + windowHeight >= documentHeight - threshold) {
-    if (!this.isLoading && !this.hasMoreData) {
+    if (scrollY + windowHeight >= documentHeight - threshold) {
+      if (!this.isLoading && !this.hasMoreData) {
         this.loadMore();
+      }
     }
   }
-}
 
   loadMore(): void {
     this.isPostLoader = true;
     this.isLoading = true;
-    
+
     if (!this.communityId && this.activePage === 0) {
       this.getSeeFirstIdByProfileId(+this.profileId);
     }
@@ -172,6 +173,7 @@ onScroll(event: Event) {
   }
 
   onEditPostData(post: any, index: number): void {
+    console.log(index);
     this.editPostIndex = index;
     this.onEditPost?.emit(post);
   }
