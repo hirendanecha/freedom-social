@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { ToastService } from './toast.service';
+import { Router } from '@angular/router';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -13,16 +15,20 @@ export class TokenStorageService {
   isUserAuthenticated: Subject<boolean> = new BehaviorSubject<boolean>(false);
   public _credentials: any = {};
 
-  constructor(private cookieService: CookieService) { }
+  constructor(private cookieService: CookieService,
+    private router: Router,
+    private toastService: ToastService,
+    ) { }
 
   signOut(): void {
     window.sessionStorage.clear();
-
     const theme = window.localStorage.getItem('theme');
     window.localStorage.clear();
     this.cookieService.delete('auth-user');
-    this.cookieService.deleteAll()
+    this.cookieService.deleteAll('/');
     window.localStorage.setItem('theme', theme);
+    this.toastService.success('Logout successfully');
+    this.router.navigate(['/login']);
   }
 
   public saveToken(token: string): void {
