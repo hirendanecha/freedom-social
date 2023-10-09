@@ -28,7 +28,7 @@ export class TokenStorageService {
     this.cookieService.deleteAll('/');
     window.localStorage.setItem('theme', theme);
     this.toastService.success('Logout successfully');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   public saveToken(token: string): void {
