@@ -35,15 +35,18 @@
             {{ post.Username }}
           </div>
           <ng-container *ngIf="post?.groupName">
-            <span>posted on</span>
-            <a
-              [href]="'/research/detail/grpm/' + post?.groupLink"
-              target="_blank"
-              class="m-0"
-            >
-              <span class="fw-bold m-0">{{ post?.groupName }}</span>
-            </a>
-            <span>Group</span>
+            <div class="d-flex align-items-center">
+              <span>posted on</span>&nbsp;
+              <a
+                [href]="'/research/detail/grpm/' + post?.groupLink"
+                target="_blank"
+                class="m-0"
+              >
+                <span class="fw-bold m-0 posted-group-text d-flex align-items-center posted-wrap-text"
+                [title]="post?.groupName">{{ post?.groupName }}</span>
+              </a>
+              &nbsp;<span>Group</span>
+            </div>
           </ng-container>
         </div>
 

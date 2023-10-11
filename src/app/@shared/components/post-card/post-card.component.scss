@@ -18,6 +18,12 @@
       line-break: anywhere;
     }
 
+    .posted-wrap-text{
+      max-width: 298px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     .post-profile {
       max-width: 48px;
       min-height: 48px;

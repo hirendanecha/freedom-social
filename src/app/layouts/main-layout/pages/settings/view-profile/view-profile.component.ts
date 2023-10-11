@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -11,6 +6,7 @@ import { Customer } from 'src/app/@shared/constant/customer';
 import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 import { CommunityService } from 'src/app/@shared/services/community.service';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
+import { PostService } from 'src/app/@shared/services/post.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 
@@ -20,7 +16,9 @@ import { TokenStorageService } from 'src/app/@shared/services/token-storage.serv
   styleUrls: ['./view-profile.component.scss'],
 })
 export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
-  customer: Customer = new Customer();
+  customer: any;
+  // customer: Customer = new Customer();
+  customerPostList: any = [];
   userId = '';
   profilePic: any = {};
   coverPic: any = {};
@@ -37,7 +35,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     private tokenStorage: TokenStorageService,
     public sharedService: SharedService,
     private communityService: CommunityService,
-    public breakpointService: BreakpointService
+    public breakpointService: BreakpointService,
+    private postService: PostService
   ) {
     this.router.events.subscribe((event: any) => {
       const id = event?.routerEvent?.url.split('/')[3];
@@ -47,8 +46,6 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.profileId = localStorage.getItem('profileId');
       }
     });
-
-
   }
   ngOnInit(): void {
     if (!this.tokenStorage.getToken()) {
@@ -57,32 +54,31 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalService.close();
   }
 
-  ngAfterViewInit(): void { }
+  ngAfterViewInit(): void {}
 
   getProfile(id): void {
     this.spinner.show();
-    this.customerService.getProfile(id).subscribe(
-      {
-        next: (res: any) => {
-          this.spinner.hide();
-          if (res.data) {
-            this.customer = res.data[0];
-            this.userId = res.data[0].UserID;
-          }
-        },
-        error:
-          (error) => {
-            this.spinner.hide();
-            console.log(error);
-          }
-      });
+    this.customerService.getProfile(id).subscribe({
+      next: (res: any) => {
+        this.spinner.hide();
+        if (res.data) {
+          this.customer = res.data[0];
+          this.userId = res.data[0].UserID;
+        }
+      },
+      error: (error) => {
+        this.spinner.hide();
+        console.log(error);
+      },
+    });
   }
 
   getCommunities(): void {
     this.spinner.show();
     this.communityList = [];
-    this.communityService.getCommunityByUserId(this.profileId, 'community').subscribe(
-      {
+    this.communityService
+      .getCommunityByUserId(this.profileId, 'community')
+      .subscribe({
         next: (res: any) => {
           this.spinner.hide();
           if (res.data) {
@@ -94,11 +90,10 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
             });
           }
         },
-        error:
-          (error) => {
-            this.spinner.hide();
-            console.log(error);
-          }
+        error: (error) => {
+          this.spinner.hide();
+          console.log(error);
+        },
       });
   }
 
@@ -115,7 +110,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   openEditProfile(): void {
-    this.router.navigate([`settings/edit-profile/${this.profileId}`])
+    this.router.navigate([`settings/edit-profile/${this.profileId}`]);
   }
 
   ngOnDestroy(): void {

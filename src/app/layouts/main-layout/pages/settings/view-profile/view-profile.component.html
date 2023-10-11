@@ -73,7 +73,7 @@
       class="flex-column mb-15 w-100"
     >
       <ng-container *ngIf="activeTab === 1">
-        <app-post-list parentComponent="ViewProfileComponent" />
+        <app-post-list parentComponent="ViewProfileComponent" [id]="customer.ID" />
       </ng-container>
       <ng-container *ngIf="activeTab === 2">
         <ng-container *ngIf="communityList.length; else noData">

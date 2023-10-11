@@ -24,6 +24,7 @@ import { SocketService } from 'src/app/@shared/services/socket.service';
 })
 export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('parentComponent') parentComponent: string = '';
+  @Input('id') userId: number = null;
   @Input('communityId') communityId: number = null;
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
 
@@ -41,7 +42,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     private postService: PostService,
     public sharedService: SharedService,
     private socketService: SocketService,
-    private seeFirstUserService: SeeFirstUserService,
+    private seeFirstUserService: SeeFirstUserService
   ) {
     this.profileId = localStorage.getItem('profileId');
   }
@@ -51,7 +52,8 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       this.socketService.socket.connect();
     }
 
-    this.socketService.socket.on('new-post-added',
+    this.socketService.socket.on(
+      'new-post-added',
       (res: any) => {
         if (res?.[0]) {
           if (this.editPostIndex >= 0 && this.editPostIndex != null) {
@@ -82,7 +84,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     // );
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getPostList();
@@ -96,33 +98,51 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       this.loadMore();
     } else {
       this.isPostLoader = true;
-      this.postService.getPostsByProfileId(this.profileId).subscribe({
-        next: (res: any) => {
-          if (res?.data) {
-            this.postList = res?.data;
-          }
-        },
-        error: (error) => {
-          console.log(error);
-        },
-        complete: () => {
-          this.isPostLoader = false;
-        }
-      });
+      if (this.userId) { 
+        this.postService.getPostsByProfileId(this.userId).subscribe({
+          next: (res: any) => {
+            if (res?.data) {
+              this.postList = res?.data;
+            }
+          },
+          error: (error) => {
+            console.log(error);
+          },
+          complete: () => {
+            this.isPostLoader = false;
+          },
+        });
+      } else {
+        this.postService.getPostsByProfileId(this.profileId).subscribe({
+          next: (res: any) => {
+            if (res?.data) {
+              this.postList = res?.data;
+            }
+          },
+          error: (error) => {
+            console.log(error);
+          },
+          complete: () => {
+            this.isPostLoader = false;
+          },
+        });
+      }
     }
   }
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event) {
-    const scrollY = window.scrollY;
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    const thresholdFraction = 0.2;
-    const threshold = windowHeight * thresholdFraction;
+    if (this.parentComponent === 'HomeComponent') {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const thresholdFraction = 0.2;
+      const threshold = windowHeight * thresholdFraction;
 
-    if (scrollY + windowHeight >= documentHeight - threshold) {
-      if (!this.isLoading && !this.hasMoreData) {
-        this.loadMore();
+      if (scrollY + windowHeight >= documentHeight - threshold) {
+        if (!this.isLoading && !this.hasMoreData) {
+          this.loadMore();
+        }
       }
     }
   }
@@ -136,25 +156,32 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     this.activePage = this.activePage + 1;
-    this.postService.getPosts({ profileId: this.profileId, communityId: this.communityId, page: this.activePage, size: 15 }).subscribe({
-      next: (res: any) => {
-        this.isLoading = false;
-        this.isPostLoader = false;
-        if (res?.data?.length > 0) {
-          this.postList = [...this.postList, ...res?.data];
-        } else {
-          this.hasMoreData = true;
-        }
-      },
-      error: (error) => {
-        this.isLoading = false;
-        console.log(error);
-      },
-      complete: () => {
-        this.isPostLoader = false;
-        this.isLoading = false;
-      }
-    });
+    this.postService
+      .getPosts({
+        profileId: this.profileId,
+        communityId: this.communityId,
+        page: this.activePage,
+        size: 15,
+      })
+      .subscribe({
+        next: (res: any) => {
+          this.isLoading = false;
+          this.isPostLoader = false;
+          if (res?.data?.length > 0) {
+            this.postList = [...this.postList, ...res?.data];
+          } else {
+            this.hasMoreData = true;
+          }
+        },
+        error: (error) => {
+          this.isLoading = false;
+          console.log(error);
+        },
+        complete: () => {
+          this.isPostLoader = false;
+          this.isLoading = false;
+        },
+      });
   }
 
   getSeeFirstIdByProfileId(id: number): void {
