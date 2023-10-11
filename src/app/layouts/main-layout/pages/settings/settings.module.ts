@@ -6,7 +6,6 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { SeeFirstUserComponent } from './see-first-user/see-first-user.component';
 import { UnsubscribedUsersComponent } from './unsubscribed-users/unsubscribed-users.component';
 import { SharedModule } from 'src/app/@shared/shared.module';
-import { PipeModule } from 'src/app/@shared/pipe/pipe.module';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 
 @NgModule({
@@ -17,6 +16,6 @@ import { DeleteAccountComponent } from './delete-account/delete-account.componen
     SeeFirstUserComponent,
     UnsubscribedUsersComponent
   ],
-  imports: [SettingsRoutingModule, SharedModule, PipeModule],
+  imports: [SettingsRoutingModule, SharedModule],
 })
 export class SettingsModule {}

@@ -77,6 +77,7 @@ import {
 import { ClaimTokenModalComponent } from './modals/clai-1776-token-modal/claim-token-modal.component';
 import { WalletLinkComponent } from './modals/wallet-download-modal/1776-wallet.component';
 import { ReplyCommentModalComponent } from './modals/reply-comment-modal/reply-comment-modal.component';
+import { PipeModule } from './pipe/pipe.module';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -107,6 +108,7 @@ const sharedModules = [
   RouterModule,
   NgxTrimDirectiveModule,
   FontAwesomeModule,
+  PipeModule
 ];
 
 @NgModule({

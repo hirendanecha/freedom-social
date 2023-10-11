@@ -28,26 +28,31 @@
       <div
         class="profile-area d-center justify-content-between align-items-start h-24-px w-100 ms-2 ms-lg-0"
       >
-        <div
-          class="info-area d-flex flex-wrap gap-1 justify-content-start align-items-center"
-        >
-          <div class="h6 m-0" *ngIf="post.Username">
-            {{ post.Username }}
-          </div>
-          <ng-container *ngIf="post?.groupName">
-            <div class="d-flex align-items-center">
-              <span>posted on</span>&nbsp;
-              <a
-                [href]="'/research/detail/grpm/' + post?.groupLink"
-                target="_blank"
-                class="m-0"
-              >
-                <span class="fw-bold m-0 posted-group-text d-flex align-items-center posted-wrap-text"
-                [title]="post?.groupName">{{ post?.groupName }}</span>
-              </a>
-              &nbsp;<span>Group</span>
+        <div class="info-area d-flex flex-wrap gap-1 justify-content-start align-items-center">
+          <div class="d-flex flex-column h6 m-0" *ngIf="post.Username">
+            <div class="d-flex">
+              {{ post.Username }}
+              <fa-icon class="ms-2 me-1" [icon]="['fas', 'clock']" />
+              {{ post.postcreationdate | dateDay }}
             </div>
-          </ng-container>
+            <ng-container *ngIf="post?.groupName">
+              <div class="d-flex mt-2">
+                <span>posted on</span>&nbsp;
+                <a
+                  [href]="'/research/detail/grpm/' + post?.groupLink"
+                  target="_blank"
+                  class="m-0"
+                >
+                  <span
+                    class="fw-bold m-0 posted-group-text align-items-center posted-wrap-text"
+                    [title]="post?.groupName"
+                    >{{ post?.groupName }}</span
+                  >
+                </a>
+                &nbsp;<span>Group</span>
+              </div>
+            </ng-container>
+          </div>
         </div>
 
         <div ngbDropdown>
@@ -136,7 +141,7 @@
     </div>
 
     <p
-      class="post-description mdtxt m-0 pt-2 pb-3"
+      class="post-description mdtxt m-0 pt-7 pb-3"
       [innerHTML]="post.postdescription"
     ></p>
 
