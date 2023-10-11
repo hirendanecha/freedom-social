@@ -285,7 +285,7 @@
                   <div
                     class="d-flex justify-content-between align-items-center w-100"
                   >
-                    <h6 class="m-0">{{ comment.Username }}</h6>
+                    <h6 class="m-0">{{ comment.Username }} <span class="font-12-px">{{ comment.createdDate | dateDay }}</span></h6>
 
                     <ng-container
                       *ngIf="
