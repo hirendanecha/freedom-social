@@ -30,7 +30,7 @@
                 class="unread-notification smtxt"
               ></span>
             </h6>
-            <span class="mdtxt time-schedule">Just now</span>
+            <span class="mdtxt time-schedule">{{ notification.createdDate | dateDay }}</span>
           </div>
         </div>
         <div class="btn-group cus-dropdown d-flex gap-3">

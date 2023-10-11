@@ -28,6 +28,7 @@
                 *ngIf="notification.isRead === 'N'"
                 class="unread-notification smtxt"
               ></span>
+              <span class="font-12-px">{{ notification.createdDate | dateDay }}</span>
             </h6>
             <p class="mdtxt">{{ notification?.notificationDesc }}</p>
           </div>
