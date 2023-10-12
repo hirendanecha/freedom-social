@@ -16,13 +16,13 @@ export class DateDayPipe implements PipeTransform {
     }
 
     if (diffInDays === 0) {
-      return `${diffInHours} ${diffInHours === 1 ? 'hour' : 'hours'} ago`;
-    }
-    
-    if (diffInDays === 1) {
-      return '1 day ago';
+      return `${diffInHours}h`;
     }
 
-    return `${diffInDays} days ago`;
+    if (diffInDays === 1) {
+      return '1d';
+    }
+
+    return `${diffInDays}d`;
   }
 }

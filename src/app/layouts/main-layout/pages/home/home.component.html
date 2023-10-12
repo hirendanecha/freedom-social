@@ -170,9 +170,10 @@
           </li>
           <li
             class="d-flex gap-2 align-items-center"
-            ngbTooltip="Comming Soon!"
-            placement="bottom"
+            (click)="openUploadVideoModal()"
           >
+            <!-- ngbTooltip="Comming Soon!"
+            placement="bottom" -->
             <fa-icon [icon]="['fas', 'video']" class="font-20-px" />
             <span>Video</span>
           </li>

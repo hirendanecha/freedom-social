@@ -4,10 +4,15 @@
   width: 100%;
 
   .tag-input-div {
-    font-size: 16px;
+    font-size: 16px !important;
     min-height: 56px;
     line-break: anywhere;
     text-align: start;
+    div {
+      background: unset !important;
+      background-color: unset !important;
+      font-size: 16px !important;
+    }
 
     &[placeholder]:empty {
       &:before {
@@ -23,6 +28,29 @@
 
     .user-dropdown-menu {
       max-height: 300px;
+    }
+  }
+}
+
+::ng-deep {
+  .tag-input-div {
+    div,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    p {
+      background: unset !important;
+      background-color: unset !important;
+      font-size: 16px !important;
+      line-height: unset !important;
+      color: var(--para-2nd-color) !important;
+    }
+    br {
+      display: none;
     }
   }
 }

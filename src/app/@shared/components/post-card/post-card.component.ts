@@ -13,6 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { ReplyCommentModalComponent } from '../../modals/reply-comment-modal/reply-comment-modal.component';
 
+declare var jwplayer: any;
 @Component({
   selector: 'app-post-card',
   templateUrl: './post-card.component.html',
@@ -43,6 +44,7 @@ export class PostCardComponent {
   isCommentsLoader: boolean = false;
   isPostComment: boolean = false;
   webUrl = environment.webUrl;
+  player: any
 
 
   constructor(
@@ -58,6 +60,10 @@ export class PostCardComponent {
     private renderer: Renderer2
   ) {
     this.profileId = localStorage.getItem('profileId');
+  }
+
+  ngOnInit(): void {
+    this.playvideo(this.post?.id)
   }
 
   removeSeeFirstUser(id: number): void {
@@ -408,5 +414,41 @@ export class PostCardComponent {
   removePostSelectedFile(): void {
     this.commentData['file'] = null;
     this.commentData['imageUrl'] = '';
+  }
+
+  playvideo(id: any) {
+    let i = setInterval(() => {
+      if (this.player) {
+        this.player.remove();
+      }
+      console.log('enter', id);
+      const config = {
+        file: this.post?.streamname,
+        image: this.post?.thumbfilename,
+        mute: false,
+        autostart: false,
+        volume: 30,
+        height: '308px',
+        width: 'auto',
+        pipIcon: "disabled",
+        displaydescription: true,
+        playbackRateControls: false,
+        aspectratio: "16:9",
+        autoPause: {
+          viewability: true
+        },
+        controls: true,
+        events: {
+          onError: function (e: any) {
+            console.log(e);
+          },
+        },
+      }
+      this.player = jwplayer('jwVideo-' + id).setup({
+        ...config
+      });
+      this.player.load();
+      if (this.player) clearInterval(i)
+    }, 1000)
   }
 }

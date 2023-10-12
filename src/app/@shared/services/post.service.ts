@@ -85,4 +85,30 @@ export class PostService {
   deleteComments(id): Observable<any> {
     return this.http.delete(`${this.baseUrl}/comments/${id}`);
   }
+
+
+  uploadVideo(
+    files: File,
+  ): Observable<HttpEvent<any>> {
+    const url = environment.serverUrl
+    const formData: FormData = new FormData();
+    formData.append('file', files);
+    console.log(formData);
+    const req =
+      new HttpRequest(
+        'POST',
+        `${url}posts/upload-video`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: 'json',
+        }
+      );
+    return this.http.request(req);
+  }
+
+  createVideoPost(postData: any): Observable<Object> {
+    const url = environment.serverUrl
+    return this.http.post(`${url}/posts/create-post`, postData);
+  }
 }

@@ -17,6 +17,7 @@ import { SharedService } from 'src/app/@shared/services/shared.service';
 import { SocketService } from 'src/app/@shared/services/socket.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
 import { getTagUsersFromAnchorTags } from 'src/app/@shared/utils/utils';
+import { VideoPostModalComponent } from 'src/app/@shared/modals/video-post-modal/video-post-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     tags: [],
     file: {},
     imageUrl: '',
+    posttype: 'S'
   };
 
   communitySlug: string;
@@ -361,4 +363,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     });
   }
+
+  openUploadVideoModal(): void {
+    const modalRef = this.modalService.open(VideoPostModalComponent, {
+      centered: true,
+      size: 'lg'
+    })
+    modalRef.componentInstance.title = `Upload Video`;
+    modalRef.componentInstance.confirmButtonLabel = 'Create Post';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.result.then(res => {
+      if (res === 'success') {
+        this.socketService.socket.on(
+          'new-post'
+        );
+      }
+    })
+  }
+
 }

@@ -73,11 +73,14 @@ import {
   faCheck,
   faSquareCheck,
   faSquareXmark,
+  faUpload,
+  faFileUpload,
 } from '@fortawesome/free-solid-svg-icons';
 import { ClaimTokenModalComponent } from './modals/clai-1776-token-modal/claim-token-modal.component';
 import { WalletLinkComponent } from './modals/wallet-download-modal/1776-wallet.component';
 import { ReplyCommentModalComponent } from './modals/reply-comment-modal/reply-comment-modal.component';
 import { PipeModule } from './pipe/pipe.module';
+import { VideoPostModalComponent } from './modals/video-post-modal/video-post-modal.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -93,7 +96,8 @@ const sharedComponents = [
   CopyClipboardDirective,
   ClaimTokenModalComponent,
   WalletLinkComponent,
-  ReplyCommentModalComponent
+  ReplyCommentModalComponent,
+  VideoPostModalComponent
 ];
 
 const sharedModules = [
@@ -171,6 +175,7 @@ export class SharedModule {
       faCheck,
       faSquareCheck,
       faSquareXmark,
+      faFileUpload
     );
   }
 }
