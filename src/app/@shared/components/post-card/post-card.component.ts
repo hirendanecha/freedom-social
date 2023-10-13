@@ -421,7 +421,6 @@ export class PostCardComponent {
       if (this.player) {
         this.player.remove();
       }
-      console.log('enter', id);
       const config = {
         file: this.post?.streamname,
         image: this.post?.thumbfilename,
