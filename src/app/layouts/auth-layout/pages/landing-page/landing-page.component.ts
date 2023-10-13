@@ -1,5 +1,6 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -12,8 +13,13 @@ export class LandingPageComponent {
   constructor(
     private router: Router,
     private renderer: Renderer2,
-    private el: ElementRef
-   ) {}
+    private el: ElementRef,
+    private tokenService: TokenStorageService
+  ) {
+    if (this.tokenService.getToken()) {
+      this.router.navigate(['/home']);
+    }
+  }
 
   openLoginPage(): void {
     this.closeMenu();

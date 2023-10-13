@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { LandingPageComponent } from './layouts/auth-layout/pages/landing-page/landing-page.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LandingPageComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '',
@@ -28,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
