@@ -215,7 +215,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
       this.customer.ProfilePicName = this.profileImg?.url || this.customer.ProfilePicName;
       this.customer.CoverPicName = this.profileCoverImg?.url || this.customer.CoverPicName;
       this.customer.IsActive = 'Y';
-
+      this.customer.UserID = +this.userId;
       this.customerService.updateProfile(this.profileId, this.customer).subscribe({
         next: (res: any) => {
           this.spinner.hide();
