@@ -16,13 +16,13 @@ import { TokenStorageService } from 'src/app/@shared/services/token-storage.serv
   styleUrls: ['./view-profile.component.scss'],
 })
 export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
-  customer: any;
+  customer: any = {};
   // customer: Customer = new Customer();
   customerPostList: any = [];
   userId = '';
   profilePic: any = {};
   coverPic: any = {};
-  profileId = '';
+  profileId: number;
   activeTab = 1;
   communityList = [];
   communityId = '';
@@ -42,9 +42,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       const id = event?.routerEvent?.url.split('/')[3];
       if (id) {
         this.getProfile(id);
-      } else {
-        this.profileId = localStorage.getItem('profileId');
       }
+      this.profileId = +localStorage.getItem('profileId');
     });
   }
   ngOnInit(): void {
@@ -54,7 +53,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalService.close();
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   getProfile(id): void {
     this.spinner.show();

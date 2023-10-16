@@ -28,6 +28,7 @@ export class ForgotPasswordComponent {
   ) { }
 
   verifyEmailSend(form: NgForm) {
+
     this.submitted = true;
     if (form.form.invalid) {
       return;
@@ -48,7 +49,7 @@ export class ForgotPasswordComponent {
               this.spinner.hide();
               this.submitted = false;
               if (!result.error) {
-                this.activeModal.close(this.cancelButtonLabel);
+                this.activeModal.close('success');
                 this.loading = false;
                 this.msg =
                   'Please check your email and click the link to set new password.';

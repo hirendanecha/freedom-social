@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/@shared/services/auth.service';
-import Utils from 'src/app/@shared/constant/utils';
 
 @Component({
   selector: 'app-reset-password',

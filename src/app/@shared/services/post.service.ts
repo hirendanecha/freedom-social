@@ -67,7 +67,7 @@ export class PostService {
   }
 
   createPost(postData: any): Observable<Object> {
-    return this.http.post(`${this.baseUrl}/create`, postData);
+    return this.http.post(`${this.baseUrl}/create-post`, postData);
   }
 
   getMetaData(url) {

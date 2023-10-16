@@ -372,6 +372,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     modalRef.componentInstance.title = `Upload Video`;
     modalRef.componentInstance.confirmButtonLabel = 'Create Post';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.communityId = this.communityDetails?.Id;
     modalRef.result.then(res => {
       if (res === 'success') {
         this.socketService.socket.on(
@@ -379,6 +380,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         );
       }
     })
+  }
+
+  openAlertMessage(): void {
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = `Warning message`;
+    modalRef.componentInstance.confirmButtonLabel = 'Ok';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.message = `Videos on freedom.buzz home are limited to 2 minurtes!
+    Videos must be a mp4 format`;
+    modalRef.result.then((res) => {
+      if (res === 'success') {
+        this.openUploadVideoModal();
+      }
+    });
   }
 
 }

@@ -30,16 +30,20 @@
             <h3 class="d-flex">
               {{ customer?.Username }}
             </h3>
+            <div class="col-md" *ngIf="+profileId === customer.Id">
+              <button
+                class="btn btn-sm btn-primary float-end d-flex"
+                (click)="openEditProfile()"
+              >
+                <fa-icon
+                  [icon]="['fas', 'link']"
+                  class="font-14-px me-1"
+                />
+                Privacy and settings
+              </button>
+            </div>
           </div>
         </div>
-        <!-- <div class="col-md">
-          <button
-            class="btn btn-sm btn-primary float-end"
-            (click)="openEditProfile()"
-          >
-            Edit Profile
-          </button>
-        </div> -->
       </div>
       <div class="row mt-8">
         <div class="page-details">
@@ -69,11 +73,12 @@
   </div>
 
   <div class="d-lg-flex d-block w-100 gap-5 min-vh-100">
-    <div
-      class="flex-column mb-15 w-100"
-    >
+    <div class="flex-column mb-15 w-100">
       <ng-container *ngIf="activeTab === 1">
-        <app-post-list parentComponent="ViewProfileComponent" [id]="customer.ID" />
+        <app-post-list
+          parentComponent="ViewProfileComponent"
+          [id]="customer.Id"
+        />
       </ng-container>
       <ng-container *ngIf="activeTab === 2">
         <ng-container *ngIf="communityList.length; else noData">
@@ -101,13 +106,14 @@
                           class="dropdown-btn"
                           (click)="openDropDown(community.id)"
                         >
-                          <fa-icon [icon]="['fas', 'ellipsis']" class="font-24-px" />
+                          <fa-icon
+                            [icon]="['fas', 'ellipsis']"
+                            class="font-24-px"
+                          />
                         </button>
                         <ul
                           class="dropdown-menu p-4 pt-2"
-                          [ngClass]="
-                            communityId === community.id ? 'show' : ''
-                          "
+                          [ngClass]="communityId === community.id ? 'show' : ''"
                           (mouseleave)="communityId = null"
                         >
                           <!-- <li>
@@ -150,9 +156,7 @@
                   {{ community.CommunityDescription }}
                 </p>
                 <div class="friends-list d-center mt-3 gap-1 text-center">
-                  <span class="smtxt m-0"
-                    >{{ community.members }} Member</span
-                  >
+                  <span class="smtxt m-0">{{ community.members }} Member</span>
                 </div>
                 <div class="d-center btn-border pt-5 gap-2 mt-4">
                   <button

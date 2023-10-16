@@ -45,6 +45,8 @@ export class PostCardComponent {
   isPostComment: boolean = false;
   webUrl = environment.webUrl;
   player: any
+  isExpand = false;
+  commentCount = 0;
 
 
   constructor(
@@ -63,7 +65,8 @@ export class PostCardComponent {
   }
 
   ngOnInit(): void {
-    this.playvideo(this.post?.id)
+    this.playvideo(this.post?.id);
+    this.viewComments(this.post?.id)
   }
 
   removeSeeFirstUser(id: number): void {
@@ -213,15 +216,15 @@ export class PostCardComponent {
   }
 
   viewComments(id: number): void {
-    // this.isExpand = this.isOpenCommentsPostId == id ? false : true;
-    // this.isOpenCommentsPostId = id;
-    // if (!this.isExpand) {
-    //   this.isOpenCommentsPostId = null;
-    // } else {
-    //   this.isOpenCommentsPostId = id;
-    // }
-
+    this.isExpand = this.isOpenCommentsPostId == id ? false : true;
     this.isOpenCommentsPostId = id;
+    if (!this.isExpand) {
+      this.isOpenCommentsPostId = null;
+    } else {
+      this.isOpenCommentsPostId = id;
+    }
+
+    // this.isOpenCommentsPostId = id;
     this.isCommentsLoader = true;
 
     this.postService.getComments(id).subscribe({
@@ -241,6 +244,8 @@ export class PostCardComponent {
               return ele.id === ele1.parentCommentId;
             }),
           }));
+          this.commentCount = this.commentList.length;
+          console.log('commonets count', this.commentCount)
         }
       },
       error: (error) => {

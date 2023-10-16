@@ -17,6 +17,7 @@ export class VideoPostModalComponent {
   @Input() title: string = 'Confirmation Dialog';
   @Input() message: string;
   @Input() data: any;
+  @Input() communityId: any;
   postData: any = {
     profileid: null,
     communityId: null,
@@ -108,7 +109,9 @@ export class VideoPostModalComponent {
 
   createPost(): void {
     this.spinner.show();
+    this.postData.communityId = this.communityId || null;
     if (this.postData?.streamname && this.postData.thumbfilename && this.postData.postdescription && this.postData.albumname) {
+      console.log('post-data', this.postData)
       this.activeModal.close();
       this.socketService.createOrEditPost(this.postData, (data) => {
         this.spinner.hide();
