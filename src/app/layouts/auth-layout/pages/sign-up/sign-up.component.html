@@ -21,9 +21,8 @@
 
     <form
       class="form-dark d-flex flex-column"
-      #signInForm="ngForm"
-      autocomplete="off"
-      (ngSubmit)="onSubmit(signInForm.form.valid)"
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
     >
       <div
         class="alert alert-{{ type }}"
@@ -41,7 +40,7 @@
               class="input-area"
               name="FirstName"
               placeholder="Enter Your Name"
-              [(ngModel)]="customer.FirstName"
+              formControlName="FirstName"
             />
           </div>
 
@@ -52,14 +51,16 @@
               class="input-area"
               name="LastName"
               placeholder="Enter Your Name"
-              [(ngModel)]="customer.LastName"
+              formControlName="LastName"
             />
           </div>
         </div>
 
         <div class="col-12 col-md-6 mb-3 d-flex flex-column">
-          <label class="form-label">Profile Picture<span class="text-danger">*</span></label>
-          <app-img-picker (onFileChange)="selectFiles($event)"/>
+          <label class="form-label"
+            >Profile Picture<span class="text-danger">*</span></label
+          >
+          <app-img-picker (onFileChange)="selectFiles($event)" />
         </div>
 
         <div class="col-12 col-md-6 mb-3">
@@ -71,9 +72,23 @@
             class="input-area"
             name="Username"
             placeholder="Enter Your Username Name"
-            [(ngModel)]="customer.Username"
+            formControlName="Username"
+            autocomplete="Username"
             required
           />
+          <div
+            class="text-danger"
+            *ngIf="
+              registerForm.get('Username').invalid &&
+              registerForm.get('Username').touched
+            "
+          >
+            <ng-container
+              *ngIf="registerForm.get('Username').hasError('required')"
+            >
+              User Name is required.
+            </ng-container>
+          </div>
         </div>
 
         <div class="col-12 col-md-6 mb-3">
@@ -86,12 +101,24 @@
             class="input-area"
             required
             placeholder="Enter your email"
-            [(ngModel)]="customer.Email"
+            formControlName="Email"
+            autocomplete="Email"
           />
+          <div
+            class="text-danger"
+            *ngIf="
+              registerForm.get('Email').hasError('required') &&
+              registerForm.get('Email').touched
+            "
+          >
+            Please enter valid Email.
+          </div>
         </div>
 
         <div class="col-12 col-md-6 mb-3">
-          <label class="form-label">Password<span class="text-danger">*</span></label>
+          <label class="form-label"
+            >Password<span class="text-danger">*</span></label
+          >
           <input
             type="password"
             class="input-area"
@@ -100,12 +127,24 @@
             placeholder="Enter your password"
             (input)="changetopassword($event)"
             (keyup)="changetopassword($event)"
-            [(ngModel)]="customer.Password"
+            formControlName="Password"
+            autocomplete="new-password"
           />
+          <div
+            class="text-danger"
+            *ngIf="
+              registerForm.get('Password').hasError('required') &&
+              registerForm.get('Password').touched
+            "
+          >
+            Please enter valid Password.
+          </div>
         </div>
 
         <div class="col-12 col-md-6 mb-3">
-          <label class="form-label">Confirm Password<span class="text-danger">*</span></label>
+          <label class="form-label"
+            >Confirm Password<span class="text-danger">*</span></label
+          >
           <input
             type="password"
             class="input-area"
@@ -115,8 +154,18 @@
             (focusout)="validatepassword()"
             (input)="changetopassword($event)"
             (keyup)="changetopassword($event)"
-            [(ngModel)]="confirm_password"
+            formControlName="confirm_password"
+            autocomplete="new-password"
           />
+          <div
+            class="text-danger"
+            *ngIf="
+              registerForm.get('confirm_password').hasError('required') &&
+              registerForm.get('confirm_password').touched
+            "
+          >
+            Password is not matched.
+          </div>
         </div>
 
         <div class="col-12 col-md-6 mb-3">
@@ -126,19 +175,21 @@
             class="input-area"
             name="MobileNo"
             placeholder="Enter your mobile number"
-            [(ngModel)]="customer.MobileNo"
+            formControlName="MobileNo"
           />
         </div>
 
         <div class="col-12 col-md-6 mb-3">
-          <label class="form-label">Country<span class="text-danger">*</span></label>
+          <label class="form-label"
+            >Country<span class="text-danger">*</span></label
+          >
           <select
             id="Country"
             required
             name="Country"
             class="input-area w-100"
-            [(ngModel)]="customer.Country"
             (change)="changeCountry()"
+            formControlName="Country"
           >
             <option [value]="defaultCountry">United states</option>
             <option
@@ -151,51 +202,62 @@
         </div>
 
         <div class="col-12 col-md-6 mb-3">
-          <label class="form-label">Zip Code<span class="text-danger">*</span></label>
+          <label class="form-label"
+            >Zip Code<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="input-area"
             required
             placeholder="Enter your zip code"
-            [disabled]="!customer.Country"
-            [(ngModel)]="customer.Zip"
+            formControlName="Zip"
             name="Zip"
             #zipCode
           />
+          <div
+            class="text-danger"
+            *ngIf="
+              registerForm.get('Zip').hasError('required') &&
+              registerForm.get('Zip').touched
+            "
+          >
+            Zip code is not required.
+          </div>
         </div>
 
         <div class="col-12 col-md-6 mb-3">
-          <label class="form-label">State<span class="text-danger">*</span></label>
+          <label class="form-label"
+            >State<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="input-area"
             required
             placeholder="Enter your state"
-            disabled
             name="State"
-            [(ngModel)]="customer.State"
+            formControlName="State"
           />
         </div>
 
         <div class="col-12 col-md-6 mb-3">
-          <label class="form-label">City<span class="text-danger">*</span></label>
+          <label class="form-label"
+            >City<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="input-area"
             required
             name="City"
             placeholder="Enter your city"
-            disabled
-            [(ngModel)]="customer.City"
+            formControlName="City"
           />
         </div>
       </div>
 
       <div class="form-check ps-0 my-4 d-flex">
-        <input class="p-0" type="checkbox" name="TermAndPolicy" [(ngModel)]="customer.termAndPolicy" required />
-        <label class="form-check-label ms-2"
-          >I agree to the <a>Terms</a> and
-          <a>Privacy Policy</a>.
+        <input type="checkbox" class="p-0" formControlName="TermAndPolicy" />
+        <label class="form-check-label ms-2">
+          I agree to the <a>Terms</a> and <a>Privacy Policy</a>.
           <span class="text-danger">*</span>
         </label>
       </div>
@@ -203,7 +265,7 @@
       <button
         class="btn btn-primary my-2 ms-auto"
         type="submit"
-        [disabled]="submitted"
+        [disabled]="!registerForm.valid"
       >
         Register
       </button>

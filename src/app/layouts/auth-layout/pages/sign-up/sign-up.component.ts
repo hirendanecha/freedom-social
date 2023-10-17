@@ -5,7 +5,11 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { debounceTime, fromEvent } from 'rxjs';
@@ -20,7 +24,7 @@ import { UploadFilesService } from 'src/app/@shared/services/upload-files.servic
 })
 export class SignUpComponent implements OnInit, AfterViewInit {
   customer = new Customer();
-  registerForm!: FormGroup;
+  useDetails: any = {};
   isragister = false;
   registrationMessage = '';
   confirm_password = '';
@@ -33,20 +37,34 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   profilePic = '';
   profileImg: any = {
     file: null,
-    url: ''
+    url: '',
   };
 
   @ViewChild('zipCode') zipCode: ElementRef;
+
+  registerForm = new FormGroup({
+    FirstName: new FormControl(''),
+    LastName: new FormControl(''),
+    Username: new FormControl('', [Validators.required]),
+    Email: new FormControl('', [Validators.required]),
+    Password: new FormControl('', [Validators.required]),
+    confirm_password: new FormControl('', [Validators.required]),
+    MobileNo: new FormControl('', [Validators.required]),
+    Country: new FormControl('US', [Validators.required]),
+    Zip: new FormControl({ value: '', disabled: true }, Validators.required),
+    State: new FormControl({ value: '', disabled: true }, Validators.required),
+    City: new FormControl({ value: '', disabled: true }, Validators.required),
+    TermAndPolicy: new FormControl(false, Validators.required),
+  });
+
   constructor(
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
     private customerService: CustomerService,
     private router: Router,
     private uploadService: UploadFilesService,
-    private toastService: ToastService
-  ) {
-    this.customer.termAndPolicy = false;
-  }
+    private toastService: ToastService,
+  ) {}
 
   ngOnInit(): void {
     this.getAllCountries();
@@ -72,71 +90,75 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     //   return 'Image file size exceeds 5 MB!';
     // }
     this.spinner.show();
-    this.uploadService.upload(file, id, defaultType).subscribe(
-      {
-        next: (res: any) => {
-          this.spinner.hide();
-          if (file?.size < 5120000) {
+    this.uploadService.upload(file, id, defaultType).subscribe({
+      next: (res: any) => {
+        this.spinner.hide();
+        if (file?.size < 5120000) {
           if (res.body) {
             this.profilePic = res?.body?.url;
-            this.creatProfile(this.customer);
-          }}else {
-            this.toastService.warring('Image is too large!');
+            this.creatProfile(this.registerForm.value);
           }
-        },
-        error:
-          (err) => {
-            this.spinner.hide();
-            this.profileImg = {
-              file: null,
-              url: ''
-            };
-            return 'Could not upload the file:' + file.name;
-          }
-      });
+        } else {
+          this.toastService.warring('Image is too large!');
+        }
+      },
+      error: (err) => {
+        this.spinner.hide();
+        this.profileImg = {
+          file: null,
+          url: '',
+        };
+        return 'Could not upload the file:' + file.name;
+      },
+    });
   }
 
   save() {
     this.spinner.show();
-    this.customerService.createCustomer(this.customer).subscribe(
-      {
-        next: (data: any) => {
-          this.spinner.hide();
-          if (!data.error) {
-            this.submitted = true;
-            window.sessionStorage.user_id = data.data;
-            this.registrationMessage =
-              'Your account has registered successfully. Kindly login with your email and password !!!';
-            this.scrollTop();
-            this.isragister = true;
-            const id = data.data;
-            if (id) {
-              this.upload(this.profileImg?.file, id, 'profile');
-              localStorage.setItem('register', String(this.isragister));
-              this.router.navigateByUrl('/login?isVerify=false');
-            }
+
+    this.customerService.createCustomer(this.registerForm.value).subscribe({
+      next: (data: any) => {
+        this.spinner.hide();
+        if (!data.error) {
+          this.submitted = true;
+          window.sessionStorage.user_id = data.data;
+          this.registrationMessage =
+            'Your account has registered successfully. Kindly login with your email and password !!!';
+          this.scrollTop();
+          this.isragister = true;
+          const id = data.data;
+          if (id) {
+            this.upload(this.profileImg?.file, id, 'profile');
+            localStorage.setItem('register', String(this.isragister));
+            this.router.navigateByUrl('/login?isVerify=false');
           }
-        },
-        error:
-          (err) => {
-            this.registrationMessage = err.error.message;
-            this.type = 'danger';
-            this.spinner.hide();
-            this.scrollTop();
-          }
-      });
+        }
+      },
+      error: (err) => {
+        this.registrationMessage = err.error.message;
+        this.type = 'danger';
+        this.spinner.hide();
+        this.scrollTop();
+      },
+    });
   }
 
-  validatepassword() {
+  validatepassword(): boolean {
     const pattern =
       '(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[a-z])(?=.*[0-9].*[0-9]).{8}';
-    if (!this.customer.Password.match(pattern)) {
+
+    if (!this.registerForm.get('Password').value.match(pattern)) {
       this.msg =
-        'Password must be a minimum of 8 characters and include one uppercase letter, one lowercase letter and one special character';
+        'Password must be a minimum of 8 characters and include one uppercase letter, one lowercase letter, and one special character';
       this.scrollTop();
+      return false;
     }
-    if (this.customer.Password !== this.confirm_password) {
-      this.msg = 'Passwords is incorrect';
+
+    if (
+      this.registerForm.get('Password').value !==
+      this.registerForm.get('confirm_password').value
+    ) {
+      this.msg = 'Passwords do not match';
       this.scrollTop();
       return false;
     }
@@ -144,71 +166,93 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     return true;
   }
 
-  onSubmit(isValid: boolean = false) {
+  onSubmit() {
 
     this.msg = '';
-    if (!isValid || this.customer.termAndPolicy === false || !this.profileImg?.file?.name) {
-      this.msg = 'Please enter mandatory fields(*) data and please check terms and condition.';
+    if (this.registerForm.valid && this.profileImg?.file?.name && this.registerForm.get('TermAndPolicy').value === true) {
+      if (!this.validatepassword()) {
+        return;
+      }
+  
+      const id = this.route.snapshot.paramMap.get('id');
+      if (this.userId) {
+        // this.updateCustomer();
+      } else {
+        // this.submitted = true;
+        this.save();
+      }
+    } else {
+      this.msg = 'Please enter mandatory fields(*) data.';
       this.scrollTop();
       return false;
     }
-
-    if (!this.validatepassword()) return;
-
-    const id = this.route.snapshot.paramMap.get('id');
-    if (this.userId) {
-      // this.updateCustomer();
-    } else {
-      // this.submitted = true;
-      this.save();
-    }
+    
+    // if (
+    //  this.registerForm.invalid ||
+    //   this.registerForm.get('termAndPolicy')?.value === false ||
+    //   !this.profileImg?.file?.name
+    // ) {
+    //   this.msg =
+    //     'Please enter mandatory fields(*) data and please check terms and conditions.';
+    //   this.scrollTop();
+    //   return false;
+    // }
   }
 
   changeCountry() {
-    this.customer.Zip = '';
-    this.customer.State = '';
-    this.customer.City = '';
-    // this.customer.Place = '';
+    this.registerForm.get('Zip').setValue('');
+    this.registerForm.get('State').setValue('');
+    this.registerForm.get('City').setValue('');
+    // this.registerForm.get('Place').setValue('');
   }
 
   getAllCountries() {
     this.spinner.show();
 
-    this.customerService.getCountriesData().subscribe(
-      {
-        next: (result) => {
-          this.spinner.hide();
-          this.allCountryData = result;
-        },
-        error:
-          (error) => {
-            this.spinner.hide();
-            console.log(error);
-          }
-      });
+    this.customerService.getCountriesData().subscribe({
+      next: (result) => {
+        this.spinner.hide();
+        this.allCountryData = result;
+        this.registerForm.get('Zip').enable();
+      },
+      error: (error) => {
+        this.spinner.hide();
+        console.log(error);
+      },
+    });
   }
 
   onZipChange(event) {
     this.spinner.show();
+    this.customerService
+      .getZipData(event, this.registerForm.get('Country').value)
+      .subscribe(
+        (data) => {
+          const zipData = data[0];
+          if (zipData?.state) {
+            this.registerForm.get('State').enable();
+            this.registerForm.get('City').enable();
+            this.registerForm.patchValue({
+              State: zipData.state,
+              City: zipData.city,
+            });
+          } else {
+            this.registerForm.get('State').disable();
+            this.registerForm.get('City').disable();
+            this.toastService.danger(
+              'Please check and enter a valid country or zip code.'
+            );
+          }
 
-    this.customerService.getZipData(event, this.customer?.Country).subscribe(
-      (data) => {
-        const zip_data = data[0];
-        if (zip_data?.state) {
-          this.customer.State = zip_data ? zip_data.state : '';
-          this.customer.City = zip_data ? zip_data.city : '';
-        } else {
-          this.toastService.danger('Please check and enter valid country or zip code.');
+          this.spinner.hide();
+        },
+        (err) => {
+          this.spinner.hide();
+          console.log(err);
         }
-
-        this.spinner.hide();
-      },
-      (err) => {
-        this.spinner.hide();
-        console.log(err);
-      }
-    );
+      );
   }
+
   changetopassword(event) {
     event.target.setAttribute('type', 'password');
     this.msg = '';
@@ -230,21 +274,21 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       IsActive: 'N',
       ProfilePicName: this.profilePic,
     };
-    this.customerService.createProfile(profile).subscribe(
-      {
-        next: (data: any) => {
-          this.spinner.hide();
+    console.log(profile);
 
-          if (data) {
-            const profileId = data.data;
-            localStorage.setItem('profileId', profileId);
-          }
-        },
-        error:
-          (err) => {
-            this.spinner.hide();
-          }
-      });
+    this.customerService.createProfile(profile).subscribe({
+      next: (data: any) => {
+        this.spinner.hide();
+
+        if (data) {
+          const profileId = data.data;
+          localStorage.setItem('profileId', profileId);
+        }
+      },
+      error: (err) => {
+        this.spinner.hide();
+      },
+    });
   }
 
   clearProfileImg(event: any): void {
@@ -253,7 +297,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
     this.profileImg = {
       file: null,
-      url: ''
+      url: '',
     };
   }
 
