@@ -1,7 +1,8 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm, NgModel } from '@angular/forms';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { AuthService } from 'src/app/@shared/services/auth.service';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 
@@ -25,7 +26,8 @@ export class ForgotPasswordComponent {
     public activeModal: NgbActiveModal,
     private authService: AuthService,
     private spinner: NgxSpinnerService,
-    private tokenStorage: TokenStorageService
+    private tokenStorage: TokenStorageService,
+    private modalService: NgbModal,
   ) {
     this.userEmail = JSON.parse(localStorage.getItem('auth-user')).Email;
    }
@@ -86,5 +88,21 @@ export class ForgotPasswordComponent {
     }
 
     return true;
+  }
+
+  openAlertMessage(): void {
+    this.activeModal.close()
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = `Confirmation message`;
+    modalRef.componentInstance.confirmButtonLabel = 'Ok';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.message = `Are you sure want to change password?`;
+    modalRef.result.then((res) => {
+      if (res === 'success') {
+        this.verifyEmailSend(this.verifyEmail)
+      }
+    });
   }
 }
