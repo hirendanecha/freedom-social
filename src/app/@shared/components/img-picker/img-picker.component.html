@@ -10,7 +10,7 @@
 
   <div class="edit-image d-flex justify-content-center align-items-center w-100 h-100 c-pointer" (click)="imgFileTagRef.click()" >
     <ng-container *ngIf="!fileData?.url">
-      <fa-icon [icon]="['fas', 'eye']" class="eye-icon" ></fa-icon>
+      <fa-icon [icon]="['fas', 'camera']" class="eye-icon" ></fa-icon>
     </ng-container>
 
     <ng-container *ngIf="fileData?.url">
