@@ -9,6 +9,11 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'logout',
+    component: LandingPageComponent,
+    pathMatch: 'full',
+  },
+  {
     path: '',
     loadChildren: () => import('./layouts/main-layout/main-layout.module').then((m) => m.MainLayoutModule),
   },

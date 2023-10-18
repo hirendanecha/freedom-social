@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     component: AuthLayoutComponent,
     children: [
-       {
+      {
         path: 'login',
         component: LoginComponent,
       },
@@ -22,7 +22,7 @@ const routes: Routes = [
       {
         path: 'reset-password/user',
         component: ResetPasswordComponent,
-      },
+      }
     ]
   }
 ];

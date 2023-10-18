@@ -252,21 +252,25 @@
       <div #addMemberSearchDropdownRef ngbDropdown>
         <div ngbDropdownMenu class="search-user-list w-100">
           <ng-container *ngFor="let user of userList">
-            <div
-              ngbDropdownItem
-              class="d-flex gap-3 pe-auto"
-              role="button"
-              (click)="joinCommunity(user.Id)"
+            <ng-container
+              *ngIf="!this.communityDetails.memberIds.includes(user.Id)"
             >
-              <img
-                loading="lazy"
-                class="w-32-px h-32-px rounded"
-                data-src="{{ user.ProfilePicName }}"
-                [alt]="user.Username"
-                onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
-              />
-              <span>{{ user.Username }}</span>
-            </div>
+              <div
+                ngbDropdownItem
+                class="d-flex gap-3 pe-auto"
+                role="button"
+                (click)="joinCommunity(user.Id)"
+              >
+                <img
+                  loading="lazy"
+                  class="w-32-px h-32-px rounded"
+                  data-src="{{ user.ProfilePicName }}"
+                  [alt]="user.Username"
+                  onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+                />
+                <span>{{ user.Username }}</span>
+              </div>
+            </ng-container>
           </ng-container>
         </div>
       </div>
