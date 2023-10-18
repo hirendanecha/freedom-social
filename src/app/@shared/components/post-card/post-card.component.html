@@ -15,6 +15,40 @@
   />
 
   <div class="d-flex flex-column w-100">
+    <div
+      class="d-center justify-content-center align-items-center h-24-px w-100 ms-2 ms-lg-0"
+    >
+      <ng-container *ngIf="profileId != post.profileid">
+        <button>
+          <a
+            class="droplist d-flex align-items-center gap-2"
+            (click)="unsubscribe(post)"
+          >
+            <fa-icon [icon]="['fas', 'user-minus']" />
+            <span>Unsubscribe</span>
+          </a>
+        </button>
+        <span class="me-2 ms-2">|</span>
+        <button *ngIf="!seeFirstList.includes(post.profileid)">
+          <a
+            class="droplist d-flex align-items-center gap-2"
+            (click)="seeFirst(post?.profileid)"
+          >
+            <fa-icon [icon]="['fas', 'eye']" />
+            <span>See First</span>
+          </a>
+        </button>
+        <button *ngIf="seeFirstList.includes(post?.profileid)">
+          <a
+            class="droplist d-flex alig n-items-center gap-2"
+            (click)="removeSeeFirstUser(post?.profileid)"
+          >
+            <fa-icon [icon]="['fas', 'eye']" />
+            <span>Stop See First</span>
+          </a>
+        </button>
+      </ng-container>
+    </div>
     <div class="d-flex">
       <div class="w-48-px d-block d-lg-none">
         <img
@@ -78,6 +112,7 @@
               <button
                 ngbDropdownItem
                 *ngIf="seeFirstList.includes(post?.profileid)"
+                class="d-block d-lg-none"
               >
                 <a
                   class="droplist d-flex alig n-items-center gap-2"
@@ -90,6 +125,7 @@
               <button
                 ngbDropdownItem
                 *ngIf="!seeFirstList.includes(post.profileid)"
+                class="d-block d-lg-none"
               >
                 <a
                   class="droplist d-flex align-items-center gap-2"
@@ -99,7 +135,7 @@
                   <span>See First</span>
                 </a>
               </button>
-              <button ngbDropdownItem>
+              <button ngbDropdownItem class="d-block d-lg-none">
                 <a
                   class="droplist d-flex align-items-center gap-2"
                   (click)="unsubscribe(post)"
@@ -487,11 +523,15 @@
                           <div
                             class="d-flex justify-content-between align-items-center w-100"
                           >
-                            <h6 class="m-0">
+                            <h6 class="m-0 align-items-center">
                               {{ reply.Username }}
-                              <span class="font-12-px">{{
-                                reply?.createdDate | dateDay
-                              }}</span>
+                              <span class="font-12-px">
+                                <fa-icon
+                                  class="ms-2"
+                                  [icon]="['fas', 'clock']"
+                                />
+                                {{ reply?.createdDate | dateDay }}</span
+                              >
                             </h6>
 
                             <ng-container

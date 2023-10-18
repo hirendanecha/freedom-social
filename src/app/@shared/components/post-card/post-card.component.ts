@@ -86,10 +86,11 @@ export class PostCardComponent {
   }
 
   unsubscribe(post: any): void {
-    post['hide'] = true;
+    // post['hide'] = true;
 
     this.unsubscribeProfileService.create({ profileId: this.profileId, unsubscribeProfileId: post?.profileid }).subscribe({
       next: (res) => {
+        this.getPostList.emit()
         return true;
       },
     });

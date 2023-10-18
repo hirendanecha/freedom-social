@@ -389,7 +389,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     modalRef.componentInstance.title = `Warning message`;
     modalRef.componentInstance.confirmButtonLabel = 'Ok';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.componentInstance.message = `Videos on freedom.buzz home are limited to 2 minurtes!
+    modalRef.componentInstance.message = `Videos on freedom.buzz home are limited to 2 Minutes!
     Videos must be a mp4 format`;
     modalRef.result.then((res) => {
       if (res === 'success') {

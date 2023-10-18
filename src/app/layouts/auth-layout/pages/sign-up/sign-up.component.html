@@ -65,7 +65,7 @@
 
         <div class="col-12 col-md-6 mb-3">
           <label class="form-label"
-            >User Name<span class="text-danger">*</span></label
+            >Username<span class="text-danger">*</span></label
           >
           <input
             type="text"
@@ -86,7 +86,7 @@
             <ng-container
               *ngIf="registerForm.get('Username').hasError('required')"
             >
-              User Name is required.
+              Username is required.
             </ng-container>
           </div>
         </div>
@@ -169,7 +169,9 @@
         </div>
 
         <div class="col-12 col-md-6 mb-3">
-          <label class="form-label">Mobile</label>
+          <label class="form-label"
+            >Mobile<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="input-area"
@@ -177,6 +179,15 @@
             placeholder="Enter your mobile number"
             formControlName="MobileNo"
           />
+          <div
+            class="text-danger"
+            *ngIf="
+              registerForm.get('MobileNo').hasError('required') &&
+              registerForm.get('MobileNo').touched
+            "
+          >
+            Mobile number is required.
+          </div>
         </div>
 
         <div class="col-12 col-md-6 mb-3">
@@ -221,7 +232,7 @@
               registerForm.get('Zip').touched
             "
           >
-            Zip code is not required.
+            Zip code is required.
           </div>
         </div>
 

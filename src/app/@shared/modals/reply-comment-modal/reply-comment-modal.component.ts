@@ -13,17 +13,26 @@ export class ReplyCommentModalComponent implements AfterViewInit {
   @Input() title: string = 'Confirmation Dialog';
   @Input() message: string;
   @Input() data: any;
+  @ViewChild('parentPostCommentElement', { static: false }) parentPostCommentElement: ElementRef;
+
   commentData: any = {
     file: null,
     url: ''
   };
 
   constructor(public activeModal: NgbActiveModal,
-    private toastService: ToastService,) {
+    private toastService: ToastService,
+    private renderer: Renderer2) {
   }
 
   ngAfterViewInit(): void {
     if (this.data) {
+
+      this.renderer.setProperty(
+        this.parentPostCommentElement?.nativeElement,
+        'innerHTML',
+        this.data.comment
+      );
       this.commentData.comment = this.data?.comment
       this.commentData.id = this.data.id
       this.commentData.parentCommentId = this.data.parentCommentId
@@ -50,5 +59,10 @@ export class ReplyCommentModalComponent implements AfterViewInit {
   removePostSelectedFile(): void {
     this.commentData['file'] = null;
     this.commentData['imageUrl'] = '';
+  }
+
+  onChangeComment(): void {
+    this.commentData.comment = this.parentPostCommentElement.nativeElement.innerHTML;
+    this.activeModal.close(this.commentData);
   }
 }
