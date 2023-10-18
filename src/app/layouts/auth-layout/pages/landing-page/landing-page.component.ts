@@ -1,5 +1,7 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 
 @Component({
@@ -12,11 +14,17 @@ export class LandingPageComponent {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private renderer: Renderer2,
     private el: ElementRef,
-    private tokenService: TokenStorageService
+    private customerService: CustomerService,
+    private tokenStorageService: TokenStorageService,
+    private spinner: NgxSpinnerService
   ) {
-    if (this.tokenService.getToken()) {
+    const path = this.route.snapshot.routeConfig.path;
+    if (path === 'logout') {
+      this.logout();
+    } else if (this.tokenStorageService.getToken()) {
       this.router.navigate(['/home']);
     }
   }
@@ -36,5 +44,22 @@ export class LandingPageComponent {
   closeMenu() {
     this.mobileMenuToggle = false;
     this.renderer.removeStyle(this.el.nativeElement.ownerDocument.body, 'overflow');
+  }
+
+  logout(): void {
+    // this.isCollapsed = true;
+    this.spinner.show();
+    this.customerService.logout().subscribe({
+      next: (res => {
+        this.spinner.hide();
+        this.tokenStorageService.signOut();
+        this.router.navigate(['/']);
+      }), error: error => {
+        this.spinner.hide();
+        console.log(error)
+      }
+    })
+    // this.toastService.success('Logout successfully');
+    // this.isDomain = false;
   }
 }

@@ -10,6 +10,7 @@ import { ToastService } from 'src/app/@shared/services/toast.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
+import { CustomerService } from 'src/app/@shared/services/customer.service';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private toastService: ToastService,
     private sharedService: SharedService,
-    private cookieService: CookieService
+    private customerService: CustomerService,
+    private tokenStorageService: TokenStorageService
   ) {
     const isVerify = this.route.snapshot.queryParams.isVerify;
     if (isVerify === 'false') {
