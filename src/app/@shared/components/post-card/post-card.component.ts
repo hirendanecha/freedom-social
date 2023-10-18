@@ -227,8 +227,11 @@ export class PostCardComponent {
 
     // this.isOpenCommentsPostId = id;
     this.isCommentsLoader = true;
-
-    this.postService.getComments(id).subscribe({
+    const data = {
+      postId: id,
+      profileId: this.profileId
+    }
+    this.postService.getComments(data).subscribe({
       next: (res) => {
         if (res) {
           // this.commentList = res.data.commmentsList.filter((ele: any) => {
@@ -296,7 +299,9 @@ export class PostCardComponent {
   }
 
   disLikeComments(comment) {
-    comment.likeCount = comment.likeCount - 1;
+    if (comment.react == 'L') {
+      comment.likeCount = comment.likeCount - 1;
+    }
     comment.react = null;
     const data = {
       postId: comment.postId,

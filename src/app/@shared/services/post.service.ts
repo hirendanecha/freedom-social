@@ -78,8 +78,8 @@ export class PostService {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
-  getComments(id): Observable<any> {
-    return this.http.get(`${this.baseUrl}/comments/${id}`);
+  getComments(data): Observable<any> {
+    return this.http.post(`${this.baseUrl}/comments`, data);
   }
 
   deleteComments(id): Observable<any> {
