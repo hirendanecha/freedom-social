@@ -1,7 +1,8 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm, NgModel } from '@angular/forms';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmationModalComponent } from 'src/app/@shared/modals/confirmation-modal/confirmation-modal.component';
 import { AuthService } from 'src/app/@shared/services/auth.service';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 
@@ -20,53 +21,89 @@ export class ForgotPasswordComponent {
   msg = '';
   type = 'danger';
   EMAIL_REGEX = '[A-Za-z0-9._%-+-]+@[A-Za-z0-9._%-]+\\.[A-Za-z]{2,}';
+  userEmail: any;
   constructor(
     public activeModal: NgbActiveModal,
     private authService: AuthService,
     private spinner: NgxSpinnerService,
-    private tokenStorage: TokenStorageService
-  ) { }
+    private tokenStorage: TokenStorageService,
+    private modalService: NgbModal,
+  ) {
+    this.userEmail = JSON.parse(localStorage.getItem('auth-user')).Email;
+   }
 
-  verifyEmailSend(form: NgForm) {
+  // verifyEmailSend(form: NgForm) {
 
-    this.submitted = true;
-    if (form.form.invalid) {
-      return;
-    }
-    this.loading = true;
-    const user = this.tokenStorage.getUser();
-    const email = this.verifyEmail.form.controls['email'].value;
-    // const password = this.verifyEmail.form.controls?.password?.value;
-    if (email) {
-      this.spinner.show();
-      this.authService
-        .forgotPassword({
-          email: email,
-        })
-        .subscribe({
-          next:
-            (result: any) => {
-              this.spinner.hide();
-              this.submitted = false;
-              if (!result.error) {
-                this.activeModal.close('success');
-                this.loading = false;
-                this.msg =
-                  'Please check your email and click the link to set new password.';
-                this.type = 'success';
-              } else {
-                this.msg = result.message;
-                this.type = 'danger';
-                this.loading = false;
-              }
-            },
-          error:
-            (error) => {
-              this.spinner.hide();
-              this.loading = false;
-            }
-        });
-    }
+  //   this.submitted = true;
+  //   if (form.form.invalid) {
+  //     return;
+  //   }
+  //   this.loading = true;
+  //   const user = this.tokenStorage.getUser();
+  //   const email = this.verifyEmail.form.controls['email'].value;
+  //   // const password = this.verifyEmail.form.controls?.password?.value;
+  //   if (email) {
+  //     this.spinner.show();
+  //     this.authService
+  //       .forgotPassword({
+  //         email: email,
+  //       })
+  //       .subscribe({
+  //         next:
+  //           (result: any) => {
+  //             this.spinner.hide();
+  //             this.submitted = false;
+  //             if (!result.error) {
+  //               this.activeModal.close('success');
+  //               this.loading = false;
+  //               this.msg =
+  //                 'Please check your email and click the link to set new password.';
+  //               this.type = 'success';
+  //             } else {
+  //               this.msg = result.message;
+  //               this.type = 'danger';
+  //               this.loading = false;
+  //             }
+  //           },
+  //         error:
+  //           (error) => {
+  //             this.spinner.hide();
+  //             this.loading = false;
+  //           }
+  //       });
+  //   }
+  // }
+  verifyEmailSend():void{
+    if (this.userEmail) {
+          this.spinner.show();
+          this.authService
+            .forgotPassword({
+              email: this.userEmail,
+            })
+            .subscribe({
+              next:
+                (result: any) => {
+                  this.spinner.hide();
+                  this.submitted = false;
+                  if (!result.error) {
+                    this.activeModal.close('success');
+                    this.loading = false;
+                    this.msg =
+                      'Please check your email and click the link to set new password.';
+                    this.type = 'success';
+                  } else {
+                    this.msg = result.message;
+                    this.type = 'danger';
+                    this.loading = false;
+                  }
+                },
+              error:
+                (error) => {
+                  this.spinner.hide();
+                  this.loading = false;
+                }
+            });
+        }
   }
 
   validatepassword(password, cPassword) {
@@ -83,5 +120,24 @@ export class ForgotPasswordComponent {
     }
 
     return true;
+  }
+
+  openAlertMessage(): void {
+    this.activeModal.close()
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = `Confirmation message`;
+    modalRef.componentInstance.confirmButtonLabel = 'Ok';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.message = `Are you sure want to change password?`;
+    modalRef.result.then((res) => {
+      if (res === 'success') {
+        this.verifyEmailSend()
+        // this.verifyEmailSend(this.verifyEmail)
+   
+        
+      }
+    });
   }
 }
