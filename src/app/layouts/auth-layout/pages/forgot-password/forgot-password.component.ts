@@ -20,12 +20,15 @@ export class ForgotPasswordComponent {
   msg = '';
   type = 'danger';
   EMAIL_REGEX = '[A-Za-z0-9._%-+-]+@[A-Za-z0-9._%-]+\\.[A-Za-z]{2,}';
+  userEmail: any;
   constructor(
     public activeModal: NgbActiveModal,
     private authService: AuthService,
     private spinner: NgxSpinnerService,
     private tokenStorage: TokenStorageService
-  ) { }
+  ) {
+    this.userEmail = JSON.parse(localStorage.getItem('auth-user')).Email;
+   }
 
   verifyEmailSend(form: NgForm) {
 
