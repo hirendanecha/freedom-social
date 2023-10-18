@@ -32,46 +32,78 @@ export class ForgotPasswordComponent {
     this.userEmail = JSON.parse(localStorage.getItem('auth-user')).Email;
    }
 
-  verifyEmailSend(form: NgForm) {
+  // verifyEmailSend(form: NgForm) {
 
-    this.submitted = true;
-    if (form.form.invalid) {
-      return;
-    }
-    this.loading = true;
-    const user = this.tokenStorage.getUser();
-    const email = this.verifyEmail.form.controls['email'].value;
-    // const password = this.verifyEmail.form.controls?.password?.value;
-    if (email) {
-      this.spinner.show();
-      this.authService
-        .forgotPassword({
-          email: email,
-        })
-        .subscribe({
-          next:
-            (result: any) => {
-              this.spinner.hide();
-              this.submitted = false;
-              if (!result.error) {
-                this.activeModal.close('success');
-                this.loading = false;
-                this.msg =
-                  'Please check your email and click the link to set new password.';
-                this.type = 'success';
-              } else {
-                this.msg = result.message;
-                this.type = 'danger';
-                this.loading = false;
-              }
-            },
-          error:
-            (error) => {
-              this.spinner.hide();
-              this.loading = false;
-            }
-        });
-    }
+  //   this.submitted = true;
+  //   if (form.form.invalid) {
+  //     return;
+  //   }
+  //   this.loading = true;
+  //   const user = this.tokenStorage.getUser();
+  //   const email = this.verifyEmail.form.controls['email'].value;
+  //   // const password = this.verifyEmail.form.controls?.password?.value;
+  //   if (email) {
+  //     this.spinner.show();
+  //     this.authService
+  //       .forgotPassword({
+  //         email: email,
+  //       })
+  //       .subscribe({
+  //         next:
+  //           (result: any) => {
+  //             this.spinner.hide();
+  //             this.submitted = false;
+  //             if (!result.error) {
+  //               this.activeModal.close('success');
+  //               this.loading = false;
+  //               this.msg =
+  //                 'Please check your email and click the link to set new password.';
+  //               this.type = 'success';
+  //             } else {
+  //               this.msg = result.message;
+  //               this.type = 'danger';
+  //               this.loading = false;
+  //             }
+  //           },
+  //         error:
+  //           (error) => {
+  //             this.spinner.hide();
+  //             this.loading = false;
+  //           }
+  //       });
+  //   }
+  // }
+  verifyEmailSend():void{
+    if (this.userEmail) {
+          this.spinner.show();
+          this.authService
+            .forgotPassword({
+              email: this.userEmail,
+            })
+            .subscribe({
+              next:
+                (result: any) => {
+                  this.spinner.hide();
+                  this.submitted = false;
+                  if (!result.error) {
+                    this.activeModal.close('success');
+                    this.loading = false;
+                    this.msg =
+                      'Please check your email and click the link to set new password.';
+                    this.type = 'success';
+                  } else {
+                    this.msg = result.message;
+                    this.type = 'danger';
+                    this.loading = false;
+                  }
+                },
+              error:
+                (error) => {
+                  this.spinner.hide();
+                  this.loading = false;
+                }
+            });
+        }
   }
 
   validatepassword(password, cPassword) {
@@ -101,7 +133,10 @@ export class ForgotPasswordComponent {
     modalRef.componentInstance.message = `Are you sure want to change password?`;
     modalRef.result.then((res) => {
       if (res === 'success') {
-        this.verifyEmailSend(this.verifyEmail)
+        this.verifyEmailSend()
+        // this.verifyEmailSend(this.verifyEmail)
+   
+        
       }
     });
   }
