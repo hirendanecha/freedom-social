@@ -17,7 +17,8 @@
 
   .custom-height {
     height: calc(100vh - 300px);
-    min-height: 400px;
+    min-height: 300px;
+    // min-height: 400px;
   }
   .sub-container {
     display: flex;
