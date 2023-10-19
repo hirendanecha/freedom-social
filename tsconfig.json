@@ -49,16 +49,13 @@
     "resolveJsonModule": true,
     "target": "es2017",
     "types": [
-      "node",
-      "google.maps",
-      "google-one-tap",
-      "google.accounts"
+      "node"
     ],
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2020",
+      "es2018",
       "dom"
     ],
   },

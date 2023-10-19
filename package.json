@@ -16,6 +16,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-webpack": "^0.1602.6",
     "@angular/animations": "^16.1.0",
     "@angular/common": "^16.1.0",
     "@angular/compiler": "^16.1.0",
@@ -42,6 +43,7 @@
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.7.2",
     "tslib": "^2.3.0",
+    "webpack": "^5.89.0",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
