@@ -18,6 +18,9 @@
 # Footer Area
 ============================================*/
 
+/* Autoprefixer configuration */
+@import "autoprefixer";
+
 // CSS Plugin import
 @import "plugins/materialicons.scss";
 
@@ -30,7 +33,6 @@
 
 // Responsive Area
 @import "main/_responsive.scss";
-
 
 .content-area {
   padding: 40px 0;
@@ -45,7 +47,7 @@
 }
 
 .fade {
-  transition: opacity .15s linear;
+  transition: opacity 0.15s linear;
 }
 
 .dropdown-menu {
@@ -55,7 +57,8 @@
   border-color: var(--bs-primary) !important;
   z-index: 1 !important;
 
-  .dropdown-item:hover, .dropdown-item:focus {
+  .dropdown-item:hover,
+  .dropdown-item:focus {
     background-color: #ababab57 !important;
   }
 }
