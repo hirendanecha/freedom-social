@@ -1,20 +1,38 @@
 <div class="card group-post-card single-box border-secondary mb-0 rounded-1">
   <div
     class="card-img-top c-pointer"
-    [ngStyle]="{
+    (click)="openResearchPost()"
+    >
+    <!-- [ngStyle]="{
       'background-image':
         'url(' +
         (post?.image ||
           'https://freedom.social/assets/newtemplate/images/mb-logo.png') +
         ')'
-    }"
-    (click)="openResearchPost()"
-  ></div>
+    }" -->
+    <img
+      [src]="
+        post?.image ||
+        'https://freedom.social/assets/newtemplate/images/mb-logo.png'
+      "
+      class="card-img-top"
+      alt=""
+    />
+  </div>
 
   <div class="card-body p-2 border-top">
-    <div class="card-text text-start font-12-px text-wrap c-pointer" (click)="openResearchPost()">
-      <ng-container *ngIf="post?.title || post?.textpostdesc || post?.postdescription">
-        <span [innerHTML]="post?.title || post?.textpostdesc || post?.postdescription">
+    <div
+      class="card-text text-start font-12-px text-wrap c-pointer"
+      (click)="openResearchPost()"
+    >
+      <ng-container
+        *ngIf="post?.title || post?.textpostdesc || post?.postdescription"
+      >
+        <span
+          [innerHTML]="
+            post?.title || post?.textpostdesc || post?.postdescription
+          "
+        >
         </span>
       </ng-container>
 
