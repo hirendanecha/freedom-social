@@ -7,24 +7,29 @@ import { PostService } from 'src/app/@shared/services/post.service';
 import { ProfileService } from 'src/app/@shared/services/profile.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
-import { deleteExtraParamsFromReqObj, isFormSubmittedAndError, numToRevArray } from 'src/app/@shared/utils/utils';
+import {
+  deleteExtraParamsFromReqObj,
+  isFormSubmittedAndError,
+  numToRevArray,
+} from 'src/app/@shared/utils/utils';
 
 @Component({
   selector: 'app-research-list',
   templateUrl: './research-list.component.html',
-  styleUrls: ['./research-list.component.scss']
+  styleUrls: ['./research-list.component.scss'],
 })
 export class ResearchListComponent {
-
   researches: any = [];
   btnGroupFeedTypeCtrl: FormControl;
   btnGroupViewTypeCtrl: FormControl;
+
+  selectedImgFile: any;
 
   groupPosts: any = [];
   pagination: any = {
     page: 0,
     limit: 0,
-    limitArray: []
+    limitArray: [],
   };
   isGroupPostsLoader: boolean = false;
 
@@ -40,13 +45,16 @@ export class ResearchListComponent {
     isSubmitted: new FormControl(false),
   });
 
+  postImageUrl: string;
+  postImage: any;
+
   constructor(
     private profileService: ProfileService,
     private postService: PostService,
     public sharedService: SharedService,
     private spinner: NgxSpinnerService,
     private breakpointService: BreakpointService,
-    private toastService: ToastService,
+    private toastService: ToastService
   ) {
     this.btnGroupFeedTypeCtrl = new FormControl('All');
     this.btnGroupViewTypeCtrl = new FormControl('TopStories');
@@ -56,7 +64,7 @@ export class ResearchListComponent {
         this.pagination = {
           page: 7,
           limit: 1,
-          limitArray: numToRevArray(1)
+          limitArray: numToRevArray(1),
         };
 
         this.groupsAndPosts();
@@ -64,7 +72,7 @@ export class ResearchListComponent {
         this.pagination = {
           page: 4,
           limit: 2,
-          limitArray: numToRevArray(2)
+          limitArray: numToRevArray(2),
         };
 
         this.groupsAndPosts();
@@ -72,7 +80,7 @@ export class ResearchListComponent {
         this.pagination = {
           page: 3,
           limit: 3,
-          limitArray: numToRevArray(3)
+          limitArray: numToRevArray(3),
         };
 
         this.groupsAndPosts();
@@ -113,7 +121,7 @@ export class ResearchListComponent {
       },
       complete: () => {
         this.isGroupPostsLoader = false;
-      }
+      },
     });
   }
 
@@ -129,7 +137,7 @@ export class ResearchListComponent {
       },
       error: () => {
         this.spinner.hide();
-      }
+      },
     });
   }
 
@@ -141,13 +149,15 @@ export class ResearchListComponent {
         group.page += 1;
       }
 
-      this.profileService.getGroupPostById(group?.Id, group?.page, this.pagination.limit).subscribe({
-        next: (res: any) => {
-          if (res?.length > 0) {
-            group.posts = [...group.posts, ...res];
-          }
-        }
-      });
+      this.profileService
+        .getGroupPostById(group?.Id, group?.page, this.pagination.limit)
+        .subscribe({
+          next: (res: any) => {
+            if (res?.length > 0) {
+              group.posts = [...group.posts, ...res];
+            }
+          },
+        });
     }
   }
 
@@ -159,41 +169,88 @@ export class ResearchListComponent {
     } else {
       this.formIsSubmitted.setValue(true);
       const reqObj = deleteExtraParamsFromReqObj(this.researchForm.value);
-      const meta = {...reqObj['meta']};
+      const meta = { ...reqObj['meta'] };
       delete reqObj['meta'];
       reqObj['profileId'] = localStorage.getItem('profileId');
       reqObj['title'] = meta?.title;
       reqObj['metadescription'] = meta?.metadescription;
       reqObj['metaimage'] = meta?.metaimage;
       reqObj['metalink'] = meta?.metalink;
-      console.log('reqObj : ', reqObj);
+      reqObj['imageUrl'] = this.postImage;
+      this.postService
+        .createPost(reqObj)
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              console.log('res : ', res);
+              this.toastService.success('Research added successfully.');
+              this.groupsAndPosts();
+            } else {
+              this.toastService.danger(res['message']);
+            }
+          },
+          error: (error: any) => {
+            this.toastService.danger(error.message);
+          },
+        })
+        .add(() => {
+          this.researchForm.reset();
+          this.tagInputDefaultData = 'reset';
+          setTimeout(() => {
+            this.tagInputDefaultData = '';
+          }, 100);
+          this.formIsClicked.setValue(false);
+          this.formIsSubmitted.setValue(false);
+        });
+    }
+    this.removeImgFile()
+  }
 
-      this.postService.createPost(reqObj).subscribe({
-        next: (res) => {
-          if (res) {
-            console.log('res : ', res);
-            this.toastService.success('Research added successfully.');
-            this.groupsAndPosts();
-          } else {
-            this.toastService.danger(res['message']);
-          }
-        },
-        error: (error: any) => {
-          this.toastService.danger(error.message);
-        }
-      }).add(() => {
-        this.researchForm.reset();
-        this.tagInputDefaultData = 'reset';
-        setTimeout(() => {
-          this.tagInputDefaultData = '';
-        }, 100);
-        this.formIsClicked.setValue(false);
-        this.formIsSubmitted.setValue(false);
-      });
+  isFormSubmittedAndError(
+    controlName: string,
+    errorName: string = '',
+    notError: Array<string> = new Array()
+  ): any {
+    return isFormSubmittedAndError(
+      this.researchForm,
+      this.formIsClicked.value,
+      controlName,
+      errorName,
+      notError
+    );
+  }
+
+  createImagePost(): void {
+    const profileId = localStorage.getItem('profileId');
+    if (this.selectedImgFile) {
+      this.postService
+        .upload(this.selectedImgFile, profileId, 'post')
+        .subscribe({
+          next: (res: any) => {
+            if (res?.body?.url) {
+              this.postImage = res?.body?.url;
+              this.createResearch();
+            }
+          },
+        });
+    } else {
+      this.createResearch();
     }
   }
 
-  isFormSubmittedAndError(controlName: string, errorName: string = '', notError: Array<string> = new Array()): any {
-    return isFormSubmittedAndError(this.researchForm, this.formIsClicked.value, controlName, errorName, notError);
+  onFileSelected(event: any) {
+    const file = event.target?.files?.[0] || {};
+    if (file?.size < 5120000) {
+      if (file) {
+        this.postImageUrl = URL.createObjectURL(event.target.files[0]);
+        this.selectedImgFile = file;
+      }
+    } else {
+      this.toastService.warring('Image is too large!');
+    }
+  }
+
+  removeImgFile(): void {
+    this.selectedImgFile = null;
   }
 }

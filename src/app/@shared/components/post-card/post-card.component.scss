@@ -23,6 +23,16 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+
+      @media (max-width:450px) {
+        max-width: 200px;
+      }
+      @media (min-width:450px) and (max-width:575px) {
+        max-width: 275px;
+      }
+      @media (min-width:575px) and (max-width:85px) {
+        max-width: 350px;
+      }
     }
     .post-profile {
       max-width: 48px;

@@ -15,40 +15,7 @@
   />
 
   <div class="d-flex flex-column w-100">
-    <div
-      class="d-center justify-content-center align-items-center h-24-px w-100 ms-2 ms-lg-0"
-    >
-      <ng-container *ngIf="profileId != post.profileid">
-        <button>
-          <a
-            class="droplist d-flex align-items-center gap-2"
-            (click)="unsubscribe(post)"
-          >
-            <fa-icon [icon]="['fas', 'user-minus']" />
-            <span>Unsubscribe</span>
-          </a>
-        </button>
-        <span class="me-2 ms-2">|</span>
-        <button *ngIf="!seeFirstList.includes(post.profileid)">
-          <a
-            class="droplist d-flex align-items-center gap-2"
-            (click)="seeFirst(post?.profileid)"
-          >
-            <fa-icon [icon]="['fas', 'eye']" />
-            <span>See First</span>
-          </a>
-        </button>
-        <button *ngIf="seeFirstList.includes(post?.profileid)">
-          <a
-            class="droplist d-flex alig n-items-center gap-2"
-            (click)="removeSeeFirstUser(post?.profileid)"
-          >
-            <fa-icon [icon]="['fas', 'eye']" />
-            <span>Stop See First</span>
-          </a>
-        </button>
-      </ng-container>
-    </div>
+
     <div class="d-flex">
       <div class="w-48-px d-block d-lg-none">
         <img
@@ -79,24 +46,8 @@
               />
               {{ post.postcreationdate | dateDay }}
             </div>
-            <ng-container *ngIf="post?.groupName">
-              <div class="d-flex mt-2">
-                <span>posted on</span>&nbsp;
-                <a
-                  [href]="'/research/detail/grpm/' + post?.groupLink"
-                  target="_blank"
-                  class="m-0"
-                >
-                  <span
-                    class="fw-bold m-0 posted-group-text align-items-center posted-wrap-text"
-                    [title]="post?.groupName"
-                    >{{ post?.groupName }}</span
-                  >
-                </a>
-                &nbsp;<span>Group</span>
-              </div>
-            </ng-container>
           </div>
+      
         </div>
 
         <div ngbDropdown>
@@ -185,9 +136,59 @@
         </div>
       </div>
     </div>
-
+    <div
+      class="d-none d-lg-flex text-center justify-content-center align-items-center h-24-px w-100 mt-lg-4 ms-2 ms-lg-0"
+    >
+      <ng-container *ngIf="profileId != post.profileid">
+        <button>
+          <a
+            class="droplist d-flex align-items-center gap-2"
+            (click)="unsubscribe(post)"
+          >
+            <fa-icon [icon]="['fas', 'user-minus']" />
+            <span>Unsubscribe</span>
+          </a>
+        </button>
+        <span class="me-2 ms-2">|</span>
+        <button *ngIf="!seeFirstList.includes(post.profileid)">
+          <a
+            class="droplist d-flex align-items-center gap-2"
+            (click)="seeFirst(post?.profileid)"
+          >
+            <fa-icon [icon]="['fas', 'eye']" />
+            <span>See First</span>
+          </a>
+        </button>
+        <button *ngIf="seeFirstList.includes(post?.profileid)">
+          <a
+            class="droplist d-flex alig n-items-center gap-2"
+            (click)="removeSeeFirstUser(post?.profileid)"
+          >
+            <fa-icon [icon]="['fas', 'eye']" />
+            <span>Stop See First</span>
+          </a>
+        </button>
+      </ng-container>
+    </div>
+    <ng-container *ngIf="post?.groupName">
+      <div class="d-flex mt-4">
+        <span>posted on</span>&nbsp;
+        <a
+          [href]="'/research/detail/grpm/' + post?.groupLink"
+          target="_blank"
+          class="m-0"
+        >
+          <span
+            class="fw-bold m-0 posted-group-text align-items-center posted-wrap-text"
+            [title]="post?.groupName"
+            >{{ post?.groupName }}</span
+          >
+        </a>
+        &nbsp;<span>Group</span>
+      </div>
+    </ng-container>
     <p
-      class="post-description mdtxt m-0 mt-7 pb-3"
+      class="post-description mdtxt m-0 mt-4 pb-3"
       [innerHTML]="post.postdescription"
     ></p>
 
