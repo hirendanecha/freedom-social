@@ -46,8 +46,9 @@
     class="switch-wrapper mt-4 d-flex gap-1 align-items-center"
     (click)="closeMenu($event, '')"
   >
+  <!-- [icon]="['fas', 'sun']" -->
     <fa-icon
-      [icon]="['fas', 'sun']"
+      [icon]="['fas', 'moon']"
       class="sun icon"
       [ngClass]="{ active: !sharedService.isDark }"
       class="font-20-px"
@@ -63,8 +64,9 @@
       />
     </div>
 
+    <!-- [icon]="['fas', 'moon']" -->
     <fa-icon
-      [icon]="['fas', 'moon']"
+      [icon]="['fas', 'sun']"
       class="moon icon"
       [ngClass]="{ active: sharedService.isDark }"
       class="font-20-px"
