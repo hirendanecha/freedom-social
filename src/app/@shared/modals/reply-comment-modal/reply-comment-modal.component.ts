@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast.service';
+import { getTagUsersFromAnchorTags } from '../../utils/utils';
 
 @Component({
   selector: 'app-reply-comment-modal',
@@ -17,8 +18,12 @@ export class ReplyCommentModalComponent implements AfterViewInit {
 
   commentData: any = {
     file: null,
-    url: ''
+    url: '',
+    tags: []
   };
+
+  commentMessageInputValue: string = ''
+  commentMessageTags: any[];
 
   constructor(public activeModal: NgbActiveModal,
     private toastService: ToastService,
@@ -28,12 +33,12 @@ export class ReplyCommentModalComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     if (this.data) {
 
-      this.renderer.setProperty(
-        this.parentPostCommentElement?.nativeElement,
-        'innerHTML',
-        this.data.comment
-      );
-      this.commentData.comment = this.data?.comment
+      // this.renderer.setProperty(
+      //   this.parentPostCommentElement?.nativeElement,
+      //   'innerHTML',
+      //   this.data.comment
+      // );
+      this.commentMessageInputValue = this.data?.comment
       this.commentData.id = this.data.id
       this.commentData.parentCommentId = this.data.parentCommentId
       this.commentData.postId = this.data.postId
@@ -62,7 +67,13 @@ export class ReplyCommentModalComponent implements AfterViewInit {
   }
 
   onChangeComment(): void {
-    this.commentData.comment = this.parentPostCommentElement.nativeElement.innerHTML;
+    this.commentData.tags = getTagUsersFromAnchorTags(this.commentMessageTags);
     this.activeModal.close(this.commentData);
+  }
+
+  onTagUserInputChangeEvent(data: any): void {
+    console.log('comments-data', data)
+    this.commentData.comment = data?.html;
+    this.commentMessageTags = data?.tags;
   }
 }

@@ -18,19 +18,19 @@
       line-break: anywhere;
     }
 
-    .posted-wrap-text{
+    .posted-wrap-text {
       max-width: 400px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
 
-      @media (max-width:450px) {
+      @media (max-width: 450px) {
         max-width: 200px;
       }
-      @media (min-width:450px) and (max-width:575px) {
+      @media (min-width: 450px) and (max-width: 575px) {
         max-width: 275px;
       }
-      @media (min-width:575px) and (max-width:85px) {
+      @media (min-width: 575px) and (max-width: 85px) {
         max-width: 350px;
       }
     }
@@ -39,7 +39,8 @@
       min-height: 48px;
     }
 
-    .post-message-input, .comment-input {
+    .post-message-input,
+    .comment-input {
       font-size: 16px;
       min-height: 56px;
 
@@ -255,3 +256,4 @@
     }
   }
 }
+

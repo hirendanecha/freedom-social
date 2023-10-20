@@ -132,7 +132,6 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
   selectTagUser(user: any): void {
     const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
-
     const text = htmlText.replace(
       `@${this.userNameSearch}`,
       `<a href="/settings/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a>`
@@ -182,10 +181,14 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   emitChangeEvent(): void {
     if (this.tagInputDiv) {
       const htmlText = this.tagInputDiv?.nativeElement?.innerHTML;
-      this.value = htmlText;
+
+      this.value = `${htmlText}`.replace(/\<div\>\<br\>\<\/div\>/ig, '');
+      // console.log('htmlText', `${htmlText}`.replace(/\<div\>\<br\>\<\/div\>/ig, ''))
+      console.log('htmlText', this.value);
+
 
       this.onDataChange.emit({
-        html: htmlText,
+        html: this.value,
         tags: this.tagInputDiv?.nativeElement?.children,
         meta: this.metaData,
       });

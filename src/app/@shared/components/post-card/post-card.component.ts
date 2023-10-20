@@ -12,6 +12,7 @@ import { slideUp } from '../../animations/slideUp';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { ReplyCommentModalComponent } from '../../modals/reply-comment-modal/reply-comment-modal.component';
+import { getTagUsersFromAnchorTags } from '../../utils/utils';
 
 declare var jwplayer: any;
 @Component({
@@ -37,7 +38,8 @@ export class PostCardComponent {
   commentId = null;
   commentData: any = {
     file: null,
-    url: ''
+    url: '',
+    tags: []
   };
   isParent: boolean = false;
   postComment = {};
@@ -47,7 +49,8 @@ export class PostCardComponent {
   player: any
   isExpand = false;
   commentCount = 0;
-
+  commentMessageInputValue: string = '';
+  commentMessageTags: any[];
 
   constructor(
     private seeFirstUserService: SeeFirstUserService,
@@ -117,6 +120,7 @@ export class PostCardComponent {
       modalRef.componentInstance.data = comment;
       modalRef.result.then((res) => {
         if (res) {
+          this.commentData['tags'] = res?.tags;
           this.commentData.comment = res?.comment;
           this.commentData.postId = res?.postId;
           this.commentData.profileId = res?.profileId;
@@ -128,11 +132,13 @@ export class PostCardComponent {
         }
       });
     } else {
-      this.renderer.setProperty(
-        this.parentPostCommentElement?.nativeElement,
-        'innerHTML',
-        comment.comment
-      );
+      // this.renderer.setProperty(
+      //   this.parentPostCommentElement?.nativeElement,
+      //   'innerHTML',
+      //   comment.comment
+      // );
+      this.isReply = false;
+      this.commentMessageInputValue = comment.comment
       this.commentData['id'] = comment.id
       if (comment.imageUrl) {
         this.commentData['imageUrl'] = comment.imageUrl
@@ -217,15 +223,15 @@ export class PostCardComponent {
   }
 
   viewComments(id: number): void {
-    this.isExpand = this.isOpenCommentsPostId == id ? false : true;
-    this.isOpenCommentsPostId = id;
-    if (!this.isExpand) {
-      this.isOpenCommentsPostId = null;
-    } else {
-      this.isOpenCommentsPostId = id;
-    }
-
+    // this.isExpand = this.isOpenCommentsPostId == id ? false : true;
     // this.isOpenCommentsPostId = id;
+    // if (!this.isExpand) {
+    //   this.isOpenCommentsPostId = null;
+    // } else {
+    //   this.isOpenCommentsPostId = id;
+    // }
+
+    this.isOpenCommentsPostId = id;
     this.isCommentsLoader = true;
     const data = {
       postId: id,
@@ -248,8 +254,10 @@ export class PostCardComponent {
               return ele.id === ele1.parentCommentId;
             }),
           }));
-          this.commentCount = this.commentList.length;
-          console.log('commonets count', this.commentCount)
+          const replyCount = res.data.replyCommnetsList.filter((ele1) => {
+            return ele1.parentCommentId;
+          })
+          this.commentCount = this.commentList.length + replyCount.length;
         }
       },
       error: (error) => {
@@ -261,11 +269,11 @@ export class PostCardComponent {
     });
   }
 
-  deleteComments(id): void {
-    this.postService.deleteComments(id).subscribe({
+  deleteComments(comment): void {
+    this.postService.deleteComments(comment.id).subscribe({
       next: (res: any) => {
         this.toastService.success(res.message);
-        this.viewComments(id);
+        this.viewComments(comment?.postId);
       },
       error: (error) => {
         console.log(error);
@@ -315,20 +323,22 @@ export class PostCardComponent {
     });
   }
 
-  commentOnPost(parentPostCommentElement, postId, commentId = null): void {
-    const postComment = parentPostCommentElement.innerHTML;
+  commentOnPost(postId, commentId = null): void {
+    // const postComment = parentPostCommentElement.innerHTML;
+    this.commentData.tags = getTagUsersFromAnchorTags(this.commentMessageTags);
     console.log(this.commentData)
     if (this.isPostComment === false) {
-      if (postComment || this.commentData?.file?.name) {
+      if (this.commentData.comment || this.commentData?.file?.name) {
         this.isPostComment = true;
-        this.commentData.comment = postComment;
+        // this.commentData.comment = postComment;
         this.commentData.postId = postId;
         this.commentData.profileId = this.profileId;
         if (commentId) {
           this.commentData['parentCommentId'] = commentId;
         }
-        this.uploadCommentFileAndAddComment()
-        parentPostCommentElement.innerHTML = ''
+        this.uploadCommentFileAndAddComment();
+        this.commentMessageInputValue = null;
+        // parentPostCommentElement.innerHTML = ''
       } else {
         this.toastService.clear();
         this.toastService.danger('Please enter comment');
@@ -369,6 +379,7 @@ export class PostCardComponent {
         this.toastService.success('replied on comment');
         this.postComment = '';
         this.commentData = {}
+
         // childPostCommentElement.innerText = '';
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
@@ -397,6 +408,12 @@ export class PostCardComponent {
         this.commentList.push(data[0]);
         this.viewComments(data[0]?.postId);
         this.commentData.comment = '';
+        this.commentData.tags = [];
+        this.commentMessageTags = []
+        this.commentMessageInputValue = ''
+        setTimeout(() => {
+          this.commentMessageInputValue = ''
+        }, 100);
         this.commentData = {}
         // parentPostCommentElement.innerText = '';
       });
@@ -460,5 +477,12 @@ export class PostCardComponent {
       this.player.load();
       if (this.player) clearInterval(i)
     }, 1000)
+  }
+
+
+  onTagUserInputChangeEvent(data: any): void {
+    console.log('comments-data', data)
+    this.commentData.comment = data?.html;
+    this.commentMessageTags = data?.tags;
   }
 }
