@@ -171,7 +171,7 @@ export class ResearchListComponent {
       const reqObj = deleteExtraParamsFromReqObj(this.researchForm.value);
       const meta = { ...reqObj['meta'] };
       delete reqObj['meta'];
-      reqObj['profileId'] = localStorage.getItem('profileId');
+      reqObj['profileid'] = localStorage.getItem('profileId');
       reqObj['title'] = meta?.title;
       reqObj['metadescription'] = meta?.metadescription;
       reqObj['metaimage'] = meta?.metaimage;
