@@ -27,13 +27,14 @@ export class RightSidebarComponent implements OnInit {
     public breakpointService: BreakpointService,
     private userRewardDetailsService: UserRewardDetailsService
   ) {
-    this.breakpointService.screen.subscribe((res) => {
-      if (res.xl.gatherThen) {
-        this.getCommunityList();
-      } else {
-        this.isCommunitiesLoader = false;
-      }
-    });
+    // this.breakpointService.screen.subscribe((res) => {
+    //   if (res.xl.gatherThen) {
+    //     this.getCommunityList();
+    //   } else {
+    //     this.isCommunitiesLoader = false;
+    //   }
+    // });
+    this.getCommunityList()
   }
 
   ngOnInit(): void {

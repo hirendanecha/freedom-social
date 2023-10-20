@@ -236,7 +236,7 @@
   *ngIf="activeCommunityTab === 2 && communityDetails?.memberList?.length > 0"
 >
   <ng-container *ngIf="communityDetails?.adminIds.includes(+profileId)">
-    <div class="input-area h-48-px d-md-flex d-none align-items-center mb-3">
+    <div class="input-area h-48-px d-flex align-items-center mb-3">
       <fa-icon [icon]="['fas', 'magnifying-glass']" class="me-1" />
       <input
         type="text"
