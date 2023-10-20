@@ -49,7 +49,7 @@ export class VideoPostModalComponent {
 
 
   uploadImgAndSubmit(): void {
-    if (this.postData.videoduration >= 2) {
+    if (this.postData.videoduration > 2) {
       this.toastService.danger('Please upload less then 2minutes video!');
     } else {
       let uploadObs = {};
