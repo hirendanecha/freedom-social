@@ -36,6 +36,8 @@ export class VideoPostModalComponent {
   selectedThumbFile: any
   postMessageTags: any[];
   postMessageInputValue: string = '';
+  progressValue = 0;
+  isProgress = false
 
   constructor(public activeModal: NgbActiveModal,
     private toastService: ToastService,
@@ -52,6 +54,8 @@ export class VideoPostModalComponent {
     if (this.postData.videoduration >= 2) {
       this.toastService.danger('Please upload less then 2minutes video!');
     } else {
+      this.startProgress();
+      this.isProgress = true
       let uploadObs = {};
       if (this.postData?.file1?.name) {
         uploadObs['streamname'] = this.postService.uploadVideo(this.postData?.file1);
@@ -62,7 +66,7 @@ export class VideoPostModalComponent {
       }
 
       if (Object.keys(uploadObs)?.length > 0) {
-        this.spinner.show();
+        // this.spinner.show();
         forkJoin(uploadObs).subscribe({
           next: (res: any) => {
             if (res?.streamname?.body?.url) {
@@ -76,6 +80,7 @@ export class VideoPostModalComponent {
             }
 
             this.spinner.hide();
+            this.progressValue = 100;
             this.createPost();
           },
           error: (err) => {
@@ -83,7 +88,17 @@ export class VideoPostModalComponent {
           },
         });
       }
-    }
+    } 
+  }
+
+  startProgress() {
+    const interval = setInterval(() => {
+      this.progressValue = this.progressValue + Math.floor(Math.random() * 15);
+
+      if (this.progressValue >= 100) {
+        clearInterval(interval);
+      }
+    }, 1000);
   }
 
   onTagUserInputChangeEvent(data: any): void {
@@ -108,7 +123,7 @@ export class VideoPostModalComponent {
   }
 
   createPost(): void {
-    this.spinner.show();
+    // this.spinner.show();
     this.postData.communityId = this.communityId || null;
     if (this.postData?.streamname && this.postData.thumbfilename && this.postData.postdescription && this.postData.albumname) {
       console.log('post-data', this.postData)
