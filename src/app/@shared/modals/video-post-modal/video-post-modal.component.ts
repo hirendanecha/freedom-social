@@ -88,14 +88,15 @@ export class VideoPostModalComponent {
           },
         });
       }
-    } 
+    }
   }
 
   startProgress() {
     const interval = setInterval(() => {
-      this.progressValue = this.progressValue + Math.floor(Math.random() * 15);
-
-      if (this.progressValue >= 100) {
+      if (this.progressValue < 92) {
+        this.progressValue = this.progressValue > 92 ? this.progressValue : this.progressValue + Math.floor(Math.random() * 10);
+      }
+      if (this.progressValue >= 98) {
         clearInterval(interval);
       }
     }, 1000);
