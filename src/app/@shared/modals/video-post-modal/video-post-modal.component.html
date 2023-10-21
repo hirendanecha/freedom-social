@@ -112,6 +112,21 @@
           />
         </div>
       </div>
+      <div class="col-12 mb-5">
+        <label class="form-label d-flex"
+          >Enter Upto 5 Tags Separated By A Comma<span
+            class="text-danger"
+          ></span
+        ></label>
+        <input
+          type="text"
+          class="form-control"
+          name="cname"
+          [(ngModel)]="postData.keywords"
+          placeholder="Enter keywords"
+          (keyup)="onChangeTag($event)"
+        />
+      </div>
     </form>
   </div>
 

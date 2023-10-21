@@ -31,6 +31,7 @@ export class VideoPostModalComponent {
     albumname: '',
     file1: {},
     file2: {},
+    keywords: ''
   };
   selectedVideoFile: any
   selectedThumbFile: any
@@ -171,5 +172,9 @@ export class VideoPostModalComponent {
   onvideoPlay(e: any): void {
     this.postData.videoduration = (e?.target?.duration / 60);
     console.log('videoduration', this.postData.videoduration)
+  }
+
+  onChangeTag(event) {
+    this.postData.keywords = event.target.value.replaceAll(' ', ',');
   }
 }
