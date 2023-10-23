@@ -59,6 +59,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
           if (this.editPostIndex >= 0 && this.editPostIndex != null) {
             this.postList[this.editPostIndex] = res?.[0];
             this.editPostIndex = null;
+            this.getPostList();
           } else {
             this.postList.unshift(res?.[0]);
           }
@@ -84,7 +85,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     // );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getPostList();
@@ -98,7 +99,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       this.loadMore();
     } else {
       this.isPostLoader = true;
-      if (this.userId) { 
+      if (this.userId) {
         this.postService.getPostsByProfileId(this.userId).subscribe({
           next: (res: any) => {
             if (res?.data) {
