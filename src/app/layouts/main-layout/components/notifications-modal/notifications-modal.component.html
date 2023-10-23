@@ -1,5 +1,5 @@
 <div class="main-area p-5 notification-content">
-  <h5 class="mb-8">Notification</h5>
+  <h5 class="mb-8">Notifications</h5>
   <ng-container *ngFor="let notification of sharedService.notificationList">
     <div class="single-box p-0 mb-7" *ngIf="notification.isRead === 'N'">
       <a
@@ -46,6 +46,6 @@
     *ngIf="sharedService.notificationList.length > 0"
     (click)="closeModal()"
   >
-    <a routerLink="/notifications">See all notification</a>
+    <a routerLink="/notifications">See all notifications</a>
   </div>
 </div>
