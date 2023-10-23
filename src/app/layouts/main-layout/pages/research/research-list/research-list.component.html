@@ -128,7 +128,7 @@
         <div class="col-12 d-flex justify-content-end">
           <button
             class="btn btn-sm btn-secondary px-3 py-1 d-flex justify-content-center align-items-center gap-2 me-2"
-            *ngIf="this.researchForm.get('meta').value"
+            *ngIf="this.researchForm.value"
             (click)="resetPost()"
           >
             Cancel

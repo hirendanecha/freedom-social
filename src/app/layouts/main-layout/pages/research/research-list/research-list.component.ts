@@ -258,8 +258,13 @@ export class ResearchListComponent {
     this.researchForm.reset();
     this.tagInputDefaultData = null;
     this.selectedImgFile = null;
+    setTimeout(() => {
+      this.tagInputDefaultData = null;
+    }, 100);
+    console.log(this.tagInputDefaultData)
     Object.keys(this.researchForm.controls).forEach(key => {
       this.researchForm.get(key).setErrors(null);
     });
+    console.log(this.researchForm.value)
   }
 }
