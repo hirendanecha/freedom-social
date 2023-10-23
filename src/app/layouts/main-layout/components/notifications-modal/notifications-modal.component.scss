@@ -1,5 +1,6 @@
 ::ng-deep {
   .notifications-modal {
+    cursor: pointer;
     position: fixed;
     right: 385px;
     top: 50px;
@@ -33,7 +34,7 @@
     }
 
     @media (min-width: 1941px) and (max-width: 2580px) {
-      right: calc(23% + 70px) !important
+      right: calc(23% + 70px) !important;
     }
 
     @media (min-width: 2641px) {

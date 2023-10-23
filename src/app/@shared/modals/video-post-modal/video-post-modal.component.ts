@@ -52,7 +52,7 @@ export class VideoPostModalComponent {
 
 
   uploadImgAndSubmit(): void {
-    if (this.postData.videoduration >= 120) {
+    if (this.postData.videoduration > 121) {
       this.toastService.danger('Please upload less then 2minutes video!');
     } else {
       this.startProgress();
