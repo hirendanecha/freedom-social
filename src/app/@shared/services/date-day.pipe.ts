@@ -12,13 +12,13 @@ export class DateDayPipe implements PipeTransform {
     const diffInMinutes = Math.round(diffInTime / (1000 * 60));
     const diffInHours = Math.round(diffInTime / (1000 * 3600));
     const diffInDays = Math.round(diffInTime / (1000 * 3600 * 24));
-
-    if (diffInSeconds < 60) {
-      return `${Math.max(diffInSeconds, 1)}s ago`;
-    }
     
+    if (diffInSeconds <= 60) {
+      return 'just now';
+    }
+
     if (diffInMinutes < 60) {
-      return `${diffInMinutes}m ago`;
+      return `${diffInMinutes}min ago`;
     }
 
     if (diffInDays === 0 && diffInMinutes >= 60) {

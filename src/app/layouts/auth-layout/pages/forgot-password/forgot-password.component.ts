@@ -89,7 +89,7 @@ export class ForgotPasswordComponent {
                     this.activeModal.close('success');
                     this.loading = false;
                     this.msg =
-                      'Please check your email and click the link to set new password.';
+                      'If the entered email exists you will receive a email to change your password.';
                     this.type = 'success';
                   } else {
                     this.msg = result.message;
