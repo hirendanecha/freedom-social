@@ -385,17 +385,17 @@ export class PostCardComponent {
       this.socketService.socket.on('comments-on-post', (data: any) => {
         this.isPostComment = false;
         this.commentList.map((ele: any) =>
-          data.filter((ele1) => {
-            if (ele.id === ele1.parentCommentId) {
-              ele?.['replyCommnetsList'].push(ele1);
-              return ele;
-            }
-          })
+        data.filter((ele1) => {
+          if (ele.id === ele1.parentCommentId) {
+            ele?.['replyCommnetsList'].push(ele1);
+            return ele;
+          }
+        })
         );
-        this.viewComments(this.commentData?.postId);
         this.isReply = false;
         this.commentId = null;
       });
+      this.viewComments(this.commentData?.postId);
     } else {
       this.socketService.commentOnPost(this.commentData, (data) => {
         this.toastService.success('comment added on post');
@@ -405,8 +405,7 @@ export class PostCardComponent {
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         this.isPostComment = false;
-        this.commentList.push(data[0]);
-        this.viewComments(data[0]?.postId);
+        // this.commentList.push(data[0]);
         this.commentData.comment = '';
         this.commentData.tags = [];
         this.commentMessageTags = []
@@ -417,6 +416,7 @@ export class PostCardComponent {
         this.commentData = {}
         // parentPostCommentElement.innerText = '';
       });
+      this.viewComments(this.commentData?.postId);
     }
   }
 

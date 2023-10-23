@@ -52,7 +52,7 @@ export class VideoPostModalComponent {
 
 
   uploadImgAndSubmit(): void {
-    if (this.postData.videoduration > 2) {
+    if (this.postData.videoduration >= 120) {
       this.toastService.danger('Please upload less then 2minutes video!');
     } else {
       this.startProgress();
@@ -170,8 +170,8 @@ export class VideoPostModalComponent {
   }
 
   onvideoPlay(e: any): void {
-    this.postData.videoduration = (e?.target?.duration / 60);
-    console.log('videoduration', this.postData.videoduration)
+    this.postData.videoduration = (e?.target?.duration);
+    console.log('videoduration', e?.target?.duration)
   }
 
   onChangeTag(event) {
