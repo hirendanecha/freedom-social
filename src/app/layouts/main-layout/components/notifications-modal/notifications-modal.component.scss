@@ -33,11 +33,16 @@
     }
 
     @media (min-width: 1941px) and (max-width: 2580px) {
-      right: calc(23% + 70px) !important
+      right: calc(23% + 70px) !important;
     }
 
     @media (min-width: 2641px) {
       right: calc(23% + 70px) !important;
     }
   }
+}
+
+.modal-height{
+  max-height: 500px;
+  overflow: auto;
 }
