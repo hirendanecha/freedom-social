@@ -344,7 +344,7 @@
                   >
                     <h6 class="m-0">
                       {{ comment.Username }}
-                      <span class="font-12-px">
+                      <span class="font-12-px text-lowercase">
                         <fa-icon class="ms-2" [icon]="['fas', 'clock']" />
                         {{ comment.createdDate | dateDay }}</span
                       >
@@ -450,7 +450,9 @@
                       [value]="commentMessageInputValue"
                       (onDataChange)="onTagUserInputChangeEvent($event)"
                     />
-                    <div class="file-input d-flex gap-1 gap-md-2 ms-2 align-items-center">
+                    <div
+                      class="file-input d-flex gap-1 gap-md-2 ms-2 align-items-center"
+                    >
                       <div class="file-upload d-flex">
                         <label class="file">
                           <input
