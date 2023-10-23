@@ -1,27 +1,58 @@
 <div class="research d-flex flex-column gap-3 z-0">
   <ng-container *ngIf="sharedService?.isUserMediaApproved()">
     <div class="single-box d-flex flex-column p-5 mb-3">
-      <form [formGroup]="researchForm" *ngIf="researchForm" (submit)="createImagePost()" autocomplete="off" role="form" class="form-dark d-flex flex-column row">
+      <form
+        [formGroup]="researchForm"
+        *ngIf="researchForm"
+        autocomplete="off"
+        role="form"
+        class="form-dark d-flex flex-column row"
+      >
         <div class="col form-group">
-          <label for="posttoprofileid" class="form-label">Select Group <span class="text-danger">*</span></label>
-          <select class="input-area w-100" id="posttoprofileid" formControlName="posttoprofileid" placeholder="Select select group" trim="blur">
+          <label for="posttoprofileid" class="form-label"
+            >Select Group <span class="text-danger">*</span></label
+          >
+          <select
+            class="input-area w-100"
+            id="posttoprofileid"
+            formControlName="posttoprofileid"
+            placeholder="Select select group"
+            trim="blur"
+          >
             <option *ngFor="let research of researches" [value]="research?.ID">
               {{ research?.FirstName }}
             </option>
           </select>
 
-          <div *ngIf="isFormSubmittedAndError('posttoprofileid')" class="invalid-feedback">
-            <div *ngIf="isFormSubmittedAndError('posttoprofileid', 'required')">This field is required.</div>
+          <div
+            *ngIf="isFormSubmittedAndError('posttoprofileid')"
+            class="invalid-feedback"
+          >
+            <div *ngIf="isFormSubmittedAndError('posttoprofileid', 'required')">
+              This field is required.
+            </div>
           </div>
         </div>
 
         <div class="col form-group">
-          <label for="textpostdesc" class="form-label">Paste article or video link</label>
+          <label for="textpostdesc" class="form-label"
+            >Paste article or video link</label
+          >
           <!-- <input type="text" class="input-area" id="textpostdesc" formControlName="textpostdesc" placeholder="Paste article or video link..." trim="blur"> -->
-          <app-tag-user-input id="textpostdesc" placeholder="Paste article or video link..." [isShowMetaPreview]="false" [isAllowTagUser]="false" [value]="tagInputDefaultData" (onDataChange)="onTagUserInputChangeEvent($event, 'textpostdesc')" />
+          <app-tag-user-input
+            id="textpostdesc"
+            placeholder="Paste article or video link..."
+            [isShowMetaPreview]="true"
+            [isAllowTagUser]="false"
+            [value]="tagInputDefaultData"
+            (onDataChange)="onTagUserInputChangeEvent($event, 'textpostdesc')"
+          />
         </div>
 
-        <div class="col form-group">
+        <div
+          class="col form-group"
+          *ngIf="!this.researchForm.get('meta').value?.metaimage"
+        >
           <label for="textpostdesc" class="form-label">Upload Image</label>
           <div class="d-flex custom-input-area" *ngIf="!selectedImgFile">
             <fa-icon
@@ -58,22 +89,60 @@
         </div>
 
         <div class="col form-group">
-          <label for="postdescription" class="form-label">Type or paste the Title or Description (no links) <span class="text-danger">*</span></label>
-          <textarea class="input-area" id="postdescription" formControlName="postdescription" placeholder="What's going on?" trim="blur"></textarea>
+          <label for="postdescription" class="form-label"
+            >Type or paste the Title or Description (no links)
+            <span class="text-danger">*</span></label
+          >
+          <textarea
+            class="input-area"
+            id="postdescription"
+            formControlName="postdescription"
+            placeholder="What's going on?"
+            trim="blur"
+          ></textarea>
 
-          <div *ngIf="isFormSubmittedAndError('postdescription')" class="invalid-feedback">
-            <div *ngIf="isFormSubmittedAndError('postdescription', 'required')">This field is required.</div>
+          <div
+            *ngIf="isFormSubmittedAndError('postdescription')"
+            class="invalid-feedback"
+          >
+            <div *ngIf="isFormSubmittedAndError('postdescription', 'required')">
+              This field is required.
+            </div>
           </div>
         </div>
 
         <div class="col form-group">
-          <label for="keywords" class="form-label">Enter upto 5 tags separated by a comma</label>
-          <input type="text" class="input-area" id="keywords" formControlName="keywords" placeholder="Enter Keywords" trim="blur">
+          <label for="keywords" class="form-label"
+            >Enter upto 5 tags separated by a comma</label
+          >
+          <input
+            type="text"
+            class="input-area"
+            id="keywords"
+            formControlName="keywords"
+            placeholder="Enter Keywords"
+            trim="blur"
+          />
         </div>
 
         <div class="col-12 d-flex justify-content-end">
-          <button type="submit" class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2">
-            Post <fa-icon [icon]="['fas', 'paper-plane']" class="font-20-px c-icon-color" />
+          <button
+            class="btn btn-sm btn-secondary px-3 py-1 d-flex justify-content-center align-items-center gap-2 me-2"
+            *ngIf="this.researchForm.get('meta').value"
+            (click)="resetPost()"
+          >
+            Cancel
+            <fa-icon class="c-icon-color" [icon]="['fas', 'xmark']" />
+          </button>
+          <button
+            class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
+            (click)="createImagePost()"
+          >
+            Post
+            <fa-icon
+              [icon]="['fas', 'paper-plane']"
+              class="font-20-px c-icon-color"
+            />
           </button>
         </div>
       </form>
@@ -113,9 +182,7 @@
         id="btnRadioAll"
         autocomplete="off"
       />
-      <label
-        class="btn btn-outline-primary border-0 rounded"
-        for="btnRadioAll"
+      <label class="btn btn-outline-primary border-0 rounded" for="btnRadioAll"
         >All</label
       >
 
@@ -214,7 +281,11 @@
           <div class="d-flex justify-content-between align-items-center mb-5">
             <h6 class="text-start mb-0">{{ group?.name }}</h6>
 
-            <a href="/research/detail/grpm/{{ group?.groupUniqueLink }}" target="_blank" class="c-pointer">
+            <a
+              href="/research/detail/grpm/{{ group?.groupUniqueLink }}"
+              target="_blank"
+              class="c-pointer"
+            >
               <fa-icon [icon]="['fas', 'chevron-right']" />
             </a>
           </div>
@@ -228,9 +299,20 @@
               <ng-container *ngIf="i !== 0 && (i + 1) % pagination.limit === 0">
                 <ng-template ngbSlide>
                   <div class="row px-2">
-                    <ng-container *ngFor="let revIndex of pagination.limitArray">
-                      <div class="px-2" [ngClass]="{'col-4': pagination.limit === 3, 'col-6': pagination.limit === 2, 'col-12': pagination.limit === 1}" >
-                        <app-research-card [post]="group?.posts[i - revIndex]"/>
+                    <ng-container
+                      *ngFor="let revIndex of pagination.limitArray"
+                    >
+                      <div
+                        class="px-2"
+                        [ngClass]="{
+                          'col-4': pagination.limit === 3,
+                          'col-6': pagination.limit === 2,
+                          'col-12': pagination.limit === 1
+                        }"
+                      >
+                        <app-research-card
+                          [post]="group?.posts[i - revIndex]"
+                        />
                       </div>
                     </ng-container>
                   </div>

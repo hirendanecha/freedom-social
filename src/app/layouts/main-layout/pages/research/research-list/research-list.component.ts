@@ -40,7 +40,7 @@ export class ResearchListComponent {
     postdescription: new FormControl('', [Validators.required]),
     keywords: new FormControl(''),
     posttype: new FormControl('R'),
-    meta: new FormControl({}),
+    meta: new FormControl(null),
     isClicked: new FormControl(false),
     isSubmitted: new FormControl(false),
   });
@@ -252,5 +252,14 @@ export class ResearchListComponent {
 
   removeImgFile(): void {
     this.selectedImgFile = null;
+  }
+
+  resetPost(): void {
+    this.researchForm.reset();
+    this.tagInputDefaultData = null;
+    this.selectedImgFile = null;
+    Object.keys(this.researchForm.controls).forEach(key => {
+      this.researchForm.get(key).setErrors(null);
+    });
   }
 }
