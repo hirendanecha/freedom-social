@@ -21,7 +21,7 @@ export class ForgotPasswordComponent {
   msg = '';
   type = 'danger';
   EMAIL_REGEX = '[A-Za-z0-9._%-+-]+@[A-Za-z0-9._%-]+\\.[A-Za-z]{2,}';
-  userEmail: any;
+  userEmail = '';
   constructor(
     public activeModal: NgbActiveModal,
     private authService: AuthService,
@@ -30,7 +30,9 @@ export class ForgotPasswordComponent {
     private modalService: NgbModal,
   ) {
     this.userEmail = JSON.parse(localStorage.getItem('auth-user'))?.Email;
-   }
+
+    console.log('userEmail', this.userEmail)
+  }
 
   // verifyEmailSend(form: NgForm) {
 
@@ -73,37 +75,37 @@ export class ForgotPasswordComponent {
   //       });
   //   }
   // }
-  verifyEmailSend():void{
+  verifyEmailSend(): void {
     if (this.userEmail) {
-          this.spinner.show();
-          this.authService
-            .forgotPassword({
-              email: this.userEmail,
-            })
-            .subscribe({
-              next:
-                (result: any) => {
-                  this.spinner.hide();
-                  this.submitted = false;
-                  if (!result.error) {
-                    this.activeModal.close('success');
-                    this.loading = false;
-                    this.msg =
-                      'If the entered email exists you will receive a email to change your password.';
-                    this.type = 'success';
-                  } else {
-                    this.msg = result.message;
-                    this.type = 'danger';
-                    this.loading = false;
-                  }
-                },
-              error:
-                (error) => {
-                  this.spinner.hide();
-                  this.loading = false;
-                }
-            });
-        }
+      this.spinner.show();
+      this.authService
+        .forgotPassword({
+          email: this.userEmail,
+        })
+        .subscribe({
+          next:
+            (result: any) => {
+              this.spinner.hide();
+              this.submitted = false;
+              if (!result.error) {
+                this.activeModal.close('success');
+                this.loading = false;
+                this.msg =
+                  'If the entered email exists you will receive a email to change your password.';
+                this.type = 'success';
+              } else {
+                this.msg = result.message;
+                this.type = 'danger';
+                this.loading = false;
+              }
+            },
+          error:
+            (error) => {
+              this.spinner.hide();
+              this.loading = false;
+            }
+        });
+    }
   }
 
   validatepassword(password, cPassword) {
@@ -133,10 +135,10 @@ export class ForgotPasswordComponent {
     modalRef.componentInstance.message = `Are you sure want to change password?`;
     modalRef.result.then((res) => {
       if (res === 'success') {
-        this.verifyEmailSend()
+        this.verifyEmailSend();
         // this.verifyEmailSend(this.verifyEmail)
-   
-        
+
+
       }
     });
   }

@@ -139,10 +139,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     modalRef.componentInstance.confirmButtonLabel = 'Submit';
     modalRef.componentInstance.closeIcon = true;
     modalRef.result.then(res => {
-      if (res === 'success') {
-        this.msg = 'if a valid email address, a email will sent with a link to update your password'
-        this.type = 'success'
-      }
+      this.msg = 'If the entered email exists you will receive a email to change your password.'
+      this.type = 'success'
     });
   }
 }

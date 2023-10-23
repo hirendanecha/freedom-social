@@ -82,6 +82,7 @@ import { WalletLinkComponent } from './modals/wallet-download-modal/1776-wallet.
 import { ReplyCommentModalComponent } from './modals/reply-comment-modal/reply-comment-modal.component';
 import { PipeModule } from './pipe/pipe.module';
 import { VideoPostModalComponent } from './modals/video-post-modal/video-post-modal.component';
+import { ForgotPasswordComponent } from '../layouts/auth-layout/pages/forgot-password/forgot-password.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -98,7 +99,8 @@ const sharedComponents = [
   ClaimTokenModalComponent,
   WalletLinkComponent,
   ReplyCommentModalComponent,
-  VideoPostModalComponent
+  VideoPostModalComponent,
+  ForgotPasswordComponent,
 ];
 
 const sharedModules = [
