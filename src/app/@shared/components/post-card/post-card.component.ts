@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/@shared/services/post.service';
 import { SeeFirstUserService } from 'src/app/@shared/services/see-first-user.service';
@@ -21,7 +21,7 @@ declare var jwplayer: any;
   styleUrls: ['./post-card.component.scss'],
   animations: [slideUp],
 })
-export class PostCardComponent {
+export class PostCardComponent implements OnInit, AfterViewInit {
   @Input('post') post: any = {};
   @Input('seeFirstList') seeFirstList: any = [];
   @Output('getPostList') getPostList: EventEmitter<void> = new EventEmitter<void>();
@@ -68,8 +68,11 @@ export class PostCardComponent {
   }
 
   ngOnInit(): void {
-    this.playvideo(this.post?.id);
     this.viewComments(this.post?.id);
+  }
+
+  ngAfterViewInit(): void {
+    this.playvideo(this.post?.id);
   }
 
   removeSeeFirstUser(id: number): void {
@@ -496,13 +499,8 @@ export class PostCardComponent {
           viewability: true
         },
         controls: true,
-        events: {
-          onError: function (e: any) {
-            console.log(e);
-          },
-        },
       }
-      this.player = jwplayer('jwVideo-' + id).setup({
+      this.player = jwplayer('jwVideo-' + id)?.setup({
         ...config
       });
       this.player.load();
