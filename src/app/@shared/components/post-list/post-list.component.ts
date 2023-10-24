@@ -55,13 +55,14 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     this.socketService.socket.on(
       'new-post-added',
       (res: any) => {
-        if (res?.[0]) {
+        if (res[0]) {
+          console.log('new-post-data', res)
           if (this.editPostIndex >= 0 && this.editPostIndex != null) {
-            this.postList[this.editPostIndex] = res?.[0];
+            this.postList[this.editPostIndex] = res[0];
             this.editPostIndex = null;
-            this.getPostList();
           } else {
-            this.postList.unshift(res?.[0]);
+            this.postList.unshift(res[0]);
+            // this.getPostList();
           }
         }
       },
@@ -113,6 +114,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
             this.isPostLoader = false;
           },
         });
+        this.socketService.socket
       } else {
         this.postService.getPostsByProfileId(this.profileId).subscribe({
           next: (res: any) => {

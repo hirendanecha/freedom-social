@@ -68,8 +68,8 @@ export class PostCardComponent {
   }
 
   ngOnInit(): void {
-    this.playvideo(this.post?.id);
-    this.viewComments(this.post?.id)
+    // this.playvideo(this.post?.id);
+    // this.viewComments(this.post?.id);
   }
 
   removeSeeFirstUser(id: number): void {
@@ -178,9 +178,9 @@ export class PostCardComponent {
     });
   }
 
-  reactLikeOnPost(post) {
-    post.likescount = post.likescount + 1;
-    post.totalReactCount = post.totalReactCount + 1;
+  reactLikeOnPost(post: any) {
+    post.likescount = post?.likescount + 1;
+    post.totalReactCount = post?.totalReactCount + 1;
     post.react = 'L';
     const data = {
       postId: post.id,
@@ -209,17 +209,18 @@ export class PostCardComponent {
 
   likeDisLikePost(data): void {
     this.socketService.likeFeedPost(data, (res) => {
+      console.log('likeOrDislike', res);
       return;
     });
-    // this.socketService.socket.on(
-    //   'new-post',
-    //   (data) => {
-    //     this.postList = data;
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
+
+    this.socketService.socket.on('likeOrDislike', (res) => {
+      if (res[0]) {
+        console.log('likeOrDislike', res[0], this.post);
+        if (this.post.id === res[0]?.id) {
+          this.post.likescount = res[0]?.likescount;
+        }
+      }
+    })
   }
 
   viewComments(id: number): void {
@@ -301,9 +302,8 @@ export class PostCardComponent {
       likeCount: comment.likeCount,
       actionType: 'L',
     };
-    this.socketService.likeFeedComments(data, (res) => {
-      return;
-    });
+    this.likeDisLikePostComment(data);
+
   }
 
   disLikeComments(comment) {
@@ -318,9 +318,38 @@ export class PostCardComponent {
       toProfileId: Number(comment.profileId),
       likeCount: comment.likeCount,
     };
+    this.likeDisLikePostComment(data);
+    // this.socketService.likeFeedComments(data, (res) => {
+    //   return;
+    // });
+  }
+
+  likeDisLikePostComment(data): void {
     this.socketService.likeFeedComments(data, (res) => {
+      console.log('likeFeedComments', res);
       return;
     });
+
+    this.socketService.socket.on('likeOrDislikeComments', (res) => {
+      if (res[0]) {
+        console.log('likeFeedComments', res[0]);
+        if (res[0].parentCommentId) {
+          let index = this.commentList.findIndex(obj => obj.id === res[0].id);
+          let index1 = this.commentList.findIndex(obj => obj.replyCommnetsList.findIndex(ele => ele.id === res[0].id));
+          if (index !== -1) {
+            this.commentList[index].replyCommnetsList[index1].likeCount = res[0].likeCount;
+          }
+        } else {
+          let index = this.commentList.findIndex(obj => obj.id === res[0].id);
+          if (index !== -1) {
+            this.commentList[index].likeCount = res[0].likeCount;
+          }
+        }
+        // if (this.post.id === res[0]?.id) {
+        //   this.post.likescount = res[0]?.likescount;
+        // }
+      }
+    })
   }
 
   commentOnPost(postId, commentId = null): void {
@@ -384,18 +413,19 @@ export class PostCardComponent {
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         this.isPostComment = false;
+        console.log(data[0]);
         this.commentList.map((ele: any) =>
-        data.filter((ele1) => {
-          if (ele.id === ele1.parentCommentId) {
-            ele?.['replyCommnetsList'].push(ele1);
-            return ele;
-          }
-        })
+          data.filter((ele1) => {
+            if (ele.id === ele1.parentCommentId) {
+              ele?.['replyCommnetsList'].push(ele1);
+              return ele;
+            }
+          })
         );
         this.isReply = false;
         this.commentId = null;
       });
-      this.viewComments(this.commentData?.postId);
+      this.viewComments(this.post?.id);
     } else {
       this.socketService.commentOnPost(this.commentData, (data) => {
         this.toastService.success('comment added on post');
@@ -405,7 +435,9 @@ export class PostCardComponent {
       });
       this.socketService.socket.on('comments-on-post', (data: any) => {
         this.isPostComment = false;
-        // this.commentList.push(data[0]);
+        console.log(data[0]);
+        this.commentList.push(data[0]);
+        this.viewComments(this.post?.id);
         this.commentData.comment = '';
         this.commentData.tags = [];
         this.commentMessageTags = []
@@ -416,7 +448,6 @@ export class PostCardComponent {
         this.commentData = {}
         // parentPostCommentElement.innerText = '';
       });
-      this.viewComments(this.commentData?.postId);
     }
   }
 
