@@ -98,4 +98,16 @@ export class HeaderComponent {
   openRightSidebar() {
     this.offcanvasService.open(RightSidebarComponent, { position: 'end', panelClass: 'w-300-px' });
   }
+
+  scrollToTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+
+  reloadPage(): void {
+    window.location.reload();
+  }
 }

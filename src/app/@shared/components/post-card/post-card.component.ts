@@ -68,8 +68,8 @@ export class PostCardComponent {
   }
 
   ngOnInit(): void {
-    // this.playvideo(this.post?.id);
-    // this.viewComments(this.post?.id);
+    this.playvideo(this.post?.id);
+    this.viewComments(this.post?.id);
   }
 
   removeSeeFirstUser(id: number): void {
@@ -437,7 +437,6 @@ export class PostCardComponent {
         this.isPostComment = false;
         console.log(data[0]);
         this.commentList.push(data[0]);
-        this.viewComments(this.post?.id);
         this.commentData.comment = '';
         this.commentData.tags = [];
         this.commentMessageTags = []
@@ -446,6 +445,7 @@ export class PostCardComponent {
           this.commentMessageInputValue = ''
         }, 100);
         this.commentData = {}
+        this.viewComments(this.post?.id);
         // parentPostCommentElement.innerText = '';
       });
     }

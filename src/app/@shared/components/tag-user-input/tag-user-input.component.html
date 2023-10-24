@@ -3,7 +3,7 @@
   contenteditable
   [attr.placeholder]="placeholder"
   class="tag-input-div input-area c-text"
-  (keyup)="messageOnKeyEvent()"
+  (input)="messageOnKeyEvent()"
 ></div>
 
 <div #userSearchDropdownRef ngbDropdown>

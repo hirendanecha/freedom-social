@@ -34,7 +34,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     private postService: PostService,
     private spinner: NgxSpinnerService,
   ) {
-    this.metaDataSubject.pipe(debounceTime(300)).subscribe(() => {
+    this.metaDataSubject.pipe(debounceTime(100)).subscribe(() => {
       this.getMetaDataFromUrlStr();
       this.checkUserTagFlag();
     });
@@ -134,7 +134,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
     const text = htmlText.replace(
       `@${this.userNameSearch}`,
-      `<a href="/settings/view-profile/${user?.Id}" class="text-warning" data-id="${user?.Id}">@${user?.Username}</a>`
+      `<a href="/settings/view-profile/${user?.Id}" class="text-danger" data-id="${user?.Id}">@${user?.Username}</a>`
     );
     this.setTagInputDivValue(text);
 

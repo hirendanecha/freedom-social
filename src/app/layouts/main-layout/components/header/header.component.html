@@ -53,9 +53,10 @@
       >
         <li>
           <a
-            routerLink="/home"
+            (click)="scrollToTop()"
+            (dblclick)="reloadPage()"
             routerLinkActive="active"
-            class="nav-icon home"
+            class="nav-icon home cursor"
             data-toggle="tooltip"
             data-placement="bottom"
             title="Home"
