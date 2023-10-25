@@ -70,7 +70,7 @@ export class ResetPasswordComponent {
           next: (result) => {
             this.submitted = false;
             this.loading = false;
-            this.msg = 'New password set successfully';
+            this.msg = 'New password set successfully!';
             this.type = 'success';
             this.changePassword.reset();
             setTimeout(() => {
@@ -81,7 +81,7 @@ export class ResetPasswordComponent {
             (error) => {
               this.loading = false;
               this.submitted = false;
-              this.msg = 'Something went wrong';
+              this.msg = 'Something went wrong please try again.';
               this.type = 'danger';
             }
         });
