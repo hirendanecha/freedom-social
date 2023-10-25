@@ -88,7 +88,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   getMetaDataFromUrlStr(): void {
     const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
 
-    const matches = htmlText.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/gi);
+    const matches = htmlText.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?(.*)/gi);
 
     const url = matches?.[0];
 
