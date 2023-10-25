@@ -530,7 +530,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         if (!this.commentList[index]) {
           this.commentList.push(data[0]);
         }
-        this.viewComments(data[0]?.postId);
+        // this.viewComments(data[0]?.postId);
       }
     });
   }
