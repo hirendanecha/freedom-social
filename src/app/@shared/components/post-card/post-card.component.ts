@@ -68,11 +68,14 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.socketListner();
     this.viewComments(this.post?.id);
+
   }
 
   ngAfterViewInit(): void {
     this.playvideo(this.post?.id);
+
   }
 
   removeSeeFirstUser(id: number): void {
@@ -215,15 +218,6 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       console.log('likeOrDislike', res);
       return;
     });
-
-    this.socketService.socket.on('likeOrDislike', (res) => {
-      if (res[0]) {
-        console.log('likeOrDislike', res[0], this.post);
-        if (this.post.id === res[0]?.id) {
-          this.post.likescount = res[0]?.likescount;
-        }
-      }
-    })
   }
 
   viewComments(id: number): void {
@@ -329,30 +323,8 @@ export class PostCardComponent implements OnInit, AfterViewInit {
 
   likeDisLikePostComment(data): void {
     this.socketService.likeFeedComments(data, (res) => {
-      console.log('likeFeedComments', res);
       return;
     });
-
-    this.socketService.socket.on('likeOrDislikeComments', (res) => {
-      if (res[0]) {
-        console.log('likeFeedComments', res[0]);
-        if (res[0].parentCommentId) {
-          let index = this.commentList.findIndex(obj => obj.id === res[0].id);
-          let index1 = this.commentList.findIndex(obj => obj.replyCommnetsList.findIndex(ele => ele.id === res[0].id));
-          if (index !== -1) {
-            this.commentList[index].replyCommnetsList[index1].likeCount = res[0].likeCount;
-          }
-        } else {
-          let index = this.commentList.findIndex(obj => obj.id === res[0].id);
-          if (index !== -1) {
-            this.commentList[index].likeCount = res[0].likeCount;
-          }
-        }
-        // if (this.post.id === res[0]?.id) {
-        //   this.post.likescount = res[0]?.likescount;
-        // }
-      }
-    })
   }
 
   commentOnPost(postId, commentId = null): void {
@@ -406,52 +378,31 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   addComment(): void {
-    if (this.commentData?.parentCommentId) {
+    if (this.commentData) {
       this.socketService.commentOnPost(this.commentData, (data) => {
-        this.toastService.success('replied on comment');
         this.postComment = '';
         this.commentData = {}
-
-        // childPostCommentElement.innerText = '';
-      });
-      this.socketService.socket.on('comments-on-post', (data: any) => {
-        this.isPostComment = false;
-        console.log(data[0]);
-        this.commentList.map((ele: any) =>
-          data.filter((ele1) => {
-            if (ele.id === ele1.parentCommentId) {
-              ele?.['replyCommnetsList'].push(ele1);
-              return ele;
-            }
-          })
-        );
-        this.isReply = false;
-        this.commentId = null;
-      });
-      this.viewComments(this.post?.id);
-    } else {
-      this.socketService.commentOnPost(this.commentData, (data) => {
-        this.toastService.success('comment added on post');
-        this.commentData.comment = '';
-        this.commentData = {}
-        // parentPostCommentElement.innerText = '';
-      });
-      this.socketService.socket.on('comments-on-post', (data: any) => {
-        this.isPostComment = false;
-        console.log(data[0]);
-        this.commentList.push(data[0]);
         this.commentData.comment = '';
         this.commentData.tags = [];
         this.commentMessageTags = []
-        this.commentMessageInputValue = ''
-        setTimeout(() => {
-          this.commentMessageInputValue = ''
-        }, 100);
-        this.commentData = {}
-        this.viewComments(this.post?.id);
-        // parentPostCommentElement.innerText = '';
+        // childPostCommentElement.innerText = '';
       });
+      this.commentMessageInputValue = ''
+      setTimeout(() => {
+        this.commentMessageInputValue = ''
+      }, 100);
+      this.commentData = {}
+      this.viewComments(this.post?.id);
     }
+    //  else {
+    //   this.socketService.commentOnPost(this.commentData, (data) => {
+    //     this.toastService.success('comment added on post');
+    //     this.commentData.comment = '';
+    //     this.commentData = {}
+    //     // parentPostCommentElement.innerText = '';
+    //     return data;
+    //   });
+    // }
   }
 
   onPostFileSelect(event: any, type: string): void {
@@ -513,5 +464,74 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     console.log('comments-data', data)
     this.commentData.comment = data?.html;
     this.commentMessageTags = data?.tags;
+  }
+
+  socketListner(): void {
+    this.socketService.socket.on('likeOrDislike', (res) => {
+      if (res[0]) {
+        if (this.post.id === res[0]?.id) {
+          this.post.likescount = res[0]?.likescount;
+        }
+      }
+    });
+
+    this.socketService.socket.on('likeOrDislikeComments', (res) => {
+      console.log('likeOrDislikeComments', res)
+      if (res[0]) {
+        if (res[0].parentCommentId) {
+          // let index = this.commentList.findIndex(obj => obj.id === res[0].parentCommentId);
+          // let index1 = this.commentList.findIndex(obj => obj.replyCommnetsList.findIndex(ele => ele.id === res[0].id));
+          // if (index1 !== -1 && index !== -1) {
+          //   this.commentList[index].replyCommnetsList[index1].likeCount = res[0]?.likeCount;
+          // }
+          this.commentList.map((ele: any) =>
+            res.filter((ele1) => {
+              if (ele.id === ele1.parentCommentId) {
+                let index = ele?.['replyCommnetsList'].findIndex(obj => obj.id === res[0].id);
+                if (index !== -1) {
+                  return ele['replyCommnetsList'][index].likeCount = res[0]?.likeCount;
+                } else {
+                  return ele;
+                }
+              }
+            })
+          );
+        } else {
+          let index = this.commentList.findIndex(obj => obj.id === res[0].id);
+          if (index !== -1) {
+            this.commentList[index].likeCount = res[0].likeCount;
+          }
+        }
+        // if (this.post.id === res[0]?.id) {
+        //   this.post.likescount = res[0]?.likescount;
+        // }
+      }
+    });
+
+    this.socketService.socket.on('comments-on-post', (data: any) => {
+      this.isPostComment = false;
+      console.log('comments-on-post', data[0]);
+      if (data[0]?.parentCommentId) {
+        this.commentList.map((ele: any) =>
+          data.filter((ele1) => {
+            if (ele.id === ele1.parentCommentId) {
+              let index = ele?.['replyCommnetsList'].findIndex(obj => obj.id === data[0].id);
+              if (!ele?.['replyCommnetsList'][index]) {
+                ele?.['replyCommnetsList'].push(ele1);
+                return ele;
+              } else {
+                return ele;
+              }
+            }
+          })
+        );
+      } else {
+        let index = this.commentList.findIndex(obj => obj.id === data[0].id);
+        if (!this.commentList[index]) {
+          this.commentList.push(data[0]);
+        }
+        this.viewComments(data[0]?.postId);
+      }
+    });
   }
 }
