@@ -28,16 +28,14 @@ export class SharedService {
     this.isDark = true;
     document.body.classList.remove('dark-ui');
     // document.body.classList.add('dark-ui');
-    // localStorage.setItem('theme', 'dark');
-    localStorage.setItem('theme', 'light');
+    localStorage.setItem('theme', 'dark');
   }
 
   changeLightUi() {
     this.isDark = false;
     document.body.classList.add('dark-ui');
     // document.body.classList.remove('dark-ui');
-    // localStorage.setItem('theme', 'light');
-    localStorage.setItem('theme', 'dark');
+    localStorage.setItem('theme', 'light');
   }
 
   toggleUi(): void {

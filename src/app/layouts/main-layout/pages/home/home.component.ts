@@ -247,9 +247,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onEditPost(post: any): void {
     console.log('edit-post', post)
-    this.postData = { ...post };
-    this.postMessageInputValue = this.postData?.postdescription;
-
+    if (post.posttype === 'V') {
+      this.openUploadVideoModal(post); 
+    } else{
+      this.postData = { ...post };
+      this.postMessageInputValue = this.postData?.postdescription;
+    }
     window.scroll({
       top: 0,
       left: 0,
@@ -364,15 +367,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  openUploadVideoModal(): void {
+  openUploadVideoModal(post: any = {}): void {
     const modalRef = this.modalService.open(VideoPostModalComponent, {
       centered: true,
       size: 'lg'
     })
-    modalRef.componentInstance.title = `Upload Video`;
-    modalRef.componentInstance.confirmButtonLabel = 'Create Post';
+    modalRef.componentInstance.title = post.id ? `Edit Video`:`Upload Video`;
+    modalRef.componentInstance.confirmButtonLabel = post.id ? `Edit Post`: 'Create Post';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.communityId = this.communityDetails?.Id;
+    modalRef.componentInstance.post = post.id ? post : null
     modalRef.result.then(res => {
       if (res === 'success') {
         this.socketService.socket.on(
