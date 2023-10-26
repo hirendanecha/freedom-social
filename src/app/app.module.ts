@@ -25,7 +25,6 @@ import { MetafrenzyModule } from 'ngx-metafrenzy';
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MetafrenzyModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
