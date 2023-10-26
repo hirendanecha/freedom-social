@@ -7,8 +7,10 @@ import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 import { CommunityService } from 'src/app/@shared/services/community.service';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { PostService } from 'src/app/@shared/services/post.service';
+import { SeoService } from 'src/app/@shared/services/seo.service';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-view-profile',
@@ -36,7 +38,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     public sharedService: SharedService,
     private communityService: CommunityService,
     public breakpointService: BreakpointService,
-    private postService: PostService
+    private postService: PostService,
+    private seoService: SeoService
   ) {
     this.router.events.subscribe((event: any) => {
       const id = event?.routerEvent?.url.split('/')[3];
@@ -63,6 +66,13 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         if (res.data) {
           this.customer = res.data[0];
           this.userId = res.data[0].UserID;
+          const data = {
+            title: this.customer?.FirstName + ' ' + this.customer?.LastName,
+            url: `${environment.webUrl}settings/view-profile/${this.customer?.Id}`,
+            description: '',
+            image: this.customer?.ProfilePicName
+          }
+          this.seoService.updateSeoMetaData(data);
         }
       },
       error: (error) => {

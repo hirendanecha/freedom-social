@@ -19,6 +19,8 @@ import { ToastService } from 'src/app/@shared/services/toast.service';
 import { getTagUsersFromAnchorTags } from 'src/app/@shared/utils/utils';
 import { VideoPostModalComponent } from 'src/app/@shared/modals/video-post-modal/video-post-modal.component';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
+import { environment } from 'src/environments/environment';
+import { SeoService } from 'src/app/@shared/services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -62,7 +64,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private customerService: CustomerService,
     private router: Router,
-    public tokenService: TokenStorageService
+    public tokenService: TokenStorageService,
+    private seoService: SeoService
   ) {
     this.profileId = localStorage.getItem('profileId');
     this.postData.profileid = +this.profileId;
@@ -134,6 +137,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.spinner.hide();
           if (res?.Id) {
             const details = res;
+            const data = {
+              title: details?.CommunityName,
+              url: `${environment.webUrl}${details?.pageType}/${details?.slug}`,
+              description: details.CommunityDescription,
+              image: details?.coverImg
+            }
+            this.seoService.updateSeoMetaData(data);
 
             if (details?.memberList?.length > 0) {
               details['memberIds'] = details?.memberList?.map(

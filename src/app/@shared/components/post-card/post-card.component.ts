@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 import { ReplyCommentModalComponent } from '../../modals/reply-comment-modal/reply-comment-modal.component';
 import { getTagUsersFromAnchorTags } from '../../utils/utils';
 import { TokenStorageService } from '../../services/token-storage.service';
+import { SeoService } from '../../services/seo.service';
 
 declare var jwplayer: any;
 @Component({
@@ -64,7 +65,8 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     public sharedService: SharedService,
     private router: Router,
     private renderer: Renderer2,
-    public tokenService: TokenStorageService
+    public tokenService: TokenStorageService,
+    private seoService: SeoService
   ) {
     this.profileId = localStorage.getItem('profileId');
   }
@@ -72,7 +74,6 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.socketListner();
     this.viewComments(this.post?.id);
-
   }
 
   ngAfterViewInit(): void {
