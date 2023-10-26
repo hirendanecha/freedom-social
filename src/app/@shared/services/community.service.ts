@@ -36,7 +36,7 @@ export class CommunityService {
     return this.http.get<Community>(`${this.baseUrl}/?id=${id}&pageType=${pageType}`);
   }
 
-  createCommunity(communityData: Community): Observable<Community> {
+  createCommunity(communityData): Observable<Community> {
     return this.http.post<Community>(`${this.baseUrl}/create`, communityData);
   }
 

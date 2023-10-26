@@ -36,4 +36,8 @@ export class Community {
   coverImg: string;
   isApprove: string;
   pageType: string;
+  Zip: string;
+  City: string;
+  State: string;
+  Country = 'US';
 }
