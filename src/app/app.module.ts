@@ -9,6 +9,7 @@ import { ToastsContainerComponent } from './@shared/components/toasts-container/
 import { AuthenticationGuard } from './@shared/guards/authentication.guard';
 import { CookieService } from 'ngx-cookie-service';
 import { LandingPageComponent } from './layouts/auth-layout/pages/landing-page/landing-page.component';
+import { MetafrenzyModule } from 'ngx-metafrenzy';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LandingPageComponent } from './layouts/auth-layout/pages/landing-page/l
     HttpClientModule,
     SharedModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MetafrenzyModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
