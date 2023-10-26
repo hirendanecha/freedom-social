@@ -79,7 +79,7 @@ export class VideoPostModalComponent implements AfterViewInit {
       if (
         this.postData?.profileid &&
         this.postData.postdescription &&
-        this.postData.albumname &&
+        this.postData.albumname && this.postData.keywords &&
         (this.postData.file1 || this.selectedVideoFile) &&
         (this.postData.file2 || this.selectedThumbFile)
       ) {
@@ -171,7 +171,7 @@ export class VideoPostModalComponent implements AfterViewInit {
     if (
       this.postData?.streamname &&
       this.postData.thumbfilename &&
-      this.postData.postdescription &&
+      this.postData.postdescription && this.postData.keywords &&
       this.postData.albumname
     ) {
       console.log('post-data', this.postData);
