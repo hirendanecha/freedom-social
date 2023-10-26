@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { UserRewardDetailsService } from 'src/app/@shared/services/user-reward-details.service';
+import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 
 @Component({
   selector: 'app-right-sidebar',
@@ -25,7 +26,8 @@ export class RightSidebarComponent implements OnInit {
     private customerService: CustomerService,
     private activeOffcanvas: NgbActiveOffcanvas,
     public breakpointService: BreakpointService,
-    private userRewardDetailsService: UserRewardDetailsService
+    private userRewardDetailsService: UserRewardDetailsService,
+    public tokenService: TokenStorageService
   ) {
     // this.breakpointService.screen.subscribe((res) => {
     //   if (res.xl.gatherThen) {

@@ -10,8 +10,10 @@
             onerror="this.onerror=null;"
           />
         </a>
-
-        <div class="input-area h-48-px d-md-flex d-none align-items-center">
+        <div
+          class="input-area h-48-px d-md-flex d-none align-items-center"
+          *ngIf="tokenService.getCredentials()"
+        >
           <fa-icon [icon]="['fas', 'magnifying-glass']" class="me-1" />
           <input
             type="text"
@@ -49,6 +51,7 @@
       </div>
 
       <ul
+        *ngIf="tokenService.getCredentials()"
         class="navbar-nav d-flex flex-row justify-content-around align-self-center ms-auto m-lg-auto gap-3 gap-xl-20 gap-lg-10 py-0"
       >
         <li>
@@ -93,6 +96,7 @@
 
       <div
         class="right-area d-lg-flex d-none justify-content-end align-items-center gap-6 cus-z p-0"
+        *ngIf="tokenService.getCredentials()"
       >
         <div class="single-item">
           <div

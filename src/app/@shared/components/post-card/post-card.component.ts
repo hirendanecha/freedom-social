@@ -13,6 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { ReplyCommentModalComponent } from '../../modals/reply-comment-modal/reply-comment-modal.component';
 import { getTagUsersFromAnchorTags } from '../../utils/utils';
+import { TokenStorageService } from '../../services/token-storage.service';
 
 declare var jwplayer: any;
 @Component({
@@ -62,7 +63,8 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     private spinner: NgxSpinnerService,
     public sharedService: SharedService,
     private router: Router,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    public tokenService: TokenStorageService
   ) {
     this.profileId = localStorage.getItem('profileId');
   }

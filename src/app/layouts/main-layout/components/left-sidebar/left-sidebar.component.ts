@@ -12,6 +12,7 @@ import { BreakpointService } from 'src/app/@shared/services/breakpoint.service';
 import { ResearchSidebarComponent } from '../research-sidebar/research-sidebar.component';
 import { RightSidebarComponent } from '../right-sidebar/right-sidebar.component';
 import { ProfileMenusModalComponent } from '../profile-menus-modal/profile-menus-modal.component';
+import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 
 @Component({
   selector: 'app-left-sidebar',
@@ -33,8 +34,9 @@ export class LeftSidebarComponent implements OnInit {
     private customerService: CustomerService,
     private activeOffcanvas: NgbActiveOffcanvas,
     public breakpointService: BreakpointService,
-    private offcanvasService: NgbOffcanvas
-  ) {}
+    private offcanvasService: NgbOffcanvas,
+    public tokenService: TokenStorageService
+  ) { }
 
   ngOnInit(): void {
     this.getUserDetails();

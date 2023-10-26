@@ -14,6 +14,7 @@ import { RightSidebarComponent } from '../../components/right-sidebar/right-side
 import { ResearchSidebarComponent } from '../../components/research-sidebar/research-sidebar.component';
 import { LeftSidebarComponent } from '../../components/left-sidebar/left-sidebar.component';
 import { environment } from 'src/environments/environment';
+import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -47,6 +48,7 @@ export class HeaderComponent {
     private customerService: CustomerService,
     public breakpointService: BreakpointService,
     private offcanvasService: NgbOffcanvas,
+    public tokenService: TokenStorageService
 
   ) {
     this.sharedService.getNotificationList();

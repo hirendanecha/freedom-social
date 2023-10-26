@@ -48,7 +48,7 @@
           </div>
         </div>
 
-        <div ngbDropdown>
+        <div ngbDropdown *ngIf="tokenService.getCredentials()">
           <fa-icon
             [icon]="['fas', 'ellipsis']"
             class="font-24-px m-0"
@@ -136,7 +136,7 @@
     </div>
     <div
       class="d-none d-lg-flex text-center justify-content-center align-items-center h-24-px w-100 mt-lg-4 ms-2 ms-lg-0"
-      *ngIf="profileId != post.profileid"
+      *ngIf="profileId != post.profileid && tokenService.getCredentials()"
     >
       <button>
         <a
@@ -211,6 +211,7 @@
         data-toggle="tooltip"
         data-placement="bottom"
         title="Post Likes"
+        [disabled]="!tokenService.getCredentials()"
         (click)="
           post.react == 'L' ? dislikeFeedPost(post) : reactLikeOnPost(post)
         "
@@ -236,6 +237,7 @@
         data-toggle="tooltip"
         data-placement="bottom"
         title="View Comments"
+        [disabled]="!tokenService.getCredentials()"
         (click)="viewComments(post?.id)"
       >
         <fa-icon [icon]="['fas', 'comment']" class="font-20-px" />
@@ -244,7 +246,7 @@
       </button>
     </div>
 
-    <form>
+    <form *ngIf="tokenService.getCredentials()">
       <div class="d-flex mt-5 gap-3 align-items-start">
         <img
           loading="lazy"
@@ -404,6 +406,7 @@
                   <li class="d-center">
                     <button
                       class="d-center gap-1 gap-sm-2 font-12-px"
+                      [disabled]="!tokenService.getCredentials()"
                       (click)="
                         comment.react == 'L'
                           ? disLikeComments(comment)
@@ -422,6 +425,7 @@
                   <li class="d-center">
                     <button
                       class="d-center gap-1 gap-sm-2 font-12-px"
+                      [disabled]="!tokenService.getCredentials()"
                       (click)="showReplySection(comment.id)"
                     >
                       <fa-icon [icon]="['fas', 'message']" class="font-16-px" />
@@ -595,6 +599,7 @@
                           <li class="d-center">
                             <button
                               class="d-center gap-1 gap-sm-2 font-12-px"
+                              [disabled]="!tokenService.getCredentials()"
                               (click)="
                                 reply.react == 'L'
                                   ? disLikeComments(reply)

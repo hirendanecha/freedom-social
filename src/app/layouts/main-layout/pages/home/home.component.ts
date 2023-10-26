@@ -18,6 +18,7 @@ import { SocketService } from 'src/app/@shared/services/socket.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
 import { getTagUsersFromAnchorTags } from 'src/app/@shared/utils/utils';
 import { VideoPostModalComponent } from 'src/app/@shared/modals/video-post-modal/video-post-modal.component';
+import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -60,7 +61,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private communityService: CommunityService,
     private route: ActivatedRoute,
     private customerService: CustomerService,
-    private router: Router
+    private router: Router,
+    public tokenService: TokenStorageService
   ) {
     this.profileId = localStorage.getItem('profileId');
     this.postData.profileid = +this.profileId;
@@ -248,8 +250,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   onEditPost(post: any): void {
     console.log('edit-post', post)
     if (post.posttype === 'V') {
-      this.openUploadVideoModal(post); 
-    } else{
+      this.openUploadVideoModal(post);
+    } else {
       this.postData = { ...post };
       this.postMessageInputValue = this.postData?.postdescription;
     }
@@ -372,8 +374,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       centered: true,
       size: 'lg'
     })
-    modalRef.componentInstance.title = post.id ? `Edit Video`:`Upload Video`;
-    modalRef.componentInstance.confirmButtonLabel = post.id ? `Edit Post`: 'Create Post';
+    modalRef.componentInstance.title = post.id ? `Edit Video` : `Upload Video`;
+    modalRef.componentInstance.confirmButtonLabel = post.id ? `Edit Post` : 'Create Post';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.communityId = this.communityDetails?.Id;
     modalRef.componentInstance.post = post.id ? post : null

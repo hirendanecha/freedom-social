@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, mapToCanActivate } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
+import { AuthenticationGuard } from 'src/app/@shared/guards/authentication.guard';
 
 const routes: Routes = [
   {
@@ -16,10 +17,12 @@ const routes: Routes = [
   {
     path: 'communities/:name',
     component: HomeComponent,
+    canActivate: mapToCanActivate([AuthenticationGuard]),
   },
   {
     path: 'pages/:name',
     component: HomeComponent,
+    canActivate: mapToCanActivate([AuthenticationGuard]),
   },
   {
     path: 'post/:id',

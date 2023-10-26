@@ -7,7 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
-    canActivate: mapToCanActivate([AuthenticationGuard]),
     children: [
       {
         path: '',
@@ -22,28 +21,32 @@ const routes: Routes = [
         loadChildren: () => import('./pages/communities/communities.module').then((m) => m.CommunitiesModule),
         data: {
           isShowLeftSideBar: true
-        }
+        },
+        canActivate: mapToCanActivate([AuthenticationGuard]),
       },
       {
         path: 'pages',
         loadChildren: () => import('./pages/freedom-page/freedom-page.module').then((m) => m.FreedomPageModule),
         data: {
           isShowLeftSideBar: true
-        }
+        },
+        canActivate: mapToCanActivate([AuthenticationGuard]),
       },
       {
         path: 'settings',
         loadChildren: () => import('./pages/settings/settings.module').then((m) => m.SettingsModule),
         data: {
           isShowLeftSideBar: true
-        }
+        },
+        canActivate: mapToCanActivate([AuthenticationGuard]),
       },
       {
         path: 'notifications',
         loadChildren: () => import('./pages/notifications/notification.module').then((m) => m.NotificationsModule),
         data: {
           isShowLeftSideBar: true
-        }
+        },
+        canActivate: mapToCanActivate([AuthenticationGuard]),
       },
       {
         path: 'research',
@@ -52,7 +55,8 @@ const routes: Routes = [
           isShowLeftSideBar: true,
           isShowRightSideBar: true,
           isShowResearchLeftSideBar: true
-        }
+        },
+        canActivate: mapToCanActivate([AuthenticationGuard]),
       }
     ]
   },
