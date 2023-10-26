@@ -1,4 +1,12 @@
-import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -11,12 +19,12 @@ import { SocketService } from '../../services/socket.service';
   templateUrl: './video-post-modal.component.html',
   styleUrls: ['./video-post-modal.component.scss'],
 })
-export class VideoPostModalComponent {
+export class VideoPostModalComponent implements AfterViewInit {
   @Input() cancelButtonLabel: string = 'Cancel';
   @Input() confirmButtonLabel: string = 'Confirm';
   @Input() title: string = 'Confirmation Dialog';
   @Input() message: string;
-  @Input() data: any;
+  @Input() post: any = [];
   @Input() communityId: any;
   postData: any = {
     profileid: null,
@@ -31,63 +39,93 @@ export class VideoPostModalComponent {
     albumname: '',
     file1: {},
     file2: {},
-    keywords: ''
+    keywords: '',
   };
-  selectedVideoFile: any
-  selectedThumbFile: any
+  selectedVideoFile: any;
+  selectedThumbFile: any;
   postMessageTags: any[];
   postMessageInputValue: string = '';
   progressValue = 0;
-  isProgress = false
+  isProgress = false;
 
-  constructor(public activeModal: NgbActiveModal,
+  constructor(
+    public activeModal: NgbActiveModal,
     private toastService: ToastService,
     private spinner: NgxSpinnerService,
     private postService: PostService,
     private socketService: SocketService
   ) {
     this.postData.profileid = localStorage.getItem('profileId');
-    console.log('profileId', this.postData.profileid)
+    console.log('profileId', this.postData.profileid);
   }
-
+  ngAfterViewInit(): void {
+    console.log('editPreview', this.post);
+    if (this.post) {
+      this.postData.id = this.post.id;
+      this.postData.profileid = this.post.profileid;
+      this.postData.albumname = this.post.albumname;
+      this.postMessageInputValue = this.post?.postdescription;
+      this.selectedThumbFile = this.post?.thumbfilename;
+      this.selectedVideoFile = this.post?.streamname;
+      this.postData.videoduration = this.post?.videoduration;
+      this.postData.keywords = this.post?.keywords;
+    }
+  }
 
   uploadImgAndSubmit(): void {
     if (this.postData.videoduration > 121) {
       this.toastService.danger('Please upload less then 2minutes video!');
     } else {
-      this.startProgress();
-      this.isProgress = true
-      let uploadObs = {};
-      if (this.postData?.file1?.name) {
-        uploadObs['streamname'] = this.postService.uploadVideo(this.postData?.file1);
-      }
+      if (
+        this.postData?.profileid &&
+        this.postData.postdescription &&
+        this.postData.albumname && this.postData.keywords &&
+        (this.postData.file1 || this.selectedVideoFile) &&
+        (this.postData.file2 || this.selectedThumbFile)
+      ) {
+        this.startProgress();
+        this.isProgress = true;
+        let uploadObs = {};
+        if (this.postData?.file1?.name) {
+          uploadObs['streamname'] = this.postService.uploadVideo(
+            this.postData?.file1
+          );
+        }
 
-      if (this.postData?.file2?.name) {
-        uploadObs['thumbfilename'] = this.postService.uploadVideo(this.postData?.file2);
-      }
+        if (this.postData?.file2?.name) {
+          uploadObs['thumbfilename'] = this.postService.uploadVideo(
+            this.postData?.file2
+          );
+        }
 
-      if (Object.keys(uploadObs)?.length > 0) {
-        // this.spinner.show();
-        forkJoin(uploadObs).subscribe({
-          next: (res: any) => {
-            if (res?.streamname?.body?.url) {
-              this.postData['file1'] = null;
-              this.postData['streamname'] = res?.streamname?.body?.url;
-            }
+        if (Object.keys(uploadObs)?.length > 0) {
+          // this.spinner.show();
+          forkJoin(uploadObs).subscribe({
+            next: (res: any) => {
+              if (res?.streamname?.body?.url) {
+                this.postData['file1'] = null;
+                this.postData['streamname'] = res?.streamname?.body?.url;
+              }
 
-            if (res?.thumbfilename?.body?.url) {
-              this.postData['file2'] = null;
-              this.postData['thumbfilename'] = res?.thumbfilename?.body?.url;
-            }
+              if (res?.thumbfilename?.body?.url) {
+                this.postData['file2'] = null;
+                this.postData['thumbfilename'] = res?.thumbfilename?.body?.url;
+              }
 
-            this.spinner.hide();
-            this.progressValue = 100;
-            this.createPost();
-          },
-          error: (err) => {
-            this.spinner.hide();
-          },
-        });
+              this.spinner.hide();
+              this.progressValue = 100;
+              this.createPost();
+            },
+            error: (err) => {
+              this.spinner.hide();
+            },
+          });
+        }
+      } else {
+        this.postData.streamname = this.selectedVideoFile;
+        this.postData.thumbfilename = this.selectedThumbFile;
+        this.progressValue = 100;
+        this.createPost();
       }
     }
   }
@@ -95,7 +133,10 @@ export class VideoPostModalComponent {
   startProgress() {
     const interval = setInterval(() => {
       if (this.progressValue < 92) {
-        this.progressValue = this.progressValue > 92 ? this.progressValue : this.progressValue + Math.floor(Math.random() * 10);
+        this.progressValue =
+          this.progressValue > 92
+            ? this.progressValue
+            : this.progressValue + Math.floor(Math.random() * 10);
       }
       if (this.progressValue >= 98) {
         clearInterval(interval);
@@ -122,13 +163,18 @@ export class VideoPostModalComponent {
     }
 
     return tags;
-  }
+  };
 
   createPost(): void {
     // this.spinner.show();
     this.postData.communityId = this.communityId || null;
-    if (this.postData?.streamname && this.postData.thumbfilename && this.postData.postdescription && this.postData.albumname) {
-      console.log('post-data', this.postData)
+    if (
+      this.postData?.streamname &&
+      this.postData.thumbfilename &&
+      this.postData.postdescription && this.postData.keywords &&
+      this.postData.albumname
+    ) {
+      console.log('post-data', this.postData);
       this.activeModal.close();
       this.socketService.createOrEditPost(this.postData, (data) => {
         this.spinner.hide();
@@ -145,7 +191,7 @@ export class VideoPostModalComponent {
       //   }
       // })
     } else {
-      this.toastService.danger('Please enter mandatory fields(*) data.')
+      this.toastService.danger('Please enter mandatory fields(*) data.');
     }
   }
 
@@ -170,8 +216,8 @@ export class VideoPostModalComponent {
   }
 
   onvideoPlay(e: any): void {
-    this.postData.videoduration = (e?.target?.duration);
-    console.log('videoduration', e?.target?.duration)
+    this.postData.videoduration = e?.target?.duration;
+    console.log('videoduration', e?.target?.duration);
   }
 
   onChangeTag(event) {

@@ -21,7 +21,7 @@
         <input
           type="text"
           class="input-area"
-          name="cname"
+          name="albumname"
           [(ngModel)]="postData.albumname"
           placeholder="Enter video title"
         />
@@ -114,14 +114,15 @@
       </div>
       <div class="col-12 mb-5">
         <label class="form-label d-flex"
-          >Enter Upto 5 Tags Separated By A Comma<span
+          >Enter Upto 5 Tags Separated By A Comma<span class="text-danger">*</span>
+          <span
             class="text-danger"
           ></span
         ></label>
         <input
           type="text"
           class="input-area"
-          name="cname"
+          name="keywords"
           [(ngModel)]="postData.keywords"
           placeholder="Enter keywords"
           (keyup)="onChangeTag($event)"
