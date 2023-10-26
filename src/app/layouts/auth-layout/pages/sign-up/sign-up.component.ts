@@ -64,7 +64,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     private router: Router,
     private uploadService: UploadFilesService,
     private toastService: ToastService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllCountries();
@@ -173,7 +173,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       if (!this.validatepassword()) {
         return;
       }
-  
+
       const id = this.route.snapshot.paramMap.get('id');
       if (this.userId) {
         // this.updateCustomer();
@@ -186,7 +186,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       this.scrollTop();
       return false;
     }
-    
+
     // if (
     //  this.registerForm.invalid ||
     //   this.registerForm.get('termAndPolicy')?.value === false ||
@@ -228,8 +228,8 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       .getZipData(event, this.registerForm.get('Country').value)
       .subscribe(
         (data) => {
-          const zipData = data[0];
-          if (zipData?.state) {
+          if (data[0]) {
+            const zipData = data[0];
             this.registerForm.get('State').enable();
             this.registerForm.get('City').enable();
             this.registerForm.patchValue({
@@ -239,9 +239,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
           } else {
             this.registerForm.get('State').disable();
             this.registerForm.get('City').disable();
-            this.toastService.danger(
-              'Please check and enter a valid country or zip code.'
-            );
+            this.toastService.danger(data?.message);
           }
 
           this.spinner.hide();
