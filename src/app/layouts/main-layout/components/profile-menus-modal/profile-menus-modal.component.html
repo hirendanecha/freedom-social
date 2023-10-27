@@ -46,7 +46,22 @@
     class="switch-wrapper mt-4 d-flex gap-1 align-items-center"
     (click)="closeMenu($event, '')"
   >
-  <!-- [icon]="['fas', 'sun']" -->
+    <!-- [icon]="['fas', 'sun']" -->
+    <fa-icon
+      [icon]="['fas', 'sun']"
+      class="moon icon"
+      [ngClass]="{ active: sharedService.isDark }"
+      class="font-20-px"
+    />
+    <div class="form-check form-switch">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        [checked]="!sharedService.isDark"
+        (change)="sharedService.toggleUi()"
+      />
+    </div>
     <fa-icon
       [icon]="['fas', 'moon']"
       class="sun icon"
@@ -54,23 +69,8 @@
       class="font-20-px"
     />
 
-    <div class="form-check form-switch">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        role="switch"
-        [checked]="sharedService.isDark"
-        (change)="sharedService.toggleUi()"
-      />
-    </div>
-
     <!-- [icon]="['fas', 'moon']" -->
-    <fa-icon
-      [icon]="['fas', 'sun']"
-      class="moon icon"
-      [ngClass]="{ active: sharedService.isDark }"
-      class="font-20-px"
-    />
+
     <span class="mdtxt ms-2">Mode</span>
   </div>
 </div>
