@@ -144,7 +144,7 @@
           (click)="unsubscribe(post)"
         >
           <fa-icon [icon]="['fas', 'user-minus']" />
-          <span>Unsubscribe</span>
+          <span class="fw-bold c-text-color">Unsubscribe</span>
         </a>
       </button>
       <span class="me-2 ms-2">|</span>
@@ -154,7 +154,7 @@
           (click)="seeFirst(post?.profileid)"
         >
           <fa-icon [icon]="['fas', 'eye']" />
-          <span>See First</span>
+          <span class="fw-bold c-text-color">See First</span>
         </a>
       </button>
       <button *ngIf="seeFirstList.includes(post?.profileid)">

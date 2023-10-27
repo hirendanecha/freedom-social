@@ -15,7 +15,11 @@
     }
 
     .post-description {
-      line-break: anywhere;
+      // line-break: anywhere;
+    }
+
+    .c-text-color{
+      color: var(--font-icon-color);
     }
 
     .posted-wrap-text {
