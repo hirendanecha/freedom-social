@@ -111,7 +111,8 @@ export class HeaderComponent {
   }
 
   reloadPage(): void {
-    // location.reload();
-    // this.router.navigate(['home'])
+    this.router.navigate(['home']).then(() => {
+      location.reload();
+    })
   }
 }
