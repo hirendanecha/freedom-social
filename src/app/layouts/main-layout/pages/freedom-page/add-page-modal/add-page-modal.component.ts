@@ -1,9 +1,11 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { forkJoin } from 'rxjs';
+import { debounceTime, forkJoin, fromEvent } from 'rxjs';
 import { Community } from 'src/app/@shared/constant/customer';
 import { CommunityService } from 'src/app/@shared/services/community.service';
+import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
 import { UploadFilesService } from 'src/app/@shared/services/upload-files.service';
 import { slugify } from 'src/app/@shared/utils/utils';
@@ -14,7 +16,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './add-page-modal.component.html',
   styleUrls: ['./add-page-modal.component.scss'],
 })
-export class AddFreedomPageComponent {
+export class AddFreedomPageComponent implements OnInit, AfterViewInit {
   @Input() closeIcon: boolean | undefined;
 
   pageDetails = new Community();
@@ -26,14 +28,50 @@ export class AddFreedomPageComponent {
   userId = '';
   profileId = '';
   originUrl = environment.webUrl + 'page/';
+
+  pageForm = new FormGroup({
+    profileId: new FormControl(),
+    CommunityName: new FormControl(''),
+    CommunityDescription: new FormControl(''),
+    slug: new FormControl('', [Validators.required]),
+    pageType: new FormControl('page', [Validators.required]),
+    isApprove: new FormControl('Y', [Validators.required]),
+    Country: new FormControl('US', [Validators.required]),
+    Zip: new FormControl({ value: '', disabled: true }, Validators.required),
+    State: new FormControl({ value: '', disabled: true }, Validators.required),
+    City: new FormControl({ value: '', disabled: true }, Validators.required),
+    County: new FormControl({ value: '', disabled: true }, Validators.required),
+    logoImg: new FormControl('', Validators.required),
+    coverImg: new FormControl('', Validators.required),
+  });
+  allCountryData: any;
+  defaultCountry = 'US';
+  @ViewChild('zipCode') zipCode: ElementRef;
+
   constructor(
     public activeModal: NgbActiveModal,
     private spinner: NgxSpinnerService,
     private communityService: CommunityService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private customerService: CustomerService
   ) {
     this.userId = window.sessionStorage.user_id;
     this.profileId = localStorage.getItem('profileId');
+  }
+
+  ngOnInit(): void {
+    this.getAllCountries()
+  }
+
+  ngAfterViewInit(): void {
+    fromEvent(this.zipCode.nativeElement, 'input')
+      .pipe(debounceTime(1000))
+      .subscribe((event) => {
+        const val = event['target'].value;
+        if (val.length > 3) {
+          this.onZipChange(val);
+        }
+      });
   }
 
   selectFiles(event, type) {
@@ -71,6 +109,7 @@ export class AddFreedomPageComponent {
   // }
 
   uploadImgAndSubmit(): void {
+    this.pageForm.get('profileId').setValue(this.profileId);
     let uploadObs = {};
     if (this.logoImg?.file?.name) {
       uploadObs['logoImg'] = this.communityService.upload(this.logoImg?.file, this.profileId, 'page-logo');
@@ -88,11 +127,15 @@ export class AddFreedomPageComponent {
           if (res?.logoImg?.body?.url) {
             this.logoImg['file'] = null;
             this.logoImg['url'] = res?.logoImg?.body?.url;
+            this.pageForm.get('logoImg').setValue(res?.logoImg?.body?.url)
+
           }
 
           if (res?.coverImg?.body?.url) {
             this.coverImg['file'] = null;
             this.coverImg['url'] = res?.coverImg?.body?.url;
+            this.pageForm.get('coverImg').setValue(res?.coverImg?.body?.url)
+
           }
 
           this.spinner.hide();
@@ -109,32 +152,25 @@ export class AddFreedomPageComponent {
 
   onSubmit() {
     this.spinner.show();
-    if (this.pageDetails.CommunityName && this.pageDetails.slug && this.logoImg?.url && this.coverImg?.url) {
-      this.pageDetails.profileId = this.profileId;
-      this.pageDetails.logoImg = this.logoImg?.url;
-      this.pageDetails.coverImg = this.coverImg?.url;
-      this.pageDetails.pageType = 'page';
-      this.pageDetails.isApprove = 'Y';
-      if (this.pageDetails) {
-        this.communityService.createCommunity(this.pageDetails).subscribe(
-          {
-            next: (res: any) => {
+    if (this.pageForm.valid) {
+      this.communityService.createCommunity(this.pageForm.value).subscribe(
+        {
+          next: (res: any) => {
+            this.spinner.hide();
+            if (!res.error) {
+              this.submitted = true;
+              this.createCommunityAdmin(res.data);
+              this.activeModal.close('success');
+              this.toastService.success('Freedom page created successfully');
+              // this.router.navigateByUrl('/home');
+            }
+          },
+          error:
+            (err) => {
+              this.toastService.danger('Please change page name. this page name already in use.');
               this.spinner.hide();
-              if (!res.error) {
-                this.submitted = true;
-                this.createCommunityAdmin(res.data);
-                this.activeModal.close('success');
-                this.toastService.success('Freedom page created successfully');
-                // this.router.navigateByUrl('/home');
-              }
-            },
-            error:
-              (err) => {
-                this.toastService.danger('Please change page name. this page name already in use.');
-                this.spinner.hide();
-              }
-          });
-      }
+            }
+        });
     } else {
       this.spinner.hide();
       this.toastService.danger('Please enter mandatory fields(*) data.');
@@ -202,6 +238,63 @@ export class AddFreedomPageComponent {
   }
 
   onCommunityNameChange(): void {
-    this.pageDetails.slug = slugify(this.pageDetails.CommunityName);
+    const slug = slugify(this.pageForm.get('CommunityName').value);
+    this.pageForm.get('slug').setValue(slug)
+  }
+
+  getAllCountries() {
+    this.spinner.show();
+
+    this.customerService.getCountriesData().subscribe({
+      next: (result) => {
+        this.spinner.hide();
+        this.allCountryData = result;
+        this.pageForm.get('Zip').enable();
+      },
+      error: (error) => {
+        this.spinner.hide();
+        console.log(error);
+      },
+    });
+  }
+
+  changeCountry() {
+    this.pageForm.get('Zip').setValue('');
+    this.pageForm.get('State').setValue('');
+    this.pageForm.get('City').setValue('');
+    this.pageForm.get('County').setValue('');
+    // this.registerForm.get('Place').setValue('');
+  }
+
+  onZipChange(event) {
+    this.spinner.show();
+    this.customerService
+      .getZipData(event, this.pageForm.get('Country').value)
+      .subscribe(
+        (data) => {
+          if (data[0]) {
+            const zipData = data[0];
+            this.pageForm.get('State').enable();
+            this.pageForm.get('City').enable();
+            this.pageForm.get('County').enable();
+            this.pageForm.patchValue({
+              State: zipData.state,
+              City: zipData.city,
+              County: zipData.places,
+            });
+          } else {
+            this.pageForm.get('State').disable();
+            this.pageForm.get('City').disable();
+            this.pageForm.get('County').disable();
+            this.toastService.danger(data?.message);
+          }
+
+          this.spinner.hide();
+        },
+        (err) => {
+          this.spinner.hide();
+          console.log(err);
+        }
+      );
   }
 }

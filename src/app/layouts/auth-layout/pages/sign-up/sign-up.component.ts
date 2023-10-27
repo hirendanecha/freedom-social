@@ -54,6 +54,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     Zip: new FormControl({ value: '', disabled: true }, Validators.required),
     State: new FormControl({ value: '', disabled: true }, Validators.required),
     City: new FormControl({ value: '', disabled: true }, Validators.required),
+    County: new FormControl({ value: '', disabled: true }, Validators.required),
     TermAndPolicy: new FormControl(false, Validators.required),
   });
 
@@ -203,7 +204,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     this.registerForm.get('Zip').setValue('');
     this.registerForm.get('State').setValue('');
     this.registerForm.get('City').setValue('');
-    // this.registerForm.get('Place').setValue('');
+    this.registerForm.get('County').setValue('');
   }
 
   getAllCountries() {
@@ -232,13 +233,16 @@ export class SignUpComponent implements OnInit, AfterViewInit {
             const zipData = data[0];
             this.registerForm.get('State').enable();
             this.registerForm.get('City').enable();
+            this.registerForm.get('County').enable();
             this.registerForm.patchValue({
               State: zipData.state,
               City: zipData.city,
+              County: zipData.places
             });
           } else {
             this.registerForm.get('State').disable();
             this.registerForm.get('City').disable();
+            this.registerForm.get('County').disable();
             this.toastService.danger(data?.message);
           }
 
@@ -266,6 +270,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       Country: data?.Country,
       City: data?.City,
       State: data?.State,
+      County: data?.County,
       Zip: data?.Zip,
       MobileNo: data?.MobileNo,
       UserID: window?.sessionStorage?.user_id,

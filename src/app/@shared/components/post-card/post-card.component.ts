@@ -77,8 +77,9 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.playvideo(this.post?.id);
-
+    if (this.post?.posttype === 'V') {
+      this.playVideo(this.post?.id);
+    }
   }
 
   removeSeeFirstUser(id: number): void {
@@ -432,34 +433,36 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     this.commentData['imageUrl'] = '';
   }
 
-  playvideo(id: any) {
-    let i = setInterval(() => {
-      if (this.player) {
-        this.player.remove();
+  playVideo(id: any) {
+    if (this.player) {
+      this.player.remove();
+    }
+    const config = {
+      file: this.post?.streamname,
+      image: this.post?.thumbfilename,
+      mute: false,
+      autostart: false,
+      volume: 30,
+      height: '308px',
+      width: 'auto',
+      pipIcon: "disabled",
+      displaydescription: true,
+      playbackRateControls: false,
+      aspectratio: "16:9",
+      autoPause: {
+        viewability: true
+      },
+      controls: true,
+    }
+    if (id) {
+      const jwPlayer = jwplayer('jwVideo-' + id);
+      if (jwPlayer) {
+        this.player = jwPlayer?.setup({
+          ...config
+        });
+        this.player?.load();
       }
-      const config = {
-        file: this.post?.streamname,
-        image: this.post?.thumbfilename,
-        mute: false,
-        autostart: false,
-        volume: 30,
-        height: '308px',
-        width: 'auto',
-        pipIcon: "disabled",
-        displaydescription: true,
-        playbackRateControls: false,
-        aspectratio: "16:9",
-        autoPause: {
-          viewability: true
-        },
-        controls: true,
-      }
-      this.player = jwplayer('jwVideo-' + id)?.setup({
-        ...config
-      });
-      this.player.load();
-      if (this.player) clearInterval(i)
-    }, 1000)
+    }
   }
 
 

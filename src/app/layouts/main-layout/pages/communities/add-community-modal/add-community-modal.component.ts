@@ -48,6 +48,7 @@ export class AddCommunityModalComponent implements OnInit, AfterViewInit {
     Zip: new FormControl({ value: '', disabled: true }, Validators.required),
     State: new FormControl({ value: '', disabled: true }, Validators.required),
     City: new FormControl({ value: '', disabled: true }, Validators.required),
+    County: new FormControl({ value: '', disabled: true }, Validators.required),
     logoImg: new FormControl('', Validators.required),
     coverImg: new FormControl('', Validators.required),
   });
@@ -199,6 +200,7 @@ export class AddCommunityModalComponent implements OnInit, AfterViewInit {
     this.communityForm.get('Zip').setValue('');
     this.communityForm.get('State').setValue('');
     this.communityForm.get('City').setValue('');
+    this.communityForm.get('County').setValue('');
     // this.registerForm.get('Place').setValue('');
   }
 
@@ -212,13 +214,16 @@ export class AddCommunityModalComponent implements OnInit, AfterViewInit {
             const zipData = data[0];
             this.communityForm.get('State').enable();
             this.communityForm.get('City').enable();
+            this.communityForm.get('County').enable();
             this.communityForm.patchValue({
               State: zipData.state,
               City: zipData.city,
+              County: zipData.places,
             });
           } else {
             this.communityForm.get('State').disable();
             this.communityForm.get('City').disable();
+            this.communityForm.get('County').disable();
             this.toastService.danger(data?.message);
           }
 

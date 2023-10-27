@@ -107,10 +107,11 @@ export class HeaderComponent {
       left: 0,
       behavior: 'smooth',
     });
+    this.router.navigate(['home'])
   }
 
   reloadPage(): void {
     // location.reload();
-    this.router.navigate(['home'])
+    // this.router.navigate(['home'])
   }
 }
