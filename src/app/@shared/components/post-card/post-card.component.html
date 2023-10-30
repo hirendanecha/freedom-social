@@ -37,13 +37,14 @@
           >
             <div class="d-flex align-items-center">
               {{ post?.Username || post?.FirstName }}
-              <fa-icon
+              <!-- <fa-icon
                 class="ms-2 me-1 font-12-px cursor"
                 [icon]="['fas', 'clock']"
                 [ngbTooltip]="post.postcreationdate | date : ' h:mm a MMM d, y'"
                 placement="bottom"
-              />
-              {{ post.postcreationdate | dateDay }}
+              /> -->
+              {{ post.postcreationdate }}
+              <!-- | dateDay -->
             </div>
           </div>
         </div>
