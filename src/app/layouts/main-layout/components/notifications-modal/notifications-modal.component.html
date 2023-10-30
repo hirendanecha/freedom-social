@@ -37,11 +37,10 @@
       </a>
     </div>
   </ng-container>
+  <ng-container *ngIf="!sharedService.notificationList.length">
+    <span>No notification</span>
+  </ng-container>
 </div>
-
-<ng-container *ngIf="!sharedService.notificationList.length">
-  <span>No notification</span>
-</ng-container>
 <div
   class="btn-area m-3"
   *ngIf="sharedService.notificationList.length > 0"
