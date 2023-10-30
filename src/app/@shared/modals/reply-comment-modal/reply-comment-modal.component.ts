@@ -49,16 +49,17 @@ export class ReplyCommentModalComponent implements AfterViewInit {
 
   onPostFileSelect(event: any): void {
     const file = event.target?.files?.[0] || {};
-    if (file?.size < 5120000) {
-      if (file.type.includes('image/')) {
-        this.commentData['file'] = file;
-        this.commentData['imageUrl'] = URL.createObjectURL(file);
-      } else {
-        this.toastService.danger(`sorry ${file.type} are not allowed!`)
-      }
-    } else {
-      this.toastService.warring('Image is too large!');
+    if (file.type.includes('image/')) {
+      this.commentData['file'] = file;
+      this.commentData['imageUrl'] = URL.createObjectURL(file);
+    } 
+    else {
+      this.toastService.danger(`sorry ${file.type} are not allowed!`)
     }
+    // if (file?.size < 5120000) {
+    // } else {
+    //   this.toastService.warring('Image is too large!');
+    // }
   }
 
   removePostSelectedFile(): void {

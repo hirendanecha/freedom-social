@@ -3,8 +3,10 @@
     .unread-notification {
       width: 13px;
       height: 13px;
-      background: var(--primary-color);
+      background: red;
+      // background: var(--primary-color);
       border-radius: 50%;
+      margin-left: 5px;
     }
   }
 }

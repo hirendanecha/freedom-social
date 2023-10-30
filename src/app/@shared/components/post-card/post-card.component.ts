@@ -361,15 +361,15 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         this.postService.upload(this.commentData?.file, this.profileId).subscribe({
           next: (res: any) => {
             this.spinner.hide();
-            if (this.commentData.file?.size < 5120000) {
-              if (res?.body?.url) {
-                this.commentData['file'] = null;
-                this.commentData['imageUrl'] = res?.body?.url;
-                this.addComment();
-              }
-            } else {
-              this.toastService.warring('Image is too large!');
+            if (res?.body?.url) {
+              this.commentData['file'] = null;
+              this.commentData['imageUrl'] = res?.body?.url;
+              this.addComment();
             }
+            // if (this.commentData.file?.size < 5120000) {
+            // } else {
+            //   this.toastService.warring('Image is too large!');
+            // }
           },
           error: (err) => {
             this.spinner.hide();
@@ -416,16 +416,16 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       this.isParent = false;
     }
     const file = event.target?.files?.[0] || {};
-    if (file?.size < 5120000) {
-      if (file.type.includes('image/')) {
-        this.commentData['file'] = file;
-        this.commentData['imageUrl'] = URL.createObjectURL(file);
-      } else {
-        this.toastService.danger(`sorry ${file.type} are not allowed!`)
-      }
+    if (file.type.includes('image/')) {
+      this.commentData['file'] = file;
+      this.commentData['imageUrl'] = URL.createObjectURL(file);
     } else {
-      this.toastService.warring('Image is too large!');
+      this.toastService.danger(`sorry ${file.type} are not allowed!`)
     }
+    // if (file?.size < 5120000) {
+    // } else {
+    //   this.toastService.warring('Image is too large!');
+    // }
   }
 
   removePostSelectedFile(): void {
