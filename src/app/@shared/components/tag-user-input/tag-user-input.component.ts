@@ -66,15 +66,35 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     this.emitChangeEvent();
   }
 
+  // checkUserTagFlag1(): void {
+  //   if (this.isAllowTagUser) {
+  //     const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
+
+  //     const atSymbolIndex = htmlText.lastIndexOf('@');
+
+  //     if (atSymbolIndex !== -1) {
+  //       this.userNameSearch = htmlText.substring(atSymbolIndex + 1);
+  //       if (this.userNameSearch?.length > 2) {
+  //         this.getUserList(this.userNameSearch);
+  //       } else {
+  //         this.clearUserSearchData();
+  //       }
+  //     } else {
+  //       this.clearUserSearchData();
+  //     }
+  //   }
+  // }
   checkUserTagFlag(): void {
     if (this.isAllowTagUser) {
-      const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
-
+      let htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
+      htmlText = htmlText.replace(/<[^>]*>/g, '');
+  
       const atSymbolIndex = htmlText.lastIndexOf('@');
+      const validUserName = /^[A-Za-z0-9_]+$/.test('')
 
       if (atSymbolIndex !== -1) {
         this.userNameSearch = htmlText.substring(atSymbolIndex + 1);
-        if (this.userNameSearch?.length > 2) {
+        if (this.userNameSearch.length > 2 && !validUserName) {
           this.getUserList(this.userNameSearch);
         } else {
           this.clearUserSearchData();
@@ -137,7 +157,6 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
       `<a href="/settings/view-profile/${user?.Id}" class="text-danger" data-id="${user?.Id}">@${user?.Username}</a>`
     );
     this.setTagInputDivValue(text);
-
     this.emitChangeEvent();
   }
 
