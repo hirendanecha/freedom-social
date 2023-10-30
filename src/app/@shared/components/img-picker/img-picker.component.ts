@@ -28,16 +28,17 @@ export class ImgPickerComponent {
     //   this.toastService.danger('Image file size exceeds 5 MB!');
     //   return;
     // }
-    if (file?.size < 5120000) {
     if (file) {
       this.fileData['file'] = file;
       this.fileData['url'] = URL.createObjectURL(file);
 
       this.onFileChange.emit(this.fileData);
-    }}
-    else {
-      this.toastService.warring('Image is too large!');
     }
+  //   if (file?.size < 5120000) {
+  // }
+  //   else {
+  //     this.toastService.warring('Image is too large!');
+  //   }
   }
 
   onClearFile(event: any): void {

@@ -114,14 +114,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onPostFileSelect(event: any): void {
     const file = event.target?.files?.[0] || {};
-    if (file?.size < 5120000) {
-      if (file) {
-        this.postData['file'] = file;
-        this.postData['imageUrl'] = URL.createObjectURL(file);
-      }
-    } else {
-      this.toastService.warring('Image is too large!');
+    if (file) {
+      this.postData['file'] = file;
+      this.postData['imageUrl'] = URL.createObjectURL(file);
     }
+    // if (file?.size < 5120000) {
+    // } else {
+    //   this.toastService.warring('Image is too large!');
+    // }
   }
 
   removePostSelectedFile(): void {
@@ -205,15 +205,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.postService.upload(this.postData?.file, this.profileId).subscribe({
           next: (res: any) => {
             this.spinner.hide();
-            if (this.postData.file?.size < 5120000) {
-              if (res?.body?.url) {
-                this.postData['file'] = null;
-                this.postData['imageUrl'] = res?.body?.url;
-                this.createOrEditPost();
-              }
-            } else {
-              this.toastService.warring('Image is too large!');
+            if (res?.body?.url) {
+              this.postData['file'] = null;
+              this.postData['imageUrl'] = res?.body?.url;
+              this.createOrEditPost();
             }
+            // if (this.postData.file?.size < 5120000) {
+            // } else {
+            //   this.toastService.warring('Image is too large!');
+            // }
           },
           error: (err) => {
             this.spinner.hide();

@@ -240,14 +240,14 @@ export class ResearchListComponent {
 
   onFileSelected(event: any) {
     const file = event.target?.files?.[0] || {};
-    if (file?.size < 5120000) {
-      if (file) {
-        this.postImageUrl = URL.createObjectURL(event.target.files[0]);
-        this.selectedImgFile = file;
-      }
-    } else {
-      this.toastService.warring('Image is too large!');
+    if (file) {
+      this.postImageUrl = URL.createObjectURL(event.target.files[0]);
+      this.selectedImgFile = file;
     }
+    // if (file?.size < 5120000) {
+    // } else {
+    //   this.toastService.warring('Image is too large!');
+    // }
   }
 
   removeImgFile(): void {

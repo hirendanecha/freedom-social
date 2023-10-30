@@ -30,7 +30,8 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   userId = '';
   profilePic: any = {};
   coverPic: any = {};
-  profileId = '';
+  profileId : number;
+  userlocalId: number;
   profileData: any = {};
   @ViewChild('zipCode') zipCode: ElementRef;
   uploadListSubject: Subject<void> = new Subject<void>();
@@ -52,10 +53,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     private tokenStorage: TokenStorageService,
     private postService: PostService,
     public sharedService: SharedService,
-    private toastService: ToastService
+    private toastService: ToastService,
   ) {
+    this.userlocalId = +localStorage.getItem('user_id');
     this.userId = this.route.snapshot.paramMap.get('id');
-    this.profileId = localStorage.getItem('profileId');
+    this.profileId = +localStorage.getItem('profileId');
     if (this.profileId) {
       this.getProfile(this.profileId);
     } else {
@@ -257,5 +259,33 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
 
   onProfileCoverImgChange(event: any): void {
     this.profileCoverImg = event;
+  }
+
+  deleteAccount(): void {
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = 'Delete Account';
+    modalRef.componentInstance.confirmButtonLabel = 'Delete';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.message =
+      'Are you sure want to delete your account?';
+    modalRef.result.then((res) => {
+      if (res === 'success') {
+        this.customerService.deleteCustomer(this.userlocalId, this.profileId).subscribe({
+          next: (res: any) => {
+            if (res) {
+              this.toastService.success(res.message || 'Account deleted successfully');
+              this.tokenStorage.signOut();
+              this.router.navigateByUrl('register');
+            }
+          },
+          error: (error) => {
+            console.log(error);
+            this.toastService.success(error.message);
+          },
+        });
+      }
+    });
   }
 }
