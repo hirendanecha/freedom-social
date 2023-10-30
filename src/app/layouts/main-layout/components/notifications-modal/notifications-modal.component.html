@@ -27,8 +27,9 @@
                 class="unread-notification smtxt"
               ></span>
               <span class="font-12-px">
-              <fa-icon class="ms-2" [icon]="['fas', 'clock']" />
-                {{notification?.createDate | dateDay}}</span>
+                <fa-icon class="ms-2" [icon]="['fas', 'clock']" />
+                {{ notification?.createDate | dateDay }}</span
+              >
             </h6>
             <p class="mdtxt">{{ notification?.notificationDesc }}</p>
           </div>
@@ -36,16 +37,15 @@
       </a>
     </div>
   </ng-container>
+</div>
 
-  <ng-container *ngIf="!sharedService.notificationList.length">
-    <span>No notification</span>
-  </ng-container>
-
-  <div
-    class="btn-area"
-    *ngIf="sharedService.notificationList.length > 0"
-    (click)="closeModal()"
-  >
-    <a routerLink="/notifications">See all notifications</a>
-  </div>
+<ng-container *ngIf="!sharedService.notificationList.length">
+  <span>No notification</span>
+</ng-container>
+<div
+  class="btn-area m-3"
+  *ngIf="sharedService.notificationList.length > 0"
+  (click)="closeModal()"
+>
+  <a routerLink="/notifications">See all notifications</a>
 </div>
