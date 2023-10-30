@@ -396,6 +396,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         this.commentMessageInputValue = ''
       }, 100);
       this.commentData = {}
+      this.isReply = false;
       this.viewComments(this.post?.id);
     }
     //  else {
