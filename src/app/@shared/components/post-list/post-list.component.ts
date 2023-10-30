@@ -164,7 +164,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
         profileId: this.profileId,
         communityId: this.communityId,
         page: this.activePage,
-        size: 15,
+        size: 10,
       })
       .subscribe({
         next: (res: any) => {
