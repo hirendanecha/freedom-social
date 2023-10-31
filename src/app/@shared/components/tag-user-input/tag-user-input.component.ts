@@ -203,7 +203,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
       this.value = `${htmlText}`.replace(/\<div\>\<br\>\<\/div\>/ig, '');
       // console.log('htmlText', `${htmlText}`.replace(/\<div\>\<br\>\<\/div\>/ig, ''))
-      console.log('htmlText', this.value);
+      // console.log('htmlText', this.value);
 
 
       this.onDataChange.emit({

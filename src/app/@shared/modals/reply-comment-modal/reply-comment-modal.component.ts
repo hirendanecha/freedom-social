@@ -73,7 +73,7 @@ export class ReplyCommentModalComponent implements AfterViewInit {
   }
 
   onTagUserInputChangeEvent(data: any): void {
-    console.log('comments-data', data)
+    // console.log('comments-data', data)
     this.commentData.comment = data?.html;
     this.commentMessageTags = data?.tags;
   }
