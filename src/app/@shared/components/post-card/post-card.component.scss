@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-
+  .post-item {
+    max-width: 650px;
+  }
   .post-single-box {
     background: var(--section-1st-color);
     box-shadow: var(--box-shadow);
@@ -18,7 +20,7 @@
       // line-break: anywhere;
     }
 
-    .c-text-color{
+    .c-text-color {
       color: var(--font-icon-color);
     }
 
@@ -173,6 +175,7 @@
       }
     }
     .comments-area {
+      max-width: 548px;
       .top-area {
         background: var(--box-1st-color);
         border-radius: 10px;
@@ -260,4 +263,3 @@
     }
   }
 }
-

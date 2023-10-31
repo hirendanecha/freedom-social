@@ -99,37 +99,60 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     if (this.parentComponent === 'HomeComponent') {
       this.loadMore();
     } else {
-      this.isPostLoader = true;
-      if (this.userId) {
-        this.postService.getPostsByProfileId(this.userId).subscribe({
-          next: (res: any) => {
-            if (res?.data) {
-              this.postList = res?.data;
-            }
-          },
-          error: (error) => {
-            console.log(error);
-          },
-          complete: () => {
-            this.isPostLoader = false;
-          },
-        });
-        this.socketService.socket
-      } else {
-        this.postService.getPostsByProfileId(this.profileId).subscribe({
-          next: (res: any) => {
-            if (res?.data) {
-              this.postList = res?.data;
-            }
-          },
-          error: (error) => {
-            console.log(error);
-          },
-          complete: () => {
-            this.isPostLoader = false;
-          },
-        });
+      this.getUsersPosts();
+    }
+  }
+
+  getUsersPosts(): void {
+    this.isPostLoader = true;
+    this.activePage = this.activePage + 1;
+    if (this.userId) {
+      const data = {
+        page: this.activePage,
+        size: 10,
+        profileId: this.userId,
       }
+      this.postService.getPostsByProfileId(data).subscribe({
+        next: (res: any) => {
+          this.isPostLoader = false;
+          this.isLoading = false;
+          if (res?.data.data.length > 0) {
+            this.postList = [...this.postList, ...res?.data.data];
+          } else {
+            this.hasMoreData = false;
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          this.isPostLoader = false;
+        },
+      });
+      this.socketService.socket
+    } else {
+      const data = {
+        page: this.activePage,
+        size: 10,
+        profileId: this.profileId,
+      }
+      this.postService.getPostsByProfileId(data).subscribe({
+        next: (res: any) => {
+          this.isPostLoader = false;
+          this.isLoading = false;
+          if (res?.data.data.length > 0) {
+            this.postList = [...this.postList, ...res?.data.data];
+          } else {
+            this.hasMoreData = false;
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          this.isPostLoader = false;
+        },
+      });
     }
   }
 
@@ -145,6 +168,18 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       if (scrollY + windowHeight >= documentHeight - threshold) {
         if (!this.isLoading && !this.hasMoreData) {
           this.loadMore();
+        }
+      }
+    } else {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const thresholdFraction = 0;
+      const threshold = windowHeight * thresholdFraction;
+
+      if (scrollY + windowHeight >= documentHeight - threshold) {
+        if (!this.isLoading && !this.hasMoreData) {
+          this.getUsersPosts();
         }
       }
     }

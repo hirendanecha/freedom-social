@@ -54,8 +54,8 @@ export class PostService {
     return this.http.post(`${this.baseUrl}`, reqBody);
   }
 
-  getPostsByProfileId(id) {
-    return this.http.get(`${this.baseUrl}/${id}`);
+  getPostsByProfileId(data) {
+    return this.http.post(`${this.baseUrl}/get-my-post`, data);
   }
   getPostsByPostId(id) {
     return this.http.get(`${this.baseUrl}/get/${id}`);
