@@ -12,7 +12,7 @@
 
 <app-toasts-container />
 
-<ngx-spinner
+<!-- <ngx-spinner
   bdColor="rgba(0, 0, 0, 0.5)"
   size="medium"
   color="#fff"
@@ -20,4 +20,13 @@
   [fullScreen]="true"
 >
   <p style="color: white">Loading...</p>
+</ngx-spinner> -->
+<ngx-spinner
+  [type]="'line-scale'"
+  bdColor="rgba(0, 0, 0, 0.5)"
+  size="medium"
+  color="#fff"
+  [fullScreen]="true"
+  >
+  <img src="/assets/images/default-profile.jpg" alt="" class="spinner-wrapper" />
 </ngx-spinner>
