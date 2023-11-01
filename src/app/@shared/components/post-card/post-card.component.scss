@@ -15,7 +15,39 @@
         display: none;
       }
     }
+    .c-padding{
+      padding: 10px 0;
+      white-space: nowrap;
+    }
+    .hover-box-container {
+      min-width: 267px;
+      min-height: 125px;
+      z-index: 2;
+      background: var(--para-2nd-color);
+      border-radius: 15px;
+      padding: 5px 10px;
+      position: relative;
+      top: 77px;
+      right: 195px;
+      margin: 15px;
+      opacity: 0;
+      display: none;
+      transition: opacity 0.3s ease-in-out;
 
+      p,
+      span {
+        color: var(--body-color);
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      ::ng-deep svg path {
+        fill: var(--body-color);
+      }
+    }
+    .hover-box-container.show {
+      display: block;
+      opacity: 1;
+  }
     .post-description {
       // line-break: anywhere;
     }

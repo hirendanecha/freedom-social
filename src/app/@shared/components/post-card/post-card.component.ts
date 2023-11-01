@@ -53,6 +53,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   commentCount = 0;
   commentMessageInputValue: string = '';
   commentMessageTags: any[];
+  showHoverBox = false;
 
   constructor(
     private seeFirstUserService: SeeFirstUserService,
@@ -444,7 +445,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       mute: false,
       autostart: false,
       volume: 30,
-      height: '308px',
+      height: '300px',
       width: 'auto',
       pipIcon: "disabled",
       displaydescription: true,
