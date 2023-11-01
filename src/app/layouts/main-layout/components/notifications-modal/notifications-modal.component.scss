@@ -43,7 +43,16 @@
   }
 }
 
-.modal-height{
+.notification-content {
+  .unread-notification {
+    width: 13px;
+    height: 13px;
+    background: red;
+    border-radius: 50%;
+    margin-left: 5px;
+  }
+}
+.modal-height {
   max-height: 500px;
   overflow: auto;
 }
