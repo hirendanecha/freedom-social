@@ -13,6 +13,7 @@
     onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
     alt="avatar"
   />
+
   <div class="d-flex flex-column w-100" (mouseout)="showHoverBox = false">
     <div class="d-flex">
       <div class="w-48-px d-block d-lg-none">
@@ -27,30 +28,33 @@
       <div
         class="profile-area d-center justify-content-between align-items-center h-24-px w-100 ms-2 ms-lg-0"
       >
-        <div class="info-area d-flex justify-content-start align-items-center">
+        <div
+          class="info-area d-flex justify-content-start align-items-center position-relative"
+        >
           <div
             class="d-flex flex-column h6 m-0"
             *ngIf="post?.Username || post?.FirstName"
+            (mouseover)="showHoverBox = true"
           >
-            <div
-              class="d-flex align-items-center cursor c-padding"
-              (mouseover)="showHoverBox = true"
-            >
+            <div class="d-flex align-items-center cursor c-padding">
               {{ post?.Username || post?.FirstName }}
               <!-- [ngbTooltip]="post.postcreationdate | date : ' h:mm a MMM d, y'" -->
-              <fa-icon
-                class="ms-2 me-1 font-12-px cursor"
-                [icon]="['fas', 'clock']"
-                placement="bottom"
-              />
-              {{ post?.postcreationdate | dateDay }}
+              <div>
+                <fa-icon
+                  class="ms-2 me-1 font-12-px cursor"
+                  [icon]="['fas', 'clock']"
+                  placement="bottom"
+                />
+                {{ post?.postcreationdate | dateDay }}
+              </div>
             </div>
           </div>
           <!-- hoverbox -->
           <div
             [class.show]="showHoverBox"
-            class="hover-box-container"
+            class="hover-box-container shadow-lg"
             (mouseover)="showHoverBox = true"
+            *ngIf="(breakpointService?.screen | async).lg.gatherThen"
           >
             <div class="d-flex flex-column">
               <img
@@ -308,7 +312,7 @@
         />
 
         <div class="px-3 gap-2 align-items-center w-100">
-          <div class="d-flex gap-2 align-items-center">
+          <div class="d-flex gap-2 align-items-center custom-width-comment">
             <!-- <div
               #parentPostCommentElement
               contenteditable
