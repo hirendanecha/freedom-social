@@ -9,7 +9,8 @@
     // line-break: anywhere;
     text-align: start;
     max-width: 541px;
-
+    overflow: hidden;
+    
     @media (max-width:767px) {
       max-width: 395px;
     }
