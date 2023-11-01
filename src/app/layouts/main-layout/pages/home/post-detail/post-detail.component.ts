@@ -14,8 +14,8 @@ import { environment } from 'src/environments/environment';
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.scss'],
-  providers: [MetafrenzyService]
 })
+// providers: [MetafrenzyService]
 export class PostDetailComponent implements OnInit {
 
   postId: string = '';
@@ -27,7 +27,7 @@ export class PostDetailComponent implements OnInit {
     public sharedService: SharedService,
     private route: ActivatedRoute,
     private seoService: SeoService,
-    private metaFrenzyService: MetafrenzyService,
+    // private metaFrenzyService: MetafrenzyService,
   ) {
     this.postId = this.route.snapshot.paramMap.get('id');
     console.log('route', this.route)
@@ -58,14 +58,14 @@ export class PostDetailComponent implements OnInit {
             //   video: this.post?.streamname
             // }
             // this.seoService.updateSeoMetaData(data, true);
-            this.metaFrenzyService.setOpenGraph({
-              title: this.post?.title,
-              description: html.innerHTML,
-              type: 'website',
-              url: `${environment.webUrl}post/${this.postId}`,
-              image: this.post?.imageUrl,
-              site_name: 'Freedom buzz'
-            });
+            // this.metaFrenzyService.setOpenGraph({
+            //   title: this.post?.title,
+            //   description: html.innerHTML,
+            //   type: 'website',
+            //   url: `${environment.webUrl}post/${this.postId}`,
+            //   image: this.post?.imageUrl,
+            //   site_name: 'Freedom buzz'
+            // });
           }
         },
         error:
