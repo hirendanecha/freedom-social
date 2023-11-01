@@ -8,6 +8,15 @@
     min-height: 56px;
     // line-break: anywhere;
     text-align: start;
+    max-width: 541px;
+
+    @media (max-width:767px) {
+      max-width: 395px;
+    }
+    @media (max-width:507px) {
+      max-width: 265px;
+    }
+
     div {
       background: unset !important;
       background-color: unset !important;

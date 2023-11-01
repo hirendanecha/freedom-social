@@ -55,4 +55,8 @@
 .modal-height {
   max-height: 500px;
   overflow: auto;
+
+  @media (max-width:991px) {
+    max-height: unset;
+  }
 }

@@ -114,7 +114,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
     if (url) {
       if (!url?.includes(this.metaData?.url)) {
-        this.spinner.show();
+        // this.spinner.show();
         this.ngUnsubscribe.next();
 
         this.postService
