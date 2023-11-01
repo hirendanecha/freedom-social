@@ -53,8 +53,21 @@
               name="uname"
               class="input-area"
               required
-              placeholder="Enter your email"
+              placeholder="Enter your Username"
               [(ngModel)]="customer.Username"
+            />
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <label class="d-flex form-label">Email</label>
+            <!-- <small>(not editable)</small> -->
+            <input
+              type="text"
+              name="email"
+              class="input-area"
+              required
+              placeholder="Enter your email"
+              [(ngModel)]="userMail"
+              disabled
             />
           </div>
           <div class="col-12 col-md-6 mb-3">

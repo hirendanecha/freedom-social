@@ -28,6 +28,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   confirm_password = '';
   msg = '';
   userId = '';
+  userMail :string;
   profilePic: any = {};
   coverPic: any = {};
   profileId : number;
@@ -58,11 +59,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     this.userlocalId = +localStorage.getItem('user_id');
     this.userId = this.route.snapshot.paramMap.get('id');
     this.profileId = +localStorage.getItem('profileId');
-    if (this.profileId) {
-      this.getProfile(this.profileId);
-    } else {
-      this.getUserDetails(this.userId);
-    }
+    this.getProfile(this.profileId);
+    this.getUserDetails(this.userId);
+    // if (this.profileId) {
+    // } else {
+    // }
   }
 
   ngOnInit(): void {
@@ -87,6 +88,8 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
         if (data) {
           this.spinner.hide();
           this.customer = data;
+          this.userMail = data.Email
+          console.log(data);
           this.getAllCountries();
         }
       },
