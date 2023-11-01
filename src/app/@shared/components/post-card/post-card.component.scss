@@ -145,6 +145,13 @@
           color: var(--primary-color) !important;
         }
       }
+      .single-comment-area {
+        .top-area {
+          p {
+            line-break: anywhere;
+          }
+        }
+      }
     }
 
     .post-img {
