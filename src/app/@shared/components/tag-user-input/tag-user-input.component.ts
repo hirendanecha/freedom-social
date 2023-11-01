@@ -88,7 +88,8 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     if (this.isAllowTagUser) {
       let htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
       htmlText = htmlText.replace(/<[^>]*>/g, '');
-  
+
+
       const atSymbolIndex = htmlText.lastIndexOf('@');
       const validUserName = /^[A-Za-z0-9_]+$/.test('')
 
@@ -107,16 +108,13 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
   getMetaDataFromUrlStr(): void {
     const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
-
-    const matches = htmlText.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?(.*)/gi);
-
+    const text = htmlText.replace(/<[^>]*>/g, '');
+    const matches = text.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?(.*)/gi);
     const url = matches?.[0];
-
     if (url) {
       if (!url?.includes(this.metaData?.url)) {
         // this.spinner.show();
         this.ngUnsubscribe.next();
-
         this.postService
           .getMetaData({ url })
           .pipe(takeUntil(this.ngUnsubscribe))
