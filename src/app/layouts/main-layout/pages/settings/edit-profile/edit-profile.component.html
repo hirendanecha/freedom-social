@@ -27,7 +27,6 @@
             <input
               type="text"
               class="input-area"
-              required
               name="fname"
               placeholder="Enter Your Name"
               [(ngModel)]="customer.FirstName"
@@ -39,7 +38,6 @@
               type="text"
               class="input-area"
               name="lname"
-              required
               placeholder="Enter Your Name"
               [(ngModel)]="customer.LastName"
             />
@@ -52,7 +50,6 @@
               type="text"
               name="uname"
               class="input-area"
-              required
               placeholder="Enter your Username"
               [(ngModel)]="customer.Username"
             />
@@ -64,7 +61,6 @@
               type="text"
               name="email"
               class="input-area"
-              required
               placeholder="Enter your email"
               [(ngModel)]="userMail"
               disabled
@@ -76,7 +72,6 @@
             <label class="d-flex form-label">Country</label>
             <select
               id="country"
-              required
               name="country"
               class="input-area w-100"
               [(ngModel)]="customer.Country"
@@ -96,7 +91,6 @@
             <input
               type="text"
               class="input-area"
-              required
               placeholder="Enter your zip code"
               [disabled]="!customer.Country"
               [(ngModel)]="customer.Zip"
@@ -111,7 +105,6 @@
             <input
               type="text"
               class="input-area"
-              required
               placeholder="Enter your state"
               disabled
               name="state"
@@ -123,7 +116,6 @@
             <input
               type="text"
               class="input-area"
-              required
               name="city"
               placeholder="Enter your city"
               disabled

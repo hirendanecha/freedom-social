@@ -28,10 +28,10 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   confirm_password = '';
   msg = '';
   userId = '';
-  userMail :string;
+  userMail: string;
   profilePic: any = {};
   coverPic: any = {};
-  profileId : number;
+  profileId: number;
   userlocalId: number;
   profileData: any = {};
   @ViewChild('zipCode') zipCode: ElementRef;
@@ -59,11 +59,12 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     this.userlocalId = +localStorage.getItem('user_id');
     this.userId = this.route.snapshot.paramMap.get('id');
     this.profileId = +localStorage.getItem('profileId');
-    this.getProfile(this.profileId);
-    this.getUserDetails(this.userId);
-    // if (this.profileId) {
-    // } else {
-    // }
+    this.userMail = JSON.parse(localStorage.getItem('auth-user'))?.Email;
+    if (this.profileId) {
+      this.getProfile(this.profileId);
+    } else {
+      this.getUserDetails(this.userId);
+    }
   }
 
   ngOnInit(): void {
@@ -88,7 +89,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
         if (data) {
           this.spinner.hide();
           this.customer = data;
-          this.userMail = data.Email
           console.log(data);
           this.getAllCountries();
         }
