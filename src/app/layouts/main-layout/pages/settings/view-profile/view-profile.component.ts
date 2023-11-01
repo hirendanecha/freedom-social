@@ -65,7 +65,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.spinner.hide();
         if (res.data) {
           this.customer = res.data[0];
-          this.userId = res.data[0].UserID;
+          this.userId = res.data[0]?.UserID;
           const data = {
             title: this.customer?.FirstName + ' ' + this.customer?.LastName,
             url: `${environment.webUrl}settings/view-profile/${this.customer?.Id}`,
