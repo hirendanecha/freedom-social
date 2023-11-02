@@ -19,8 +19,8 @@
         class="form-dark"
         ngNativeValidate
         autocomplete="off"
-        (ngSubmit)="confirmAndUpdateCustomer()"
-      >
+        >
+        <!-- (ngSubmit)="confirmAndUpdateCustomer()" -->
         <div class="row">
           <div class="col-12 col-md-6 mb-3">
             <label class="d-flex form-label">First Name</label>
@@ -45,18 +45,19 @@
         </div>
         <div class="row">
           <div class="col-12 col-md-6 mb-3">
-            <label class="d-flex form-label">User Name</label>
+            <label class="d-flex form-label align-items-center">User Name<span class="font-12-px ms-2">(not editable)</span></label>
             <input
               type="text"
               name="uname"
               class="input-area"
               placeholder="Enter your Username"
               [(ngModel)]="customer.Username"
+              disabled
             />
           </div>
           <div class="col-12 col-md-6 mb-3">
-            <label class="d-flex form-label">Email</label>
-            <!-- <small>(not editable)</small> -->
+            <label class="d-flex form-label align-items-center">Email<span class="font-12-px ms-2">(not editable)</span></label>
+         
             <input
               type="text"
               name="email"
@@ -125,6 +126,16 @@
         </div>
         <div class="row">
           <div class="col-6 col-md-6 mb-3">
+            <label class="d-flex form-label">County</label>
+            <input
+              type="text"
+              class="input-area"
+              name="County"
+              placeholder="Enter your county"
+              [(ngModel)]="customer.County"
+            />
+          </div>
+          <div class="col-6 col-md-6 mb-3">
             <label class="d-flex form-label">Mobile</label>
             <input
               type="text"
@@ -134,20 +145,21 @@
               [(ngModel)]="customer.MobileNo"
             />
           </div>
-          <div
-            class="col-6 col-md-6 mb-3 justify-content-end align-items-end d-flex"
+          <!-- <div
+            class="justify-content-end align-items-end d-flex"
           >
-            <button
-              class="btn btn-primary mt-3 login-button float-end w-100-px"
-              type="submit"
-            >
-              Update
-            </button>
-          </div>
-        </div>
-      </form>
+        </div> -->
+      </div>
+    </form>
+    <button
+      class="btn btn-primary mt-5 login-button float-end w-100-px"
+      (click)="confirmAndUpdateCustomer()"
+      >
+      <!-- type="submit" -->
+      Update
+    </button>
       <button
-        class="btn btn-outline-danger px-3 py-1 h-auto d-flex gap-2 align-items-center mt-3 delete-account float-end"
+        class="btn btn-outline-danger mt-5 px-3 py-1 h-auto d-flex gap-2 align-items-center mb-5 delete-account float-start"
         (click)="deleteAccount()"
       >
         Delete
