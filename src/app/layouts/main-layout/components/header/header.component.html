@@ -82,10 +82,10 @@
         </li>
         <li>
           <a
-            [href]="environment.tubeUrl"
-            routerLinkActive="active"
+            (click)="redirectToTube()"
             target="_blank"
-            class="nav-icon"
+            routerLinkActive="active"
+            class="nav-icon cursor"
             data-toggle="tooltip"
             data-placement="bottom"
             title="FreedomTube"

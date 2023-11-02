@@ -115,4 +115,9 @@ export class HeaderComponent {
       location.reload();
     })
   }
+
+  redirectToTube(): void {
+    const channelId = +localStorage.getItem('channelId')
+    window.open(`${environment.tubeUrl}?channelId=${channelId}`, '_blank');
+  }
 }
