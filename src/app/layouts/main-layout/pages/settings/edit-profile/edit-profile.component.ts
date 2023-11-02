@@ -62,9 +62,10 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     this.userMail = JSON.parse(localStorage.getItem('auth-user'))?.Email;
     if (this.profileId) {
       this.getProfile(this.profileId);
-    } else {
-      this.getUserDetails(this.userId);
     }
+    // else {
+    //   this.getUserDetails(this.userId);
+    // }
   }
 
   ngOnInit(): void {
@@ -221,6 +222,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
       this.customer.CoverPicName = this.profileCoverImg?.url || this.customer.CoverPicName;
       this.customer.IsActive = 'Y';
       this.customer.UserID = +this.userId;
+      console.log('update', this.customer)
       this.customerService.updateProfile(this.profileId, this.customer).subscribe({
         next: (res: any) => {
           this.spinner.hide();
@@ -245,6 +247,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
         this.spinner.hide();
         if (res.data) {
           this.customer = res.data[0];
+          console.log(this.customer)
           this.getAllCountries();
         }
       },
