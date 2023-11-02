@@ -12,6 +12,7 @@ export class Customer {
   State: string;
   Country = 'US';
   MobileNo: string;
+  County: string;
   PartnerId: string;
   DateCreation: string;
   IsSuspended: number;

@@ -120,6 +120,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     this.customer.Zip = '';
     this.customer.State = '';
     this.customer.City = '';
+    this.customer.County = '';
     // this.customer.Place = '';
   }
 
@@ -148,6 +149,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
           let zip_data = data[0];
           this.customer.State = zip_data ? zip_data.state : '';
           this.customer.City = zip_data ? zip_data.city : '';
+          this.customer.County = zip_data ? zip_data.places : '';
           // this.customer.Place = zip_data ? zip_data.places : '';
         },
         error:
