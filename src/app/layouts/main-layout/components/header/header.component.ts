@@ -117,10 +117,10 @@ export class HeaderComponent {
   }
 
   redirectToTube(): void {
-    const channelId = +localStorage.getItem('channelId')
+    const channelId = +localStorage.getItem('channelId');
     if (channelId) {
       window.open(`${environment.tubeUrl}?channelId=${channelId}`, '_blank');
-    } else{
+    } else {
       window.open(`${environment.tubeUrl}`, '_blank');
     }
   }

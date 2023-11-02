@@ -52,7 +52,7 @@
           <!-- hoverbox -->
           <div
             [class.show]="showHoverBox"
-            class="hover-box-container shadow-lg"
+            class="hover-box-container shadow"
             (mouseover)="showHoverBox = true"
             *ngIf="(breakpointService?.screen | async).lg.gatherThen"
           >
@@ -60,7 +60,7 @@
               <img
                 class="w-48-px h-48-px rounded-4"
                 loading="lazy"
-                data-src="{{ post.ProfilePicName }}"
+                data-src="{{ post?.ProfilePicName }}"
                 onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
                 alt="avatar"
               />
@@ -98,6 +98,27 @@
                     <fa-icon [icon]="['fas', 'eye']" />
                     <span>Stop See First</span>
                   </a>
+                </button>
+              </div>
+              <div
+                class="d-flex"
+                *ngIf="
+                  +profileId === post.profileid && tokenService.getCredentials()
+                "
+              >
+                <button (click)="goToViewProfile(post.profileid)">
+                  <a class="droplist d-flex align-items-center gap-2">
+                    <fa-icon [icon]="['fas', 'user']" />
+                    <span>View Profile</span>
+                  </a>
+                </button>
+                <span class="me-2 ms-2">|</span>
+                <button
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="editPost(post)"
+                >
+                  <fa-icon [icon]="['fas', 'pen-to-square']" />
+                  <span>Edit</span>
                 </button>
               </div>
             </div>

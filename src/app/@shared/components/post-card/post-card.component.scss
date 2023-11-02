@@ -25,7 +25,7 @@
       min-width: 267px;
       min-height: 125px;
       z-index: 2;
-      background: var(--para-2nd-color);
+      background: var(--body-color);
       border-radius: 15px;
       padding: 5px 10px;
       position: absolute;
@@ -38,12 +38,12 @@
 
       p,
       span {
-        color: var(--body-color);
+        color: var(--para-2nd-color);
         font-weight: 600;
         white-space: nowrap;
       }
       ::ng-deep svg path {
-        fill: var(--body-color);
+        fill: var(--para-2nd-color);
       }
     }
     .hover-box-container.show {
