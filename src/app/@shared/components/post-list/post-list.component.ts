@@ -9,6 +9,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { slideUp } from 'src/app/@shared/animations/slideUp';
 import { PostService } from 'src/app/@shared/services/post.service';
@@ -24,7 +25,7 @@ import { SocketService } from 'src/app/@shared/services/socket.service';
 })
 export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('parentComponent') parentComponent: string = '';
-  @Input('id') userId: number = null;
+  // @Input('id') userId: number = null;
   @Input('communityId') communityId: number = null;
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
 
@@ -36,14 +37,18 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   editPostIndex: number = null;
   isLoading = false;
   hasMoreData = false;
+  userId: number = null
 
   constructor(
     private spinner: NgxSpinnerService,
     private postService: PostService,
     public sharedService: SharedService,
     private socketService: SocketService,
-    private seeFirstUserService: SeeFirstUserService
+    private seeFirstUserService: SeeFirstUserService,
+    private route: ActivatedRoute
   ) {
+    console.log(this.route.snapshot.params.id)
+    this.userId = this.route.snapshot.params.id;
     this.profileId = localStorage.getItem('profileId');
   }
 
@@ -129,7 +134,6 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
           this.isPostLoader = false;
         },
       });
-      this.socketService.socket
     } else {
       const data = {
         page: this.activePage,

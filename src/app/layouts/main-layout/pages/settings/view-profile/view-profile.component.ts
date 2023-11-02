@@ -43,6 +43,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.router.events.subscribe((event: any) => {
       const id = event?.routerEvent?.url.split('/')[3];
+      this.profileId = id
       if (id) {
         this.getProfile(id);
       }
