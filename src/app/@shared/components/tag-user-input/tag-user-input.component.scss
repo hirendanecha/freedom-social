@@ -67,4 +67,12 @@
   .dropdown-menu.show {
     max-height: 292px;
   }
+  mention-list {
+    .mention-menu {
+      width: 340px;
+      .mention-item {
+        padding: 8px;
+      }
+    }
+  }
 }

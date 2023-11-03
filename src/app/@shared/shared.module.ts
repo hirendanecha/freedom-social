@@ -83,6 +83,7 @@ import { ReplyCommentModalComponent } from './modals/reply-comment-modal/reply-c
 import { PipeModule } from './pipe/pipe.module';
 import { VideoPostModalComponent } from './modals/video-post-modal/video-post-modal.component';
 import { ForgotPasswordComponent } from '../layouts/auth-layout/pages/forgot-password/forgot-password.component';
+import { MentionModule } from 'angular-mentions';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -115,7 +116,8 @@ const sharedModules = [
   RouterModule,
   NgxTrimDirectiveModule,
   FontAwesomeModule,
-  PipeModule
+  PipeModule,
+  MentionModule
 ];
 
 @NgModule({
