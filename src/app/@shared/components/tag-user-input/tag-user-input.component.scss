@@ -10,11 +10,11 @@
     text-align: start;
     max-width: 541px;
     overflow: hidden;
-    
-    @media (max-width:767px) {
+
+    @media (max-width: 767px) {
       max-width: 395px;
     }
-    @media (max-width:507px) {
+    @media (max-width: 507px) {
       max-width: 265px;
     }
 
@@ -66,5 +66,13 @@
   }
   .dropdown-menu.show {
     max-height: 292px;
+  }
+  mention-list {
+    .mention-menu {
+      width: 340px;
+      .mention-item {
+        padding: 8px;
+      }
+    }
   }
 }

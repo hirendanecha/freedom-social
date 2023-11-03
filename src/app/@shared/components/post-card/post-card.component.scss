@@ -52,6 +52,11 @@
       opacity: 1;
     }
     .post-description {
+      p {
+        h1 {
+          font-size: 18px;
+        }
+      }
       // line-break: anywhere;
     }
 
@@ -113,6 +118,11 @@
     }
 
     .post-description {
+      p {
+        h1 {
+          font-size: 18px;
+        }
+      }
       .postlink {
         img {
           border-radius: 0.5rem;
@@ -321,6 +331,14 @@
     }
     @media (max-width: 435px) {
       max-width: 206px;
+    }
+  }
+}
+
+::ng-deep {
+  p {
+    h1 {
+      font-size: 18px;
     }
   }
 }

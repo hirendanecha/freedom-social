@@ -212,9 +212,11 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   reactLikeOnPost(post: any) {
-    post.likescount = post?.likescount + 1;
-    post.totalReactCount = post?.totalReactCount + 1;
-    post.react = 'L';
+    if (post.react != 'L') {
+      post.likescount = post?.likescount + 1;
+      post.totalReactCount = post?.totalReactCount + 1;
+      post.react = 'L';
+    }
     const data = {
       postId: post.id,
       profileId: this.profileId,
@@ -226,11 +228,11 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   dislikeFeedPost(post) {
-    if (post.react == 'L') {
+    if (post.react == 'L' && post.likescount > 0) {
       post.likescount = post.likescount - 1;
+      post.react = null;
+      post.totalReactCount = post.totalReactCount - 1;
     }
-    post.totalReactCount = post.totalReactCount - 1;
-    post.react = null;
     const data = {
       postId: post.id,
       profileId: this.profileId,
@@ -316,8 +318,10 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   likeComments(comment) {
-    comment.likeCount = comment.likeCount + 1;
-    comment.react = 'L';
+    if (comment.react != 'L') {
+      comment.likeCount = comment.likeCount + 1;
+      comment.react = 'L';
+    }
     const data = {
       postId: comment.postId,
       commentId: comment.id,
@@ -330,10 +334,10 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   disLikeComments(comment) {
-    if (comment.react == 'L') {
+    if (comment.react == 'L' && comment.likeCount > 0) {
       comment.likeCount = comment.likeCount - 1;
+      comment.react = null;
     }
-    comment.react = null;
     const data = {
       postId: comment.postId,
       commentId: comment.id,
