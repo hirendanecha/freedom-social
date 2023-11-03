@@ -57,7 +57,7 @@ export class ProfileMenusModalComponent {
     // this.isCollapsed = true;
     this.customerService.logout().subscribe({
       next: (res => {
-        console.log(res)
+        // console.log(res)
       })
     })
     this.tokenStorageService.signOut();

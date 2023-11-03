@@ -67,6 +67,8 @@ export class VideoPostModalComponent implements AfterViewInit {
       this.postMessageInputValue = this.post?.postdescription;
       this.selectedThumbFile = this.post?.thumbfilename;
       this.selectedVideoFile = this.post?.streamname;
+      this.postData.streamname = this.selectedVideoFile
+      this.postData.thumbfilename = this.selectedThumbFile
       this.postData.videoduration = this.post?.videoduration;
       this.postData.keywords = this.post?.keywords;
     }
@@ -165,7 +167,7 @@ export class VideoPostModalComponent implements AfterViewInit {
   createPost(): void {
     this.progressValue = 100;
     // this.spinner.show();
-    this.postData.communityId = this.communityId || null;
+        this.postData.communityId = this.communityId || null;
     if (
       this.postData?.streamname &&
       this.postData.thumbfilename &&

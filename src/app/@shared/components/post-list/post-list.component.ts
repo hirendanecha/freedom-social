@@ -47,7 +47,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     private seeFirstUserService: SeeFirstUserService,
     private route: ActivatedRoute
   ) {
-    console.log(this.route.snapshot.params.id)
+    // console.log(this.route.snapshot.params.id)
     this.userId = this.route.snapshot.params.id;
     this.profileId = localStorage.getItem('profileId');
   }

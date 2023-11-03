@@ -258,7 +258,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onEditPost(post: any): void {
-    console.log('edit-post', post)
+    // console.log('edit-post', post)
     if (post.posttype === 'V') {
       this.openUploadVideoModal(post);
     } else {
