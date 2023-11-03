@@ -56,10 +56,10 @@ export class VideoPostModalComponent implements AfterViewInit {
     private socketService: SocketService
   ) {
     this.postData.profileid = localStorage.getItem('profileId');
-    console.log('profileId', this.postData.profileid);
+    // console.log('profileId', this.postData.profileid);
   }
   ngAfterViewInit(): void {
-    console.log('editPreview', this.post);
+    // console.log('editPreview', this.post);
     if (this.post) {
       this.postData.id = this.post.id;
       this.postData.profileid = this.post.profileid;
@@ -79,7 +79,8 @@ export class VideoPostModalComponent implements AfterViewInit {
       if (
         this.postData?.profileid &&
         this.postData.postdescription &&
-        this.postData.albumname && this.postData.keywords &&
+        this.postData.albumname &&
+        this.postData.keywords &&
         (this.postData.file1 || this.selectedVideoFile) &&
         (this.postData.file2 || this.selectedThumbFile)
       ) {
@@ -106,26 +107,22 @@ export class VideoPostModalComponent implements AfterViewInit {
                 this.postData['file1'] = null;
                 this.postData['streamname'] = res?.streamname?.body?.url;
               }
-
               if (res?.thumbfilename?.body?.url) {
                 this.postData['file2'] = null;
                 this.postData['thumbfilename'] = res?.thumbfilename?.body?.url;
               }
-
               this.spinner.hide();
-              this.progressValue = 100;
               this.createPost();
             },
             error: (err) => {
               this.spinner.hide();
             },
           });
+        } else {
+          this.postData.streamname = this.selectedVideoFile;
+          this.postData.thumbfilename = this.selectedThumbFile;
+          this.createPost();
         }
-      } else {
-        this.postData.streamname = this.selectedVideoFile;
-        this.postData.thumbfilename = this.selectedThumbFile;
-        this.progressValue = 100;
-        this.createPost();
       }
     }
   }
@@ -166,15 +163,16 @@ export class VideoPostModalComponent implements AfterViewInit {
   };
 
   createPost(): void {
+    this.progressValue = 100;
     // this.spinner.show();
     this.postData.communityId = this.communityId || null;
     if (
       this.postData?.streamname &&
       this.postData.thumbfilename &&
-      this.postData.postdescription && this.postData.keywords &&
+      this.postData.postdescription &&
+      this.postData.keywords &&
       this.postData.albumname
     ) {
-      this.progressValue = 100;
       console.log('post-data', this.postData);
       this.activeModal.close();
       this.socketService.createOrEditPost(this.postData, (data) => {
@@ -218,7 +216,7 @@ export class VideoPostModalComponent implements AfterViewInit {
 
   onvideoPlay(e: any): void {
     this.postData.videoduration = e?.target?.duration;
-    console.log('videoduration', e?.target?.duration);
+    // console.log('videoduration', e?.target?.duration);
   }
 
   onChangeTag(event) {
