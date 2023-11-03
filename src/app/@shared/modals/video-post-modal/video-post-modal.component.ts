@@ -125,6 +125,8 @@ export class VideoPostModalComponent implements AfterViewInit {
           this.postData.thumbfilename = this.selectedThumbFile;
           this.createPost();
         }
+      } else{
+        this.toastService.danger('Please enter mandatory fields(*) data.');
       }
     }
   }
