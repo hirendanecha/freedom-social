@@ -174,6 +174,7 @@ export class VideoPostModalComponent implements AfterViewInit {
       this.postData.postdescription && this.postData.keywords &&
       this.postData.albumname
     ) {
+      this.progressValue = 100;
       console.log('post-data', this.postData);
       this.activeModal.close();
       this.socketService.createOrEditPost(this.postData, (data) => {
