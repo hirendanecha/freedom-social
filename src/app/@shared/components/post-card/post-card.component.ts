@@ -55,6 +55,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     file: null,
     url: '',
     tags: [],
+    meta: {},
   };
   isParent: boolean = false;
   postComment = {};
@@ -489,7 +490,9 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   onTagUserInputChangeEvent(data: any): void {
     // console.log('comments-data', data)
     this.commentData.comment = data?.html;
+    this.commentData.meta = data?.meta;
     this.commentMessageTags = data?.tags;
+    console.log(this.commentData)
   }
 
   socketListner(): void {
@@ -514,7 +517,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
             res.filter((ele1) => {
               if (ele.id === ele1.parentCommentId) {
                 let index = ele?.['replyCommnetsList'].findIndex(
-                  (obj) => obj.id === res[0].id
+                  (obj) => obj?.id === res[0]?.id
                 );
                 if (index !== -1) {
                   return (ele['replyCommnetsList'][index].likeCount =
@@ -526,9 +529,9 @@ export class PostCardComponent implements OnInit, AfterViewInit {
             })
           );
         } else {
-          let index = this.commentList.findIndex((obj) => obj.id === res[0].id);
+          let index = this.commentList.findIndex((obj) => obj?.id === res[0]?.id);
           if (index !== -1) {
-            this.commentList[index].likeCount = res[0].likeCount;
+            this.commentList[index].likeCount = res[0]?.likeCount;
           }
         }
         // if (this.post.id === res[0]?.id) {
@@ -557,7 +560,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
           })
         );
       } else {
-        let index = this.commentList.findIndex((obj) => obj.id === data[0].id);
+        let index = this.commentList.findIndex((obj) => obj?.id === data[0]?.id);
         if (!this.commentList[index]) {
           this.commentList.push(data[0]);
         }

@@ -422,7 +422,7 @@
                     class="d-flex justify-content-between align-items-center w-100"
                   >
                     <h6 class="m-0">
-                      {{ comment.Username }}
+                      {{ comment.Username || comment.FirstName }}
                       <span class="font-12-px text-lowercase">
                         <fa-icon class="ms-2" [icon]="['fas', 'clock']" />
                         {{ comment.createdDate | dateDay }}</span
@@ -470,6 +470,7 @@
                   <ng-container *ngIf="comment?.comment">
                     <p class="mdtxt mb-0" [innerHTML]="comment.comment"></p>
                   </ng-container>
+                  <app-post-meta-data-card [post]="comment" />
 
                   <ng-container *ngIf="comment.imageUrl">
                     <app-img-preview
@@ -607,7 +608,7 @@
                             class="d-flex justify-content-between align-items-center w-100"
                           >
                             <h6 class="m-0 align-items-center">
-                              {{ reply.Username }}
+                              {{ reply.Username || reply.FirstName }}
                               <span class="font-12-px">
                                 <fa-icon
                                   class="ms-2"
@@ -663,6 +664,7 @@
                               [innerHTML]="reply?.comment"
                             ></p>
                           </ng-container>
+                          <app-post-meta-data-card [post]="reply" />
 
                           <ng-container *ngIf="reply.imageUrl">
                             <app-img-preview
