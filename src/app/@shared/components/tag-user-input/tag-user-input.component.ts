@@ -95,7 +95,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
       if (atSymbolIndex !== -1) {
         this.userNameSearch = htmlText.substring(atSymbolIndex + 1);
-        if (this.userNameSearch.length > 2 && !validUserName) {
+        if (this.userNameSearch.length > 2 && this.userNameSearch.length <= 10 && !validUserName) {
           this.getUserList(this.userNameSearch);
         } else {
           this.clearUserSearchData();

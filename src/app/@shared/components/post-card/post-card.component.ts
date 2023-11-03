@@ -101,6 +101,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   removeSeeFirstUser(id: number): void {
     this.seeFirstUserService.remove(Number(this.profileId), id).subscribe({
       next: (res) => {
+        this.toastService.warring('See first stop');
         this.getPostList?.emit();
       },
     });
@@ -111,6 +112,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       .create({ profileId: this.profileId, seeFirstProfileId: postProfileId })
       .subscribe({
         next: (res) => {
+          this.toastService.success('See first set');
           this.getPostList?.emit();
         },
       });
@@ -126,6 +128,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       })
       .subscribe({
         next: (res) => {
+          this.toastService.danger('Unsubscribe successfully');
           this.getPostList.emit();
           return true;
         },
