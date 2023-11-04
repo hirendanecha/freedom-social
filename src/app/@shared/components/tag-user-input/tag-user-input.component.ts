@@ -85,6 +85,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   //   }
   // }
   checkUserTagFlag(): void {
+    this.userList = [];
     if (this.isAllowTagUser) {
       let htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
       htmlText = htmlText.replace(/<[^>]*>/g, '');
@@ -92,7 +93,6 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
       const atSymbolIndex = htmlText.lastIndexOf('@');
       const validUserName = /^[A-Za-z0-9_]+$/.test('')
-
       if (atSymbolIndex !== -1) {
         this.userNameSearch = htmlText.substring(atSymbolIndex + 1);
         if (this.userNameSearch.length > 2 && !validUserName) {
@@ -150,14 +150,14 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     }
   }
 
-  moveCursorToEnd (): void {
+  moveCursorToEnd(): void {
     const range = document.createRange();
     const selection = window.getSelection();
     range.setStart(this.tagInputDiv?.nativeElement, this.tagInputDiv?.nativeElement.childNodes.length);
     range.collapse(true);
     selection.removeAllRanges();
     selection.addRange(range);
-};
+  };
 
   selectTagUser(user: any): void {
     const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
