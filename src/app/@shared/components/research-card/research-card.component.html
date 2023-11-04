@@ -1,8 +1,5 @@
 <div class="card group-post-card single-box border-secondary mb-0 rounded-1">
-  <div
-    class="card-img-top c-pointer"
-    (click)="openResearchPost()"
-    >
+  <div class="card-img-top c-pointer" (click)="openResearchPost()">
     <!-- [ngStyle]="{
       'background-image':
         'url(' +
@@ -13,7 +10,9 @@
     <img
       [src]="
         post?.image ||
-        'https://freedom.social/assets/newtemplate/images/mb-logo.png'
+        post?.metaimage ||
+        post?.imageUrl ||
+        '/assets/images/default-profile.jpg'
       "
       class="card-img-top"
       alt=""
@@ -45,7 +44,11 @@
     <div
       class="d-flex flex-wrap justify-content-start align-items-start mt-2 pt-2 border-top"
     >
-      <a href="#" class="link-primary font-12-px w-50 text-start"
+      <a
+        class="link-primary font-12-px w-50 text-start"
+        [appCopyClipboard]="
+          webUrl + 'research/post/' + (post?.postID || post?.id)
+        "
         >copy link url</a
       >
       <a
@@ -54,7 +57,7 @@
         class="link-primary font-12-px w-50 text-start"
         >larger view</a
       >
-      <a href="#" class="link-primary font-12-px w-50 text-start"
+      <!-- <a href="#" class="link-primary font-12-px w-50 text-start"
         >unsubscribe</a
       >
       <a
@@ -62,7 +65,7 @@
         target="_blank"
         class="link-primary font-12-px w-50 text-start"
         >research</a
-      >
+      > -->
     </div>
   </div>
 </div>

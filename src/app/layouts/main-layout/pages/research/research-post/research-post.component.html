@@ -1,5 +1,5 @@
 <div class="research d-flex gap-6">
-  <div class="single-box d-flex flex-column p-5 mb-3">
+  <!-- <div class="single-box d-flex flex-column p-5 mb-3">
     <h6 class="text-start mb-5">1776 Token Forum Group</h6>
 
     <div class="d-flex gap-5 py-5 border-top">
@@ -54,5 +54,8 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+  <ng-container *ngIf="post?.id">
+    <app-post-card [post]="post" />
+  </ng-container>
 </div>
