@@ -94,6 +94,7 @@ export class ForgotPasswordComponent {
                   'If the entered email exists you will receive a email to change your password.';
                 this.type = 'success';
               } else {
+                this.activeModal.close('success');
                 this.msg = result.message;
                 this.type = 'danger';
                 this.loading = false;
@@ -101,6 +102,7 @@ export class ForgotPasswordComponent {
             },
           error:
             (error) => {
+              this.activeModal.close('success');
               this.spinner.hide();
               this.loading = false;
             }
