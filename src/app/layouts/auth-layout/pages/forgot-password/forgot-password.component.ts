@@ -124,22 +124,22 @@ export class ForgotPasswordComponent {
     return true;
   }
 
-  openAlertMessage(): void {
-    this.activeModal.close()
-    const modalRef = this.modalService.open(ConfirmationModalComponent, {
-      centered: true,
-    });
-    modalRef.componentInstance.title = `Confirmation message`;
-    modalRef.componentInstance.confirmButtonLabel = 'Ok';
-    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.componentInstance.message = `Are you sure want to change password?`;
-    modalRef.result.then((res) => {
-      if (res === 'success') {
-        this.verifyEmailSend();
-        // this.verifyEmailSend(this.verifyEmail)
+  // openAlertMessage(): void {
+  //   this.activeModal.close()
+  //   const modalRef = this.modalService.open(ConfirmationModalComponent, {
+  //     centered: true,
+  //   });
+  //   modalRef.componentInstance.title = `Confirmation message`;
+  //   modalRef.componentInstance.confirmButtonLabel = 'Ok';
+  //   modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+  //   modalRef.componentInstance.message = `Are you sure want to change password?`;
+  //   modalRef.result.then((res) => {
+  //     if (res === 'success') {
+  //       this.verifyEmailSend();
+  //       // this.verifyEmailSend(this.verifyEmail)
 
 
-      }
-    });
-  }
+  //     }
+  //   });
+  // }
 }
