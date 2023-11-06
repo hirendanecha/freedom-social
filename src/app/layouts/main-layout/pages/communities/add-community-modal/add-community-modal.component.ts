@@ -16,7 +16,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-community-modal.component.scss'],
 })
 export class AddCommunityModalComponent implements OnInit, AfterViewInit {
+  @Input() title: string | undefined = 'Create Community';
+  @Input() cancelButtonLabel: string | undefined = 'Cancel';
+  @Input() confirmButtonLabel: string | undefined = 'Create';
   @Input() closeIcon: boolean | undefined;
+  @Input() data: any = [];
   @ViewChild('zipCode') zipCode: ElementRef;
 
   communityDetails = new Community();
@@ -45,10 +49,10 @@ export class AddCommunityModalComponent implements OnInit, AfterViewInit {
     pageType: new FormControl('community', [Validators.required]),
     isApprove: new FormControl('N', [Validators.required]),
     Country: new FormControl('US', [Validators.required]),
-    Zip: new FormControl({ value: '', disabled: true }, Validators.required),
-    State: new FormControl({ value: '', disabled: true }, Validators.required),
-    City: new FormControl({ value: '', disabled: true }, Validators.required),
-    County: new FormControl({ value: '', disabled: true }, Validators.required),
+    Zip: new FormControl('', Validators.required),
+    State: new FormControl('', Validators.required),
+    City: new FormControl('', Validators.required),
+    County: new FormControl('', Validators.required),
     logoImg: new FormControl('', Validators.required),
     coverImg: new FormControl('', Validators.required),
   });
@@ -64,9 +68,29 @@ export class AddCommunityModalComponent implements OnInit, AfterViewInit {
     this.userId = window.sessionStorage.user_id;
     this.profileId = localStorage.getItem('profileId');
   }
-
+  
   ngOnInit(): void {
     this.getAllCountries()
+    
+    if (this.data.Id) {     
+      this.communityForm.patchValue({
+        profileId: this.data?.profileId,
+        CommunityName: this.data?.CommunityName,
+        CommunityDescription: this.data?.CommunityDescription,
+        slug: this.data?.slug,
+        pageType: this.data?.pageType,
+        isApprove: this.data?.isApprove,
+        Country: this.data?.Country,
+        Zip: this.data?.Zip,
+        State: this.data?.State,
+        City: this.data?.City,
+        County: this.data?.County,
+        logoImg: this.data?.logoImg,
+        coverImg: this.data?.coverImg,
+      });
+      console.log(this.data);
+    }
+    // console.log(this.communityForm.value);
   }
 
   ngAfterViewInit(): void {
@@ -121,16 +145,40 @@ export class AddCommunityModalComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    this.spinner.show();
-    if (this.communityForm.valid) {
-      this.communityService.createCommunity(this.communityForm.value).subscribe(
+    if (!this.data.Id) {
+      this.spinner.show();
+      if (this.communityForm.valid) {
+        this.communityService.createCommunity(this.communityForm.value).subscribe(
+          {
+            next: (res: any) => {
+              this.spinner.hide();
+              if (!res.error) {
+                this.submitted = true;
+                this.createCommunityAdmin(res.data);
+                this.toastService.success('Your Local Community will be approved within 24 hours!');
+                this.activeModal.close('success');
+              }
+            },
+            error:
+              (err) => {
+                this.toastService.danger('Please change community name. this community name already in use.');
+                this.spinner.hide();
+              }
+          });
+      } else {
+        this.spinner.hide();
+        this.toastService.danger('Please enter mandatory fields(*) data.');
+      }
+    }
+    if (this.communityForm.valid && this.data.Id) {
+      this.communityService.editCommunity(this.communityForm.value, this.data.Id).subscribe(
         {
           next: (res: any) => {
             this.spinner.hide();
             if (!res.error) {
               this.submitted = true;
-              this.createCommunityAdmin(res.data);
-              this.toastService.success('Your Local Community will be approved within 24 hours!');
+              // this.createCommunityAdmin(res.data);
+              this.toastService.success('Your Local Community edit successfully!');
               this.activeModal.close('success');
             }
           },

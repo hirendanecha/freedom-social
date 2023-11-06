@@ -43,6 +43,10 @@ export class CommunityService {
     return this.http.post<Community>(`${this.baseUrl}/create`, communityData);
   }
 
+  editCommunity(communityData, id): Observable<Community> {
+    return this.http.put<Community>(`${this.baseUrl}/edit/${id}`, communityData);
+  }
+
   joinCommunity(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/join-community`, data);
   }

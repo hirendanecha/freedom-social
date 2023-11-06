@@ -1,5 +1,6 @@
 <div class="modal-header border-0">
-  <h5 class="text-start">Create Community</h5>
+  <h5 class="text-start">{{ title }}</h5>
+  <!-- <h5 class="text-start">Create Community</h5> -->
   <fa-icon
     [icon]="['fas', 'xmark']"
     class="xxltxt"
@@ -56,7 +57,7 @@
         <input
           type="text"
           class="input-area"
-          name="cname"
+          name="Zip"
           formControlName="Zip"
           placeholder="Enter your Zip"
           #zipCode
@@ -106,10 +107,10 @@
       </div>
     </div>
 
-    <div class="col-12 mb-5">
+    <div class="col-12 mb-5 custom-textarea">
       <label class="form-label d-flex">Community Description</label>
       <textarea
-        name="dec"
+        name="CommunityDescription"
         cols="30"
         rows="3"
         placeholder="Enter your description"
@@ -125,6 +126,7 @@
       <app-img-picker
         classes="w-160-px h-160-px p-0"
         (onFileChange)="onLogoImgChange($event)"
+        [url]="data?.logoImg"
       />
     </div>
 
@@ -135,6 +137,7 @@
       <app-img-picker
         classes="w-160-px h-160-px p-0"
         (onFileChange)="onCoverImgChange($event)"
+        [url]="data?.coverImg"
       />
     </div>
 
@@ -167,7 +170,8 @@
     class="cmn-btn alt p-2"
     (click)="activeModal.close('Cancel')"
   >
-    Cancel
+    <!-- Cancel -->
+    {{ cancelButtonLabel }}
   </button>
   <button
     id="common-filter-confirm"
@@ -176,6 +180,7 @@
     [disabled]="!communityDetails"
     (click)="uploadImgAndSubmit()"
   >
-    Create
+    <!-- Create -->
+    {{ confirmButtonLabel }}
   </button>
 </div>
