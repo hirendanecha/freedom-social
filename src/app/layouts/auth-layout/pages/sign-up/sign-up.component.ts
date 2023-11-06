@@ -218,7 +218,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       next: (result) => {
         this.spinner.hide();
         this.allCountryData = result;
-        this.registerForm.get('Zip').enable();
+        this.registerForm.get('Zip').enable();  
       },
       error: (error) => {
         this.spinner.hide();
