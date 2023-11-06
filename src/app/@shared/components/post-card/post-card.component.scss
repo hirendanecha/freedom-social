@@ -59,6 +59,9 @@
       }
       // line-break: anywhere;
     }
+    .pdf-container {
+      overflow-x: hidden !important;
+    }
 
     .c-text-color {
       color: var(--font-icon-color);

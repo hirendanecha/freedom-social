@@ -39,7 +39,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     tags: [],
     file: {},
     imageUrl: '',
-    posttype: 'S'
+    posttype: 'S',
+    pdfUrl: ''
   };
 
   communitySlug: string;
@@ -53,7 +54,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   addMemberSearchNgbDropdown: NgbDropdown;
   userList: any = [];
   memberIds: any = [];
-
+  pdfName: string = '';
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -115,9 +116,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onPostFileSelect(event: any): void {
     const file = event.target?.files?.[0] || {};
-    if (file) {
+    console.log(file)
+    if (file.type.includes("application/pdf")) {
+      this.postData['file'] = file;
+      this.pdfName = file?.name
+      this.postData['imageUrl'] = null;
+      this.postData['streamname'] = null;
+    } else {
       this.postData['file'] = file;
       this.postData['imageUrl'] = URL.createObjectURL(file);
+      this.pdfName = null;
+      this.postData['pdfUrl'] = null;
     }
     // if (file?.size < 5120000) {
     // } else {
@@ -128,6 +137,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   removePostSelectedFile(): void {
     this.postData['file'] = null;
     this.postData['imageUrl'] = '';
+    this.pdfName = '';
   }
 
   getCommunityDetailsBySlug(): void {
@@ -203,13 +213,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.postData?.postdescription || this.postData?.file?.name) {
       if (this.postData?.file?.name) {
         this.spinner.show();
-        this.postService.upload(this.postData?.file, this.profileId).subscribe({
+        this.postService.uploadFile(this.postData?.file).subscribe({
           next: (res: any) => {
             this.spinner.hide();
             if (res?.body?.url) {
-              this.postData['file'] = null;
-              this.postData['imageUrl'] = res?.body?.url;
-              this.createOrEditPost();
+              if (this.postData?.file.type.includes("application/pdf")) {
+                this.postData['pdfUrl'] = res?.body?.url;
+                console.log('pdfUrl', res?.body?.url);
+                this.postData['imageUrl'] = ''
+                this.createOrEditPost();
+              } else {
+                this.postData['file'] = null;
+                this.postData['imageUrl'] = res?.body?.url;
+                this.postData['pdfUrl'] = ''
+                this.createOrEditPost();
+              }
             }
             // if (this.postData.file?.size < 5120000) {
             // } else {
@@ -228,7 +246,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   createOrEditPost(): void {
     this.postData.tags = getTagUsersFromAnchorTags(this.postMessageTags);
-    if (this.postData?.postdescription || this.postData?.imageUrl) {
+    if (this.postData?.postdescription || this.postData?.imageUrl || this.postData?.pdfUrl) {
       this.spinner.show();
       this.socketService.createOrEditPost(this.postData, (data) => {
         this.spinner.hide();
@@ -251,6 +269,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.postData['tags'] = [];
     this.postData['file'] = {};
     this.postData['imageUrl'] = '';
+    this.postData['pdfUrl'] = '';
+    this.pdfName = '';
     this.postMessageInputValue = ' ';
     setTimeout(() => {
       this.postMessageInputValue = '';
@@ -262,7 +282,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     // console.log('edit-post', post)
     if (post.posttype === 'V') {
       this.openUploadVideoModal(post);
-    } else {
+    } else if (post.pdfUrl) {
+      this.pdfName = post.pdfUrl.split('/')[3]
+      console.log(this.pdfName)
+      this.postData = { ...post };
+      this.postMessageInputValue = this.postData?.postdescription;
+    }
+    else {
       this.postData = { ...post };
       this.postMessageInputValue = this.postData?.postdescription;
     }

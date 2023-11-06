@@ -29,6 +29,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   communityList = [];
   communityId = '';
   isExpand = false;
+  pdfList: any = [];
   constructor(
     private modalService: NgbActiveModal,
     private router: Router,
@@ -125,5 +126,35 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.communityList = [];
+  }
+
+  getPdfs(): void {
+    this.postService.getPdfsFile(this.customer.Id).subscribe(
+      {
+        next: (res: any) => {
+          this.spinner.hide();
+          if (res) {
+            this.pdfList = res;
+            console.log(this.pdfList);
+          }
+        },
+        error:
+          (error) => {
+            this.spinner.hide();
+            console.log(error);
+          }
+      });
+  }
+
+  viewUserPost(id) {
+    this.router.navigate([`post/${id}`]);
+  }
+
+  downloadPdf(pdf): void {
+    const pdfLink = document.createElement('a');
+    pdfLink.href = pdf;
+    window.open(pdf);
+    pdfLink.download = "TestFile.pdf";
+    pdfLink.click();
   }
 }

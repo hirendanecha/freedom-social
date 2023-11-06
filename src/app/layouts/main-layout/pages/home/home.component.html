@@ -147,6 +147,21 @@
             />
           </div>
         </ng-container>
+        <ng-container *ngIf="pdfName">
+          <div class="position-relative w-100-px h-100-px mt-5">
+            <fa-icon
+              [icon]="['fas', 'file-pdf']"
+              class="c-pointer close-icon font-40-px"
+            />
+            <span>{{ pdfName }}</span>
+            <fa-icon
+              [icon]="['fas', 'xmark']"
+              class="position-absolute top-0 translate-middle badge bg-danger p-1 font-12-px c-pointer c-icon-color"
+              role="button"
+              (click)="removePostSelectedFile()"
+            />
+          </div>
+        </ng-container>
 
         <ul
           class="d-flex justify-content-between justify-content-lg-between flex-wrap ps-0 mb-0 gap-3 gap-sm-5 pt-3 pt-sm-5"
@@ -183,11 +198,18 @@
             <fa-icon [icon]="['fas', 'image']" class="font-20-px" />
             <span>Image</span>
           </li>
-          <li
-            class="d-flex gap-2 align-items-center"
-            ngbTooltip="Comming Soon!"
-            placement="bottom"
-          >
+          <li class="d-flex gap-2 align-items-center" (click)="pdfFile.click()">
+            <!-- ngbTooltip="Comming Soon!"
+            placement="bottom" -->
+            <input
+              type="file"
+              #pdfFile
+              hidden
+              class="d-none"
+              accept="application/pdf"
+              (change)="onPostFileSelect($event)"
+              [disabled]="postData?.meta?.metaimage"
+            />
             <fa-icon [icon]="['fas', 'file']" class="font-20-px" />
             <span>File</span>
           </li>

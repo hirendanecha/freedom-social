@@ -86,8 +86,12 @@ export class PostService {
     return this.http.delete(`${this.baseUrl}/comments/${id}`);
   }
 
+  getPdfsFile(id): Observable<Object> {
+    return this.http.get<Object>(`${this.baseUrl}/get-pdfs/${id}`);
+  }
 
-  uploadVideo(
+
+  uploadFile(
     files: File,
   ): Observable<HttpEvent<any>> {
     const url = environment.serverUrl
@@ -97,7 +101,7 @@ export class PostService {
     const req =
       new HttpRequest(
         'POST',
-        `${url}posts/upload-video`,
+        `${url}posts/upload`,
         formData,
         {
           reportProgress: true,

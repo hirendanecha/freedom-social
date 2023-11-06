@@ -90,13 +90,13 @@ export class VideoPostModalComponent implements AfterViewInit {
         this.isProgress = true;
         let uploadObs = {};
         if (this.postData?.file1?.name) {
-          uploadObs['streamname'] = this.postService.uploadVideo(
+          uploadObs['streamname'] = this.postService.uploadFile(
             this.postData?.file1
           );
         }
 
         if (this.postData?.file2?.name) {
-          uploadObs['thumbfilename'] = this.postService.uploadVideo(
+          uploadObs['thumbfilename'] = this.postService.uploadFile(
             this.postData?.file2
           );
         }
@@ -125,7 +125,7 @@ export class VideoPostModalComponent implements AfterViewInit {
           this.postData.thumbfilename = this.selectedThumbFile;
           this.createPost();
         }
-      } else{
+      } else {
         this.toastService.danger('Please enter mandatory fields(*) data.');
       }
     }
@@ -169,7 +169,7 @@ export class VideoPostModalComponent implements AfterViewInit {
   createPost(): void {
     this.progressValue = 100;
     // this.spinner.show();
-        this.postData.communityId = this.communityId || null;
+    this.postData.communityId = this.communityId || null;
     if (
       this.postData?.streamname &&
       this.postData.thumbfilename &&
