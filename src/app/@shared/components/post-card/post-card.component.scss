@@ -118,6 +118,7 @@
     }
 
     .post-description {
+      white-space: pre-wrap;
       p {
         h1 {
           font-size: 18px;
@@ -315,11 +316,11 @@
     }
   }
   .custom-width-comment {
-    // max-width: 430px;
+    max-width: 430px;
 
-    // @media (max-width: 1399px) {
-    //   max-width: 250px;
-    // }
+    @media (max-width: 1399px) {
+      max-width: 250px;
+    }
     @media (max-width: 1199px) {
       max-width: 385px;
     }

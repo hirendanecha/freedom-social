@@ -21,6 +21,7 @@ import { VideoPostModalComponent } from 'src/app/@shared/modals/video-post-modal
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 import { environment } from 'src/environments/environment';
 import { SeoService } from 'src/app/@shared/services/seo.service';
+import { AddCommunityModalComponent } from '../communities/add-community-modal/add-community-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -271,6 +272,25 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       behavior: 'smooth',
     });
 
+  }
+
+  editCommunity(data):void{
+    const modalRef = this.modalService.open(AddCommunityModalComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+      size: 'lg'
+    });
+    modalRef.componentInstance.title = 'Edit Community Details';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.confirmButtonLabel = 'Save';
+    modalRef.componentInstance.closeIcon = true;
+    modalRef.componentInstance.data = data;
+    modalRef.result.then(res => {
+      if (res === 'success') {
+        this.router.navigate(['communities']);
+      }
+    });
   }
 
   joinCommunity(id?): void {

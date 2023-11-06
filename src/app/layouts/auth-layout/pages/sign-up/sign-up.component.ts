@@ -142,11 +142,15 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   validatepassword(): boolean {
     const pattern =
-      '(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[a-z])(?=.*[0-9].*[0-9]).{8}';
+      '[a-zA-Z0-9]{5,}';
+    // const pattern =
+    //   '(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[a-z])(?=.*[0-9].*[0-9]).{8}';
 
     if (!this.registerForm.get('Password').value.match(pattern)) {
       this.msg =
-        'Password must be a minimum of 8 characters and include one uppercase letter, one lowercase letter, and one special character';
+        'Password must be a minimum of 5 characters';
+      // this.msg =
+      //   'Password must be a minimum of 8 characters and include one uppercase letter, one lowercase letter, and one special character';
       this.scrollTop();
       return false;
     }

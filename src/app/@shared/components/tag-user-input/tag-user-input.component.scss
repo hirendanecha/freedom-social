@@ -58,11 +58,14 @@
       background-color: unset !important;
       font-size: 16px !important;
       line-height: unset !important;
-      color: var(--para-2nd-color);
+      color: var(--para-2nd-color) !important;
     }
     // br {
     //   display: none;
     // }
+    a{
+      color: rgb(var(--bs-danger-rgb)) !important;
+    }
   }
   .dropdown-menu.show {
     max-height: 292px;
