@@ -90,7 +90,6 @@ export class AddCommunityModalComponent implements OnInit, AfterViewInit {
       });
       console.log(this.data);
     }
-    // console.log(this.communityForm.value);
   }
 
   ngAfterViewInit(): void {
@@ -188,9 +187,6 @@ export class AddCommunityModalComponent implements OnInit, AfterViewInit {
               this.spinner.hide();
             }
         });
-    } else {
-      this.spinner.hide();
-      this.toastService.danger('Please enter mandatory fields(*) data.');
     }
   }
 
