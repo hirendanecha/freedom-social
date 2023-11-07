@@ -371,7 +371,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
           this.commentData['parentCommentId'] = commentId;
         }
         this.uploadCommentFileAndAddComment();
-        this.commentMessageInputValue = null;
+        // this.commentMessageInputValue = null;
         // parentPostCommentElement.innerHTML = ''
       } else {
         this.toastService.clear();
@@ -393,6 +393,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
                 this.commentData['file'] = null;
                 this.commentData['imageUrl'] = res?.body?.url;
                 this.addComment();
+                this.commentMessageInputValue = null;
               }
               // if (this.commentData.file?.size < 5120000) {
               // } else {
@@ -401,10 +402,12 @@ export class PostCardComponent implements OnInit, AfterViewInit {
             },
             error: (err) => {
               this.spinner.hide();
+              this.commentMessageInputValue = null;
             },
           });
       } else {
         this.addComment();
+        this.commentMessageInputValue = null;
       }
     }
   }

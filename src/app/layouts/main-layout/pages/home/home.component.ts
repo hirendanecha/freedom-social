@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onPostFileSelect(event: any): void {
     const file = event.target?.files?.[0] || {};
-    console.log(file)
+    // console.log(file)
     if (file.type.includes("application/pdf")) {
       this.postData['file'] = file;
       this.pdfName = file?.name
@@ -216,7 +216,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.spinner.show();
         this.postService.uploadFile(this.postData?.file).subscribe({
           next: (res: any) => {
-            this.spinner.hide();
+            // this.spinner.hide();
             if (res?.body?.url) {
               if (this.postData?.file.type.includes("application/pdf")) {
                 this.postData['pdfUrl'] = res?.body?.url;
