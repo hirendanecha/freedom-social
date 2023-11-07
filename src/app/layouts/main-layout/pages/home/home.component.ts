@@ -116,7 +116,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onPostFileSelect(event: any): void {
     const file = event.target?.files?.[0] || {};
-    console.log(file)
+    // console.log(file)
     if (file.type.includes("application/pdf")) {
       this.postData['file'] = file;
       this.pdfName = file?.name
@@ -249,6 +249,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.postData?.postdescription || this.postData?.imageUrl || this.postData?.pdfUrl) {
       this.spinner.show();
       this.socketService.createOrEditPost(this.postData, (data) => {
+        console.log(this.postData);
+        console.log(data);
         this.spinner.hide();
         this.toastService.success('Post created successfully.');
         return data;

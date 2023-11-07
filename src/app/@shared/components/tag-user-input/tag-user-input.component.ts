@@ -113,7 +113,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     // const matches = text.match(/((ftp|http|https):\/\/)?(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/);
     const matches = text.match(/(?:https?:\/\/|www\.)[^\s]+/g);
     const url = matches?.[0];
-    console.log(url, matches);
+    // console.log(url, matches);
     if (url) {
       if (!url?.includes(this.metaData?.url)) {
         // this.spinner.show();
