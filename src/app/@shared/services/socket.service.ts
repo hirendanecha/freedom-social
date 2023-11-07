@@ -6,10 +6,10 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SocketService {
-  public socket: any = io(environment.socketUrl);
+  public socket: any = io(environment.socketUrl, { transports: ["websocket"] });
 
   constructor() {
-    this.socket = io(environment.socketUrl);
+    this.socket = io(environment.socketUrl,  { transports: ["websocket"] });
   }
 
   // socket for posts //
@@ -17,8 +17,15 @@ export class SocketService {
     this.socket.emit('get-new-post', params, callback);
   }
 
-  createOrEditPost(params, callback: (post: any) => void) {
-    this.socket.emit('create-new-post', params, callback);
+  createOrEditPost({file, ...params}) {
+    console.log(this.socket.connected, params);
+    if (this.socket.connected){
+      this.socket.emit('create-new-post', params);
+    } else{
+      this.socket.connect();
+      this.socket.emit('create-new-post', params);
+    }
+    
   }
 
   editPost(params, callback: (post: any) => void) {

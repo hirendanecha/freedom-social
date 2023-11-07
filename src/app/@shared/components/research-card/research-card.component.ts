@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-research-card',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
 export class ResearchCardComponent implements AfterViewInit {
 
   @Input('post') post: any;
+  webUrl = environment.webUrl;
 
   constructor(
     private router: Router
@@ -18,6 +20,9 @@ export class ResearchCardComponent implements AfterViewInit {
   }
 
   openResearchPost(): void {
-    this.router.navigate(['/', 'research', 'post', this.post?.postToProfileID]);
+    console.log(this.post)
+    // this.router.navigate(['/', 'research', 'post', this.post?.postID]);
+    const id = this.post?.postID || this.post?.id
+    this.router.navigate([`research/post/${id}`]);
   }
 }

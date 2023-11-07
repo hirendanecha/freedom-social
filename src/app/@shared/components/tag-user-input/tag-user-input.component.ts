@@ -66,15 +66,36 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     this.emitChangeEvent();
   }
 
+  // checkUserTagFlag1(): void {
+  //   if (this.isAllowTagUser) {
+  //     const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
+
+  //     const atSymbolIndex = htmlText.lastIndexOf('@');
+
+  //     if (atSymbolIndex !== -1) {
+  //       this.userNameSearch = htmlText.substring(atSymbolIndex + 1);
+  //       if (this.userNameSearch?.length > 2) {
+  //         this.getUserList(this.userNameSearch);
+  //       } else {
+  //         this.clearUserSearchData();
+  //       }
+  //     } else {
+  //       this.clearUserSearchData();
+  //     }
+  //   }
+  // }
   checkUserTagFlag(): void {
+    this.userList = [];
     if (this.isAllowTagUser) {
-      const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
+      let htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
+      htmlText = htmlText.replace(/<[^>]*>/g, '');
+
 
       const atSymbolIndex = htmlText.lastIndexOf('@');
-
+      const validUserName = /^[A-Za-z0-9_]+$/.test('')
       if (atSymbolIndex !== -1) {
         this.userNameSearch = htmlText.substring(atSymbolIndex + 1);
-        if (this.userNameSearch?.length > 2) {
+        if (this.userNameSearch.length > 2 && !validUserName) {
           this.getUserList(this.userNameSearch);
         } else {
           this.clearUserSearchData();
@@ -87,16 +108,16 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
   getMetaDataFromUrlStr(): void {
     const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
-
-    const matches = htmlText.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?(.*)/gi);
-
+    const text = htmlText.replace(/<[^>]*>/g, '');
+    // const matches = text.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?(.*)/gi);
+    // const matches = text.match(/((ftp|http|https):\/\/)?(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/);
+    const matches = text.match(/(?:https?:\/\/|www\.)[^\s]+/g);
     const url = matches?.[0];
-
+    console.log(url, matches);
     if (url) {
       if (!url?.includes(this.metaData?.url)) {
-        this.spinner.show();
+        // this.spinner.show();
         this.ngUnsubscribe.next();
-
         this.postService
           .getMetaData({ url })
           .pipe(takeUntil(this.ngUnsubscribe))
@@ -130,23 +151,35 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     }
   }
 
+  moveCursorToEnd(): void {
+    const range = document.createRange();
+    const selection = window.getSelection();
+    range.setStart(this.tagInputDiv?.nativeElement, this.tagInputDiv?.nativeElement.childNodes.length);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+
   selectTagUser(user: any): void {
     const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
+    console.log(user)
     const text = htmlText.replace(
       `@${this.userNameSearch}`,
       `<a href="/settings/view-profile/${user?.Id}" class="text-danger" data-id="${user?.Id}">@${user?.Username}</a>`
     );
+    console.log(text);
     this.setTagInputDivValue(text);
-
     this.emitChangeEvent();
+    this.moveCursorToEnd();
   }
 
   getUserList(search: string): void {
     this.customerService.getProfileList(search).subscribe({
       next: (res: any) => {
         if (res?.data?.length > 0) {
-          this.userList = res.data;
-          this.userSearchNgbDropdown.open();
+          this.userList = res.data.map(e => e);
+          console.log(this.userList);
+          // this.userSearchNgbDropdown.open();
         } else {
           this.clearUserSearchData();
         }
@@ -160,7 +193,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   clearUserSearchData(): void {
     this.userNameSearch = '';
     this.userList = [];
-    this.userSearchNgbDropdown?.close();
+    // this.userSearchNgbDropdown?.close();
   }
 
   clearMetaData(): void {
@@ -184,7 +217,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
       this.value = `${htmlText}`.replace(/\<div\>\<br\>\<\/div\>/ig, '');
       // console.log('htmlText', `${htmlText}`.replace(/\<div\>\<br\>\<\/div\>/ig, ''))
-      console.log('htmlText', this.value);
+      // console.log('htmlText', this.value);
 
 
       this.onDataChange.emit({

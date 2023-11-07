@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/@shared/services/post.service';
 import { SeeFirstUserService } from 'src/app/@shared/services/see-first-user.service';
@@ -15,6 +25,7 @@ import { ReplyCommentModalComponent } from '../../modals/reply-comment-modal/rep
 import { getTagUsersFromAnchorTags } from '../../utils/utils';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { SeoService } from '../../services/seo.service';
+import { BreakpointService } from '../../services/breakpoint.service';
 
 declare var jwplayer: any;
 @Component({
@@ -26,9 +37,11 @@ declare var jwplayer: any;
 export class PostCardComponent implements OnInit, AfterViewInit {
   @Input('post') post: any = {};
   @Input('seeFirstList') seeFirstList: any = [];
-  @Output('getPostList') getPostList: EventEmitter<void> = new EventEmitter<void>();
+  @Output('getPostList') getPostList: EventEmitter<void> =
+    new EventEmitter<void>();
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChild('parentPostCommentElement', { static: false }) parentPostCommentElement: ElementRef;
+  @ViewChild('parentPostCommentElement', { static: false })
+  parentPostCommentElement: ElementRef;
 
   profileId = '';
   isOpenCommentsPostId: number = null;
@@ -41,18 +54,20 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   commentData: any = {
     file: null,
     url: '',
-    tags: []
+    tags: [],
+    meta: {},
   };
   isParent: boolean = false;
   postComment = {};
   isCommentsLoader: boolean = false;
   isPostComment: boolean = false;
   webUrl = environment.webUrl;
-  player: any
+  player: any;
   isExpand = false;
   commentCount = 0;
   commentMessageInputValue: string = '';
   commentMessageTags: any[];
+  showHoverBox = false;
 
   constructor(
     private seeFirstUserService: SeeFirstUserService,
@@ -66,7 +81,8 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     private router: Router,
     private renderer: Renderer2,
     public tokenService: TokenStorageService,
-    private seoService: SeoService
+    private seoService: SeoService,
+    public breakpointService: BreakpointService
   ) {
     this.profileId = localStorage.getItem('profileId');
   }
@@ -85,28 +101,38 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   removeSeeFirstUser(id: number): void {
     this.seeFirstUserService.remove(Number(this.profileId), id).subscribe({
       next: (res) => {
+        this.toastService.warring('See first stop');
         this.getPostList?.emit();
       },
     });
   }
 
   seeFirst(postProfileId: number): void {
-    this.seeFirstUserService.create({ profileId: this.profileId, seeFirstProfileId: postProfileId }).subscribe({
-      next: (res) => {
-        this.getPostList?.emit();
-      },
-    });
+    this.seeFirstUserService
+      .create({ profileId: this.profileId, seeFirstProfileId: postProfileId })
+      .subscribe({
+        next: (res) => {
+          this.toastService.success('See first set');
+          this.getPostList?.emit();
+        },
+      });
   }
 
   unsubscribe(post: any): void {
     // post['hide'] = true;
 
-    this.unsubscribeProfileService.create({ profileId: this.profileId, unsubscribeProfileId: post?.profileid }).subscribe({
-      next: (res) => {
-        this.getPostList.emit()
-        return true;
-      },
-    });
+    this.unsubscribeProfileService
+      .create({
+        profileId: this.profileId,
+        unsubscribeProfileId: post?.profileid,
+      })
+      .subscribe({
+        next: (res) => {
+          this.toastService.danger('Unsubscribe successfully');
+          this.getPostList.emit();
+          return true;
+        },
+      });
   }
 
   goToViewProfile(id: any): void {
@@ -134,10 +160,10 @@ export class PostCardComponent implements OnInit, AfterViewInit {
           this.commentData.comment = res?.comment;
           this.commentData.postId = res?.postId;
           this.commentData.profileId = res?.profileId;
-          this.commentData['id'] = res?.id
-          this.commentData.parentCommentId = res?.parentCommentId
-          this.commentData['file'] = res?.file
-          this.commentData['imageUrl'] = res?.url
+          this.commentData['id'] = res?.id;
+          this.commentData.parentCommentId = res?.parentCommentId;
+          this.commentData['file'] = res?.file;
+          this.commentData['imageUrl'] = res?.url;
           this.uploadCommentFileAndAddComment();
         }
       });
@@ -148,16 +174,15 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       //   comment.comment
       // );
       this.isReply = false;
-      this.commentMessageInputValue = comment.comment
-      this.commentData['id'] = comment.id
+      this.commentMessageInputValue = comment.comment;
+      this.commentData['id'] = comment.id;
       if (comment.imageUrl) {
-        this.commentData['imageUrl'] = comment.imageUrl
+        this.commentData['imageUrl'] = comment.imageUrl;
         this.isParent = true;
       }
     }
     console.log(comment);
   }
-
 
   deletePost(post): void {
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
@@ -171,27 +196,27 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     modalRef.result.then((res) => {
       if (res === 'success') {
         // post['hide'] = true;
-        this.postService.deletePost(post.id).subscribe(
-          {
-            next: (res: any) => {
-              if (res) {
-                this.toastService.success(res.message);
-                this.getPostList.emit();
-              }
-            },
-            error:
-              (error) => {
-                console.log('error : ', error);
-              }
-          });
+        this.postService.deletePost(post.id).subscribe({
+          next: (res: any) => {
+            if (res) {
+              this.toastService.success(res.message);
+              this.getPostList.emit();
+            }
+          },
+          error: (error) => {
+            console.log('error : ', error);
+          },
+        });
       }
     });
   }
 
   reactLikeOnPost(post: any) {
-    post.likescount = post?.likescount + 1;
-    post.totalReactCount = post?.totalReactCount + 1;
-    post.react = 'L';
+    if (post.react != 'L') {
+      post.likescount = post?.likescount + 1;
+      post.totalReactCount = post?.totalReactCount + 1;
+      post.react = 'L';
+    }
     const data = {
       postId: post.id,
       profileId: this.profileId,
@@ -203,11 +228,11 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   dislikeFeedPost(post) {
-    if (post.react == 'L') {
+    if (post.react == 'L' && post.likescount > 0) {
       post.likescount = post.likescount - 1;
+      post.react = null;
+      post.totalReactCount = post.totalReactCount - 1;
     }
-    post.totalReactCount = post.totalReactCount - 1;
-    post.react = null;
     const data = {
       postId: post.id,
       profileId: this.profileId,
@@ -237,8 +262,8 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     this.isCommentsLoader = true;
     const data = {
       postId: id,
-      profileId: this.profileId
-    }
+      profileId: this.profileId,
+    };
     this.postService.getComments(data).subscribe({
       next: (res) => {
         if (res) {
@@ -258,7 +283,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
           }));
           const replyCount = res.data.replyCommnetsList.filter((ele1) => {
             return ele1.parentCommentId;
-          })
+          });
           this.commentCount = this.commentList.length + replyCount.length;
         }
       },
@@ -267,7 +292,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       },
       complete: () => {
         this.isCommentsLoader = false;
-      }
+      },
     });
   }
 
@@ -293,8 +318,10 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   likeComments(comment) {
-    comment.likeCount = comment.likeCount + 1;
-    comment.react = 'L';
+    if (comment.react != 'L') {
+      comment.likeCount = comment.likeCount + 1;
+      comment.react = 'L';
+    }
     const data = {
       postId: comment.postId,
       commentId: comment.id,
@@ -304,14 +331,13 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       actionType: 'L',
     };
     this.likeDisLikePostComment(data);
-
   }
 
   disLikeComments(comment) {
-    if (comment.react == 'L') {
+    if (comment.react == 'L' && comment.likeCount > 0) {
       comment.likeCount = comment.likeCount - 1;
+      comment.react = null;
     }
-    comment.react = null;
     const data = {
       postId: comment.postId,
       commentId: comment.id,
@@ -334,7 +360,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   commentOnPost(postId, commentId = null): void {
     // const postComment = parentPostCommentElement.innerHTML;
     this.commentData.tags = getTagUsersFromAnchorTags(this.commentMessageTags);
-    console.log(this.commentData)
+    console.log(this.commentData);
     if (this.isPostComment === false) {
       if (this.commentData.comment || this.commentData?.file?.name) {
         this.isPostComment = true;
@@ -358,23 +384,25 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     if (this.commentData?.comment || this.commentData?.file?.name) {
       if (this.commentData?.file?.name) {
         this.spinner.show();
-        this.postService.upload(this.commentData?.file, this.profileId).subscribe({
-          next: (res: any) => {
-            this.spinner.hide();
-            if (this.commentData.file?.size < 5120000) {
+        this.postService
+          .upload(this.commentData?.file, this.profileId)
+          .subscribe({
+            next: (res: any) => {
+              this.spinner.hide();
               if (res?.body?.url) {
                 this.commentData['file'] = null;
                 this.commentData['imageUrl'] = res?.body?.url;
                 this.addComment();
               }
-            } else {
-              this.toastService.warring('Image is too large!');
-            }
-          },
-          error: (err) => {
-            this.spinner.hide();
-          },
-        });
+              // if (this.commentData.file?.size < 5120000) {
+              // } else {
+              //   this.toastService.warring('Image is too large!');
+              // }
+            },
+            error: (err) => {
+              this.spinner.hide();
+            },
+          });
       } else {
         this.addComment();
       }
@@ -385,17 +413,18 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     if (this.commentData) {
       this.socketService.commentOnPost(this.commentData, (data) => {
         this.postComment = '';
-        this.commentData = {}
+        this.commentData = {};
         this.commentData.comment = '';
         this.commentData.tags = [];
-        this.commentMessageTags = []
+        this.commentMessageTags = [];
         // childPostCommentElement.innerText = '';
       });
-      this.commentMessageInputValue = ''
+      this.commentMessageInputValue = '';
       setTimeout(() => {
-        this.commentMessageInputValue = ''
+        this.commentMessageInputValue = '';
       }, 100);
-      this.commentData = {}
+      this.commentData = {};
+      this.isReply = false;
       this.viewComments(this.post?.id);
     }
     //  else {
@@ -416,16 +445,16 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       this.isParent = false;
     }
     const file = event.target?.files?.[0] || {};
-    if (file?.size < 5120000) {
-      if (file.type.includes('image/')) {
-        this.commentData['file'] = file;
-        this.commentData['imageUrl'] = URL.createObjectURL(file);
-      } else {
-        this.toastService.danger(`sorry ${file.type} are not allowed!`)
-      }
+    if (file.type.includes('image/')) {
+      this.commentData['file'] = file;
+      this.commentData['imageUrl'] = URL.createObjectURL(file);
     } else {
-      this.toastService.warring('Image is too large!');
+      this.toastService.danger(`sorry ${file.type} are not allowed!`);
     }
+    // if (file?.size < 5120000) {
+    // } else {
+    //   this.toastService.warring('Image is too large!');
+    // }
   }
 
   removePostSelectedFile(): void {
@@ -443,33 +472,34 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       mute: false,
       autostart: false,
       volume: 30,
-      height: '308px',
+      height: '300px',
       width: 'auto',
-      pipIcon: "disabled",
+      pipIcon: 'disabled',
       displaydescription: true,
       playbackRateControls: false,
-      aspectratio: "16:9",
+      aspectratio: '16:9',
       autoPause: {
-        viewability: true
+        viewability: true,
       },
       controls: true,
-    }
+    };
     if (id) {
       const jwPlayer = jwplayer('jwVideo-' + id);
       if (jwPlayer) {
         this.player = jwPlayer?.setup({
-          ...config
+          ...config,
         });
         this.player?.load();
       }
     }
   }
 
-
   onTagUserInputChangeEvent(data: any): void {
-    console.log('comments-data', data)
+    // console.log('comments-data', data)
     this.commentData.comment = data?.html;
+    this.commentData.meta = data?.meta;
     this.commentMessageTags = data?.tags;
+    console.log(this.commentData)
   }
 
   socketListner(): void {
@@ -482,7 +512,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     });
 
     this.socketService.socket.on('likeOrDislikeComments', (res) => {
-      console.log('likeOrDislikeComments', res)
+      console.log('likeOrDislikeComments', res);
       if (res[0]) {
         if (res[0].parentCommentId) {
           // let index = this.commentList.findIndex(obj => obj.id === res[0].parentCommentId);
@@ -493,9 +523,12 @@ export class PostCardComponent implements OnInit, AfterViewInit {
           this.commentList.map((ele: any) =>
             res.filter((ele1) => {
               if (ele.id === ele1.parentCommentId) {
-                let index = ele?.['replyCommnetsList'].findIndex(obj => obj.id === res[0].id);
+                let index = ele?.['replyCommnetsList'].findIndex(
+                  (obj) => obj?.id === res[0]?.id
+                );
                 if (index !== -1) {
-                  return ele['replyCommnetsList'][index].likeCount = res[0]?.likeCount;
+                  return (ele['replyCommnetsList'][index].likeCount =
+                    res[0]?.likeCount);
                 } else {
                   return ele;
                 }
@@ -503,9 +536,9 @@ export class PostCardComponent implements OnInit, AfterViewInit {
             })
           );
         } else {
-          let index = this.commentList.findIndex(obj => obj.id === res[0].id);
+          let index = this.commentList.findIndex((obj) => obj?.id === res[0]?.id);
           if (index !== -1) {
-            this.commentList[index].likeCount = res[0].likeCount;
+            this.commentList[index].likeCount = res[0]?.likeCount;
           }
         }
         // if (this.post.id === res[0]?.id) {
@@ -521,7 +554,9 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         this.commentList.map((ele: any) =>
           data.filter((ele1) => {
             if (ele.id === ele1.parentCommentId) {
-              let index = ele?.['replyCommnetsList'].findIndex(obj => obj.id === data[0].id);
+              let index = ele?.['replyCommnetsList'].findIndex(
+                (obj) => obj.id === data[0].id
+              );
               if (!ele?.['replyCommnetsList'][index]) {
                 ele?.['replyCommnetsList'].push(ele1);
                 return ele;
@@ -532,7 +567,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
           })
         );
       } else {
-        let index = this.commentList.findIndex(obj => obj.id === data[0].id);
+        let index = this.commentList.findIndex((obj) => obj?.id === data[0]?.id);
         if (!this.commentList[index]) {
           this.commentList.push(data[0]);
         }

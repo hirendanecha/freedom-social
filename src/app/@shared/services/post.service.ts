@@ -54,8 +54,8 @@ export class PostService {
     return this.http.post(`${this.baseUrl}`, reqBody);
   }
 
-  getPostsByProfileId(id) {
-    return this.http.get(`${this.baseUrl}/${id}`);
+  getPostsByProfileId(data) {
+    return this.http.post(`${this.baseUrl}/get-my-post`, data);
   }
   getPostsByPostId(id) {
     return this.http.get(`${this.baseUrl}/get/${id}`);
@@ -86,8 +86,12 @@ export class PostService {
     return this.http.delete(`${this.baseUrl}/comments/${id}`);
   }
 
+  getPdfsFile(id): Observable<Object> {
+    return this.http.get<Object>(`${this.baseUrl}/get-pdfs/${id}`);
+  }
 
-  uploadVideo(
+
+  uploadFile(
     files: File,
   ): Observable<HttpEvent<any>> {
     const url = environment.serverUrl
@@ -97,7 +101,7 @@ export class PostService {
     const req =
       new HttpRequest(
         'POST',
-        `${url}posts/upload-video`,
+        `${url}posts/upload`,
         formData,
         {
           reportProgress: true,

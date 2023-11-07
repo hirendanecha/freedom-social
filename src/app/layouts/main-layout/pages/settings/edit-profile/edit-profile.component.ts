@@ -28,9 +28,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   confirm_password = '';
   msg = '';
   userId = '';
+  userMail: string;
   profilePic: any = {};
   coverPic: any = {};
-  profileId = '';
+  profileId: number;
+  userlocalId: number;
   profileData: any = {};
   @ViewChild('zipCode') zipCode: ElementRef;
   uploadListSubject: Subject<void> = new Subject<void>();
@@ -52,15 +54,18 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     private tokenStorage: TokenStorageService,
     private postService: PostService,
     public sharedService: SharedService,
-    private toastService: ToastService
+    private toastService: ToastService,
   ) {
+    this.userlocalId = +localStorage.getItem('user_id');
     this.userId = this.route.snapshot.paramMap.get('id');
-    this.profileId = localStorage.getItem('profileId');
+    this.profileId = +localStorage.getItem('profileId');
+    this.userMail = JSON.parse(localStorage.getItem('auth-user'))?.Email;
     if (this.profileId) {
       this.getProfile(this.profileId);
-    } else {
-      this.getUserDetails(this.userId);
     }
+    // else {
+    //   this.getUserDetails(this.userId);
+    // }
   }
 
   ngOnInit(): void {
@@ -85,6 +90,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
         if (data) {
           this.spinner.hide();
           this.customer = data;
+          console.log(data);
           this.getAllCountries();
         }
       },
@@ -114,6 +120,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     this.customer.Zip = '';
     this.customer.State = '';
     this.customer.City = '';
+    this.customer.County = '';
     // this.customer.Place = '';
   }
 
@@ -142,6 +149,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
           let zip_data = data[0];
           this.customer.State = zip_data ? zip_data.state : '';
           this.customer.City = zip_data ? zip_data.city : '';
+          this.customer.County = zip_data ? zip_data.places : '';
           // this.customer.Place = zip_data ? zip_data.places : '';
         },
         error:
@@ -216,6 +224,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
       this.customer.CoverPicName = this.profileCoverImg?.url || this.customer.CoverPicName;
       this.customer.IsActive = 'Y';
       this.customer.UserID = +this.userId;
+      console.log('update', this.customer)
       this.customerService.updateProfile(this.profileId, this.customer).subscribe({
         next: (res: any) => {
           this.spinner.hide();
@@ -240,6 +249,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
         this.spinner.hide();
         if (res.data) {
           this.customer = res.data[0];
+          console.log(this.customer)
           this.getAllCountries();
         }
       },
@@ -257,5 +267,33 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
 
   onProfileCoverImgChange(event: any): void {
     this.profileCoverImg = event;
+  }
+
+  deleteAccount(): void {
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = 'Delete Account';
+    modalRef.componentInstance.confirmButtonLabel = 'Delete';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.message =
+      'Are you sure want to delete your account?';
+    modalRef.result.then((res) => {
+      if (res === 'success') {
+        this.customerService.deleteCustomer(this.userlocalId, this.profileId).subscribe({
+          next: (res: any) => {
+            if (res) {
+              this.toastService.success(res.message || 'Account deleted successfully');
+              this.tokenStorage.signOut();
+              this.router.navigateByUrl('register');
+            }
+          },
+          error: (error) => {
+            console.log(error);
+            this.toastService.success(error.message);
+          },
+        });
+      }
+    });
   }
 }

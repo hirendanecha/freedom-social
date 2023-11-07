@@ -94,6 +94,7 @@ export class ForgotPasswordComponent {
                   'If the entered email exists you will receive a email to change your password.';
                 this.type = 'success';
               } else {
+                this.activeModal.close('success');
                 this.msg = result.message;
                 this.type = 'danger';
                 this.loading = false;
@@ -101,6 +102,7 @@ export class ForgotPasswordComponent {
             },
           error:
             (error) => {
+              this.activeModal.close('success');
               this.spinner.hide();
               this.loading = false;
             }
@@ -124,22 +126,22 @@ export class ForgotPasswordComponent {
     return true;
   }
 
-  openAlertMessage(): void {
-    this.activeModal.close()
-    const modalRef = this.modalService.open(ConfirmationModalComponent, {
-      centered: true,
-    });
-    modalRef.componentInstance.title = `Confirmation message`;
-    modalRef.componentInstance.confirmButtonLabel = 'Ok';
-    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.componentInstance.message = `Are you sure want to change password?`;
-    modalRef.result.then((res) => {
-      if (res === 'success') {
-        this.verifyEmailSend();
-        // this.verifyEmailSend(this.verifyEmail)
+  // openAlertMessage(): void {
+  //   this.activeModal.close()
+  //   const modalRef = this.modalService.open(ConfirmationModalComponent, {
+  //     centered: true,
+  //   });
+  //   modalRef.componentInstance.title = `Confirmation message`;
+  //   modalRef.componentInstance.confirmButtonLabel = 'Ok';
+  //   modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+  //   modalRef.componentInstance.message = `Are you sure want to change password?`;
+  //   modalRef.result.then((res) => {
+  //     if (res === 'success') {
+  //       this.verifyEmailSend();
+  //       // this.verifyEmailSend(this.verifyEmail)
 
 
-      }
-    });
-  }
+  //     }
+  //   });
+  // }
 }

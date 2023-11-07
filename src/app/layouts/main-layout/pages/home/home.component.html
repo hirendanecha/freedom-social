@@ -28,12 +28,21 @@
           >
         </div>
 
+        <div>
+          <ng-container *ngIf="communityDetails.profileId == profileId && communityDetails.pageType === 'community'"
+          >
+          <button class="btn btn-sm btn-primary me-2" (click)="editCommunity(communityDetails)">
+            Edit Community
+          </button>
+        </ng-container>
+        <!-- {{ communityDetails?.pageType }} -->
+        
         <ng-container
           *ngIf="
             communityDetails?.memberIds?.includes(+profileId);
             else elseJoinCommunity
           "
-        >
+          >
           <!-- <ng-container
             *ngIf="
               communityDetails?.profileId === +profileId;
@@ -60,6 +69,7 @@
             Join {{ communityDetails?.pageType }}
           </button>
         </ng-template>
+      </div>
       </div>
     </div>
 
@@ -112,9 +122,10 @@
         alt="icon"
       />
 
+      <!-- placeholder="Write something to post.." -->
       <div class="w-100 position-relative">
         <app-tag-user-input
-          placeholder="Write something to post.."
+          placeholder="Post a link or image or file or let's just talk!"
           [value]="postMessageInputValue"
           (onDataChange)="onTagUserInputChangeEvent($event)"
         />
@@ -131,6 +142,21 @@
             <fa-icon
               [icon]="['fas', 'xmark']"
               class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer c-icon-color"
+              role="button"
+              (click)="removePostSelectedFile()"
+            />
+          </div>
+        </ng-container>
+        <ng-container *ngIf="pdfName">
+          <div class="position-relative w-100-px h-100-px mt-5">
+            <fa-icon
+              [icon]="['fas', 'file-pdf']"
+              class="c-pointer close-icon font-40-px"
+            />
+            <span>{{ pdfName }}</span>
+            <fa-icon
+              [icon]="['fas', 'xmark']"
+              class="position-absolute top-0 translate-middle badge bg-danger p-1 font-12-px c-pointer c-icon-color"
               role="button"
               (click)="removePostSelectedFile()"
             />
@@ -171,6 +197,21 @@
             />
             <fa-icon [icon]="['fas', 'image']" class="font-20-px" />
             <span>Image</span>
+          </li>
+          <li class="d-flex gap-2 align-items-center" (click)="pdfFile.click()">
+            <!-- ngbTooltip="Comming Soon!"
+            placement="bottom" -->
+            <input
+              type="file"
+              #pdfFile
+              hidden
+              class="d-none"
+              accept="application/pdf"
+              (change)="onPostFileSelect($event)"
+              [disabled]="postData?.meta?.metaimage"
+            />
+            <fa-icon [icon]="['fas', 'file']" class="font-20-px" />
+            <span>File</span>
           </li>
           <li
             class="d-flex gap-2 align-items-center"
@@ -240,9 +281,7 @@
   *ngIf="activeCommunityTab === 2 && communityDetails?.memberList?.length > 0"
 >
   <ng-container *ngIf="communityDetails?.adminIds.includes(+profileId)">
-    <span>
-      Add new admin:
-    </span>
+    <span> Add new admin: </span>
     <div class="input-area h-48-px d-flex align-items-center mb-3">
       <fa-icon [icon]="['fas', 'magnifying-glass']" class="me-1" />
       <input

@@ -14,7 +14,7 @@
     alt="avatar"
   />
 
-  <div class="d-flex flex-column w-100">
+  <div class="d-flex flex-column w-100" (mouseout)="showHoverBox = false">
     <div class="d-flex">
       <div class="w-48-px d-block d-lg-none">
         <img
@@ -29,21 +29,98 @@
         class="profile-area d-center justify-content-between align-items-center h-24-px w-100 ms-2 ms-lg-0"
       >
         <div
-          class="info-area d-flex flex-wrap gap-1 justify-content-start align-items-center"
+          class="info-area d-flex justify-content-start align-items-center position-relative"
         >
           <div
             class="d-flex flex-column h6 m-0"
             *ngIf="post?.Username || post?.FirstName"
+            (mouseover)="showHoverBox = true"
           >
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center cursor c-padding">
               {{ post?.Username || post?.FirstName }}
-              <fa-icon
-                class="ms-2 me-1 font-12-px cursor"
-                [icon]="['fas', 'clock']"
-                [ngbTooltip]="post.postcreationdate | date : ' h:mm a MMM d, y'"
-                placement="bottom"
+              <!-- [ngbTooltip]="post.postcreationdate | date : ' h:mm a MMM d, y'" -->
+              <div>
+                <fa-icon
+                  class="ms-2 me-1 font-12-px cursor"
+                  [icon]="['fas', 'clock']"
+                  placement="bottom"
+                />
+                {{ post?.postcreationdate | dateDay }}
+              </div>
+            </div>
+          </div>
+          <!-- hoverbox -->
+          <div
+            [class.show]="showHoverBox"
+            class="hover-box-container shadow"
+            (mouseover)="showHoverBox = true"
+            *ngIf="(breakpointService?.screen | async).lg.gatherThen"
+          >
+            <div class="d-flex flex-column">
+              <img
+                class="w-48-px h-48-px rounded-4"
+                loading="lazy"
+                data-src="{{ post?.ProfilePicName }}"
+                onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+                alt="avatar"
               />
-              {{ post.postcreationdate | dateDay }}
+              <p class="cursor mt-2">{{ post?.Username || post?.FirstName }}</p>
+              <div
+                class="d-flex"
+                *ngIf="
+                  profileId != post.profileid && tokenService.getCredentials()
+                "
+              >
+                <button>
+                  <a
+                    class="droplist d-flex align-items-center gap-2"
+                    (click)="unsubscribe(post)"
+                  >
+                    <fa-icon [icon]="['fas', 'user-minus']" />
+                    <span>Unsubscribe</span>
+                  </a>
+                </button>
+                <span class="me-2 ms-2">|</span>
+                <button *ngIf="!seeFirstList.includes(post.profileid)">
+                  <a
+                    class="droplist d-flex align-items-center gap-2"
+                    (click)="seeFirst(post?.profileid)"
+                  >
+                    <fa-icon [icon]="['fas', 'eye']" />
+                    <span>See First</span>
+                  </a>
+                </button>
+                <button *ngIf="seeFirstList.includes(post?.profileid)">
+                  <a
+                    class="droplist d-flex alig n-items-center gap-2"
+                    (click)="removeSeeFirstUser(post?.profileid)"
+                  >
+                    <fa-icon [icon]="['fas', 'eye']" />
+                    <span>Stop See First</span>
+                  </a>
+                </button>
+              </div>
+              <!-- <div
+                class="d-flex"
+                *ngIf="
+                  +profileId === post.profileid && tokenService.getCredentials()
+                "
+              >
+                <button (click)="goToViewProfile(post.profileid)">
+                  <a class="droplist d-flex align-items-center gap-2">
+                    <fa-icon [icon]="['fas', 'user']" />
+                    <span>View Profile</span>
+                  </a>
+                </button>
+                <span class="me-2 ms-2">|</span>
+                <button
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="editPost(post)"
+                >
+                  <fa-icon [icon]="['fas', 'pen-to-square']" />
+                  <span>Edit</span>
+                </button>
+              </div> -->
             </div>
           </div>
         </div>
@@ -202,6 +279,9 @@
         loading="lazy"
       ></div>
     </ng-container>
+    <ng-container *ngIf="post?.pdfUrl">
+      <app-pdf-preview [src]="post?.pdfUrl" classes="w-100" />
+    </ng-container>
 
     <div
       class="mt-1 friends-list like-comment-share p-3 d-center flex-lg-wrap gap-3 gap-md-0 justify-content-between"
@@ -256,7 +336,7 @@
         />
 
         <div class="px-3 gap-2 align-items-center w-100">
-          <div class="d-flex gap-2 align-items-center">
+          <div class="d-flex gap-2 align-items-center custom-width-comment">
             <!-- <div
               #parentPostCommentElement
               contenteditable
@@ -326,7 +406,7 @@
           >
             <div
               class="d-flex gap-3 justify-content-sm-end"
-              *ngIf="comment.postId === post.id"
+              *ngIf="comment?.postId === post.id"
             >
               <div class="d-center align-items-baseline">
                 <img
@@ -345,7 +425,7 @@
                     class="d-flex justify-content-between align-items-center w-100"
                   >
                     <h6 class="m-0">
-                      {{ comment.Username }}
+                      {{ comment.Username || comment.FirstName }}
                       <span class="font-12-px text-lowercase">
                         <fa-icon class="ms-2" [icon]="['fas', 'clock']" />
                         {{ comment.createdDate | dateDay }}</span
@@ -393,6 +473,7 @@
                   <ng-container *ngIf="comment?.comment">
                     <p class="mdtxt mb-0" [innerHTML]="comment.comment"></p>
                   </ng-container>
+                  <app-post-meta-data-card [post]="comment" />
 
                   <ng-container *ngIf="comment.imageUrl">
                     <app-img-preview
@@ -530,7 +611,7 @@
                             class="d-flex justify-content-between align-items-center w-100"
                           >
                             <h6 class="m-0 align-items-center">
-                              {{ reply.Username }}
+                              {{ reply.Username || reply.FirstName }}
                               <span class="font-12-px">
                                 <fa-icon
                                   class="ms-2"
@@ -586,6 +667,7 @@
                               [innerHTML]="reply?.comment"
                             ></p>
                           </ng-container>
+                          <app-post-meta-data-card [post]="reply" />
 
                           <ng-container *ngIf="reply.imageUrl">
                             <app-img-preview

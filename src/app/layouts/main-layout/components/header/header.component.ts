@@ -111,7 +111,17 @@ export class HeaderComponent {
   }
 
   reloadPage(): void {
-    // location.reload();
-    // this.router.navigate(['home'])
+    this.router.navigate(['home']).then(() => {
+      location.reload();
+    })
+  }
+
+  redirectToTube(): void {
+    const channelId = +localStorage.getItem('channelId');
+    if (channelId) {
+      window.open(`${environment.tubeUrl}?channelId=${channelId}`, '_blank');
+    } else {
+      window.open(`${environment.tubeUrl}`, '_blank');
+    }
   }
 }

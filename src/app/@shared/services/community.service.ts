@@ -32,12 +32,19 @@ export class CommunityService {
     return this.http.request(req);
   }
 
+  getLocalCommunities(): Observable<Community> {
+    return this.http.get<Community>(`${this.baseUrl}/get-local-community`);
+  }
   getCommunity(id, pageType: string): Observable<Community> {
     return this.http.get<Community>(`${this.baseUrl}/?id=${id}&pageType=${pageType}`);
   }
 
   createCommunity(communityData): Observable<Community> {
     return this.http.post<Community>(`${this.baseUrl}/create`, communityData);
+  }
+
+  editCommunity(communityData, id): Observable<Community> {
+    return this.http.put<Community>(`${this.baseUrl}/edit/${id}`, communityData);
   }
 
   joinCommunity(data: any): Observable<any> {

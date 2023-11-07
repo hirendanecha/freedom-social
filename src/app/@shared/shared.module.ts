@@ -76,6 +76,7 @@ import {
   faUpload,
   faFileUpload,
   faFile,
+  faFilePdf,
 } from '@fortawesome/free-solid-svg-icons';
 import { ClaimTokenModalComponent } from './modals/clai-1776-token-modal/claim-token-modal.component';
 import { WalletLinkComponent } from './modals/wallet-download-modal/1776-wallet.component';
@@ -83,6 +84,9 @@ import { ReplyCommentModalComponent } from './modals/reply-comment-modal/reply-c
 import { PipeModule } from './pipe/pipe.module';
 import { VideoPostModalComponent } from './modals/video-post-modal/video-post-modal.component';
 import { ForgotPasswordComponent } from '../layouts/auth-layout/pages/forgot-password/forgot-password.component';
+import { MentionModule } from 'angular-mentions';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfPreviewComponent } from './components/pdf-preview/pdf-preview.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -101,6 +105,7 @@ const sharedComponents = [
   ReplyCommentModalComponent,
   VideoPostModalComponent,
   ForgotPasswordComponent,
+  PdfPreviewComponent
 ];
 
 const sharedModules = [
@@ -115,7 +120,9 @@ const sharedModules = [
   RouterModule,
   NgxTrimDirectiveModule,
   FontAwesomeModule,
-  PipeModule
+  PipeModule,
+  MentionModule,
+  PdfViewerModule
 ];
 
 @NgModule({
@@ -179,7 +186,9 @@ export class SharedModule {
       faSquareCheck,
       faSquareXmark,
       faFileUpload,
-      faFile
+      faFile,
+      faFilePdf,
+      faDownload
     );
   }
 }

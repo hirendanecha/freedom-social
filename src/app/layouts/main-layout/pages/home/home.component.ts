@@ -21,6 +21,7 @@ import { VideoPostModalComponent } from 'src/app/@shared/modals/video-post-modal
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
 import { environment } from 'src/environments/environment';
 import { SeoService } from 'src/app/@shared/services/seo.service';
+import { AddCommunityModalComponent } from '../communities/add-community-modal/add-community-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -38,7 +39,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     tags: [],
     file: {},
     imageUrl: '',
-    posttype: 'S'
+    posttype: 'S',
+    pdfUrl: ''
   };
 
   communitySlug: string;
@@ -52,7 +54,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   addMemberSearchNgbDropdown: NgbDropdown;
   userList: any = [];
   memberIds: any = [];
-
+  pdfName: string = '';
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -83,17 +85,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.socketService.socket.on(
-      'new-post-added',
-      (res: any) => {
-        this.spinner.hide();
-        this.resetPost();
-      },
-      (error: any) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+
   }
 
   ngAfterViewInit(): void {
@@ -108,25 +100,45 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sharedService.isNotify = true;
       }
     });
+    this.socketService.socket.on(
+      'new-post-added',
+      (res: any) => {
+        this.spinner.hide();
+        this.resetPost();
+      },
+      (error: any) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
   }
 
   ngOnDestroy(): void { }
 
   onPostFileSelect(event: any): void {
     const file = event.target?.files?.[0] || {};
-    if (file?.size < 5120000) {
-      if (file) {
-        this.postData['file'] = file;
-        this.postData['imageUrl'] = URL.createObjectURL(file);
-      }
+    console.log(file)
+    if (file.type.includes("application/pdf")) {
+      this.postData['file'] = file;
+      this.pdfName = file?.name
+      this.postData['imageUrl'] = null;
+      this.postData['streamname'] = null;
     } else {
-      this.toastService.warring('Image is too large!');
+      this.postData['file'] = file;
+      this.postData['imageUrl'] = URL.createObjectURL(file);
+      this.pdfName = null;
+      this.postData['pdfUrl'] = null;
     }
+    // if (file?.size < 5120000) {
+    // } else {
+    //   this.toastService.warring('Image is too large!');
+    // }
   }
 
   removePostSelectedFile(): void {
     this.postData['file'] = null;
-    this.postData['imageUrl'] = '';
+    this.postData['imageUrl'] = null;
+    this.pdfName = null;
   }
 
   getCommunityDetailsBySlug(): void {
@@ -202,24 +214,33 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.postData?.postdescription || this.postData?.file?.name) {
       if (this.postData?.file?.name) {
         this.spinner.show();
-        this.postService.upload(this.postData?.file, this.profileId).subscribe({
+        this.postService.uploadFile(this.postData?.file).subscribe({
           next: (res: any) => {
             this.spinner.hide();
-            if (this.postData.file?.size < 5120000) {
-              if (res?.body?.url) {
+            if (res?.body?.url) {
+              if (this.postData?.file.type.includes("application/pdf")) {
+                this.postData['pdfUrl'] = res?.body?.url;
+                console.log('pdfUrl', res?.body?.url);
+                this.postData['imageUrl'] = null;
+                this.createOrEditPost();
+              } else {
                 this.postData['file'] = null;
                 this.postData['imageUrl'] = res?.body?.url;
+                this.postData['pdfUrl'] = null;
                 this.createOrEditPost();
               }
-            } else {
-              this.toastService.warring('Image is too large!');
             }
+            // if (this.postData.file?.size < 5120000) {
+            // } else {
+            //   this.toastService.warring('Image is too large!');
+            // }
           },
           error: (err) => {
             this.spinner.hide();
           },
         });
       } else {
+        this.spinner.hide()
         this.createOrEditPost();
       }
     }
@@ -227,13 +248,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   createOrEditPost(): void {
     this.postData.tags = getTagUsersFromAnchorTags(this.postMessageTags);
-    if (this.postData?.postdescription || this.postData?.imageUrl) {
-      this.spinner.show();
-      this.socketService.createOrEditPost(this.postData, (data) => {
-        this.spinner.hide();
-        this.toastService.success('Post created successfully.');
-        return data;
-      });
+    if (this.postData?.postdescription || this.postData?.imageUrl || this.postData?.pdfUrl) {
+      // this.spinner.show();
+      console.log('postData', this.postData, this.socketService.socket?.connected);
+      this.toastService.success('Post created successfully.');
+      this.socketService?.createOrEditPost(this.postData);
+      // , (data) => {
+      //   this.spinner.hide();
+      //   console.log(data)
+      //   return data;
+      // });
     }
   }
 
@@ -250,6 +274,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.postData['tags'] = [];
     this.postData['file'] = {};
     this.postData['imageUrl'] = '';
+    this.postData['pdfUrl'] = '';
+    this.pdfName = '';
     this.postMessageInputValue = ' ';
     setTimeout(() => {
       this.postMessageInputValue = '';
@@ -258,10 +284,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onEditPost(post: any): void {
-    console.log('edit-post', post)
+    // console.log('edit-post', post)
     if (post.posttype === 'V') {
       this.openUploadVideoModal(post);
-    } else {
+    } else if (post.pdfUrl) {
+      this.pdfName = post.pdfUrl.split('/')[3]
+      console.log(this.pdfName)
+      this.postData = { ...post };
+      this.postMessageInputValue = this.postData?.postdescription;
+    }
+    else {
       this.postData = { ...post };
       this.postMessageInputValue = this.postData?.postdescription;
     }
@@ -271,6 +303,25 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       behavior: 'smooth',
     });
 
+  }
+
+  editCommunity(data): void {
+    const modalRef = this.modalService.open(AddCommunityModalComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+      size: 'lg'
+    });
+    modalRef.componentInstance.title = 'Edit Community Details';
+    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+    modalRef.componentInstance.confirmButtonLabel = 'Save';
+    modalRef.componentInstance.closeIcon = true;
+    modalRef.componentInstance.data = data;
+    modalRef.result.then(res => {
+      if (res === 'success') {
+        this.router.navigate(['communities']);
+      }
+    });
   }
 
   joinCommunity(id?): void {

@@ -9,6 +9,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { slideUp } from 'src/app/@shared/animations/slideUp';
 import { PostService } from 'src/app/@shared/services/post.service';
@@ -24,7 +25,7 @@ import { SocketService } from 'src/app/@shared/services/socket.service';
 })
 export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('parentComponent') parentComponent: string = '';
-  @Input('id') userId: number = null;
+  // @Input('id') userId: number = null;
   @Input('communityId') communityId: number = null;
   @Output('onEditPost') onEditPost: EventEmitter<any> = new EventEmitter<any>();
 
@@ -36,14 +37,18 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
   editPostIndex: number = null;
   isLoading = false;
   hasMoreData = false;
+  userId: number = null
 
   constructor(
     private spinner: NgxSpinnerService,
     private postService: PostService,
     public sharedService: SharedService,
     private socketService: SocketService,
-    private seeFirstUserService: SeeFirstUserService
+    private seeFirstUserService: SeeFirstUserService,
+    private route: ActivatedRoute
   ) {
+    // console.log(this.route.snapshot.params.id)
+    this.userId = this.route.snapshot.params.id;
     this.profileId = localStorage.getItem('profileId');
   }
 
@@ -99,37 +104,59 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
     if (this.parentComponent === 'HomeComponent') {
       this.loadMore();
     } else {
-      this.isPostLoader = true;
-      if (this.userId) {
-        this.postService.getPostsByProfileId(this.userId).subscribe({
-          next: (res: any) => {
-            if (res?.data) {
-              this.postList = res?.data;
-            }
-          },
-          error: (error) => {
-            console.log(error);
-          },
-          complete: () => {
-            this.isPostLoader = false;
-          },
-        });
-        this.socketService.socket
-      } else {
-        this.postService.getPostsByProfileId(this.profileId).subscribe({
-          next: (res: any) => {
-            if (res?.data) {
-              this.postList = res?.data;
-            }
-          },
-          error: (error) => {
-            console.log(error);
-          },
-          complete: () => {
-            this.isPostLoader = false;
-          },
-        });
+      this.getUsersPosts();
+    }
+  }
+
+  getUsersPosts(): void {
+    this.isPostLoader = true;
+    this.activePage = this.activePage + 1;
+    if (this.userId) {
+      const data = {
+        page: this.activePage,
+        size: 10,
+        profileId: this.userId,
       }
+      this.postService.getPostsByProfileId(data).subscribe({
+        next: (res: any) => {
+          this.isPostLoader = false;
+          this.isLoading = false;
+          if (res?.data.data.length > 0) {
+            this.postList = [...this.postList, ...res?.data.data];
+          } else {
+            this.hasMoreData = false;
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          this.isPostLoader = false;
+        },
+      });
+    } else {
+      const data = {
+        page: this.activePage,
+        size: 10,
+        profileId: this.profileId,
+      }
+      this.postService.getPostsByProfileId(data).subscribe({
+        next: (res: any) => {
+          this.isPostLoader = false;
+          this.isLoading = false;
+          if (res?.data.data.length > 0) {
+            this.postList = [...this.postList, ...res?.data.data];
+          } else {
+            this.hasMoreData = false;
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          this.isPostLoader = false;
+        },
+      });
     }
   }
 
@@ -145,6 +172,18 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
       if (scrollY + windowHeight >= documentHeight - threshold) {
         if (!this.isLoading && !this.hasMoreData) {
           this.loadMore();
+        }
+      }
+    } else {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const thresholdFraction = 0;
+      const threshold = windowHeight * thresholdFraction;
+
+      if (scrollY + windowHeight >= documentHeight - threshold) {
+        if (!this.isLoading && !this.hasMoreData) {
+          this.getUsersPosts();
         }
       }
     }
@@ -164,7 +203,7 @@ export class PostListComponent implements OnInit, OnChanges, AfterViewInit {
         profileId: this.profileId,
         communityId: this.communityId,
         page: this.activePage,
-        size: 15,
+        size: 10,
       })
       .subscribe({
         next: (res: any) => {

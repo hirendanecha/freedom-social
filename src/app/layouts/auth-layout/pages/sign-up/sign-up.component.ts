@@ -5,11 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { debounceTime, fromEvent } from 'rxjs';
@@ -64,8 +60,8 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     private customerService: CustomerService,
     private router: Router,
     private uploadService: UploadFilesService,
-    private toastService: ToastService,
-  ) { }
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.getAllCountries();
@@ -94,14 +90,14 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     this.uploadService.upload(file, id, defaultType).subscribe({
       next: (res: any) => {
         this.spinner.hide();
-        if (file?.size < 5120000) {
-          if (res.body) {
-            this.profilePic = res?.body?.url;
-            this.creatProfile(this.registerForm.value);
-          }
-        } else {
-          this.toastService.warring('Image is too large!');
+        if (res.body) {
+          this.profilePic = res?.body?.url;
+          this.creatProfile(this.registerForm.value);
         }
+        // if (file?.size < 5120000) {
+        // } else {
+        //   this.toastService.warring('Image is too large!');
+        // }
       },
       error: (err) => {
         this.spinner.hide();
@@ -146,11 +142,15 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   validatepassword(): boolean {
     const pattern =
-      '(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[a-z])(?=.*[0-9].*[0-9]).{8}';
+      '[a-zA-Z0-9]{5,}';
+    // const pattern =
+    //   '(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[a-z])(?=.*[0-9].*[0-9]).{8}';
 
     if (!this.registerForm.get('Password').value.match(pattern)) {
       this.msg =
-        'Password must be a minimum of 8 characters and include one uppercase letter, one lowercase letter, and one special character';
+        'Password must be a minimum of 5 characters';
+      // this.msg =
+      //   'Password must be a minimum of 8 characters and include one uppercase letter, one lowercase letter, and one special character';
       this.scrollTop();
       return false;
     }
@@ -168,9 +168,17 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-
     this.msg = '';
-    if (this.registerForm.valid && this.profileImg?.file?.name && this.registerForm.get('TermAndPolicy').value === true) {
+    if (!this.profileImg?.file?.name) {
+      this.msg = 'Please upload profile picture';
+      this.scrollTop();
+      return false;
+    }
+    if (
+      this.registerForm.valid &&
+      this.profileImg?.file?.name &&
+      this.registerForm.get('TermAndPolicy').value === true
+    ) {
       if (!this.validatepassword()) {
         return;
       }
@@ -214,7 +222,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       next: (result) => {
         this.spinner.hide();
         this.allCountryData = result;
-        this.registerForm.get('Zip').enable();
+        this.registerForm.get('Zip').enable();  
       },
       error: (error) => {
         this.spinner.hide();
@@ -237,7 +245,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
             this.registerForm.patchValue({
               State: zipData.state,
               City: zipData.city,
-              County: zipData.places
+              County: zipData.places,
             });
           } else {
             this.registerForm.get('State').disable();
