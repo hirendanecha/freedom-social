@@ -85,17 +85,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.socketService.socket.on(
-      'new-post-added',
-      (res: any) => {
-        this.spinner.hide();
-        this.resetPost();
-      },
-      (error: any) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+
   }
 
   ngAfterViewInit(): void {
@@ -110,6 +100,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sharedService.isNotify = true;
       }
     });
+    this.socketService.socket.on(
+      'new-post-added',
+      (res: any) => {
+        this.spinner.hide();
+        this.resetPost();
+      },
+      (error: any) => {
+        this.spinner.hide();
+        console.log(error);
+      }
+    );
   }
 
   ngOnDestroy(): void { }
@@ -136,8 +137,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   removePostSelectedFile(): void {
     this.postData['file'] = null;
-    this.postData['imageUrl'] = '';
-    this.pdfName = '';
+    this.postData['imageUrl'] = null;
+    this.pdfName = null;
   }
 
   getCommunityDetailsBySlug(): void {
@@ -220,12 +221,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
               if (this.postData?.file.type.includes("application/pdf")) {
                 this.postData['pdfUrl'] = res?.body?.url;
                 console.log('pdfUrl', res?.body?.url);
-                this.postData['imageUrl'] = ''
+                this.postData['imageUrl'] = null;
                 this.createOrEditPost();
               } else {
                 this.postData['file'] = null;
                 this.postData['imageUrl'] = res?.body?.url;
-                this.postData['pdfUrl'] = ''
+                this.postData['pdfUrl'] = null;
                 this.createOrEditPost();
               }
             }
@@ -239,6 +240,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           },
         });
       } else {
+        this.spinner.hide()
         this.createOrEditPost();
       }
     }
@@ -247,12 +249,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   createOrEditPost(): void {
     this.postData.tags = getTagUsersFromAnchorTags(this.postMessageTags);
     if (this.postData?.postdescription || this.postData?.imageUrl || this.postData?.pdfUrl) {
-      this.spinner.show();
-      this.socketService.createOrEditPost(this.postData, (data) => {
-        this.spinner.hide();
-        this.toastService.success('Post created successfully.');
-        return data;
-      });
+      // this.spinner.show();
+      console.log('postData', this.postData, this.socketService.socket?.connected);
+      this.toastService.success('Post created successfully.');
+      this.socketService?.createOrEditPost(this.postData);
+      // , (data) => {
+      //   this.spinner.hide();
+      //   console.log(data)
+      //   return data;
+      // });
     }
   }
 
@@ -300,7 +305,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  editCommunity(data):void{
+  editCommunity(data): void {
     const modalRef = this.modalService.open(AddCommunityModalComponent, {
       centered: true,
       backdrop: 'static',

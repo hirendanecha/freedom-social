@@ -179,12 +179,14 @@ export class VideoPostModalComponent implements AfterViewInit {
     ) {
       console.log('post-data', this.postData);
       this.activeModal.close();
-      this.socketService.createOrEditPost(this.postData, (data) => {
-        this.spinner.hide();
-        this.toastService.success('Post created successfully.');
-        this.postData = null;
-        return data;
-      });
+      this.socketService.createOrEditPost(this.postData
+      //   , (data) => {
+      //   this.spinner.hide();
+      //   this.toastService.success('Post created successfully.');
+      //   this.postData = null;
+      //   return data;
+      // }
+      );
       // this.postService.createVideoPost(this.postData).subscribe({
       //   next: (res: any) => {
       // this.spinner.hide()
