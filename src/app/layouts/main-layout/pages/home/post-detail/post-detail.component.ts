@@ -52,7 +52,7 @@ export class PostDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.addTag();
   }
 
   getPostsByPostId(): void {
@@ -66,8 +66,6 @@ export class PostDetailComponent implements OnInit {
             this.post = res?.[0];
             const html = document.createElement('div');
             html.innerHTML = this.post?.postdescription || this.post?.metadescription;
-            this.addTag();
-
             // const data = {
             //   title: this.post?.title,
             //   url: `${environment.webUrl}post/${this.postId}`,
