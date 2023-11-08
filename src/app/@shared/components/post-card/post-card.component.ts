@@ -570,12 +570,9 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         );
       } else {
         let index = this.commentList.findIndex((obj) => obj?.id === data[0]?.id);
-        if (index !== -1) {
+        if (!this.commentList[index]) {
           this.commentList.push(data[0]);
         }
-        // if (!this.commentList[index]) {
-        //   this.commentList.push(data[0]);
-        // }
         // this.viewComments(data[0]?.postId);
       }
     });
