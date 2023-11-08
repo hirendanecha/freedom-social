@@ -68,6 +68,14 @@ export class HeaderComponent {
     });
   }
 
+  openProfileMobileMenuModal(): void{
+    this.offcanvasService.open(ProfileMenusModalComponent, { position: 'start', panelClass: 'w-300-px' });
+  }
+
+  openNotificationsMobileModal(): void{
+    this.offcanvasService.open(NotificationsModalComponent, { position: 'end', panelClass: 'w-300-px' });
+  }
+
   getUserList(): void {
     this.customerService.getProfileList(this.searchText).subscribe({
       next: (res: any) => {

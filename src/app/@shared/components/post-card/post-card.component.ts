@@ -402,7 +402,6 @@ export class PostCardComponent implements OnInit, AfterViewInit {
             },
             error: (err) => {
               this.spinner.hide();
-              this.commentMessageInputValue = null;
             },
           });
       } else {
@@ -526,7 +525,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
           this.commentList.map((ele: any) =>
             res.filter((ele1) => {
               if (ele.id === ele1.parentCommentId) {
-                let index = ele?.['replyCommnetsList'].findIndex(
+                let index = ele?.['replyCommnetsList']?.findIndex(
                   (obj) => obj?.id === res[0]?.id
                 );
                 if (index !== -1) {
@@ -557,7 +556,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         this.commentList.map((ele: any) =>
           data.filter((ele1) => {
             if (ele.id === ele1.parentCommentId) {
-              let index = ele?.['replyCommnetsList'].findIndex(
+              let index = ele?.['replyCommnetsList']?.findIndex(
                 (obj) => obj.id === data[0].id
               );
               if (!ele?.['replyCommnetsList'][index]) {
