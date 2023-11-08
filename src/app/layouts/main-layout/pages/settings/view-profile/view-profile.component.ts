@@ -147,7 +147,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   viewUserPost(id) {
-    this.router.navigate([`post/${id}`]);
+    // this.router.navigate([`post/${id}`]);
+   window.open(`post/${id}`, '_blank');
   }
 
   downloadPdf(pdf): void {

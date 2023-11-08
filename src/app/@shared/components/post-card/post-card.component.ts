@@ -481,7 +481,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       playbackRateControls: false,
       aspectratio: '16:9',
       autoPause: {
-        viewability: true,
+        viewability: false,
       },
       controls: true,
     };
