@@ -40,11 +40,15 @@ export class PostDetailComponent implements OnInit {
     const html = document.createElement('div');
     html.innerHTML = this.post?.postdescription || this.post?.metadescription;
     this.metaService.updateTag({ property: 'og:description', content: html.textContent });
-    this.metaService.addTag({ name: 'description', content: html.textContent });
+    this.metaService.updateTag({ property: 'twitter:description', content: html.textContent });
+    this.metaService.updateTag({ name: 'description', content: html.textContent });
     this.metaService.addTag({ name: 'robots', content: 'index,follow' });
     this.metaService.updateTag({ property: 'og:title', content: this.post?.title });
+    this.metaService.updateTag({ property: 'twitter:title', content: this.post?.title });
     this.metaService.updateTag({ property: 'og:url', content: window.location.href });
+    this.metaService.updateTag({ property: 'twitter:url', content: window.location.href });
     this.metaService.updateTag({ property: 'og:image', content: (this.post?.imageUrl || this.post?.metaimage || this.post?.thumbfilename) });
+    this.metaService.updateTag({ property: 'twitter:image', content: (this.post?.imageUrl || this.post?.metaimage || this.post?.thumbfilename) });
   }
 
   ngOnInit(): void {
