@@ -93,13 +93,23 @@
             >Type or paste the Title or Description (no links)
             <span class="text-danger">*</span></label
           >
-          <textarea
+
+          <app-tag-user-input
+          id="postdescription"
+          placeholder="What's going on?"
+          [isShowMetaPreview]="true"
+          [isAllowTagUser]="false"
+          [value]="tagInputDefaultData"
+          (onDataChange)="onTagUserInputDescription($event, 'postdescription')"
+        />
+
+          <!-- <textarea
             class="input-area"
             id="postdescription"
             formControlName="postdescription"
             placeholder="What's going on?"
             trim="blur"
-          ></textarea>
+          ></textarea> -->
 
           <div
             *ngIf="isFormSubmittedAndError('postdescription')"

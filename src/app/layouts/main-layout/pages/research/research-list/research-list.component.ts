@@ -37,7 +37,7 @@ export class ResearchListComponent {
   researchForm = new FormGroup({
     posttoprofileid: new FormControl('', [Validators.required]),
     textpostdesc: new FormControl(''),
-    postdescription: new FormControl('', [Validators.required]),
+    postdescription: new FormControl(''),
     keywords: new FormControl(''),
     posttype: new FormControl('R'),
     meta: new FormControl(null),
@@ -101,6 +101,13 @@ export class ResearchListComponent {
   onTagUserInputChangeEvent(data: any, ctrlName: string): void {
     this.researchForm.get(ctrlName).setValue(data?.html);
     this.researchForm.get('meta').setValue(data?.meta || {});
+    // console.log('data : ', data);
+    // this.postData.postdescription = data?.html;
+    // this.postMessageTags = data?.tags;
+  }
+  onTagUserInputDescription(data: any, ctrlName: string): void {
+    this.researchForm.get(ctrlName).setValue(data?.html);
+    this.researchForm.get('postdescription').setValue(data?.html);
     console.log('data : ', data);
 
     // this.postData.postdescription = data?.html;
