@@ -556,13 +556,17 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         this.commentList.map((ele: any) =>
           data.filter((ele1) => {
             if (ele.id === ele1.parentCommentId) {
-              let index = ele?.['replyCommnetsList']?.findIndex(
-                (obj) => obj.id === data[0].id
-              );
-              if (!ele?.['replyCommnetsList'][index]) {
-                ele?.['replyCommnetsList'].push(ele1);
-                return ele;
-              } else {
+              if (ele?.replyCommnetsList) {
+                let index = ele?.['replyCommnetsList']?.findIndex(
+                  (obj) => obj.id === data[0].id
+                  );
+                  if (!ele?.['replyCommnetsList'][index]) {
+                    ele?.['replyCommnetsList'].push(ele1);
+                    return ele;
+                  } else {
+                    return ele;
+                  }
+              } else{
                 return ele;
               }
             }
@@ -573,7 +577,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         if (!this.commentList[index]) {
           this.commentList.push(data[0]);
         }
-        // this.viewComments(data[0]?.postId);
+        this.viewComments(data[0]?.postId);
       }
     });
   }
