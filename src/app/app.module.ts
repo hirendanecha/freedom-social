@@ -3,7 +3,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './@shared/shared.module';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Meta } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastsContainerComponent } from './@shared/components/toasts-container/toasts-container.component';
 import { AuthenticationGuard } from './@shared/guards/authentication.guard';
@@ -17,7 +17,7 @@ import { MetafrenzyModule } from 'ngx-metafrenzy';
     ToastsContainerComponent,
     LandingPageComponent
   ],
-  providers: [AuthenticationGuard, CookieService],
+  providers: [AuthenticationGuard, CookieService, Meta],
   bootstrap: [AppComponent],
   imports: [
     AppRoutingModule,

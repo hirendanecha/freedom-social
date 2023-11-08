@@ -2,8 +2,8 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { MetafrenzyService } from 'ngx-metafrenzy';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostService } from 'src/app/@shared/services/post.service';
 import { SeoService } from 'src/app/@shared/services/seo.service';
@@ -15,7 +15,6 @@ import { environment } from 'src/environments/environment';
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.scss'],
 })
-// providers: [MetafrenzyService]
 export class PostDetailComponent implements OnInit {
 
   postId: string = '';
@@ -27,16 +26,28 @@ export class PostDetailComponent implements OnInit {
     public sharedService: SharedService,
     private route: ActivatedRoute,
     private seoService: SeoService,
-    // private metaFrenzyService: MetafrenzyService,
+    private metaService: Meta
   ) {
     this.postId = this.route.snapshot.paramMap.get('id');
-    console.log('route', this.route)
+    console.log('route', this.route);
+    if (this.postId) {
+      this.getPostsByPostId();
+      this.addTag();
+    }
+  }
+
+
+  addTag() {
+    const html = document.createElement('div');
+    html.innerHTML = this.post?.postdescription || this.post?.metadescription;
+    this.metaService.addTag({ name: 'description', content: html.textContent });
+    this.metaService.addTag({ name: 'robots', content: 'index,follow' });
+    this.metaService.addTag({ property: 'og:title', content: this.post?.title });
+    this.metaService.addTag({ property: 'og:image', content: (this.post?.imageUrl || this.post?.metaimage) });
   }
 
   ngOnInit(): void {
-    if (this.postId) {
-      this.getPostsByPostId();
-    }
+
   }
 
   getPostsByPostId(): void {
