@@ -32,7 +32,6 @@ export class PostDetailComponent implements OnInit {
     console.log('route', this.route);
     if (this.postId) {
       this.getPostsByPostId();
-      this.addTag();
     }
   }
 
@@ -40,10 +39,12 @@ export class PostDetailComponent implements OnInit {
   addTag() {
     const html = document.createElement('div');
     html.innerHTML = this.post?.postdescription || this.post?.metadescription;
+    this.metaService.updateTag({ property: 'og:description', content: html.textContent });
     this.metaService.addTag({ name: 'description', content: html.textContent });
     this.metaService.addTag({ name: 'robots', content: 'index,follow' });
-    this.metaService.addTag({ property: 'og:title', content: this.post?.title });
-    this.metaService.addTag({ property: 'og:image', content: (this.post?.imageUrl || this.post?.metaimage) });
+    this.metaService.updateTag({ property: 'og:title', content: this.post?.title });
+    this.metaService.updateTag({ property: 'og:url', content: window.location.href });
+    this.metaService.updateTag({ property: 'og:image', content: (this.post?.imageUrl || this.post?.metaimage || this.post?.thumbfilename) });
   }
 
   ngOnInit(): void {
@@ -61,6 +62,8 @@ export class PostDetailComponent implements OnInit {
             this.post = res?.[0];
             const html = document.createElement('div');
             html.innerHTML = this.post?.postdescription || this.post?.metadescription;
+            this.addTag();
+
             // const data = {
             //   title: this.post?.title,
             //   url: `${environment.webUrl}post/${this.postId}`,
