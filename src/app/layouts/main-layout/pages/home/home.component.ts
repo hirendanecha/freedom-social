@@ -55,6 +55,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   userList: any = [];
   memberIds: any = [];
   pdfName: string = '';
+  notificationId: number;
   constructor(
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
@@ -97,9 +98,25 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.socketService.socket.on('notification', (data: any) => {
       console.log(data)
       if (data) {
+        this.notificationId = data.id
         this.sharedService.isNotify = true;
+        if (this.notificationId) {
+          this.customerService.getNotification(this.notificationId).subscribe({
+            next: (res) => {
+              console.log(res);
+              localStorage.setItem('isRead', res.data[0]?.isRead)
+            },
+            error: (error) => {
+              console.log(error);
+            }
+          })
+        }
       }
     });
+    const isRead = localStorage.getItem('isRead');
+    if (isRead === 'N') {
+      this.sharedService.isNotify = true;
+    }
     this.socketService.socket.on(
       'new-post-added',
       (res: any) => {

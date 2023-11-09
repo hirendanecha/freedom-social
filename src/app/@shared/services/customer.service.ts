@@ -65,7 +65,7 @@ export class CustomerService {
     const token = localStorage.getItem("auth-token");
     return this.http.put(`${this.baseUrl}/profile/${id}`, customer, {
       headers: {
-        'Authorization': 'Bearer '+ token
+        'Authorization': 'Bearer ' + token
       }
     });
   }
@@ -95,6 +95,12 @@ export class CustomerService {
   logout(): Observable<any> {
     return this.http.get(
       `${this.baseUrl}/logout`
+    );
+  }
+
+  getNotification(id): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/notification/${id}`
     );
   }
 }

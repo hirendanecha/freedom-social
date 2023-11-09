@@ -10,7 +10,7 @@ export class SharedService {
   isDark = true;
   userData: any = {};
   notificationList: any = [];
-  isNotify = false;
+  isNotify: boolean;
 
   constructor(
     public modalService: NgbModal,
@@ -82,6 +82,7 @@ export class SharedService {
     const id = localStorage.getItem('profileId');
     this.customerService.getNotificationList(Number(id)).subscribe({
       next: (res: any) => {
+        localStorage.setItem('isRead', 'Y');
         this.isNotify = false;
         this.notificationList = res?.data;
       },
