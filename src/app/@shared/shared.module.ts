@@ -85,8 +85,9 @@ import { PipeModule } from './pipe/pipe.module';
 import { VideoPostModalComponent } from './modals/video-post-modal/video-post-modal.component';
 import { ForgotPasswordComponent } from '../layouts/auth-layout/pages/forgot-password/forgot-password.component';
 import { MentionModule } from 'angular-mentions';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+// import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfPreviewComponent } from './components/pdf-preview/pdf-preview.component';
+import { HomeTestComponent } from '../layouts/auth-layout/pages/home-test/home-test.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -105,7 +106,8 @@ const sharedComponents = [
   ReplyCommentModalComponent,
   VideoPostModalComponent,
   ForgotPasswordComponent,
-  PdfPreviewComponent
+  PdfPreviewComponent,
+  HomeTestComponent
 ];
 
 const sharedModules = [
@@ -122,7 +124,7 @@ const sharedModules = [
   FontAwesomeModule,
   PipeModule,
   MentionModule,
-  PdfViewerModule
+  // PdfViewerModule
 ];
 
 @NgModule({

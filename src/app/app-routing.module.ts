@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from './layouts/auth-layout/pages/landing-page/landing-page.component';
+import { HomeTestComponent } from './layouts/auth-layout/pages/home-test/home-test.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LandingPageComponent,
+    component: HomeTestComponent,
     pathMatch: 'full',
   },
   {
@@ -29,7 +30,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    initialNavigation: 'enabledBlocking'
+})],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

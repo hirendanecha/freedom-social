@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/freedom",
+            "outputPath": "dist/freedom/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,7 +72,7 @@
                 }
               ]
             },
-            "dev": {
+            "development": {
               "optimization": false,
               "aot": false,
               "outputHashing": "all",
@@ -135,7 +135,7 @@
               "serviceWorker": false
             }
           },
-          "defaultConfiguration": "dev"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -149,7 +149,7 @@
               "hmr": false
             },
             "development": {
-              "browserTarget": "freedom:build:dev",
+              "browserTarget": "freedom:build:development",
               "hmr": false
             },
             "test": {
@@ -180,6 +180,86 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/freedom/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "buildOptimizer": true,
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": true,
+              "extractLicenses": true,
+              "vendorChunk": true
+            },
+            "development": {
+              "buildOptimizer": false,
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ],
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            },
+            "test": {
+              "buildOptimizer": false,
+              "outputHashing": "media",
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "freedom:build:development",
+              "serverTarget": "freedom:server:development"
+            },
+            "production": {
+              "browserTarget": "freedom:build:production",
+              "serverTarget": "freedom:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "freedom:build:production",
+              "serverTarget": "freedom:server:production"
+            },
+            "development": {
+              "browserTarget": "freedom:build:development",
+              "serverTarget": "freedom:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

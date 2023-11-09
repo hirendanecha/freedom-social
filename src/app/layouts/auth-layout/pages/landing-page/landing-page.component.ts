@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
 import { TokenStorageService } from 'src/app/@shared/services/token-storage.service';
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-landing-page',
@@ -19,7 +21,8 @@ export class LandingPageComponent {
     private el: ElementRef,
     private customerService: CustomerService,
     private tokenStorageService: TokenStorageService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     const path = this.route.snapshot.routeConfig.path;
     if (path === 'logout') {
@@ -30,8 +33,9 @@ export class LandingPageComponent {
   }
 
   openLoginPage(): void {
-    this.closeMenu();
-    this.router.navigate(['/login']);
+      console.log('test');  
+      this.closeMenu();
+      this.router.navigate(['/login']);
   }
   openSignPage(): void {
     this.closeMenu();

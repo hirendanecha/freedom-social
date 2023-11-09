@@ -10,6 +10,8 @@ import { AuthenticationGuard } from './@shared/guards/authentication.guard';
 import { CookieService } from 'ngx-cookie-service';
 import { LandingPageComponent } from './layouts/auth-layout/pages/landing-page/landing-page.component';
 import { MetafrenzyModule } from 'ngx-metafrenzy';
+import {provideClientHydration} from '@angular/platform-browser';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +19,7 @@ import { MetafrenzyModule } from 'ngx-metafrenzy';
     ToastsContainerComponent,
     LandingPageComponent
   ],
-  providers: [AuthenticationGuard, CookieService],
+  providers: [AuthenticationGuard, CookieService, provideClientHydration()],
   bootstrap: [AppComponent],
   imports: [
     AppRoutingModule,
