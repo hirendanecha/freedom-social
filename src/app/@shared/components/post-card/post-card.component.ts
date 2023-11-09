@@ -581,4 +581,12 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  downloadPdf(pdf): void {
+    const pdfLink = document.createElement('a');
+    pdfLink.href = pdf;
+    // window.open(pdf);
+    // pdfLink.download = "TestFile.pdf";
+    pdfLink.click();
+  }
 }

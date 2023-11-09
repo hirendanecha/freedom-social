@@ -25,6 +25,28 @@
       <li>
         <a
           class="d-flex gap-4"
+          routerLink="/home"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <fa-icon [icon]="['fas', 'home']" class="font-24-px" />
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="d-flex gap-4"
+          routerLink="/notifications"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <fa-icon [icon]="['fas', 'bell']" class="font-24-px" />
+          <span>Notifications</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="d-flex gap-4"
           routerLink="/communities"
           routerLinkActive="active"
           (click)="closeSidebar()"

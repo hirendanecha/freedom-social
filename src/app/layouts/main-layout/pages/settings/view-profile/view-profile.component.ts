@@ -154,8 +154,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   downloadPdf(pdf): void {
     const pdfLink = document.createElement('a');
     pdfLink.href = pdf;
-    window.open(pdf);
-    pdfLink.download = "TestFile.pdf";
+    // window.open(pdf);
+    // pdfLink.download = "TestFile.pdf";
     pdfLink.click();
   }
 }
