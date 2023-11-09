@@ -122,7 +122,7 @@ const sharedModules = [
   FontAwesomeModule,
   PipeModule,
   MentionModule,
-  PdfViewerModule
+  // PdfViewerModule
 ];
 
 @NgModule({

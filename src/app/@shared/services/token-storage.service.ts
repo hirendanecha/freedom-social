@@ -21,39 +21,39 @@ export class TokenStorageService {
     ) { }
 
   signOut(): void {
-    window.sessionStorage.clear();
-    const theme = window.localStorage.getItem('theme');
-    window.localStorage.clear();
+    sessionStorage.clear();
+    const theme = localStorage.getItem('theme');
+    localStorage.clear();
     this.cookieService.delete('auth-user');
     this.cookieService.deleteAll('/');
-    window.localStorage.setItem('theme', theme);
+    localStorage.setItem('theme', theme);
     this.toastService.success('Logout successfully');
     this.router.navigate(['/']);
   }
 
   public saveToken(token: string): void {
-    // window.sessionStorage.removeItem(TOKEN_KEY);
-    // window.localStorage.setItem(TOKEN_KEY, token);
-    window.localStorage.setItem(TOKEN_KEY, token);
+    // sessionStorage.removeItem(TOKEN_KEY);
+    // localStorage.setItem(TOKEN_KEY, token);
+    localStorage.setItem(TOKEN_KEY, token);
   }
 
   public getToken(): string {
-    // return window.localStorage.getItem(TOKEN_KEY);
-    return window.localStorage.getItem(TOKEN_KEY);
+    // return localStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem(TOKEN_KEY);
   }
 
   public saveUser(user: any): void {
     const userStr = JSON.stringify(user);
 
-    // window.sessionStorage.removeItem(USER_KEY);
-    window.localStorage.removeItem(USER_KEY);
+    // sessionStorage.removeItem(USER_KEY);
+    localStorage.removeItem(USER_KEY);
 
-    window.localStorage.setItem(USER_KEY, userStr);
-    // window.localStorage.setItem(USER_KEY, userStr);
+    localStorage.setItem(USER_KEY, userStr);
+    // localStorage.setItem(USER_KEY, userStr);
   }
 
   public getUser(): any {
-    return JSON.parse(window.localStorage.getItem(USER_KEY));
+    return JSON.parse(localStorage.getItem(USER_KEY));
   }
 
   public getCredentials(): any {
