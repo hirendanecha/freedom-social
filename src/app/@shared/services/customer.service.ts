@@ -62,7 +62,12 @@ export class CustomerService {
   }
 
   updateProfile(id, customer: Customer): Observable<Object> {
-    return this.http.put(`${this.baseUrl}/profile/${id}`, customer);
+    const token = localStorage.getItem("auth-token");
+    return this.http.put(`${this.baseUrl}/profile/${id}`, customer, {
+      headers: {
+        'Authorization': 'Bearer '+ token
+      }
+    });
   }
 
   getProfileList(searchText): Observable<object> {
