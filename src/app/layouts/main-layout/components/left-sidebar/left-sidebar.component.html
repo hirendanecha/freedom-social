@@ -22,7 +22,7 @@
       </div>
     </div>
     <ul class="profile-link m-0 mt-5 p-0 border-bottom-0">
-      <li>
+      <li class="ms-2">
         <a
           class="d-flex gap-4"
           routerLink="/home"
@@ -33,13 +33,18 @@
           <span>Home</span>
         </a>
       </li>
-      <li>
+      <li class="ms-2">
         <a
           class="d-flex gap-4"
           routerLink="/notifications"
           routerLinkActive="active"
-          (click)="closeSidebar()"
-        >
+          (click)="notificationNavigation()"
+          >
+          <!-- (click)="closeSidebar()" -->
+        <span
+        *ngIf="sharedService.isNotify"
+        class="abs-area position-absolute d-center smtxt"
+        ></span>
           <fa-icon [icon]="['fas', 'bell']" class="font-24-px" />
           <span>Notifications</span>
         </a>

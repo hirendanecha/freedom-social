@@ -65,7 +65,7 @@
         </ng-container>
 
         <ng-template #elseJoinCommunity>
-          <button class="btn btn-sm btn-success" (click)="joinCommunity()">
+          <button class="btn btn-sm btn-success" (click)="joinCommunity()" [disabled]="buttonClicked">
             Join {{ communityDetails?.pageType }}
           </button>
         </ng-template>
