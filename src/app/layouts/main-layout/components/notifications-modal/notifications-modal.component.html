@@ -26,7 +26,7 @@
                 *ngIf="notification?.isRead === 'N'"
                 class="unread-notification smtxt"
               ></span>
-              <span class="font-12-px">
+              <span class="font-12-px text-lowercase">
                 <fa-icon class="ms-2" [icon]="['fas', 'clock']" />
                 {{ notification?.createDate | dateDay }}</span
               >
