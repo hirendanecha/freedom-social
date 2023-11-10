@@ -270,6 +270,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.postData?.imageUrl ||
       this.postData?.pdfUrl
     ) {
+      if (!this.postData.meta.metalink) {
+        this.postData.metalink = null
+        this.postData.title = null
+        this.postData.metaimage = null
+        this.postData.metadescription = null
+        console.log(this.postData);
+        
+      }
+      
       // this.spinner.show();
       console.log(
         'postData',
