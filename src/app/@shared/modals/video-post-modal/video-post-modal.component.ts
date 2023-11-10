@@ -228,4 +228,10 @@ export class VideoPostModalComponent implements AfterViewInit {
   onChangeTag(event) {
     this.postData.keywords = event.target.value.replaceAll(' ', ',');
   }
+
+  stopUploadVideo(){
+    // this.postData = null
+    this.activeModal.close()
+    location.reload();
+  }
 }
