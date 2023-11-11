@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/@shared/services/toast.service';
 import { CustomerService } from 'src/app/@shared/services/customer.service';
+import { SharedService } from 'src/app/@shared/services/shared.service';
 
 @Component({
   selector: 'app-notification',
@@ -16,7 +17,8 @@ export class NotificationsComponent {
     private customerService: CustomerService,
     private spinner: NgxSpinnerService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +33,10 @@ export class NotificationsComponent {
         next: (res: any) => {
           this.spinner.hide();
           this.notificationList = res?.data;
+          if (!this.notificationList.length) {
+            localStorage.setItem('isRead', 'Y');
+            this.sharedService.isNotify = false;
+          }
         },
         error:
           (error) => {
