@@ -68,12 +68,15 @@ export class ProfileMenusModalComponent {
 
   goToSetting() {
     const userId = localStorage.getItem('user_id');
-    this.router.navigate([`settings/edit-profile/${userId}`]);
+    // this.router.navigate([`settings/edit-profile/${userId}`]);
+    window.open(`settings/edit-profile/${userId}`, '_blank')
+    
   }
-
+  
   goToViewProfile() {
-    const profileId = localStorage.getItem('profileId');
-    this.router.navigate([`settings/view-profile/${profileId}`]);
+    const profileId = +localStorage.getItem('profileId');
+    window.open(`settings/view-profile/${profileId}`, '_blank')
+    // this.router.navigate([`settings/view-profile/${profileId}`]);
   }
 
   forgotPasswordOpen() {

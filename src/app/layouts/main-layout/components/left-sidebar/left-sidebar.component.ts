@@ -29,7 +29,7 @@ export class LeftSidebarComponent implements OnInit {
     isShowRightSideBar: true,
     isShowResearchLeftSideBar: false,
   };
-
+  profileId: number
   constructor(
     private modalService: NgbModal,
     public sharedService: SharedService,
@@ -39,8 +39,9 @@ export class LeftSidebarComponent implements OnInit {
     private offcanvasService: NgbOffcanvas,
     public tokenService: TokenStorageService,
   ) {
-     this.isRead = localStorage.getItem('isRead');
-   }
+    this.profileId = +localStorage.getItem('profileId');
+    this.isRead = localStorage.getItem('isRead');
+  }
 
   ngOnInit(): void {
     this.getUserDetails();
@@ -88,7 +89,7 @@ export class LeftSidebarComponent implements OnInit {
     }
   }
 
-  notificationNavigation(){
+  notificationNavigation() {
     this.closeSidebar();
     if (this.isRead === 'N') {
       localStorage.setItem('isRead', 'Y');
