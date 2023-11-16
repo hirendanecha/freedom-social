@@ -9,7 +9,7 @@ export class SocketService {
   public socket: any = io(environment.socketUrl, { transports: ["websocket"] });
 
   constructor() {
-    this.socket = io(environment.socketUrl,  { transports: ["websocket"] });
+    this.socket = io(environment.socketUrl, { transports: ["websocket"] });
   }
 
   // socket for posts //
@@ -17,15 +17,15 @@ export class SocketService {
     this.socket.emit('get-new-post', params, callback);
   }
 
-  createOrEditPost({file, ...params}) {
+  createOrEditPost({ file, ...params }) {
     console.log(this.socket.connected, params);
-    if (this.socket.connected){
+    if (this.socket.connected) {
       this.socket.emit('create-new-post', params);
-    } else{
+    } else {
       this.socket.connect();
       this.socket.emit('create-new-post', params);
     }
-    
+
   }
 
   editPost(params, callback: (post: any) => void) {
@@ -63,5 +63,9 @@ export class SocketService {
 
   commentOnPost(params, callback: (data: any) => void) {
     this.socket.emit('comments-on-post', params, callback);
+  }
+
+  deletePost(params, callback: (data: any) => void) {
+    this.socket.emit('deletePost', params, callback);
   }
 }

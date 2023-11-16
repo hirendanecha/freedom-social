@@ -101,6 +101,8 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   removeSeeFirstUser(id: number): void {
     this.seeFirstUserService.remove(Number(this.profileId), id).subscribe({
       next: (res) => {
+        this.seeFirstList.pop(id);
+        console.log(this.seeFirstList)
         this.toastService.warring('See first stop');
         this.getPostList?.emit();
       },
@@ -195,6 +197,11 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       'Are you sure want to delete this post?';
     modalRef.result.then((res) => {
       if (res === 'success') {
+        // this.socketService.deletePost({ id: post?.id }, data => {
+        //   console.log('post-data', data)
+        // });
+        // this.getPostList.emit();
+        // this.toastService.success('Post deleted successfully');
         // post['hide'] = true;
         this.postService.deletePost(post.id).subscribe({
           next: (res: any) => {
@@ -559,14 +566,14 @@ export class PostCardComponent implements OnInit, AfterViewInit {
               if (ele?.replyCommnetsList) {
                 let index = ele?.['replyCommnetsList']?.findIndex(
                   (obj) => obj.id === data[0].id
-                  );
-                  if (!ele?.['replyCommnetsList'][index]) {
-                    ele?.['replyCommnetsList'].push(ele1);
-                    return ele;
-                  } else {
-                    return ele;
-                  }
-              } else{
+                );
+                if (!ele?.['replyCommnetsList'][index]) {
+                  ele?.['replyCommnetsList'].push(ele1);
+                  return ele;
+                } else {
+                  return ele;
+                }
+              } else {
                 return ele;
               }
             }
