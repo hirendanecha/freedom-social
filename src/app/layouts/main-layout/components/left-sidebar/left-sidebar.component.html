@@ -37,7 +37,6 @@
         <a
           class="d-flex gap-4"
           routerLink="/communities"
-          target="_blank"
           routerLinkActive="active"
           (click)="closeSidebar()"
         >
@@ -49,7 +48,6 @@
         <a
           class="d-flex gap-4"
           routerLink="/pages"
-          target="_blank"
           routerLinkActive="active"
           (click)="closeSidebar()"
         >
@@ -61,7 +59,6 @@
         <a
           class="d-flex gap-4"
           routerLink="/notifications"
-          target="_blank"
           routerLinkActive="active"
           (click)="notificationNavigation()"
         >
@@ -78,7 +75,6 @@
         <a
           class="d-flex gap-4"
           [routerLink]="'settings/view-profile/' + profileId"
-          target="_blank"
           routerLinkActive="active"
         >
           <fa-icon [icon]="['fas', 'gear']" class="font-20-px" />
@@ -88,7 +84,6 @@
       <li>
         <a
           href="https://1776token.com/"
-          target="_blank"
           class="d-flex gap-4"
           (click)="closeSidebar()"
         >
@@ -99,7 +94,6 @@
       <li>
         <a
           href="https://localfoods.market/"
-          target="_blank"
           class="d-flex gap-4"
           (click)="closeSidebar()"
         >
@@ -110,7 +104,6 @@
       <li>
         <a
           href="https://lamarslist.com/"
-          target="_blank"
           class="d-flex gap-4"
           (click)="closeSidebar()"
         >
@@ -149,7 +142,6 @@
               <a
                 routerLink="/settings/see-first-users"
                 routerLinkActive="active"
-                target="_blank"
                 class="d-flex gap-4"
                 (click)="closeSidebar()"
               >
@@ -163,7 +155,6 @@
                 routerLink="/settings/unsubscribed-users"
                 routerLinkActive="active"
                 class="d-flex gap-4"
-                target="_blank"
                 (click)="closeSidebar()"
               >
                 <fa-icon [icon]="['fas', 'user-minus']" class="font-24-px" />
