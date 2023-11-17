@@ -135,7 +135,7 @@ export class VideoPostModalComponent implements AfterViewInit {
     const interval = setInterval(() => {
       if (this.progressValue < 92) {
         this.progressValue =
-          this.progressValue > 86
+          this.progressValue > 95
             ? this.progressValue
             : this.progressValue + Math.floor(Math.random() * 10);
       }
