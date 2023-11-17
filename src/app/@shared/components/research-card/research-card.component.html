@@ -28,7 +28,6 @@
         *ngIf="post?.title || post?.textpostdesc || post?.postdescription"
       >
         <span
-          class="text-danger"
           [innerHTML]="
             post?.title || post?.textpostdesc || post?.postdescription
           "
@@ -38,7 +37,6 @@
 
       <ng-container *ngIf="post?.postToSharedDesc || post?.metadescription">
         <span
-          class="text-danger"
           [innerHTML]="post?.postToSharedDesc || post?.metadescription"
         >
         </span>

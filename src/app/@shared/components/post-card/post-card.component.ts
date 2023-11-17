@@ -103,21 +103,34 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       next: (res) => {
         this.seeFirstList.pop(id);
         console.log(this.seeFirstList)
-        this.toastService.warring('See first stop');
+        this.toastService.warring('See First Stopped');
         this.getPostList?.emit();
       },
     });
   }
 
   seeFirst(postProfileId: number): void {
-    this.seeFirstUserService
-      .create({ profileId: this.profileId, seeFirstProfileId: postProfileId })
-      .subscribe({
-        next: (res) => {
-          this.toastService.success('See first set');
-          this.getPostList?.emit();
-        },
-      });
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = 'See First User';
+    modalRef.componentInstance.confirmButtonLabel = 'Yes';
+    modalRef.componentInstance.cancelButtonLabel = 'No';
+    modalRef.componentInstance.message =
+      'Would you like to go to their profile?';
+    modalRef.result.then((res) => {
+      if (res === 'success') {
+        this.seeFirstUserService
+          .create({ profileId: this.profileId, seeFirstProfileId: postProfileId })
+          .subscribe({
+            next: (res) => {
+              this.router.navigate([`settings/view-profile/${postProfileId}`]);
+              this.toastService.success('See first set');
+              this.getPostList?.emit();
+            },
+          });
+      }
+    })
   }
 
   unsubscribe(post: any): void {
