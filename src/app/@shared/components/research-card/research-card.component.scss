@@ -39,6 +39,11 @@
       .card-text * {
         font-size: 12px !important;
       }
+      span{
+        a{
+          color: rgba(var(--bs-danger-rgb));
+        }
+      }
     }
   }
 }
