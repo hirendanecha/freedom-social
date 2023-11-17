@@ -5,6 +5,7 @@
       <a
         class="d-flex justify-content-between align-items-center"
         (click)="readUnreadNotification(notification.postId, notification.id)"
+        [routerLink]="'post/' + notification.postId"
       >
         <div class="left-item position-relative d-inline-flex gap-3">
           <div class="avatar position-relative d-inline-flex">
@@ -46,5 +47,5 @@
   *ngIf="sharedService.notificationList.length > 0"
   (click)="closeModal()"
 >
-  <a routerLink="/notifications" target="_blank">See all notifications</a>
+  <a routerLink="/notifications">See all notifications</a>
 </div>
