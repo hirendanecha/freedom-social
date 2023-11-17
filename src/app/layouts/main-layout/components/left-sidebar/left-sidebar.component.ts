@@ -38,6 +38,7 @@ export class LeftSidebarComponent implements OnInit {
     public breakpointService: BreakpointService,
     private offcanvasService: NgbOffcanvas,
     public tokenService: TokenStorageService,
+    private router: Router
   ) {
     this.profileId = +localStorage.getItem('profileId');
     this.isRead = localStorage.getItem('isRead');
@@ -95,6 +96,15 @@ export class LeftSidebarComponent implements OnInit {
       localStorage.setItem('isRead', 'Y');
       this.sharedService.isNotify = false;
     }
+  }
+
+  reloadPage(): void {
+    this.closeSidebar();
+    window.scrollTo(0, 0);
+    this.router.navigate(['home']);
+    // .then(() => {
+    //   location.reload();
+    // })
   }
 
   closeSidebar(): void {
