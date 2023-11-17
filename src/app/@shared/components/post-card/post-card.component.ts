@@ -441,13 +441,13 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         this.commentMessageTags = [];
         // childPostCommentElement.innerText = '';
       });
+      this.viewComments(this.post?.id);
       this.commentMessageInputValue = '';
       setTimeout(() => {
         this.commentMessageInputValue = '';
       }, 100);
       this.commentData = {};
       this.isReply = false;
-      this.viewComments(this.post?.id);
     }
     //  else {
     //   this.socketService.commentOnPost(this.commentData, (data) => {
