@@ -35,6 +35,28 @@
         </div>
 
         <div class="col form-group">
+          <label for="postdescription" class="form-label"
+            >Type or paste the Title or Description (no links)
+            </label>
+          <app-tag-user-input
+          id="postdescription"
+          placeholder="What's going on?"
+          [isShowMetaPreview]="true"
+          [isAllowTagUser]="false"
+          [value]="tagInputDefaultData"
+          (onDataChange)="onTagUserInputDescription($event, 'postdescription')"
+        />
+          <div
+            *ngIf="isFormSubmittedAndError('postdescription')"
+            class="invalid-feedback"
+          >
+            <div *ngIf="isFormSubmittedAndError('postdescription', 'required')">
+              This field is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="col form-group">
           <label for="textpostdesc" class="form-label"
             >Paste article or video link</label
           >
@@ -126,21 +148,21 @@
         </ng-container>
         </div>
 
-        <div class="col form-group">
+        <!-- <div class="col form-group">
           <label for="postdescription" class="form-label"
             >Type or paste the Title or Description
-            </label>
+            </label> -->
             <!-- (no links) -->
             <!-- <span class="text-danger">*</span> -->
 
-          <app-tag-user-input
+          <!-- <app-tag-user-input
           id="postdescription"
           placeholder="What's going on?"
           [isShowMetaPreview]="true"
           [isAllowTagUser]="false"
           [value]="tagInputDefaultData"
           (onDataChange)="onTagUserInputDescription($event, 'postdescription')"
-        />
+        /> -->
 
           <!-- <textarea
             class="input-area"
@@ -150,7 +172,7 @@
             trim="blur"
           ></textarea> -->
 
-          <div
+          <!-- <div
             *ngIf="isFormSubmittedAndError('postdescription')"
             class="invalid-feedback"
           >
@@ -158,7 +180,7 @@
               This field is required.
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="col form-group">
           <label for="keywords" class="form-label"
