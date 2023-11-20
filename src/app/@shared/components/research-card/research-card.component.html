@@ -24,15 +24,14 @@
       class="card-text text-start font-12-px text-wrap c-pointer"
       (click)="openResearchPost()"
     >
-      <ng-container
-        *ngIf="post?.title || post?.textpostdesc || post?.postdescription"
-      >
+    <ng-container *ngIf="post?.title">
+      <span class="text-danger"[innerHTML]="post?.title"></span>
+    </ng-container>
+
+      <ng-container *ngIf="post?.textpostdesc || post?.postdescription">
       <!-- class="text-danger" -->
         <span
-          [innerHTML]="
-            post?.title || post?.textpostdesc || post?.postdescription
-          "
-        >
+          [innerHTML]="post?.textpostdesc || post?.postdescription">
         </span>
       </ng-container>
 
