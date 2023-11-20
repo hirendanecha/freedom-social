@@ -277,7 +277,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     // } else {
     //   this.isOpenCommentsPostId = id;
     // }
-    this.spinner.show();
+    // this.spinner.show();
     this.isOpenCommentsPostId = id;
     this.isCommentsLoader = true;
     const data = {
@@ -287,7 +287,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     this.postService.getComments(data).subscribe({
       next: (res) => {
         if (res) {
-          this.spinner.hide();
+          // this.spinner.hide();
           // this.commentList = res.data.commmentsList.filter((ele: any) => {
           //   res.data.replyCommnetsList.some((element: any) => {
           //     if (ele?.id === element?.parentCommentId) {

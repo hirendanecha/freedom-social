@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -13,6 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostService } from '../../services/post.service';
 import { forkJoin } from 'rxjs';
 import { SocketService } from '../../services/socket.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-video-post-modal',
@@ -48,12 +50,16 @@ export class VideoPostModalComponent implements AfterViewInit {
   progressValue = 0;
   isProgress = false;
 
+  streamnameProgress = 0;
+  thumbfilenameProgress = 0;
+
   constructor(
     public activeModal: NgbActiveModal,
     private toastService: ToastService,
     private spinner: NgxSpinnerService,
     private postService: PostService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private cdr: ChangeDetectorRef
   ) {
     this.postData.profileid = localStorage.getItem('profileId');
     // console.log('profileId', this.postData.profileid);
@@ -74,61 +80,135 @@ export class VideoPostModalComponent implements AfterViewInit {
     }
   }
 
+  // uploadImgAndSubmit1(): void {
+  //   if (this.postData.videoduration > 121) {
+  //     this.toastService.danger('Please upload less then 2minutes video!');
+  //   } else {
+  //     if (
+  //       this.postData?.profileid &&
+  //       this.postData.postdescription &&
+  //       this.postData.albumname &&
+  //       this.postData.keywords &&
+  //       (this.postData.file1 || this.selectedVideoFile) &&
+  //       (this.postData.file2 || this.selectedThumbFile)
+  //     ) {
+  //       this.startProgress();
+  //       this.isProgress = true;
+  //       let uploadObs = {};
+  //       if (this.postData?.file1?.name) {
+  //         uploadObs['streamname'] = this.postService.uploadFile(
+  //           this.postData?.file1
+  //         );
+  //       }
+
+  //       if (this.postData?.file2?.name) {
+  //         uploadObs['thumbfilename'] = this.postService.uploadFile(
+  //           this.postData?.file2
+  //         );
+  //       }
+
+  //       if (Object.keys(uploadObs)?.length > 0) {
+  //         // this.spinner.show();
+  //         forkJoin(uploadObs).subscribe({
+  //           next: (res: any) => {
+  //             if (res?.streamname?.body?.url) {
+  //               this.postData['file1'] = null;
+  //               this.postData['streamname'] = res?.streamname?.body?.url;
+  //             }
+  //             if (res?.thumbfilename?.body?.url) {
+  //               this.postData['file2'] = null;
+  //               this.postData['thumbfilename'] = res?.thumbfilename?.body?.url;
+  //             }
+  //             this.spinner.hide();
+  //             this.createPost();
+  //           },
+  //           error: (err) => {
+  //             this.spinner.hide();
+  //           },
+  //         });
+  //       } else {
+  //         this.postData.streamname = this.selectedVideoFile;
+  //         this.postData.thumbfilename = this.selectedThumbFile;
+  //         this.createPost();
+  //       }
+  //     } else {
+  //       this.toastService.danger('Please enter mandatory fields(*) data.');
+  //     }
+  //   }
+  // }
+  
   uploadImgAndSubmit(): void {
     if (this.postData.videoduration > 121) {
-      this.toastService.danger('Please upload less then 2minutes video!');
-    } else {
-      if (
-        this.postData?.profileid &&
-        this.postData.postdescription &&
-        this.postData.albumname &&
-        this.postData.keywords &&
-        (this.postData.file1 || this.selectedVideoFile) &&
-        (this.postData.file2 || this.selectedThumbFile)
-      ) {
-        this.startProgress();
-        this.isProgress = true;
-        let uploadObs = {};
-        if (this.postData?.file1?.name) {
-          uploadObs['streamname'] = this.postService.uploadFile(
-            this.postData?.file1
-          );
-        }
-
-        if (this.postData?.file2?.name) {
-          uploadObs['thumbfilename'] = this.postService.uploadFile(
-            this.postData?.file2
-          );
-        }
-
-        if (Object.keys(uploadObs)?.length > 0) {
-          // this.spinner.show();
-          forkJoin(uploadObs).subscribe({
-            next: (res: any) => {
-              if (res?.streamname?.body?.url) {
-                this.postData['file1'] = null;
-                this.postData['streamname'] = res?.streamname?.body?.url;
-              }
-              if (res?.thumbfilename?.body?.url) {
-                this.postData['file2'] = null;
-                this.postData['thumbfilename'] = res?.thumbfilename?.body?.url;
-              }
-              this.spinner.hide();
-              this.createPost();
-            },
-            error: (err) => {
-              this.spinner.hide();
-            },
-          });
+          this.toastService.danger('Please upload less then 2minutes video!');
         } else {
-          this.postData.streamname = this.selectedVideoFile;
-          this.postData.thumbfilename = this.selectedThumbFile;
-          this.createPost();
+          if (
+            this.postData?.profileid &&
+            this.postData.postdescription &&
+            this.postData.albumname &&
+            this.postData.keywords &&
+            (this.postData.file1 || this.selectedVideoFile) &&
+            (this.postData.file2 || this.selectedThumbFile)
+          ) {
+            if (this.postData?.file1?.name || this.postData?.file2?.name) {
+              if (this.postData?.file1?.name) {
+                this.isProgress = true;
+                this.postService.uploadFile(this.postData?.file1).subscribe((event) => {
+                  if (event.type === HttpEventType.UploadProgress) {
+                    this.streamnameProgress = Math.round(
+                      (100 * event.loaded) / event.total
+                    );
+                    this.cdr.markForCheck();
+                    this.progressValue = this.streamnameProgress;
+                    // console.log(`Streamname Progress: ${this.streamnameProgress}%`);
+                  } else if (event.type === HttpEventType.Response) {
+                    if (event.body?.url) {
+                      this.postData['file1'] = null;
+                      this.postData['streamname'] = event.body.url;
+                    }
+                  }
+                  if (!this.postData.id && this.thumbfilenameProgress === 100 && this.streamnameProgress === 100) {
+                    this.createPost();
+                  } else if (this.postData.id && this.streamnameProgress === 100) {
+                    this.createPost();
+                  }
+                });
+              }
+              if (this.postData?.file2?.name) {
+                if (this.postData.id) {
+                  this.spinner.show();
+                }
+                this.postService.uploadFile(this.postData?.file2).subscribe((event) => {
+                  if (event.type === HttpEventType.UploadProgress) {
+                    this.thumbfilenameProgress = Math.round(
+                      (100 * event.loaded) / event.total
+                    );
+                    // console.log(
+                    //   `Thumbfilename Progress: ${this.thumbfilenameProgress}%`
+                    // );
+                  } else if (event.type === HttpEventType.Response) {
+                    if (event.body?.url) {
+                      this.postData['file2'] = null;
+                      this.postData['thumbfilename'] = event.body.url;
+                    }
+                    if (this.postData?.id && this.thumbfilenameProgress === 100 && !this.streamnameProgress) {
+                      this.spinner.hide();
+                      this.postData.streamname = this.selectedVideoFile
+                      this.createPost();
+                    }
+                  }
+                });
+              }
+            } else {
+              if (this.postData?.id) {
+                this.postData.streamname = this.selectedVideoFile;
+                this.postData.thumbfilename = this.selectedThumbFile;
+                this.createPost();
+              }
+            }
+          } else {
+            this.toastService.danger('Please enter mandatory fields(*) data.');
+          }
         }
-      } else {
-        this.toastService.danger('Please enter mandatory fields(*) data.');
-      }
-    }
   }
 
   startProgress() {
@@ -167,8 +247,8 @@ export class VideoPostModalComponent implements AfterViewInit {
   };
 
   createPost(): void {
-    this.progressValue = 100;
-    // this.spinner.show();
+    // this.progressValue = 100;
+    this.spinner.show();
     this.postData.communityId = this.communityId || null;
     if (
       this.postData?.streamname &&
@@ -178,6 +258,7 @@ export class VideoPostModalComponent implements AfterViewInit {
       this.postData.albumname
     ) {
       console.log('post-data', this.postData);
+      this.spinner.hide();
       this.activeModal.close();
       this.socketService.createOrEditPost(this.postData
       //   , (data) => {
@@ -196,7 +277,7 @@ export class VideoPostModalComponent implements AfterViewInit {
       //   }
       // })
     } else {
-      this.toastService.danger('Please enter mandatory fields(*) data.');
+      // this.toastService.danger('Please enter mandatory fields(*) data.');
     }
   }
 
@@ -205,7 +286,7 @@ export class VideoPostModalComponent implements AfterViewInit {
       this.postData.file1 = event.target?.files?.[0];
       this.selectedVideoFile = URL.createObjectURL(event.target.files[0]);
     } else {
-      this.toastService.warring('please upload only mp4 files');
+      // this.toastService.warring('please upload only mp4 files');
     }
   }
   onFileSelected(event: any) {
