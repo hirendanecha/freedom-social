@@ -338,9 +338,11 @@
     }
   }
   ::ng-deep {
-    p {
-      h1 {
+   .post-description, .comments-area {
+      h1,h2,h3,h4,h5,h6, a {
         font-size: 16px !important;
+        line-height: normal;
+        margin: unset;
       }
       img,
       svg {

@@ -3,7 +3,7 @@
   class="post-single-box d-flex gap-3 gap-sm-5 p-3 p-sm-5"
   *ngIf="
     !post?.hide &&
-    (post?.postdescription || post?.metadescription || post?.imageUrl)
+    (post?.postdescription || post?.metadescription || post?.imageUrl || post?.pdfUrl)
   "
 >
   <img
