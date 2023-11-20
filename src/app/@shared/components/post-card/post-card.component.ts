@@ -605,8 +605,8 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         let index = this.commentList.findIndex((obj) => obj?.id === data[0]?.id);
         if (!this.commentList[index]) {
           this.commentList.push(data[0]);
+          this.viewComments(data[0]?.postId);
         }
-        // this.viewComments(data[0]?.postId);
       }
     });
   }
