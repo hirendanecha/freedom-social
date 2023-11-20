@@ -277,7 +277,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     // } else {
     //   this.isOpenCommentsPostId = id;
     // }
-
+    this.spinner.show();
     this.isOpenCommentsPostId = id;
     this.isCommentsLoader = true;
     const data = {
@@ -287,6 +287,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     this.postService.getComments(data).subscribe({
       next: (res) => {
         if (res) {
+          this.spinner.hide();
           // this.commentList = res.data.commmentsList.filter((ele: any) => {
           //   res.data.replyCommnetsList.some((element: any) => {
           //     if (ele?.id === element?.parentCommentId) {
@@ -317,12 +318,15 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   deleteComments(comment): void {
+    this.spinner.show();
     this.postService.deleteComments(comment.id).subscribe({
       next: (res: any) => {
+        this.spinner.hide();
         this.toastService.success(res.message);
         this.viewComments(comment?.postId);
       },
       error: (error) => {
+        this.spinner.hide();
         console.log(error);
         this.toastService.danger(error.message);
       },
@@ -521,7 +525,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     this.commentData.comment = data?.html;
     this.commentData.meta = data?.meta;
     this.commentMessageTags = data?.tags;
-    console.log(this.commentData)
+    // console.log(this.commentData)
   }
 
   socketListner(): void {
@@ -534,7 +538,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     });
 
     this.socketService.socket.on('likeOrDislikeComments', (res) => {
-      console.log('likeOrDislikeComments', res);
+      // console.log('likeOrDislikeComments', res);
       if (res[0]) {
         if (res[0].parentCommentId) {
           // let index = this.commentList.findIndex(obj => obj.id === res[0].parentCommentId);
@@ -597,7 +601,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         if (!this.commentList[index]) {
           this.commentList.push(data[0]);
         }
-        this.viewComments(data[0]?.postId);
+        // this.viewComments(data[0]?.postId);
       }
     });
   }
