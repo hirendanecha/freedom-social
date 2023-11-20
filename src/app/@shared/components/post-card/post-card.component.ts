@@ -60,6 +60,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   isParent: boolean = false;
   postComment = {};
   isCommentsLoader: boolean = false;
+  editCommentsLoader: boolean = false;
   isPostComment: boolean = false;
   webUrl = environment.webUrl;
   player: any;
@@ -277,7 +278,8 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     // } else {
     //   this.isOpenCommentsPostId = id;
     // }
-    this.spinner.show();
+    // this.spinner.show();
+    this.editCommentsLoader = true
     this.isOpenCommentsPostId = id;
     this.isCommentsLoader = true;
     const data = {
@@ -287,7 +289,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     this.postService.getComments(data).subscribe({
       next: (res) => {
         if (res) {
-          this.spinner.hide();
+          // this.spinner.hide();
           // this.commentList = res.data.commmentsList.filter((ele: any) => {
           //   res.data.replyCommnetsList.some((element: any) => {
           //     if (ele?.id === element?.parentCommentId) {
@@ -306,13 +308,16 @@ export class PostCardComponent implements OnInit, AfterViewInit {
             return ele1.parentCommentId;
           });
           this.commentCount = this.commentList.length + replyCount.length;
+          this.editCommentsLoader = false
         }
       },
       error: (error) => {
         console.log(error);
+        this.editCommentsLoader = false
       },
       complete: () => {
         this.isCommentsLoader = false;
+        this.editCommentsLoader = false
       },
     });
   }
@@ -600,8 +605,8 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         let index = this.commentList.findIndex((obj) => obj?.id === data[0]?.id);
         if (!this.commentList[index]) {
           this.commentList.push(data[0]);
+          this.viewComments(data[0]?.postId);
         }
-        // this.viewComments(data[0]?.postId);
       }
     });
   }
