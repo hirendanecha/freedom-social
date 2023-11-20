@@ -60,6 +60,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   isParent: boolean = false;
   postComment = {};
   isCommentsLoader: boolean = false;
+  editCommentsLoader: boolean = false;
   isPostComment: boolean = false;
   webUrl = environment.webUrl;
   player: any;
@@ -278,6 +279,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     //   this.isOpenCommentsPostId = id;
     // }
     // this.spinner.show();
+    this.editCommentsLoader = true
     this.isOpenCommentsPostId = id;
     this.isCommentsLoader = true;
     const data = {
@@ -306,13 +308,16 @@ export class PostCardComponent implements OnInit, AfterViewInit {
             return ele1.parentCommentId;
           });
           this.commentCount = this.commentList.length + replyCount.length;
+          this.editCommentsLoader = false
         }
       },
       error: (error) => {
         console.log(error);
+        this.editCommentsLoader = false
       },
       complete: () => {
         this.isCommentsLoader = false;
+        this.editCommentsLoader = false
       },
     });
   }
