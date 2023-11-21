@@ -68,6 +68,36 @@
     }
 
     .posted-wrap-text {
+      max-width: 515px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      // @media (max-width: 450px) {
+      //   max-width: 200px;
+      // }
+      // @media (min-width: 450px) and (max-width: 575px) {
+      //   max-width: 275px;
+      // }
+      // @media (min-width: 575px) and (max-width: 85px) {
+      //   max-width: 350px;
+      // }
+      @media (max-width: 767px) {
+        max-width: 390px;
+      }
+
+      .posted-group-text{
+        max-width: 205px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        @media (max-width: 767px) {
+          max-width: 88px;
+        }
+      }
+    }
+
+    .posted-wrap-mobile {
       max-width: 400px;
       white-space: nowrap;
       overflow: hidden;
@@ -83,6 +113,7 @@
         max-width: 350px;
       }
     }
+
     .post-profile {
       max-width: 48px;
       min-height: 48px;
@@ -344,21 +375,20 @@
         line-height: normal;
         margin: unset;
       }
-      img,
       svg {
-        max-width: 16px;
-        max-height: 16px;
+        // max-width: 16px;
+        // max-height: 16px;
         vertical-align: middle;
         margin-right: 5px;
       }
 
-      h1,h2,h3,h4,h5,h6 {
-        img,
-        svg {
-          max-width: unset;
-          max-height: unset;
-        }
-      }
+      // h1,h2,h3,h4,h5,h6 {
+      //   img,
+      //   svg {
+      //     max-width: unset;
+      //     max-height: unset;
+      //   }
+      // }
     }
     .comments-area{
         h1,h2,h3,h4,h5,h6, a {
