@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 
 import { AddCommunityModalComponent } from './add-community-modal/add-community-modal.component';
 import { CommunitiesRoutingModule } from './communities-routing.module';
@@ -8,8 +8,11 @@ import { SharedModule } from 'src/app/@shared/shared.module';
 @NgModule({
   declarations: [
     CommunitiesComponent,
-    AddCommunityModalComponent,
   ],
   imports: [CommunitiesRoutingModule, SharedModule],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ]
 })
-export class CommunitiesModule {}
+export class CommunitiesModule { }

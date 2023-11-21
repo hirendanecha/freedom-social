@@ -103,10 +103,6 @@ export class ResearchListComponent {
   }
 
   onTagUserInputChangeEvent(data: any, ctrlName: string): void {
-    this.isGroupPostsLoader = true;
-    if (data?.meta) {
-      this.isGroupPostsLoader = false;
-    }
     this.researchForm.get(ctrlName).setValue(data?.html);
     this.researchForm.get('meta').setValue(data?.meta || {});
     // console.log('data : ', data);
@@ -324,5 +320,9 @@ export class ResearchListComponent {
       this.researchForm.get(key).setErrors(null);
     });
     console.log(this.researchForm.value)
+  }
+
+  onChangeTag(event) {
+    this.researchForm.get('keywords').setValue(event?.split(' ').join(','));
   }
 }

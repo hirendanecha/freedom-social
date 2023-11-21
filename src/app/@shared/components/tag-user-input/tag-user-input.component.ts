@@ -36,7 +36,8 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     private postService: PostService,
     private spinner: NgxSpinnerService,
   ) {
-    this.metaDataSubject.pipe(debounceTime(100)).subscribe(() => {
+    this.metaDataSubject.pipe(debounceTime(10)).subscribe(() => {
+      console.log('in!!!!')
       this.getMetaDataFromUrlStr();
       this.checkUserTagFlag();
     });
@@ -66,6 +67,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   messageOnKeyEvent(): void {
     this.metaDataSubject.next();
     this.emitChangeEvent();
+    console.log('in!!!!')
   }
 
   // checkUserTagFlag1(): void {
@@ -110,6 +112,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
 
   getMetaDataFromUrlStr(): void {
     const htmlText = this.tagInputDiv?.nativeElement?.innerHTML || '';
+    console.log(htmlText);
     const text = htmlText.replace(/<[^>]*>/g, '');
     // const matches = text.match(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?(.*)/gi);
     // const matches = text.match(/((ftp|http|https):\/\/)?(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/);
@@ -117,7 +120,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     const url = matches?.[0];
     // console.log(url, matches);
     if (url) {
-      if (!url?.includes(this.metaData?.url)) {
+      if (url !== this.metaData?.url) {
         // this.spinner.show();
         this.isMetaLoader = true;
         this.ngUnsubscribe.next();
@@ -222,8 +225,6 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
       this.value = `${htmlText}`.replace(/\<div\>\<br\>\<\/div\>/ig, '');
       // console.log('htmlText', `${htmlText}`.replace(/\<div\>\<br\>\<\/div\>/ig, ''))
       // console.log('htmlText', this.value);
-
-
       this.onDataChange.emit({
         html: this.value,
         tags: this.tagInputDiv?.nativeElement?.children,

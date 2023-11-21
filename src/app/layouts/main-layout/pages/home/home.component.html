@@ -29,17 +29,12 @@
         </div>
 
         <div>
-          <ng-container
-            *ngIf="
-              communityDetails.profileId == profileId &&
-              communityDetails.pageType === 'community'
-            "
-          >
+          <ng-container *ngIf="communityDetails.profileId == profileId">
             <button
               class="btn btn-sm btn-primary me-2"
               (click)="editCommunity(communityDetails)"
             >
-              Edit Community
+              Edit {{ communityDetails?.pageType }}
             </button>
           </ng-container>
           <!-- {{ communityDetails?.pageType }} -->

@@ -11,14 +11,13 @@
   }"
   [mentionListTemplate]="mentionListTemplate"
   (itemSelected)="selectTagUser($event)"
->
-  <ng-container *ngIf="isShowMetaLoader">
-    <app-inline-loader
-      *ngIf="isMetaLoader"
-      classes="position-absolute inline-meta-loader"
-    />
-  </ng-container>
-</div>
+></div>
+<ng-container *ngIf="isShowMetaLoader">
+  <app-inline-loader
+    *ngIf="isMetaLoader"
+    classes="position-absolute inline-meta-loader"
+  />
+</ng-container>
 
 <ng-template
   #mentionListTemplate
