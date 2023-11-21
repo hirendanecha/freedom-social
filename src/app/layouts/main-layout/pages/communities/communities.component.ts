@@ -62,6 +62,7 @@ export class CommunitiesComponent {
       keyboard: false,
       size: 'lg'
     });
+    modalRef.componentInstance.title = 'Create Community';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Create';
     modalRef.componentInstance.closeIcon = true;

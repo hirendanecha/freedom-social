@@ -34,6 +34,7 @@ export class FreedomPageComponent {
       keyboard: false,
       size: 'lg'
     });
+    modalRef.componentInstance.title = 'Create Freedom Page';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
     modalRef.componentInstance.confirmButtonLabel = 'Create';
     modalRef.componentInstance.closeIcon = true;
