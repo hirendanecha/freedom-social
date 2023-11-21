@@ -37,15 +37,18 @@
         <div class="col form-group">
           <label for="postdescription" class="form-label"
             >Type or paste the Title or Description (no links)
-            </label>
+            <span class="text-danger">*</span></label
+          >
           <app-tag-user-input
-          id="postdescription"
-          placeholder="What's going on?"
-          [isShowMetaPreview]="true"
-          [isAllowTagUser]="false"
-          [value]="tagInputDefaultData"
-          (onDataChange)="onTagUserInputDescription($event, 'postdescription')"
-        />
+            id="postdescription"
+            placeholder="What's going on?"
+            [isShowMetaPreview]="false"
+            [isAllowTagUser]="true"
+            [value]="tagInputDefaultData"
+            (onDataChange)="
+              onTagUserInputDescription($event, 'postdescription')
+            "
+          />
           <div
             *ngIf="isFormSubmittedAndError('postdescription')"
             class="invalid-feedback"
@@ -67,13 +70,16 @@
             [isShowMetaPreview]="true"
             [isAllowTagUser]="false"
             [value]="tagInputDefaultData"
+            [isShowMetaLoader]="true"
             (onDataChange)="onTagUserInputChangeEvent($event, 'textpostdesc')"
           />
         </div>
 
         <div
           class="col form-group"
-          *ngIf="!this.researchForm.get('meta').value?.metaimage && !selectedpdfFile"
+          *ngIf="
+            !this.researchForm.get('meta').value?.metaimage && !selectedpdfFile
+          "
         >
           <label for="textpostdesc" class="form-label">Upload Image</label>
           <div class="d-flex custom-input-area" *ngIf="!selectedImgFile">
@@ -109,18 +115,15 @@
             </div>
           </ng-container>
         </div>
-        <div
-        class="col form-group"
-        *ngIf="!selectedImgFile"
-        >
-        <label for="textpostdesc" class="form-label">Upload File</label>
-        <div class="d-flex custom-input-area" *ngIf="!selectedpdfFile">
-          <fa-icon
-            [icon]="['fas', 'file']"
-            class="text-primary cursor font-24-px"
-            (click)="pdfFile.click()"
-          />
-          <input
+        <div class="col form-group" *ngIf="!selectedImgFile">
+          <label for="textpostdesc" class="form-label">Upload File</label>
+          <div class="d-flex custom-input-area" *ngIf="!selectedpdfFile">
+            <fa-icon
+              [icon]="['fas', 'file']"
+              class="text-primary cursor font-24-px"
+              (click)="pdfFile.click()"
+            />
+            <input
               type="file"
               #pdfFile
               hidden
@@ -128,13 +131,13 @@
               accept="application/pdf"
               (change)="onPostFileSelect($event)"
             />
-        </div>
-        <ng-container *ngIf="selectedpdfFile">
-          <div class="position-relative w-250-px h-100-px mt-5">
-            <div class="d-flex align-items-center">
-              <fa-icon
-                [icon]="['fas', 'file-pdf']"
-                class="c-pointer close-icon font-40-px"
+          </div>
+          <ng-container *ngIf="selectedpdfFile">
+            <div class="position-relative w-250-px h-100-px mt-5">
+              <div class="d-flex align-items-center">
+                <fa-icon
+                  [icon]="['fas', 'file-pdf']"
+                  class="c-pointer close-icon font-40-px"
                 />
                 <fa-icon
                   [icon]="['fas', 'xmark']"
@@ -142,20 +145,20 @@
                   role="button"
                   (click)="removePostSelectedFile()"
                 />
-              <span class="c-pdf-show">{{ selectedpdfFile.name }}</span>
+                <span class="c-pdf-show">{{ selectedpdfFile.name }}</span>
+              </div>
             </div>
-          </div>
-        </ng-container>
+          </ng-container>
         </div>
 
         <!-- <div class="col form-group">
           <label for="postdescription" class="form-label"
             >Type or paste the Title or Description
             </label> -->
-            <!-- (no links) -->
-            <!-- <span class="text-danger">*</span> -->
+        <!-- (no links) -->
+        <!-- <span class="text-danger">*</span> -->
 
-          <!-- <app-tag-user-input
+        <!-- <app-tag-user-input
           id="postdescription"
           placeholder="What's going on?"
           [isShowMetaPreview]="true"
@@ -164,7 +167,7 @@
           (onDataChange)="onTagUserInputDescription($event, 'postdescription')"
         /> -->
 
-          <!-- <textarea
+        <!-- <textarea
             class="input-area"
             id="postdescription"
             formControlName="postdescription"
@@ -172,7 +175,7 @@
             trim="blur"
           ></textarea> -->
 
-          <!-- <div
+        <!-- <div
             *ngIf="isFormSubmittedAndError('postdescription')"
             class="invalid-feedback"
           >
@@ -211,6 +214,7 @@
             <fa-icon class="c-icon-color" [icon]="['fas', 'xmark']" />
           </button>
           <button
+            [disabled]="isGroupPostsLoader"
             class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2"
             (click)="createImagePost()"
           >
@@ -354,7 +358,9 @@
     <ng-container *ngFor="let group of groupPosts">
       <ng-container *ngIf="group?.name && group?.posts?.length > 0">
         <div class="single-box d-flex flex-column p-5 mb-3">
-          <div class="d-flex justify-content-between align-items-center mb-5 mobile-research-card">
+          <div
+            class="d-flex justify-content-between align-items-center mb-5 mobile-research-card"
+          >
             <h6 class="text-start mb-0 me-1">{{ group?.name }}</h6>
 
             <a

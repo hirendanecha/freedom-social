@@ -38,7 +38,7 @@ export class ResearchListComponent {
   researchForm = new FormGroup({
     posttoprofileid: new FormControl('', [Validators.required]),
     textpostdesc: new FormControl(''),
-    postdescription: new FormControl(''),
+    postdescription: new FormControl('', [Validators.required]),
     keywords: new FormControl(''),
     posttype: new FormControl('R'),
     meta: new FormControl(null),
@@ -103,6 +103,10 @@ export class ResearchListComponent {
   }
 
   onTagUserInputChangeEvent(data: any, ctrlName: string): void {
+    this.isGroupPostsLoader = true;
+    if (data?.meta) {
+      this.isGroupPostsLoader = false;
+    }
     this.researchForm.get(ctrlName).setValue(data?.html);
     this.researchForm.get('meta').setValue(data?.meta || {});
     // console.log('data : ', data);
@@ -208,6 +212,8 @@ export class ResearchListComponent {
         .add(() => {
           this.researchForm.reset();
           this.tagInputDefaultData = 'reset';
+          this.postImage = null;
+          this.postFile = null;
           setTimeout(() => {
             this.tagInputDefaultData = '';
           }, 100);
@@ -247,15 +253,15 @@ export class ResearchListComponent {
         });
     } else if (this.selectedpdfFile) {
       this.postService
-      .upload(this.selectedpdfFile, profileId, 'post')
-      .subscribe({
-        next: (res: any) => {
-          if (res?.body?.url) {
-            this.postFile = res?.body?.url;
-            this.createResearch();
-          }
-        },
-    });
+        .upload(this.selectedpdfFile, profileId, 'post')
+        .subscribe({
+          next: (res: any) => {
+            if (res?.body?.url) {
+              this.postFile = res?.body?.url;
+              this.createResearch();
+            }
+          },
+        });
     } else {
       this.createResearch();
     }

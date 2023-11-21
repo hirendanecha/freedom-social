@@ -16,6 +16,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   @Input('placeholder') placeholder: string = 'ss';
   @Input('isShowMetaPreview') isShowMetaPreview: boolean = true;
   @Input('isAllowTagUser') isAllowTagUser: boolean = true;
+  @Input('isShowMetaLoader') isShowMetaLoader: boolean = true;
   @Output('onDataChange') onDataChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('tagInputDiv', { static: false }) tagInputDiv: ElementRef;
@@ -27,6 +28,7 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
   userList = [];
   userNameSearch = '';
   metaData: any = {};
+  isMetaLoader: boolean = false;
 
   constructor(
     private renderer: Renderer2,
@@ -117,12 +119,14 @@ export class TagUserInputComponent implements OnChanges, OnDestroy {
     if (url) {
       if (!url?.includes(this.metaData?.url)) {
         // this.spinner.show();
+        this.isMetaLoader = true;
         this.ngUnsubscribe.next();
         this.postService
           .getMetaData({ url })
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe({
             next: (res: any) => {
+              this.isMetaLoader = false
               if (res?.meta?.image) {
                 const urls = res.meta?.image?.url;
                 const imgUrl = Array.isArray(urls) ? urls?.[0] : urls;
