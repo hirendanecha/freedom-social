@@ -3,7 +3,10 @@
   class="post-single-box d-flex gap-3 gap-sm-5 p-3 p-sm-5"
   *ngIf="
     !post?.hide &&
-    (post?.postdescription || post?.metadescription || post?.imageUrl || post?.pdfUrl)
+    (post?.postdescription ||
+      post?.metadescription ||
+      post?.imageUrl ||
+      post?.pdfUrl)
   "
 >
   <img
@@ -35,8 +38,13 @@
             class="d-flex flex-column h6 m-0"
             *ngIf="post?.Username || post?.FirstName"
           >
-            <div class="d-flex align-items-center cursor c-padding posted-wrap-text">
-              <div class="d-flex align-items-center" (mouseover)="showHoverBox = true">
+            <div
+              class="d-flex align-items-center cursor c-padding posted-wrap-text"
+            >
+              <div
+                class="d-flex align-items-center"
+                (mouseover)="showHoverBox = true"
+              >
                 {{ post?.Username || post?.FirstName }}
                 <!-- [ngbTooltip]="post.postcreationdate | date : ' h:mm a MMM d, y'" -->
                 <div>
@@ -431,7 +439,7 @@
     </form>
 
     <ng-container *ngIf="isOpenCommentsPostId === post.id">
-      <ng-container *ngIf="commentList.length > 0; else elseNoCommentsFound">
+      <ng-container *ngIf="commentList.length; else elseNoCommentsFound">
         <div class="comments-area mt-5">
           <div
             class="single-comment-area ms-xxl-15"

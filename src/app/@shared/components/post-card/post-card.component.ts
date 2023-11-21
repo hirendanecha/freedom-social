@@ -450,13 +450,13 @@ export class PostCardComponent implements OnInit, AfterViewInit {
         this.commentMessageTags = [];
         // childPostCommentElement.innerText = '';
       });
-      this.viewComments(this.post?.id);
       this.commentMessageInputValue = '';
       setTimeout(() => {
         this.commentMessageInputValue = '';
       }, 100);
       this.commentData = {};
       this.isReply = false;
+      this.viewComments(this.post?.id);
     }
     //  else {
     //   this.socketService.commentOnPost(this.commentData, (data) => {
@@ -580,19 +580,20 @@ export class PostCardComponent implements OnInit, AfterViewInit {
 
     this.socketService.socket.on('comments-on-post', (data: any) => {
       this.isPostComment = false;
-      console.log('comments-on-post', data[0]);
+      console.log('comments-on-post', data);
       if (data[0]?.parentCommentId) {
         this.commentList.map((ele: any) =>
           data.filter((ele1) => {
-            if (ele.id === ele1.parentCommentId) {
+            if (ele?.id === ele1?.parentCommentId) {
               if (ele?.replyCommnetsList) {
                 let index = ele?.['replyCommnetsList']?.findIndex(
-                  (obj) => obj.id === data[0].id
+                  (obj) => obj?.id === data[0]?.id
                 );
                 if (!ele?.['replyCommnetsList'][index]) {
                   ele?.['replyCommnetsList'].push(ele1);
                   return ele;
                 } else {
+                  ele['replyCommnetsList'][index] = ele1;
                   return ele;
                 }
               } else {
@@ -601,11 +602,16 @@ export class PostCardComponent implements OnInit, AfterViewInit {
             }
           })
         );
+        this.viewComments(data[0].postId);
+
       } else {
         let index = this.commentList.findIndex((obj) => obj?.id === data[0]?.id);
         if (!this.commentList[index]) {
           this.commentList.push(data[0]);
-          this.viewComments(data[0]?.postId);
+          this.viewComments(data[0].postId);
+        } else {
+          // this.commentList[index] = data[0];
+          this.viewComments(data[0].postId);
         }
       }
     });
