@@ -89,6 +89,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfPreviewComponent } from './components/pdf-preview/pdf-preview.component';
 import { AddFreedomPageComponent } from '../layouts/main-layout/pages/freedom-page/add-page-modal/add-page-modal.component';
 import { AddCommunityModalComponent } from '../layouts/main-layout/pages/communities/add-community-modal/add-community-modal.component';
+import { EditResearchModalComponent } from './modals/edit-research-modal/edit-research-modal.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -109,7 +110,8 @@ const sharedComponents = [
   ForgotPasswordComponent,
   PdfPreviewComponent,
   AddFreedomPageComponent,
-  AddCommunityModalComponent
+  AddCommunityModalComponent,
+  EditResearchModalComponent
 ];
 
 const sharedModules = [

@@ -16,7 +16,7 @@ import { SocketService } from 'src/app/@shared/services/socket.service';
 import { ToastService } from 'src/app/@shared/services/toast.service';
 import { UnsubscribeProfileService } from 'src/app/@shared/services/unsubscribe-profile.service';
 import { ConfirmationModalComponent } from '../../modals/confirmation-modal/confirmation-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from 'src/app/@shared/services/shared.service';
 import { slideUp } from '../../animations/slideUp';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -26,6 +26,7 @@ import { getTagUsersFromAnchorTags } from '../../utils/utils';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { SeoService } from '../../services/seo.service';
 import { BreakpointService } from '../../services/breakpoint.service';
+import { EditResearchModalComponent } from '../../modals/edit-research-modal/edit-research-modal.component';
 
 declare var jwplayer: any;
 @Component({
@@ -83,7 +84,8 @@ export class PostCardComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     public tokenService: TokenStorageService,
     private seoService: SeoService,
-    public breakpointService: BreakpointService
+    public breakpointService: BreakpointService,
+    public activeModal: NgbActiveModal,
   ) {
     this.profileId = localStorage.getItem('profileId');
   }
@@ -156,8 +158,23 @@ export class PostCardComponent implements OnInit, AfterViewInit {
   }
 
   editPost(post): void {
-    if (this.onEditPost) {
+    if (this.onEditPost && !post.groupName) {
       this.onEditPost.emit(post);
+    }
+    if (post.groupName) {
+      this.onEditPost.emit(post);
+      const modalRef = this.modalService.open(EditResearchModalComponent, {
+        centered: true,
+      });
+      modalRef.componentInstance.title = 'Edit Research Details';
+      modalRef.componentInstance.confirmButtonLabel = 'Save';
+      modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+      modalRef.componentInstance.data = post;
+      modalRef.result.then((res) => {
+        if (res) {
+          // this.activeModal.close();
+        }
+      });
     }
   }
 
