@@ -83,9 +83,9 @@ export class EditResearchModalComponent implements OnInit, AfterViewInit{
         meta: this.data?.meta,
       });
       this.postImageUrl = this.data?.imageUrl
-      this.selectedImgFile = this.data?.imageUrl
+      // this.selectedImgFile = this.data?.imageUrl
       this.postFileUrl = this.data?.pdfUrl
-      this.selectedpdfFile = this.data?.pdfUrl 
+      // this.selectedpdfFile = this.data?.pdfUrl 
     }
   }
 
@@ -255,6 +255,7 @@ export class EditResearchModalComponent implements OnInit, AfterViewInit{
 
   removeImgFile(): void {
     this.selectedImgFile = null;
+    this.postImageUrl = null;
   }
 
   onPostFileSelect(event: any): void {
@@ -283,6 +284,7 @@ export class EditResearchModalComponent implements OnInit, AfterViewInit{
 
   removePostSelectedFile(): void {
     this.selectedpdfFile = null;
+    this.postFileUrl = null;
   }
 
   resetPost(): void {
