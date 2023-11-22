@@ -125,7 +125,7 @@ export class EditResearchModalComponent implements OnInit, AfterViewInit{
   }
 
   onChangeTag(event) {
-    this.researchForm.get('keywords').setValue(event.split(' ').join(','));
+    this.researchForm.get('keywords').setValue(event.target.value.replaceAll(' ', ','));
   }
 
   getGroups(): void {

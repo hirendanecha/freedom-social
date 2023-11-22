@@ -165,6 +165,7 @@ export class PostCardComponent implements OnInit, AfterViewInit {
       this.onEditPost.emit(post);
       const modalRef = this.modalService.open(EditResearchModalComponent, {
         centered: true,
+        size: 'lg',
       });
       modalRef.componentInstance.title = 'Edit Research Details';
       modalRef.componentInstance.confirmButtonLabel = 'Save';
