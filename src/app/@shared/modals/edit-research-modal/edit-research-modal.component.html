@@ -80,80 +80,82 @@
       />
     </div>
 
-    <div
-      class="col form-group"
-      *ngIf="
-        !this.researchForm.get('meta').value?.metaimage && !selectedpdfFile
-      "
-    >
-      <label for="textpostdesc" class="form-label">Upload Image</label>
-      <div class="d-flex custom-input-area" *ngIf="!selectedImgFile">
-        <fa-icon
-          [icon]="['fas', 'image']"
-          class="text-primary cursor font-24-px"
-          (click)="uploadImage.click()"
-        />
-        <input
-          #uploadImage
-          class="d-none"
-          type="file"
-          id="fileInput"
-          (change)="onFileSelected($event)"
-          accept="image/*"
-        />
-      </div>
-      <ng-container *ngIf="selectedImgFile">
-        <div class="position-relative w-100-px h-100-px">
-          <img
-            loading="lazy"
-            data-src="{{ postImageUrl }}"
-            class="w-100 h-100 rounded-4"
-            alt="icon"
-            onerror="this.onerror=null;"
-          />
+    <div class="d-flex">
+      <div
+        class="col form-group"
+        *ngIf="
+          !this.researchForm.get('meta').value?.metaimage && !selectedpdfFile
+        "
+      >
+        <label for="textpostdesc" class="form-label">Upload Image</label>
+        <div class="d-flex custom-input-area" *ngIf="!selectedImgFile">
           <fa-icon
-            [icon]="['fas', 'xmark']"
-            class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer c-icon-color"
-            role="button"
-            (click)="removeImgFile()"
+            [icon]="['fas', 'image']"
+            class="text-primary cursor font-24-px"
+            (click)="uploadImage.click()"
+          />
+          <input
+            #uploadImage
+            class="d-none"
+            type="file"
+            id="fileInput"
+            (change)="onFileSelected($event)"
+            accept="image/*"
           />
         </div>
-      </ng-container>
-    </div>
-    <div class="col form-group" *ngIf="!selectedImgFile">
-      <label for="textpostdesc" class="form-label">Upload File</label>
-      <div class="d-flex custom-input-area" *ngIf="!selectedpdfFile">
-        <fa-icon
-          [icon]="['fas', 'file']"
-          class="text-primary cursor font-24-px"
-          (click)="pdfFile.click()"
-        />
-        <input
-          type="file"
-          #pdfFile
-          hidden
-          class="d-none"
-          accept="application/pdf"
-          (change)="onPostFileSelect($event)"
-        />
-      </div>
-      <ng-container *ngIf="selectedpdfFile">
-        <div class="position-relative w-250-px h-100-px mt-5">
-          <div class="d-flex align-items-center">
-            <fa-icon
-              [icon]="['fas', 'file-pdf']"
-              class="c-pointer close-icon font-40-px"
+        <ng-container *ngIf="selectedImgFile">
+          <div class="position-relative w-100-px h-100-px">
+            <img
+              loading="lazy"
+              data-src="{{ postImageUrl }}"
+              class="w-100 h-100 rounded-4"
+              alt="icon"
+              onerror="this.onerror=null;"
             />
             <fa-icon
               [icon]="['fas', 'xmark']"
-              class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer c-icon"
+              class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer c-icon-color"
               role="button"
-              (click)="removePostSelectedFile()"
+              (click)="removeImgFile()"
             />
-            <span class="c-pdf-show">{{ selectedpdfFile.name }}</span>
           </div>
+        </ng-container>
+      </div>
+      <div class="col form-group" *ngIf="!selectedImgFile">
+        <label for="textpostdesc" class="form-label">Upload File</label>
+        <div class="d-flex custom-input-area" *ngIf="!selectedpdfFile">
+          <fa-icon
+            [icon]="['fas', 'file']"
+            class="text-primary cursor font-24-px"
+            (click)="pdfFile.click()"
+          />
+          <input
+            type="file"
+            #pdfFile
+            hidden
+            class="d-none"
+            accept="application/pdf"
+            (change)="onPostFileSelect($event)"
+          />
         </div>
-      </ng-container>
+        <ng-container *ngIf="selectedpdfFile">
+          <div class="position-relative w-250-px h-100-px mt-5">
+            <div class="d-flex align-items-center">
+              <fa-icon
+                [icon]="['fas', 'file-pdf']"
+                class="c-pointer close-icon font-40-px"
+              />
+              <fa-icon
+                [icon]="['fas', 'xmark']"
+                class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer c-icon"
+                role="button"
+                (click)="removePostSelectedFile()"
+              />
+              <span class="c-pdf-show">{{ selectedpdfFile.name }}</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <div class="col form-group">
@@ -165,8 +167,8 @@
         class="input-area"
         placeholder="Enter Keywords"
         formControlName="keywords"
-        (ngModelChange)="onChangeTag($event)"
-      />
+        (input)="onChangeTag($event)"
+        />
     </div>
 
     <div class="col-12 d-flex justify-content-end">
