@@ -313,6 +313,9 @@
       <app-img-preview [src]="post?.imageUrl" classes="w-100" />
     </ng-container>
     <ng-container *ngIf="post?.streamname">
+      <div class="video-albumname mb-3">
+        {{post.albumname}}
+      </div>
       <!-- <app-img-preview [src]="post?.thumbfilename" classes="w-100" /> -->
       <div
         [id]="'jwVideo-' + post?.id"
