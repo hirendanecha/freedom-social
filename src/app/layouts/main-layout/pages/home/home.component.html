@@ -253,7 +253,10 @@
 
             <button
               class="btn btn-sm btn-primary px-3 py-1 d-flex justify-content-center align-items-center gap-2 float-end"
-              [disabled]="!(postData?.postdescription || postData?.file?.name)"
+              [disabled]="
+                !(postData?.postdescription || postData?.file?.name) ||
+                buttonClicked
+              "
               (click)="uploadPostFileAndCreatePost()"
             >
               {{ postData?.id ? "Update Post" : "Post" }}
