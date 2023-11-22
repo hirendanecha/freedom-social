@@ -135,7 +135,7 @@
               "serviceWorker": false
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "test"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -158,7 +158,7 @@
             },
             "ci": {}
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": ""
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
