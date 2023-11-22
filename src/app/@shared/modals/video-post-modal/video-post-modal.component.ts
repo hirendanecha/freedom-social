@@ -164,12 +164,12 @@ export class VideoPostModalComponent implements AfterViewInit {
                     if (event.body?.url) {
                       this.postData['file1'] = null;
                       this.postData['streamname'] = event.body.url;
+                      if (!this.postData.id && this.thumbfilenameProgress === 100 && this.streamnameProgress === 100) {
+                        this.createPost();
+                      } else if (this.postData.id && this.streamnameProgress === 100) {
+                        this.createPost();
+                      }
                     }
-                  }
-                  if (!this.postData.id && this.thumbfilenameProgress === 100 && this.streamnameProgress === 100) {
-                    this.createPost();
-                  } else if (this.postData.id && this.streamnameProgress === 100) {
-                    this.createPost();
                   }
                 });
               }
