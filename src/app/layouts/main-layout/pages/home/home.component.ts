@@ -235,6 +235,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   uploadPostFileAndCreatePost(): void {
+    this.buttonClicked = true;
     if (this.postData?.postdescription || this.postData?.file?.name) {
       if (this.postData?.file?.name) {
         this.spinner.show();
@@ -285,7 +286,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(this.postData);
 
       }
-
       // this.spinner.show();
       console.log(
         'postData',
@@ -294,6 +294,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       );
       this.toastService.success('Post created successfully.');
       this.socketService?.createOrEditPost(this.postData);
+      this.buttonClicked = false;
+      this.resetPost();
       // , (data) => {
       //   this.spinner.hide();
       //   console.log(data)
