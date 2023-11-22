@@ -72,7 +72,7 @@
                 }
               ]
             },
-            "dev": {
+            "development": {
               "optimization": false,
               "aot": false,
               "outputHashing": "all",
@@ -135,7 +135,7 @@
               "serviceWorker": false
             }
           },
-          "defaultConfiguration": "dev"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -149,7 +149,7 @@
               "hmr": false
             },
             "development": {
-              "browserTarget": "freedom:build:dev",
+              "browserTarget": "freedom:build:development",
               "hmr": false
             },
             "test": {
@@ -158,7 +158,7 @@
             },
             "ci": {}
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
